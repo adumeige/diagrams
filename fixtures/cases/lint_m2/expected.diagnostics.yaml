@@ -1,0 +1,15 @@
+- code: text_overflow
+  severity: warning
+  path: tight
+  message: text is 59.83 units wider than its box (width 60)
+  data: {overflow: 59.83}
+- code: text_overflow
+  severity: warning
+  path: card.label
+  message: text overflows card.bg by 27.37 units
+  data: {overflow: 27.37, shape: card.bg}
+- code: connector_crosses_shape
+  severity: warning
+  path: through
+  message: connector runs through blocker
+  data: {shape: blocker}

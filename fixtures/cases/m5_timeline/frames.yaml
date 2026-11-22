@@ -1,0 +1,6 @@
+# One resolved scene and image per entry (spec section 19, animation fixtures).
+- {name: t0_3, time: 0.3}
+- {name: t1_0, time: 1.0}
+- {name: t1_6, time: 1.6}
+- {name: t2_4, time: 2.4}
+- {name: loop, time: 3.6}

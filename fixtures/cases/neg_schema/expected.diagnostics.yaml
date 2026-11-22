@@ -1,0 +1,45 @@
+- code: expr_syntax
+  severity: error
+  path: box.radius
+  source: {file: input.authored.yaml, line: 11, column: 40}
+  message: "expression '=10 +': expected a value, found end of expression at offset 4"
+- code: schema
+  severity: error
+  path: box
+  source: {file: input.authored.yaml, line: 11, column: 27}
+  message: duplicate id 'box' in the scope of 'scene'
+- code: schema
+  severity: error
+  path: box.fill
+  source: {file: input.authored.yaml, line: 9, column: 7}
+  message: "'fill' is a color '#rrggbb' or '#rrggbbaa' (an unquoted '#' starts a comment: quote the color)"
+- code: schema
+  severity: error
+  path: box.colour
+  source: {file: input.authored.yaml, line: 10, column: 15}
+  message: unknown property 'colour' on a rect
+- code: schema
+  severity: error
+  path: box
+  source: {file: input.authored.yaml, line: 6, column: 7}
+  message: a rect requires 'height'
+- code: schema
+  severity: error
+  path: odd
+  source: {file: input.authored.yaml, line: 12, column: 15}
+  message: "unknown shape hexagon; expected one of rect, ellipse, circle, line, polyline, polygon, path, text, connector"
+- code: schema
+  severity: error
+  path: Bad.id
+  source: {file: input.authored.yaml, line: 13, column: 25}
+  message: "an id matches [a-z][a-z0-9_]*"
+- code: schema
+  severity: error
+  path: stub.points
+  source: {file: input.authored.yaml, line: 14, column: 39}
+  message: "a line takes exactly 2 points, found 1"
+- code: schema
+  severity: error
+  path: width.id
+  source: {file: input.authored.yaml, line: 15, column: 25}
+  message: "'width' is reserved and cannot be used as an id"

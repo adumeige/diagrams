@@ -1,0 +1,5 @@
+# One resolved scene and image per entry (spec section 19, animation fixtures).
+- {name: two, states: {scene: two}}
+- {name: three, states: {scene: three}}
+- {name: wide, states: {scene: two, panel: wide}}
+- {name: two_to_three, from: {scene: two}, states: {scene: three}, time: 0.25}

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="420" viewBox="0 0 640 420">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <g data-path="scene">
+    <rect data-path="background" width="640" height="420" fill="#fbfaf7" stroke="#000000" stroke-width="1" stroke-opacity="0"/>
+    <g data-path="shapes" transform="translate(40 40)">
+      <rect data-path="shapes.square" width="80" height="80" fill="#74b9ff" stroke="#000000" stroke-width="1"/>
+      <rect data-path="shapes.tilted" transform="matrix(0.866025 0.5 -0.5 0.866025 145.358984 -14.641016)" width="80" height="80" fill="#a29bfe" stroke="#000000" stroke-width="1"/>
+      <ellipse data-path="shapes.oval" transform="translate(240 10)" cx="60" cy="30" rx="60" ry="30" fill="#55efc4" stroke="#000000" stroke-width="1"/>
+      <ellipse data-path="shapes.faded" transform="translate(400 0)" opacity="0.5" cx="40" cy="40" rx="40" ry="40" fill="#fd79a8" stroke="#000000" stroke-width="1"/>
+      <polyline data-path="shapes.rule" transform="translate(0 120)" points="0,0 560,0" fill="none" stroke="#636e72" stroke-width="2"/>
+      <polyline data-path="shapes.zigzag" transform="translate(0 150)" points="0,40 40,0 80,40 120,0 160,40" fill="none" stroke="#d63031" stroke-width="3"/>
+      <polygon data-path="shapes.triangle" transform="translate(200 150)" points="40,0 80,60 0,60" fill="#ffeaa7" stroke="#000000" stroke-width="1"/>
+      <path data-path="shapes.wave" transform="translate(320 150)" d="M0 30 C30 -10 60 70 90 30 C120 -10 150 -10 180 30 L180 60 L0 60 Z" fill="#81ecec" stroke="#00b894" stroke-width="1"/>
+      <g data-path="shapes.badge" transform="matrix(1.5 0 0 1.5 -30 240)">
+        <rect width="120" height="40" rx="20" fill="#2d3436" stroke="#000000" stroke-width="1"/>
+        <g transform="translate(0 8)" font-family="Helvetica, Arial, sans-serif" font-size="16" fill="#ffffff">
+          <text x="35.544" y="13.688" xml:space="preserve">Scaled</text>
+        </g>
+      </g>
+      <g data-path="shapes.note" transform="translate(240 250)" font-family="Helvetica, Arial, sans-serif" font-size="20" fill="#2d3436">
+        <text x="149.94" y="17.11" xml:space="preserve">Two lines of text,</text>
+        <text x="141" y="41.11" xml:space="preserve">aligned to the end</text>
+      </g>
+    </g>
+  </g>
+</svg>

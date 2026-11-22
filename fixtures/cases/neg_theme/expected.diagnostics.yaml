@@ -1,0 +1,51 @@
+- code: path_unresolved
+  severity: error
+  path: imports.missing
+  source: {file: input.authored.yaml, line: 6, column: 12}
+  message: cannot read import './no_such_theme.yaml'
+- code: path_unresolved
+  severity: error
+  path: base_theme
+  source: {file: input.authored.yaml, line: 7, column: 13}
+  message: "'paperr' is not an import alias"
+- code: schema
+  severity: error
+  path: styles.bad.id
+  source: {file: input.authored.yaml, line: 9, column: 13}
+  message: a style cannot set 'id' in style 'bad'
+- code: schema
+  severity: error
+  path: styles.bad.fill
+  source: {file: input.authored.yaml, line: 9, column: 22}
+  message: "'fill' is a color '#rrggbb' or '#rrggbbaa'"
+- code: token_missing
+  severity: error
+  path: a.fill
+  source: {file: input.authored.yaml, line: 12, column: 57}
+  message: no theme in scope provides token 'secondary'; no theme is in scope (set 'base_theme')
+  data: {token: secondary}
+- code: path_unresolved
+  severity: error
+  path: b.style
+  source: {file: input.authored.yaml, line: 13, column: 58}
+  message: unknown style 'card' (a style of an imported file is written 'alias.card')
+- code: path_unresolved
+  severity: error
+  path: c.font
+  source: {file: input.authored.yaml, line: 14, column: 44}
+  message: no imported theme declares the font asset 'serif'
+- code: path_unresolved
+  severity: error
+  path: node_d.theme
+  source: {file: input.authored.yaml, line: 15, column: 63}
+  message: "'nope' is not an import alias"
+- code: schema
+  severity: error
+  path: e.theme.primary
+  source: {file: input.authored.yaml, line: 17, column: 24}
+  message: "a token is a string, number or boolean, found list"
+- code: path_unresolved
+  severity: error
+  path: e.f.fill
+  source: {file: input.authored.yaml, line: 19, column: 61}
+  message: "a token reference is 'theme.<name>', found 'theme.colors.red'"

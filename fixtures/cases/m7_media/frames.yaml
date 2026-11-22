@@ -1,0 +1,4 @@
+# One resolved scene and image per entry (spec section 19, animation fixtures).
+- {name: before_cue, time: 2.0}
+- {name: fading, time: 2.75}
+- {name: after, time: 6.0}

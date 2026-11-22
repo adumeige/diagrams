@@ -1,0 +1,77 @@
+{
+  "format": "diagrams/0.1",
+  "viewport": {"width": 480, "height": 260},
+  "time": 0,
+  "background": "#faf8f3",
+  "root": {
+    "path": "scene",
+    "loc": "scene",
+    "kind": "container",
+    "layer": "default",
+    "box": [40, 60, 390, 100],
+    "local": [40, 60, 390, 100],
+    "transform": [1, 0, 0, 1, 0, 0],
+    "opacity": 1,
+    "children": [
+      {
+        "path": "a",
+        "loc": "scene/0",
+        "kind": "rect",
+        "layer": "default",
+        "box": [40, 100, 90, 60],
+        "local": [0, 0, 90, 60],
+        "transform": [1, 0, 0, 1, 40, 100],
+        "opacity": 0,
+        "fill": "#b2bec3",
+        "stroke": "#000000",
+        "stroke_width": 0
+      },
+      {
+        "path": "b",
+        "loc": "scene/1",
+        "kind": "rect",
+        "layer": "default",
+        "box": [340, 60, 90, 60],
+        "local": [0, 0, 90, 60],
+        "transform": [1, 0, 0, 1, 340, 60],
+        "opacity": 0,
+        "fill": "#b2bec3",
+        "stroke": "#000000",
+        "stroke_width": 0
+      },
+      {
+        "path": "link",
+        "loc": "scene/2",
+        "kind": "connector",
+        "layer": "default",
+        "box": [130, 92.828071, 210, 31.171929],
+        "local": [130, 92.828071, 210, 31.171929],
+        "transform": [1, 0, 0, 1, 0, 0],
+        "opacity": 1,
+        "draw": 0,
+        "stroke": "#636e72",
+        "stroke_width": 2,
+        "points": [[130, 124], [328.105265, 97.585965]],
+        "markers": [
+          {
+            "kind": "arrow",
+            "points": [[340, 96], [328.739651, 102.343859], [327.470879, 92.828071]]
+          }
+        ]
+      },
+      {
+        "path": "dot",
+        "loc": "scene/3",
+        "kind": "circle",
+        "layer": "default",
+        "box": [123, 117, 14, 14],
+        "local": [0, 0, 14, 14],
+        "transform": [1, 0, 0, 1, 123, 117],
+        "opacity": 1,
+        "fill": "#e17055",
+        "stroke": "#000000",
+        "stroke_width": 0
+      }
+    ]
+  }
+}

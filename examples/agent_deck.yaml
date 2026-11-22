@@ -1,0 +1,95 @@
+# A short deck: one state per step of the scene's state container (spec section 11).
+#   diagrams deck examples/agent_deck.yaml --out agent_deck.html   (arrow keys to navigate)
+#   diagrams deck examples/agent_deck.yaml --out agent_deck.pdf
+#
+# Each slide is a group faded in by its states (opacity interpolates during the transition);
+# bullets appear one by one through the 'shown' parameter of deck.bullets.
+format: diagrams/0.1
+title: How an agent works
+viewport: {width: 1280, height: 720}
+imports:
+  deck: ../libs/deck.yaml
+  paper: ../themes/paper.yaml
+base_theme: paper
+scene:
+  states:
+    defaults: {duration: 0.6, ease: in_out}
+    sequence:
+      - {id: title, set: {intro.opacity: 1}}
+      - {id: parts_1, set: {parts.opacity: 1, parts.list.shown: 1, dots.current: 1}}
+      - {id: parts_2, extends: parts_1, set: {parts.list.shown: 2}}
+      - {id: parts_3, extends: parts_1, set: {parts.list.shown: 3}}
+      - {id: loop, set: {loop.opacity: 1, dots.current: 2}}
+      - id: loop_call
+        extends: loop
+        set:
+          loop.call.stroke: "=theme.primary"
+          loop.call.stroke_width: 4
+          loop.run.stroke: "=theme.primary"
+          loop.run.stroke_width: 4
+      - id: loop_result
+        extends: loop
+        set:
+          loop.back.stroke: "=theme.accent"
+          loop.back.stroke_width: 4
+          loop.back_label.fill: "#b33b17"
+      - {id: end, set: {outro.opacity: 1, dots.current: 3}}
+  children:
+    - id: intro
+      opacity: 0
+      children:
+        - use: deck.heading
+          id: head
+          text: How an agent works
+          kicker: A DIAGRAMS DECK
+          size: 64
+          align: center
+          attach: {anchor: center, to: viewport.center, offset: {x: 0, y: -40}}
+        - {shape: text, text: "A model, a harness and tools, in a loop", font_size: 28, fill: "=theme.muted", attach: {anchor: north, to: head.south, gap: 28}}
+
+    - id: parts
+      opacity: 0
+      children:
+        - {use: deck.heading, text: Three parts, kicker: OVERVIEW, at: {x: 110, y: 90}}
+        - use: deck.bullets
+          id: list
+          at: {x: 110, y: 240}
+          shown: 0
+          items:
+            - The model reads the conversation and proposes the next step
+            - The harness runs the tools it asks for, and feeds the results back
+            - "Tools touch the world: files, shells, browsers"
+
+    - id: loop
+      opacity: 0
+      children:
+        - {use: deck.heading, text: The loop, kicker: HOW IT RUNS, at: {x: 110, y: 90}}
+        - id: row
+          layout: row
+          gap: 130
+          align: stretch
+          at: {x: 110, y: 290}
+          children:
+            - {use: deck.card, id: model, title: Model, text: Proposes a tool call or an answer, width: 260}
+            - {use: deck.card, id: harness, title: Harness, text: "Runs the call, checks permissions", width: 260, accent: "#e17055"}
+            - {use: deck.card, id: tools, title: Tools, text: "Files, shell, browser", width: 260, accent: "#00b894"}
+        - {shape: connector, id: call, from: row.model, to: row.harness, stroke: "#636e72", stroke_width: 2, marker_end: arrow}
+        - {shape: connector, id: run, from: row.harness, to: row.tools, stroke: "#636e72", stroke_width: 2, marker_end: arrow}
+        - {shape: connector, id: back, from: row.tools.south, to: row.model.south, route: orthogonal, stroke: "#636e72", stroke_width: 2, marker_end: arrow}
+        - {shape: text, id: back_label, text: results come back, font_size: 20, fill: "=theme.muted", attach: {anchor: north, to: back.mid, gap: 10}}
+
+    - id: outro
+      opacity: 0
+      children:
+        - use: deck.heading
+          text: Questions?
+          kicker: THANK YOU
+          size: 64
+          align: center
+          attach: {anchor: center, to: viewport.center}
+
+    - use: deck.progress
+      id: dots
+      steps: [title, parts, loop, end]
+      current: 0
+      attach: {anchor: south, to: viewport.south, gap: -36}

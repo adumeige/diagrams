@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="360" viewBox="0 0 600 360">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <g data-path="scene">
+    <g data-path="team" transform="translate(60 60)">
+      <rect data-path="team.box" width="160" height="90" fill="#dfe6e9" stroke="#2d3436" stroke-width="1"/>
+      <g data-path="team.name" transform="translate(12 10)" font-family="Helvetica, Arial, sans-serif" font-size="18" fill="#000000">
+        <text x="0" y="15.399" xml:space="preserve">Team</text>
+      </g>
+    </g>
+    <rect data-path="note" transform="translate(260 80)" width="120" height="50" fill="#ffeaa7" stroke="#2d3436" stroke-width="1"/>
+    <rect data-path="under_note" transform="translate(280 142)" width="80" height="30" fill="#fab1a0" stroke="#000000" stroke-width="1"/>
+    <ellipse data-path="pin" transform="translate(116.008 56)" cx="8" cy="8" rx="8" ry="8" fill="#d63031"/>
+    <g data-path="tilted" transform="matrix(0.939693 -0.34202 0.34202 0.939693 115.671013 255.449095)">
+      <rect data-path="tilted.plate" width="140" height="50" fill="#a29bfe" stroke="#000000" stroke-width="1"/>
+    </g>
+    <rect data-path="tag" transform="translate(265.17541 215.638389)" width="50" height="24" fill="#6c5ce7" stroke="#000000" stroke-width="1"/>
+    <rect data-path="below" transform="translate(60 170)" width="160" height="16" fill="#636e72" stroke="#000000" stroke-width="1"/>
+    <g data-path="caption" transform="translate(228 170)" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#000000">
+      <text x="0" y="10.266" xml:space="preserve">width of team</text>
+    </g>
+    <g data-path="strip" transform="translate(380 280)">
+      <rect data-path="strip.s1" width="30" height="30" fill="#00b894" stroke="#000000" stroke-width="1"/>
+      <rect data-path="strip.s2" transform="translate(36 0)" width="30" height="30" fill="#00cec9" stroke="#000000" stroke-width="1"/>
+    </g>
+  </g>
+</svg>

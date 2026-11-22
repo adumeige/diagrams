@@ -1,0 +1,400 @@
+# From model to agent: a 24-step deck in four parts.
+#   diagrams deck examples/llm_stack_deck.yaml --out llm_stack_deck.html
+#
+# Every slide is a group at opacity 0 that its states fade in. Steps inside a slide extend the
+# slide's first state, so highlights add up; the template parameters they set (colors, 'shown',
+# 'current') make the instances expand again.
+format: diagrams/0.1
+title: From model to agent
+viewport: {width: 1280, height: 720}
+imports:
+  deck: ../libs/deck.yaml
+  paper: ../themes/paper.yaml
+base_theme: paper
+scene:
+  states:
+    defaults: {duration: 0.6, ease: in_out}
+    sequence:
+      - {id: title, set: {intro.opacity: 1}}
+
+      # 1. model, inference engine, harness
+      - {id: layers_1, set: {stack.opacity: 1, stack.row.model.opacity: 1, dots.current: 1}}
+      - {id: layers_2, extends: layers_1, set: {stack.row.engine.opacity: 1}}
+      - {id: layers_3, extends: layers_2, set: {stack.row.harness.opacity: 1, stack.note.opacity: 1}}
+      - id: flow_1
+        set:
+          flow.opacity: 1
+          dots.current: 1
+          flow.cap1.opacity: 1
+          flow.req.color: "=theme.primary"
+          flow.req.width: 3
+          flow.req.label_color: "#1f4fa8"
+      - id: flow_2
+        set:
+          flow.opacity: 1
+          dots.current: 1
+          flow.cap2.opacity: 1
+          flow.fwd.color: "=theme.primary"
+          flow.fwd.width: 3
+          flow.fwd.label_color: "#1f4fa8"
+          flow.probs.color: "=theme.primary"
+          flow.probs.width: 3
+          flow.probs.label_color: "#1f4fa8"
+      - id: flow_3
+        set:
+          flow.opacity: 1
+          dots.current: 1
+          flow.cap3.opacity: 1
+          flow.resp.color: "=theme.primary"
+          flow.resp.width: 3
+          flow.resp.label_color: "#1f4fa8"
+
+      # 2. context, tool calls, agents
+      - id: context_1
+        set: {ctx.opacity: 1, dots.current: 2, ctx.window.system.opacity: 1, ctx.window.defs.opacity: 1, ctx.why.shown: 1}
+      - id: context_2
+        extends: context_1
+        set: {ctx.window.talk.opacity: 1, ctx.window.results.opacity: 1, ctx.window.free.opacity: 1, ctx.why.shown: 3}
+      - id: tools_1
+        set: {tools.opacity: 1, dots.current: 2, tools.call.opacity: 1, tools.cap1.opacity: 1, tools.ask.color: "=theme.primary", tools.ask.width: 3, tools.ask.label_color: "#1f4fa8"}
+      - id: tools_2
+        set: {tools.opacity: 1, dots.current: 2, tools.cap2.opacity: 1, tools.run.color: "=theme.primary", tools.run.width: 3, tools.run.label_color: "#1f4fa8"}
+      - id: tools_3
+        set:
+          tools.opacity: 1
+          dots.current: 2
+          tools.cap3.opacity: 1
+          tools.result.color: "=theme.primary"
+          tools.result.width: 3
+          tools.result.label_color: "#1f4fa8"
+          tools.added.color: "=theme.primary"
+          tools.added.width: 3
+          tools.added.label_color: "#1f4fa8"
+      - {id: agent_1, set: {agent.opacity: 1, dots.current: 2, agent.why.shown: 1}}
+      - {id: agent_2, extends: agent_1, set: {agent.why.shown: 3}}
+
+      # 3. knowledge graph
+      - {id: graph_1, set: {kg.opacity: 1, dots.current: 3, kg.cap1.opacity: 1}}
+      - id: graph_2
+        set: {kg.opacity: 1, dots.current: 3, kg.cap2.opacity: 1, kg.question.opacity: 1, kg.g.ana.color: "=theme.primary", kg.g.ana.ink: "#ffffff"}
+      - id: graph_3
+        extends: graph_2
+        set:
+          kg.cap2.opacity: 0
+          kg.cap3.opacity: 1
+          kg.g.order.color: "#cfe0fa"
+          kg.g.laptop.color: "#cfe0fa"
+          kg.g.carrier.color: "#cfe0fa"
+          kg.g.placed.color: "=theme.primary"
+          kg.g.placed.width: 3
+          kg.g.contains.color: "=theme.primary"
+          kg.g.contains.width: 3
+          kg.g.shipped.color: "=theme.primary"
+          kg.g.shipped.width: 3
+      - {id: graph_4, extends: graph_3, set: {kg.cap3.opacity: 0, kg.cap4.opacity: 1, kg.facts.opacity: 1}}
+
+      # 4. embeddings
+      - {id: embed_1, set: {emb.opacity: 1, dots.current: 4, emb.cap1.opacity: 1}}
+      - {id: embed_2, set: {emb.opacity: 1, dots.current: 4, emb.plot.opacity: 1, emb.why.shown: 2}}
+      - {id: embed_3, extends: embed_2, set: {emb.plot.query.opacity: 1, emb.why.shown: 3}}
+      - id: combo_1
+        set:
+          combo.opacity: 1
+          dots.current: 4
+          combo.cap1.opacity: 1
+          combo.row.question.color: "#2d3436"
+          combo.row.question.ink: "#ffffff"
+          combo.row.embed.color: "#6c4ab6"
+          combo.row.embed.ink: "#ffffff"
+          combo.row.nearest.color: "#0f7b5f"
+          combo.row.nearest.ink: "#ffffff"
+      - {id: combo_2, extends: combo_1, set: {combo.cap1.opacity: 0, combo.cap2.opacity: 1, combo.row.walk.color: "=theme.primary", combo.row.walk.ink: "#ffffff"}}
+      - id: combo_3
+        extends: combo_2
+        set: {combo.cap2.opacity: 0, combo.cap3.opacity: 1, combo.row.context.color: "#b4532a", combo.row.context.ink: "#ffffff", combo.row.model.color: "#1f4fa8", combo.row.model.ink: "#ffffff"}
+      - {id: recap, set: {summary.opacity: 1, dots.current: 4}}
+
+  children:
+    # ---------------------------------------------------------------- title
+    - id: intro
+      opacity: 0
+      children:
+        - use: deck.heading
+          id: head
+          text: From model to agent
+          kicker: LLM SYSTEMS IN FOUR STEPS
+          size: 60
+          align: center
+          attach: {anchor: center, to: viewport.center, offset: {x: 0, y: -40}}
+        - {shape: text, text: "Models, engines, harnesses, context, graphs and embeddings", font_size: 26, fill: "=theme.muted", attach: {anchor: north, to: head.south, gap: 28}}
+
+    # ---------------------------------------------------------------- 1a. three layers
+    - id: stack
+      opacity: 0
+      children:
+        - {use: deck.heading, text: "Model, inference engine, harness", kicker: "1 · THE STACK", size: 40, at: {x: 90, y: 64}}
+        - id: row
+          layout: row
+          gap: 45
+          align: stretch
+          at: {x: 90, y: 210}
+          children:
+            - use: deck.card
+              id: model
+              opacity: 0
+              width: 340
+              title: Model
+              text: "Weights trained to predict the next token. A pure function: tokens in, probabilities out. No memory, no tools, no network."
+            - use: deck.card
+              id: engine
+              opacity: 0
+              width: 340
+              accent: "#b4532a"
+              title: Inference engine
+              text: "Runs the model on GPUs: batching, KV cache, sampling, streaming. Examples: vLLM, TensorRT-LLM, llama.cpp."
+            - use: deck.card
+              id: harness
+              opacity: 0
+              width: 340
+              accent: "#0f7b5f"
+              title: Harness
+              text: "The program around it: builds the prompt, offers tools, runs them, keeps state between turns. Example: Claude Code."
+        - shape: text
+          id: note
+          opacity: 0
+          at: {x: 90, y: 500}
+          width: 1100
+          wrap: true
+          font_size: 22
+          fill: "=theme.muted"
+          text: "Each layer can be swapped: the same model on another engine, the same engine behind another harness."
+
+    # ---------------------------------------------------------------- 1b. how they talk
+    - id: flow
+      opacity: 0
+      children:
+        - {use: deck.heading, text: How they talk, kicker: "1 · THE STACK", size: 40, at: {x: 90, y: 64}}
+        - id: chain
+          layout: row
+          gap: 205
+          at: {x: 90, y: 330}
+          children:
+            - {use: deck.pill, id: h, text: Harness, color: "#0f7b5f", width: 230, size: 20}
+            - {use: deck.pill, id: e, text: Inference engine, color: "#b4532a", width: 230, size: 20}
+            - {use: deck.pill, id: m, text: Model, color: "#2d6cdf", width: 230, size: 20}
+        - {use: deck.link, id: req, from: chain.h.north, to: chain.e.north, route: orthogonal, label: "prompt, as tokens"}
+        - {use: deck.link, id: fwd, from: chain.e, to: chain.m, label: forward pass}
+        - {use: deck.link, id: probs, from: chain.m.south, to: chain.e.south, route: orthogonal, label: next-token probabilities, label_side: north}
+        - {use: deck.link, id: resp, from: chain.e, to: chain.h, label: "sampled tokens, streamed", label_side: north}
+        - {shape: text, id: cap1, opacity: 0, at: {x: 90, y: 520}, width: 1100, wrap: true, font_size: 22, fill: "=theme.ink", text: "The harness assembles the prompt (instructions, history, tool results) and sends it to the engine as tokens."}
+        - {shape: text, id: cap2, opacity: 0, at: {x: 90, y: 520}, width: 1100, wrap: true, font_size: 22, fill: "=theme.ink", text: "The engine runs the model once per new token. The model only returns probabilities; the engine samples one and repeats."}
+        - {shape: text, id: cap3, opacity: 0, at: {x: 90, y: 520}, width: 1100, wrap: true, font_size: 22, fill: "=theme.ink", text: "Tokens stream back to the harness, which decides what to do with them: show them, or run the tool they ask for."}
+
+    # ---------------------------------------------------------------- 2a. context
+    - id: ctx
+      opacity: 0
+      children:
+        - {use: deck.heading, text: "Context: everything the model sees", kicker: "2 · AGENTS", size: 40, at: {x: 90, y: 64}}
+        - {shape: text, text: Context window, font_size: 16, fill: "=theme.muted", at: {x: 90, y: 168}}
+        - id: window
+          layout: stack
+          align: stretch
+          at: {x: 90, y: 196}
+          children:
+            - {shape: rect, width: 0, height: 0, corner_radius: 12, fill: "#00000000", stroke: "#636e72", stroke_width: 1.5}
+            - layout: column
+              gap: 10
+              padding: 16
+              children:
+                - {use: deck.pill, id: system, opacity: 0, text: System prompt, color: "#6c4ab6", width: 480}
+                - {use: deck.pill, id: defs, opacity: 0, text: Tool definitions, color: "#b4532a", width: 480}
+                - {use: deck.pill, id: talk, opacity: 0, text: Conversation, color: "#2d6cdf", width: 480}
+                - {use: deck.pill, id: results, opacity: 0, text: Tool results, color: "#0f7b5f", width: 480}
+                - {use: deck.pill, id: free, opacity: 0, text: "free space, until the limit", color: "#dfe6e9", ink: "#2d3436", width: 480}
+        - use: deck.bullets
+          id: why
+          at: {x: 680, y: 210}
+          width: 500
+          size: 22
+          shown: 0
+          items:
+            - The model knows nothing beyond its weights and this window
+            - "It is limited: from a few thousand to a million tokens"
+            - The harness chooses what goes in, and that choice decides the answer
+
+    # ---------------------------------------------------------------- 2b. tool calls
+    - id: tools
+      opacity: 0
+      children:
+        - {use: deck.heading, text: Tool calls, kicker: "2 · AGENTS", size: 40, at: {x: 90, y: 64}}
+        - {use: deck.pill, id: call, opacity: 0, at: {x: 90, y: 200}, text: "{\"tool\": \"read_file\", \"path\": \"notes.md\"}", color: "#2d3436", size: 16}
+        - id: trio
+          layout: row
+          gap: 205
+          at: {x: 90, y: 360}
+          children:
+            - {use: deck.pill, id: model, text: Model, color: "#2d6cdf", width: 230, size: 20}
+            - {use: deck.pill, id: harness, text: Harness, color: "#0f7b5f", width: 230, size: 20}
+            - {use: deck.pill, id: tool, text: "Tool: read_file", color: "#b4532a", width: 230, size: 20}
+        - {use: deck.link, id: ask, from: trio.model.north, to: trio.harness.north, route: orthogonal, label: tool call}
+        - {use: deck.link, id: run, from: trio.harness, to: trio.tool, label: runs it}
+        - {use: deck.link, id: result, from: trio.tool.south, to: trio.harness.south, route: orthogonal, label: result, label_side: north}
+        - {use: deck.link, id: added, from: trio.harness, to: trio.model, label: added to the context, label_side: north}
+        - {shape: text, id: cap1, opacity: 0, at: {x: 90, y: 520}, width: 1100, wrap: true, font_size: 22, fill: "=theme.ink", text: "Instead of prose, the model writes a structured call to one of the tools listed in its context."}
+        - {shape: text, id: cap2, opacity: 0, at: {x: 90, y: 520}, width: 1100, wrap: true, font_size: 22, fill: "=theme.ink", text: "The harness checks it (permissions, arguments) and runs it. The model never runs anything itself."}
+        - {shape: text, id: cap3, opacity: 0, at: {x: 90, y: 520}, width: 1100, wrap: true, font_size: 22, fill: "=theme.ink", text: "The result goes back into the context, and the model is called again with it."}
+
+    # ---------------------------------------------------------------- 2c. agents
+    - id: agent
+      opacity: 0
+      children:
+        - {use: deck.heading, text: An agent is a loop, kicker: "2 · AGENTS", size: 40, at: {x: 90, y: 64}}
+        - id: cycle
+          at: {x: 70, y: 200}
+          children:
+            - {use: deck.pill, id: decide, at: {x: 160, y: 0}, text: The model decides, color: "#2d6cdf", width: 240}
+            - {use: deck.pill, id: act, at: {x: 320, y: 230}, text: The harness acts, color: "#0f7b5f", width: 240}
+            - {use: deck.pill, id: observe, at: {x: 0, y: 230}, text: Results enter the context, color: "#b4532a", width: 240}
+            - {use: deck.link, from: decide, to: act, label: tool call, label_side: west}
+            - {use: deck.link, from: act, to: observe, label: result, label_side: north}
+            - {use: deck.link, from: observe, to: decide, label: next call, label_side: east}
+        - use: deck.bullets
+          id: why
+          at: {x: 680, y: 210}
+          width: 500
+          size: 22
+          shown: 0
+          items:
+            - It repeats until the model answers instead of calling a tool
+            - "The harness sets the limits: permissions, budgets, when to stop"
+            - Longer loops mean more context to manage, and that is where most of the quality comes from
+
+    # ---------------------------------------------------------------- 3. knowledge graph
+    - id: kg
+      opacity: 0
+      children:
+        - {use: deck.heading, text: Context from a knowledge graph, kicker: "3 · KNOWLEDGE GRAPHS", size: 40, at: {x: 90, y: 64}}
+        - id: g
+          at: {x: 90, y: 190}
+          children:
+            - {use: deck.pill, id: ana, at: {x: 0, y: 90}, text: "Ana · customer", color: "#dfe6e9", ink: "#2d3436", width: 200, size: 17}
+            - {use: deck.pill, id: bob, at: {x: 0, y: 300}, text: "Bob · customer", color: "#dfe6e9", ink: "#2d3436", width: 200, size: 17}
+            - {use: deck.pill, id: order, at: {x: 280, y: 90}, text: Order 1042, color: "#dfe6e9", ink: "#2d3436", width: 200, size: 17}
+            - {use: deck.pill, id: order2, at: {x: 280, y: 300}, text: Order 0981, color: "#dfe6e9", ink: "#2d3436", width: 200, size: 17}
+            - {use: deck.pill, id: laptop, at: {x: 560, y: 0}, text: Laptop X1, color: "#dfe6e9", ink: "#2d3436", width: 200, size: 17}
+            - {use: deck.pill, id: carrier, at: {x: 560, y: 160}, text: "Carrier · DHL", color: "#dfe6e9", ink: "#2d3436", width: 200, size: 17}
+            - {use: deck.link, id: placed, from: ana, to: order, label: placed, width: 1.5}
+            - {use: deck.link, id: placed2, from: bob, to: order2, label: placed, width: 1.5}
+            - {use: deck.link, id: contains, from: order, to: laptop, label: contains, width: 1.5}
+            - {use: deck.link, id: shipped, from: order, to: carrier, label: shipped by, width: 1.5}
+            - {use: deck.pill, id: phone, at: {x: 560, y: 300}, text: Headphones, color: "#dfe6e9", ink: "#2d3436", width: 200, size: 17}
+            - {use: deck.link, id: contains2, from: order2, to: phone, label: contains, width: 1.5}
+        - {use: deck.pill, id: question, opacity: 0, at: {x: 900, y: 200}, text: "Ana asks: “Where is my order?”", color: "#2d3436", width: 320, size: 17}
+        - use: deck.card
+          id: facts
+          opacity: 0
+          at: {x: 900, y: 290}
+          width: 320
+          title: Context, from the graph
+          text: "Ana placed order 1042. Order 1042 contains a Laptop X1. It is shipped by DHL."
+        - {shape: text, id: cap1, opacity: 0, at: {x: 90, y: 580}, width: 1100, wrap: true, font_size: 22, fill: "=theme.ink", text: "Entities are nodes and relations are edges: facts that can be followed from one to the next."}
+        - {shape: text, id: cap2, opacity: 0, at: {x: 90, y: 580}, width: 1100, wrap: true, font_size: 22, fill: "=theme.ink", text: "Start from the entity the question is about."}
+        - {shape: text, id: cap3, opacity: 0, at: {x: 90, y: 580}, width: 1100, wrap: true, font_size: 22, fill: "=theme.ink", text: "Walk its edges, one or two hops: only what is connected to Ana."}
+        - {shape: text, id: cap4, opacity: 0, at: {x: 90, y: 580}, width: 1100, wrap: true, font_size: 22, fill: "=theme.ink", text: "Write those facts into the context: small, precise, and linked, instead of whole documents."}
+
+    # ---------------------------------------------------------------- 4a. embeddings
+    - id: emb
+      opacity: 0
+      children:
+        - {use: deck.heading, text: What is an embedding?, kicker: "4 · EMBEDDINGS", size: 40, at: {x: 90, y: 64}}
+        - id: pipe
+          layout: row
+          gap: 90
+          at: {x: 90, y: 196}
+          children:
+            - {use: deck.pill, id: phrase, text: "“My parcel is late”", color: "#2d3436", width: 260}
+            - {use: deck.pill, id: model, text: Embedding model, color: "#6c4ab6", width: 240}
+            - {use: deck.pill, id: vector, text: "[0.12, −0.48, 0.91, … 768 numbers]", color: "#0f7b5f", width: 380}
+        - {use: deck.link, from: pipe.phrase, to: pipe.model}
+        - {use: deck.link, from: pipe.model, to: pipe.vector}
+        - {shape: text, id: cap1, opacity: 0, at: {x: 90, y: 330}, width: 1100, wrap: true, font_size: 24, fill: "=theme.ink", text: "An embedding model turns a text into a vector: a point in a space of hundreds of dimensions, placed by meaning."}
+        - id: plot
+          opacity: 0
+          at: {x: 90, y: 300}
+          children:
+            - {shape: rect, width: 560, height: 300, corner_radius: 8, fill: "#ffffff", stroke: "#b2bec3", stroke_width: 1}
+            - {shape: circle, id: p1, at: {x: 54, y: 54}, radius: 6, fill: "#2d6cdf", stroke_width: 0}
+            - {shape: circle, id: p2, at: {x: 144, y: 99}, radius: 6, fill: "#2d6cdf", stroke_width: 0}
+            - {shape: circle, id: p3, at: {x: 44, y: 144}, radius: 6, fill: "#2d6cdf", stroke_width: 0}
+            - {shape: circle, id: p4, at: {x: 324, y: 184}, radius: 6, fill: "#b4532a", stroke_width: 0}
+            - {shape: circle, id: p5, at: {x: 374, y: 224}, radius: 6, fill: "#b4532a", stroke_width: 0}
+            - {shape: circle, id: p6, at: {x: 294, y: 244}, radius: 6, fill: "#b4532a", stroke_width: 0}
+            - {shape: text, text: late parcel, font_size: 14, fill: "=theme.ink", attach: {anchor: west, to: p1, gap: 6}}
+            - {shape: text, text: delayed delivery, font_size: 14, fill: "=theme.ink", attach: {anchor: west, to: p2, gap: 6}}
+            - {shape: text, text: where is my order, font_size: 14, fill: "=theme.ink", attach: {anchor: west, to: p3, gap: 6}}
+            - {shape: text, text: money back, font_size: 14, fill: "=theme.ink", attach: {anchor: west, to: p4, gap: 6}}
+            - {shape: text, text: refund policy, font_size: 14, fill: "=theme.ink", attach: {anchor: west, to: p5, gap: 6}}
+            - {shape: text, text: return an item, font_size: 14, fill: "=theme.ink", attach: {anchor: west, to: p6, gap: 6}}
+            - id: query
+              opacity: 0
+              children:
+                - {shape: circle, at: {x: 25, y: 0}, radius: 110, fill: "#00000000", stroke: "#2d6cdf", stroke_width: 1.5}
+                - {use: deck.badge, id: q, at: {x: 196, y: 61}, label: "?", radius: 9}
+                - {shape: text, text: "Ana’s question", font_size: 14, fill: "#1f4fa8", attach: {anchor: west, to: q, gap: 6}}
+        - use: deck.bullets
+          id: why
+          at: {x: 700, y: 330}
+          width: 480
+          size: 20
+          shown: 0
+          items:
+            - Similar meanings give nearby vectors (cosine similarity)
+            - "Wording does not matter: “late parcel” is close to “delayed delivery”"
+            - "Search by meaning: embed the question, keep the nearest points"
+
+    # ---------------------------------------------------------------- 4b. embeddings and the graph
+    - id: combo
+      opacity: 0
+      children:
+        - {use: deck.heading, text: "Embeddings + graph: better context", kicker: "4 · EMBEDDINGS", size: 40, at: {x: 90, y: 64}}
+        - id: row
+          layout: row
+          gap: 38
+          align: stretch
+          at: {x: 90, y: 250}
+          children:
+            - {use: deck.pill, id: question, text: Question, color: "#dfe6e9", ink: "#2d3436", width: 152, size: 16}
+            - {use: deck.pill, id: embed, text: Embed it, color: "#dfe6e9", ink: "#2d3436", width: 152, size: 16}
+            - {use: deck.pill, id: nearest, text: Nearest nodes, color: "#dfe6e9", ink: "#2d3436", width: 152, size: 16}
+            - {use: deck.pill, id: walk, text: Walk the graph, color: "#dfe6e9", ink: "#2d3436", width: 152, size: 16}
+            - {use: deck.pill, id: context, text: Build the context, color: "#dfe6e9", ink: "#2d3436", width: 152, size: 16}
+            - {use: deck.pill, id: model, text: Ask the model, color: "#dfe6e9", ink: "#2d3436", width: 152, size: 16}
+        - {use: deck.link, from: row.question, to: row.embed, width: 1.5}
+        - {use: deck.link, from: row.embed, to: row.nearest, width: 1.5}
+        - {use: deck.link, from: row.nearest, to: row.walk, width: 1.5}
+        - {use: deck.link, from: row.walk, to: row.context, width: 1.5}
+        - {use: deck.link, from: row.context, to: row.model, width: 1.5}
+        - {shape: text, id: cap1, opacity: 0, at: {x: 90, y: 400}, width: 1100, wrap: true, font_size: 24, fill: "=theme.ink", text: "Every node of the graph has an embedding of its description. The question is embedded too, and the nearest nodes are found by meaning, whatever the wording."}
+        - {shape: text, id: cap2, opacity: 0, at: {x: 90, y: 400}, width: 1100, wrap: true, font_size: 24, fill: "=theme.ink", text: "Those nodes are the starting points. Walking their edges brings the facts connected to them, which similarity alone would miss."}
+        - {shape: text, id: cap3, opacity: 0, at: {x: 90, y: 400}, width: 1100, wrap: true, font_size: 24, fill: "=theme.ink", text: "The model gets a small set of relevant, connected facts: fewer tokens, fewer distractions, answers it can trace back."}
+
+    # ---------------------------------------------------------------- recap
+    - id: summary
+      opacity: 0
+      children:
+        - {use: deck.heading, text: Recap, kicker: SUMMARY, size: 40, at: {x: 90, y: 64}}
+        - use: deck.bullets
+          at: {x: 90, y: 210}
+          width: 1050
+          size: 26
+          items:
+            - "A model predicts tokens, an inference engine runs it, a harness turns it into a product"
+            - "Context is all the model sees; tool calls let it act; an agent loops on both"
+            - A knowledge graph supplies connected facts for that context
+            - "Embeddings find where to start in the graph, by meaning"
+
+    - use: deck.progress
+      id: dots
+      steps: [start, stack, agents, graph, embeddings]
+      current: 0
+      attach: {anchor: south, to: viewport.south, gap: -36}

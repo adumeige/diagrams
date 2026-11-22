@@ -1,0 +1,98 @@
+# An animated explainer (milestone 5): the stack builds itself, a prompt travels to the model and
+# tokens stream back, the camera zooms on the engine while it works, and the caption stays on a
+# screen-space layer. Render it with:
+#   diagrams video examples/token_flow.yaml --out token_flow.mp4
+format: diagrams/0.1
+title: How a token gets generated
+viewport: {width: 1280, height: 720}
+imports:
+  deck: ../libs/deck.yaml
+  motion: ../libs/motion.yaml
+  paper: ../themes/paper.yaml
+base_theme: paper
+camera:
+  fit: stack
+  padding: 60
+scene:
+  layers: [default, {name: hud, space: screen}]
+  timeline:
+    sequence:
+      - id: build
+        stagger:
+          - {use: motion.pop_in, target: stack.harness}
+          - {use: motion.pop_in, target: stack.engine}
+          - {use: motion.pop_in, target: stack.model}
+        interval: 0.3
+      - parallel:
+          - {use: motion.draw_stroke, target: stack.ask, duration: 0.5}
+          - {use: motion.draw_stroke, target: stack.run, duration: 0.5}
+      - parallel:
+          - {use: motion.fade_in, target: caps.c1, duration: 0.3}
+          - {use: motion.fade_in, target: stack.prompt, duration: 0.2}
+          - {use: motion.travel, target: stack.prompt, along: stack.ask, duration: 0.9}
+      - {use: motion.travel, target: stack.prompt, along: stack.run, duration: 0.9, id: forward}
+      - {use: motion.fade_out, target: stack.prompt, duration: 0.2}
+      - id: zoom
+        parallel:
+          - track: camera.zoom
+            keys: [{at: 0, value: 1.03}, {at: 0.8, value: 1.9, ease: in_out}, {at: 2.6, value: 1.9}, {at: 3.4, value: 1.03, ease: in_out}]
+          - track: camera.center
+            keys: [{at: 0, value: {x: 640, y: 330}}, {at: 0.8, value: {x: 640, y: 330}}]
+          - {use: motion.fade_out, target: caps.c1, duration: 0.3}
+          - {use: motion.fade_in, target: caps.c2, duration: 0.3}
+          - sequence:
+              - {wait: 0.8}
+              - stagger:
+                  - {use: motion.pulse, target: stack.engine.dots.d1, amount: 1.6, duration: 0.5}
+                  - {use: motion.pulse, target: stack.engine.dots.d2, amount: 1.6, duration: 0.5}
+                  - {use: motion.pulse, target: stack.engine.dots.d3, amount: 1.6, duration: 0.5}
+                  - {use: motion.pulse, target: stack.engine.dots.d1, amount: 1.6, duration: 0.5}
+                  - {use: motion.pulse, target: stack.engine.dots.d2, amount: 1.6, duration: 0.5}
+                  - {use: motion.pulse, target: stack.engine.dots.d3, amount: 1.6, duration: 0.5}
+                interval: 0.25
+      - parallel:
+          - {use: motion.fade_out, target: caps.c2, duration: 0.3}
+          - {use: motion.fade_in, target: caps.c3, duration: 0.3}
+          - stagger:
+              - parallel:
+                  - {use: motion.travel, target: stack.t1, along: stack.back, duration: 1.4, ease: linear}
+                  - {use: motion.fade_in, target: stack.t1, duration: 0.2}
+              - parallel:
+                  - {use: motion.travel, target: stack.t2, along: stack.back, duration: 1.4, ease: linear}
+                  - {use: motion.fade_in, target: stack.t2, duration: 0.2}
+              - parallel:
+                  - {use: motion.travel, target: stack.t3, along: stack.back, duration: 1.4, ease: linear}
+                  - {use: motion.fade_in, target: stack.t3, duration: 0.2}
+            interval: 0.35
+      - {wait: 1}
+  children:
+    - id: stack
+      children:
+        - {use: deck.card, id: harness, at: {x: 80, y: 260}, width: 260, title: Harness, text: Builds the prompt and streams the answer, accent: "#0f7b5f"}
+        - id: engine
+          at: {x: 510, y: 230}
+          children:
+            - {use: deck.card, id: card, width: 260, title: Inference engine, text: "Runs the model on the GPU, one token at a time", accent: "#b4532a"}
+            - id: dots
+              at: {x: 100, y: 150}
+              layout: row
+              gap: 14
+              children:
+                - {shape: circle, id: d1, radius: 7, fill: "#b4532a", stroke_width: 0}
+                - {shape: circle, id: d2, radius: 7, fill: "#b4532a", stroke_width: 0}
+                - {shape: circle, id: d3, radius: 7, fill: "#b4532a", stroke_width: 0}
+        - {use: deck.card, id: model, at: {x: 940, y: 260}, width: 260, title: Model, text: "A pure function: tokens in, probabilities out", accent: "#2d6cdf"}
+        - {shape: connector, id: ask, from: harness, to: engine, stroke: "#5c6770", stroke_width: 3, marker_end: arrow}
+        - {shape: connector, id: run, from: engine, to: model, stroke: "#5c6770", stroke_width: 3, marker_end: arrow}
+        - {shape: connector, id: back, from: engine.south, to: harness.south, route: orthogonal, stroke: "#b4532a", stroke_width: 2, opacity: 0.35}
+        - {use: deck.pill, id: prompt, text: prompt, color: "#0f7b5f", width: 110, opacity: 0}
+        - {use: deck.pill, id: t1, text: The, color: "#b4532a", width: 70, size: 16}
+        - {use: deck.pill, id: t2, text: cat, color: "#b4532a", width: 70, size: 16}
+        - {use: deck.pill, id: t3, text: sat, color: "#b4532a", width: 70, size: 16}
+    - id: caps
+      layer: hud
+      children:
+        - {shape: text, id: c1, opacity: 0, at: {x: 80, y: 620}, width: 1120, wrap: true, font_size: 28, fill: "=theme.ink", text: "The harness sends the prompt to the engine, which runs it through the model."}
+        - {shape: text, id: c2, opacity: 0, at: {x: 80, y: 620}, width: 1120, wrap: true, font_size: 28, fill: "=theme.ink", text: "The engine computes one forward pass per token, batching many requests on the GPU."}
+        - {shape: text, id: c3, opacity: 0, at: {x: 80, y: 620}, width: 1120, wrap: true, font_size: 28, fill: "=theme.ink", text: "Each sampled token streams back to the harness as soon as it exists."}
+    - {use: deck.heading, text: How a token gets generated, kicker: ANIMATION, size: 40, at: {x: 80, y: 56}, layer: hud}

@@ -1,0 +1,723 @@
+{
+  "format": "diagrams/0.1",
+  "viewport": {"width": 760, "height": 420},
+  "time": 0,
+  "background": "#faf8f3",
+  "root": {
+    "path": "scene",
+    "loc": "scene",
+    "kind": "container",
+    "layer": "default",
+    "box": [0, 0, 559.502, 361.48],
+    "local": [0, 0, 559.502, 361.48],
+    "transform": [1, 0, 0, 1, 0, 0],
+    "opacity": 1,
+    "children": [
+      {
+        "path": "lineup",
+        "loc": "scene/3",
+        "kind": "container",
+        "template": "uml.aggregation",
+        "layer": "edges",
+        "box": [0, 0, 0, 0],
+        "local": [0, 0, 0, 0],
+        "transform": [1, 0, 0, 1, 0, 0],
+        "opacity": 1,
+        "children": [
+          {
+            "path": "lineup.line",
+            "loc": "scene/3/0",
+            "kind": "connector",
+            "layer": "default",
+            "box": [151.806, 91.4, 288.194, 8.4],
+            "local": [151.806, 91.4, 288.194, 8.4],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "stroke": "#2d3436",
+            "stroke_width": 1.5,
+            "points": [[168.606, 95.6], [440, 95.6]],
+            "markers": [
+              {
+                "kind": "open_diamond",
+                "points": [[151.806, 95.6], [160.206, 91.4], [168.606, 95.6], [160.206, 99.8]]
+              }
+            ]
+          },
+          {
+            "path": null,
+            "loc": "scene/3/1",
+            "kind": "text",
+            "layer": "default",
+            "box": [279.679, 76.72, 32.448, 14.88],
+            "local": [0, 0, 32.448, 14.88],
+            "transform": [1, 0, 0, 1, 279.679, 76.72],
+            "opacity": 1,
+            "fill": "#636e72",
+            "font": "body",
+            "font_size": 12,
+            "lines": [{"text": "lineup", "x": 0, "baseline": 11.4, "width": 32.448}]
+          },
+          {
+            "path": null,
+            "loc": "scene/3/2",
+            "kind": "text",
+            "layer": "default",
+            "box": [169.806, 80.72, 4.824, 14.88],
+            "local": [0, 0, 4.824, 14.88],
+            "transform": [1, 0, 0, 1, 169.806, 80.72],
+            "opacity": 1,
+            "fill": "#636e72",
+            "font": "body",
+            "font_size": 12,
+            "lines": [{"text": "1", "x": 0, "baseline": 11.4, "width": 4.824}]
+          },
+          {
+            "path": null,
+            "loc": "scene/3/3",
+            "kind": "text",
+            "layer": "default",
+            "box": [422, 80.72, 13.476, 14.88],
+            "local": [0, 0, 13.476, 14.88],
+            "transform": [1, 0, 0, 1, 422, 80.72],
+            "opacity": 1,
+            "fill": "#636e72",
+            "font": "body",
+            "font_size": 12,
+            "lines": [{"text": "23", "x": 0, "baseline": 11.4, "width": 13.476}]
+          }
+        ]
+      },
+      {
+        "path": null,
+        "loc": "scene/4",
+        "kind": "container",
+        "template": "uml.generalization",
+        "layer": "edges",
+        "box": [0, 0, 0, 0],
+        "local": [0, 0, 0, 0],
+        "transform": [1, 0, 0, 1, 0, 0],
+        "opacity": 1,
+        "children": [
+          {
+            "path": "line",
+            "loc": "scene/4/0",
+            "kind": "connector",
+            "layer": "default",
+            "box": [492.617, 163.08, 11.55, 136.92],
+            "local": [492.617, 163.08, 11.55, 136.92],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "stroke": "#2d3436",
+            "stroke_width": 1.5,
+            "points": [[498.392, 163.08], [498.392, 287.4]],
+            "markers": [
+              {"kind": "triangle", "points": [[498.392, 300], [492.617, 287.4], [504.167, 287.4]]}
+            ]
+          }
+        ]
+      },
+      {
+        "path": "team",
+        "loc": "scene/0",
+        "kind": "container",
+        "template": "uml.class",
+        "layer": "default",
+        "box": [40, 40, 111.806, 111.2],
+        "local": [0, 0, 111.806, 111.2],
+        "transform": [1, 0, 0, 1, 40, 40],
+        "opacity": 1,
+        "children": [
+          {
+            "path": "team.header",
+            "loc": "scene/0/0",
+            "kind": "container",
+            "layer": "default",
+            "box": [40, 40, 111.806, 35.84],
+            "local": [0, 0, 111.806, 35.84],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "children": [
+              {
+                "path": null,
+                "loc": "scene/0/0/0",
+                "kind": "rect",
+                "layer": "default",
+                "box": [40, 40, 111.806, 35.84],
+                "local": [0, 0, 111.806, 35.84],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "fill": "#ffffff",
+                "stroke": "#2d3436",
+                "stroke_width": 1.5
+              },
+              {
+                "path": null,
+                "loc": "scene/0/0/1",
+                "kind": "container",
+                "layer": "default",
+                "box": [40, 40, 111.806, 35.84],
+                "local": [0, 0, 111.806, 35.84],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "children": [
+                  {
+                    "path": null,
+                    "loc": "scene/0/0/1/0",
+                    "kind": "text",
+                    "layer": "default",
+                    "box": [76.191, 48, 39.424, 19.84],
+                    "local": [0, 0, 39.424, 19.84],
+                    "transform": [1, 0, 0, 1, 36.191, 8],
+                    "opacity": 1,
+                    "fill": "#2d3436",
+                    "font": "body",
+                    "font_size": 16,
+                    "lines": [{"text": "Team", "x": 0, "baseline": 15.2, "width": 39.424}]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "team.attributes",
+            "loc": "scene/0/1",
+            "kind": "container",
+            "layer": "default",
+            "box": [40, 75.84, 111.806, 47.24],
+            "local": [0, 0, 111.806, 47.24],
+            "transform": [1, 0, 0, 1, 0, 35.84],
+            "opacity": 1,
+            "children": [
+              {
+                "path": null,
+                "loc": "scene/0/1/0",
+                "kind": "rect",
+                "layer": "default",
+                "box": [40, 75.84, 111.806, 47.24],
+                "local": [0, 0, 111.806, 47.24],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "fill": "#ffffff",
+                "stroke": "#2d3436",
+                "stroke_width": 1.5
+              },
+              {
+                "path": null,
+                "loc": "scene/0/1/1",
+                "kind": "container",
+                "layer": "default",
+                "box": [40, 75.84, 111.806, 47.24],
+                "local": [0, 0, 111.806, 47.24],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "children": [
+                  {
+                    "path": "team.attributes.attribute[name]",
+                    "loc": "scene/0/1/1/0",
+                    "kind": "text",
+                    "layer": "default",
+                    "box": [50, 81.84, 72.553, 16.12],
+                    "local": [0, 0, 72.553, 16.12],
+                    "transform": [1, 0, 0, 1, 10, 6],
+                    "opacity": 1,
+                    "fill": "#2d3436",
+                    "font": "body",
+                    "font_size": 13,
+                    "lines": [{"text": "name: String", "x": 0, "baseline": 12.35, "width": 72.553}]
+                  },
+                  {
+                    "path": "team.attributes.attribute[country]",
+                    "loc": "scene/0/1/1/1",
+                    "kind": "text",
+                    "layer": "default",
+                    "box": [50, 100.96, 82.628, 16.12],
+                    "local": [0, 0, 82.628, 16.12],
+                    "transform": [1, 0, 0, 1, 10, 25.12],
+                    "opacity": 1,
+                    "fill": "#2d3436",
+                    "font": "body",
+                    "font_size": 13,
+                    "lines": [{"text": "country: String", "x": 0, "baseline": 12.35, "width": 82.628}]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "team.operations",
+            "loc": "scene/0/2",
+            "kind": "container",
+            "layer": "default",
+            "box": [40, 123.08, 111.806, 28.12],
+            "local": [0, 0, 111.806, 28.12],
+            "transform": [1, 0, 0, 1, 0, 83.08],
+            "opacity": 1,
+            "children": [
+              {
+                "path": null,
+                "loc": "scene/0/2/0",
+                "kind": "rect",
+                "layer": "default",
+                "box": [40, 123.08, 111.806, 28.12],
+                "local": [0, 0, 111.806, 28.12],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "fill": "#ffffff",
+                "stroke": "#2d3436",
+                "stroke_width": 1.5
+              },
+              {
+                "path": null,
+                "loc": "scene/0/2/1",
+                "kind": "container",
+                "layer": "default",
+                "box": [40, 123.08, 111.806, 28.12],
+                "local": [0, 0, 111.806, 28.12],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "children": [
+                  {
+                    "path": "team.operations.operation[squad]",
+                    "loc": "scene/0/2/1/0",
+                    "kind": "text",
+                    "layer": "default",
+                    "box": [50, 129.08, 91.806, 16.12],
+                    "local": [0, 0, 91.806, 16.12],
+                    "transform": [1, 0, 0, 1, 10, 6],
+                    "opacity": 1,
+                    "fill": "#2d3436",
+                    "font": "body",
+                    "font_size": 13,
+                    "lines": [{"text": "squad(): Player[]", "x": 0, "baseline": 12.35, "width": 91.806}]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "path": "player",
+        "loc": "scene/1",
+        "kind": "container",
+        "template": "uml.class",
+        "layer": "default",
+        "box": [440, 40, 119.502, 123.08],
+        "local": [0, 0, 119.502, 123.08],
+        "transform": [1, 0, 0, 1, 440, 40],
+        "opacity": 1,
+        "children": [
+          {
+            "path": "player.header",
+            "loc": "scene/1/0",
+            "kind": "container",
+            "layer": "default",
+            "box": [440, 40, 119.502, 50.72],
+            "local": [0, 0, 119.502, 50.72],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "children": [
+              {
+                "path": null,
+                "loc": "scene/1/0/0",
+                "kind": "rect",
+                "layer": "default",
+                "box": [440, 40, 119.502, 50.72],
+                "local": [0, 0, 119.502, 50.72],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "fill": "#ffffff",
+                "stroke": "#2d3436",
+                "stroke_width": 1.5
+              },
+              {
+                "path": null,
+                "loc": "scene/1/0/1",
+                "kind": "container",
+                "layer": "default",
+                "box": [440, 40, 119.502, 50.72],
+                "local": [0, 0, 119.502, 50.72],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "children": [
+                  {
+                    "path": null,
+                    "loc": "scene/1/0/1/0",
+                    "kind": "text",
+                    "layer": "default",
+                    "box": [478.367, 48, 42.768, 14.88],
+                    "local": [0, 0, 42.768, 14.88],
+                    "transform": [1, 0, 0, 1, 38.367, 8],
+                    "opacity": 1,
+                    "fill": "#636e72",
+                    "font": "body",
+                    "font_size": 12,
+                    "lines": [{"text": "«entity»", "x": 0, "baseline": 11.4, "width": 42.768}]
+                  },
+                  {
+                    "path": null,
+                    "loc": "scene/1/0/1/1",
+                    "kind": "text",
+                    "layer": "default",
+                    "box": [478.359, 62.88, 42.784, 19.84],
+                    "local": [0, 0, 42.784, 19.84],
+                    "transform": [1, 0, 0, 1, 38.359, 22.88],
+                    "opacity": 1,
+                    "fill": "#2d3436",
+                    "font": "body",
+                    "font_size": 16,
+                    "lines": [{"text": "Player", "x": 0, "baseline": 15.2, "width": 42.784}]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "player.attributes",
+            "loc": "scene/1/1",
+            "kind": "container",
+            "layer": "default",
+            "box": [440, 90.72, 119.502, 66.36],
+            "local": [0, 0, 119.502, 66.36],
+            "transform": [1, 0, 0, 1, 0, 50.72],
+            "opacity": 1,
+            "children": [
+              {
+                "path": null,
+                "loc": "scene/1/1/0",
+                "kind": "rect",
+                "layer": "default",
+                "box": [440, 90.72, 119.502, 66.36],
+                "local": [0, 0, 119.502, 66.36],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "fill": "#ffffff",
+                "stroke": "#2d3436",
+                "stroke_width": 1.5
+              },
+              {
+                "path": null,
+                "loc": "scene/1/1/1",
+                "kind": "container",
+                "layer": "default",
+                "box": [440, 90.72, 119.502, 66.36],
+                "local": [0, 0, 119.502, 66.36],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "children": [
+                  {
+                    "path": "player.attributes.attribute[name]",
+                    "loc": "scene/1/1/1/0",
+                    "kind": "text",
+                    "layer": "default",
+                    "box": [450, 96.72, 72.553, 16.12],
+                    "local": [0, 0, 72.553, 16.12],
+                    "transform": [1, 0, 0, 1, 10, 6],
+                    "opacity": 1,
+                    "fill": "#2d3436",
+                    "font": "body",
+                    "font_size": 13,
+                    "lines": [{"text": "name: String", "x": 0, "baseline": 12.35, "width": 72.553}]
+                  },
+                  {
+                    "path": "player.attributes.attribute[position]",
+                    "loc": "scene/1/1/1/1",
+                    "kind": "text",
+                    "layer": "default",
+                    "box": [450, 115.84, 99.502, 16.12],
+                    "local": [0, 0, 99.502, 16.12],
+                    "transform": [1, 0, 0, 1, 10, 25.12],
+                    "opacity": 1,
+                    "fill": "#2d3436",
+                    "font": "body",
+                    "font_size": 13,
+                    "lines": [{"text": "position: Position", "x": 0, "baseline": 12.35, "width": 99.502}]
+                  },
+                  {
+                    "path": "player.attributes.attribute[caps]",
+                    "loc": "scene/1/1/1/2",
+                    "kind": "text",
+                    "layer": "default",
+                    "box": [450, 134.96, 49.816, 16.12],
+                    "local": [0, 0, 49.816, 16.12],
+                    "transform": [1, 0, 0, 1, 10, 44.24],
+                    "opacity": 1,
+                    "fill": "#2d3436",
+                    "font": "body",
+                    "font_size": 13,
+                    "lines": [{"text": "caps: Int", "x": 0, "baseline": 12.35, "width": 49.816}]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "player.operations",
+            "loc": "scene/1/2",
+            "kind": "container",
+            "layer": "default",
+            "box": [440, 157.08, 119.502, 6],
+            "local": [0, 0, 119.502, 6],
+            "transform": [1, 0, 0, 1, 0, 117.08],
+            "opacity": 1,
+            "children": [
+              {
+                "path": null,
+                "loc": "scene/1/2/0",
+                "kind": "rect",
+                "layer": "default",
+                "box": [440, 157.08, 119.502, 6],
+                "local": [0, 0, 119.502, 6],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "fill": "#ffffff",
+                "stroke": "#2d3436",
+                "stroke_width": 1.5
+              },
+              {
+                "path": null,
+                "loc": "scene/1/2/1",
+                "kind": "container",
+                "layer": "default",
+                "box": [440, 157.08, 119.502, 6],
+                "local": [0, 0, 119.502, 6],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "path": "person",
+        "loc": "scene/2",
+        "kind": "container",
+        "template": "uml.class",
+        "layer": "default",
+        "box": [460, 300, 76.784, 61.48],
+        "local": [0, 0, 76.784, 61.48],
+        "transform": [1, 0, 0, 1, 460, 300],
+        "opacity": 1,
+        "children": [
+          {
+            "path": "person.header",
+            "loc": "scene/2/0",
+            "kind": "container",
+            "layer": "default",
+            "box": [460, 300, 76.784, 49.48],
+            "local": [0, 0, 76.784, 49.48],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "children": [
+              {
+                "path": null,
+                "loc": "scene/2/0/0",
+                "kind": "rect",
+                "layer": "default",
+                "box": [460, 300, 76.784, 49.48],
+                "local": [0, 0, 76.784, 49.48],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "fill": "#ffffff",
+                "stroke": "#2d3436",
+                "stroke_width": 1.5
+              },
+              {
+                "path": null,
+                "loc": "scene/2/0/1",
+                "kind": "container",
+                "layer": "default",
+                "box": [460, 300, 76.784, 49.48],
+                "local": [0, 0, 76.784, 49.48],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "children": [
+                  {
+                    "path": null,
+                    "loc": "scene/2/0/1/0",
+                    "kind": "text",
+                    "layer": "default",
+                    "box": [474, 308, 48.784, 19.84],
+                    "local": [0, 0, 48.784, 19.84],
+                    "transform": [1, 0, 0, 1, 14, 8],
+                    "opacity": 1,
+                    "fill": "#2d3436",
+                    "font": "body",
+                    "font_size": 16,
+                    "lines": [{"text": "Person", "x": 0, "baseline": 15.2, "width": 48.784}]
+                  },
+                  {
+                    "path": null,
+                    "loc": "scene/2/0/1/1",
+                    "kind": "text",
+                    "layer": "default",
+                    "box": [475.2095, 327.84, 46.365, 13.64],
+                    "local": [0, 0, 46.365, 13.64],
+                    "transform": [1, 0, 0, 1, 15.2095, 27.84],
+                    "opacity": 1,
+                    "fill": "#636e72",
+                    "font": "body",
+                    "font_size": 11,
+                    "lines": [{"text": "{abstract}", "x": 0, "baseline": 10.45, "width": 46.365}]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "person.attributes",
+            "loc": "scene/2/1",
+            "kind": "container",
+            "layer": "default",
+            "box": [460, 349.48, 76.784, 6],
+            "local": [0, 0, 76.784, 6],
+            "transform": [1, 0, 0, 1, 0, 49.48],
+            "opacity": 1,
+            "children": [
+              {
+                "path": null,
+                "loc": "scene/2/1/0",
+                "kind": "rect",
+                "layer": "default",
+                "box": [460, 349.48, 76.784, 6],
+                "local": [0, 0, 76.784, 6],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "fill": "#ffffff",
+                "stroke": "#2d3436",
+                "stroke_width": 1.5
+              },
+              {
+                "path": null,
+                "loc": "scene/2/1/1",
+                "kind": "container",
+                "layer": "default",
+                "box": [460, 349.48, 76.784, 6],
+                "local": [0, 0, 76.784, 6],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "children": []
+              }
+            ]
+          },
+          {
+            "path": "person.operations",
+            "loc": "scene/2/2",
+            "kind": "container",
+            "layer": "default",
+            "box": [460, 355.48, 76.784, 6],
+            "local": [0, 0, 76.784, 6],
+            "transform": [1, 0, 0, 1, 0, 55.48],
+            "opacity": 1,
+            "children": [
+              {
+                "path": null,
+                "loc": "scene/2/2/0",
+                "kind": "rect",
+                "layer": "default",
+                "box": [460, 355.48, 76.784, 6],
+                "local": [0, 0, 76.784, 6],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "fill": "#ffffff",
+                "stroke": "#2d3436",
+                "stroke_width": 1.5
+              },
+              {
+                "path": null,
+                "loc": "scene/2/2/1",
+                "kind": "container",
+                "layer": "default",
+                "box": [460, 355.48, 76.784, 6],
+                "local": [0, 0, 76.784, 6],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "path": "squad_note",
+        "loc": "scene/5",
+        "kind": "container",
+        "template": "uml.note",
+        "layer": "default",
+        "box": [205.903, 205.6, 180, 49.76],
+        "local": [0, 0, 180, 49.76],
+        "transform": [1, 0, 0, 1, 205.903, 205.6],
+        "opacity": 1,
+        "children": [
+          {
+            "path": null,
+            "loc": "scene/5/0",
+            "kind": "rect",
+            "layer": "default",
+            "box": [205.903, 205.6, 180, 49.76],
+            "local": [0, 0, 180, 49.76],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "fill": "#fff8d6",
+            "stroke": "#636e72",
+            "stroke_width": 1
+          },
+          {
+            "path": null,
+            "loc": "scene/5/1",
+            "kind": "container",
+            "layer": "default",
+            "box": [205.903, 205.6, 180, 49.76],
+            "local": [0, 0, 180, 49.76],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "children": [
+              {
+                "path": null,
+                "loc": "scene/5/1/0",
+                "kind": "text",
+                "layer": "default",
+                "box": [215.903, 215.6, 160, 29.76],
+                "local": [0, 0, 160, 29.76],
+                "transform": [1, 0, 0, 1, 10, 10],
+                "opacity": 1,
+                "fill": "#2d3436",
+                "font": "body",
+                "font_size": 12,
+                "lines": [
+                  {
+                    "text": "Matchday squad: 15 starters",
+                    "x": 0,
+                    "baseline": 11.4,
+                    "width": 147.276
+                  },
+                  {"text": "and 8 replacements", "x": 0, "baseline": 26.28, "width": 105.372}
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "path": null,
+        "loc": "scene/6",
+        "kind": "connector",
+        "layer": "default",
+        "box": [131.958564, 123.08, 125.965501, 82.52],
+        "local": [131.958564, 123.08, 125.965501, 82.52],
+        "transform": [1, 0, 0, 1, 0, 0],
+        "opacity": 1,
+        "stroke": "#636e72",
+        "stroke_width": 1,
+        "points": [[257.924065, 205.6], [139.486964, 128.011855]],
+        "markers": [
+          {
+            "kind": "arrow",
+            "points": [[131.958564, 123.08], [141.459706, 125.000495], [137.514222, 131.023215]]
+          }
+        ]
+      }
+    ]
+  }
+}

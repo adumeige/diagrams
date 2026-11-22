@@ -1,0 +1,81 @@
+{
+  "format": "diagrams/0.1",
+  "viewport": {"width": 200, "height": 120},
+  "time": 0,
+  "root": {
+    "path": "scene",
+    "loc": "scene",
+    "kind": "container",
+    "layer": "default",
+    "box": [10, 10, 410, 410],
+    "local": [10, 10, 410, 410],
+    "transform": [1, 0, 0, 1, 0, 0],
+    "opacity": 1,
+    "children": [
+      {
+        "path": "inside",
+        "loc": "scene/0",
+        "kind": "rect",
+        "layer": "default",
+        "box": [10, 10, 50, 50],
+        "local": [0, 0, 50, 50],
+        "transform": [1, 0, 0, 1, 10, 10],
+        "opacity": 1,
+        "fill": "#74b9ff",
+        "stroke": "#000000",
+        "stroke_width": 1
+      },
+      {
+        "path": "spill",
+        "loc": "scene/1",
+        "kind": "rect",
+        "layer": "default",
+        "box": [160, 10, 80, 50],
+        "local": [0, 0, 80, 50],
+        "transform": [1, 0, 0, 1, 160, 10],
+        "opacity": 1,
+        "fill": "#fab1a0",
+        "stroke": "#000000",
+        "stroke_width": 1
+      },
+      {
+        "path": "far",
+        "loc": "scene/2",
+        "kind": "container",
+        "layer": "default",
+        "box": [400, 400, 20, 20],
+        "local": [0, 0, 20, 20],
+        "transform": [1, 0, 0, 1, 400, 400],
+        "opacity": 1,
+        "children": [
+          {
+            "path": "far.lost",
+            "loc": "scene/2/0",
+            "kind": "circle",
+            "layer": "default",
+            "box": [400, 400, 20, 20],
+            "local": [0, 0, 20, 20],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "fill": "#d63031",
+            "stroke": "#000000",
+            "stroke_width": 1
+          }
+        ]
+      },
+      {
+        "path": "tiny",
+        "loc": "scene/3",
+        "kind": "text",
+        "layer": "default",
+        "box": [10, 80, 23.01, 7.2],
+        "local": [0, 0, 23.01, 7.2],
+        "transform": [1, 0, 0, 1, 10, 80],
+        "opacity": 1,
+        "fill": "#000000",
+        "font_size": 6,
+        "lines": [{"text": "fine print", "x": 0, "baseline": 5.133, "width": 23.01}]
+      }
+    ]
+  }
+}

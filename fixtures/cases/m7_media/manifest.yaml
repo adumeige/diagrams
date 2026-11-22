@@ -1,0 +1,79 @@
+assets:
+  body:
+    kind: font
+    file: ../../../fonts/AtkinsonHyperlegible-Regular.ttf
+    metrics:
+      units_per_em: 1000
+      ascent: 950
+      descent: -290
+      line_gap: 0
+      default_advance: 527
+      advances:
+        - from: 32
+          widths: 280 281 301 655 594 927 705 160 300 300 433 602 205 368 205 377 648 402 549 574 614 583 598 510 615 598 205 205 553 602 553 520 780 626 619 656 673 567 548 710 690 414 510 627 539 820 689 727 601 753 618 596 558 690 589 840 623 595 607 315 377 315 552 396 268 526 566 500 564 539 311 560 546 278 254 490 239 841 546 552 566 576 340 471 324 536 441 654 461 429 460 319 233 319 555
+        - from: 160
+          widths: 280 281 500 586 580 595 233 530 425 798 371 562 602 348 798 382 352 579 382 383 268 555 508 235 291 256 381 562 826 812 868 520 626 626 626 626 626 626 998 656 567 567 567 567 414 414 414 414 712 689 727 727 727 727 727 528 727 690 690 690 690 595 576 597 526 526 526 526 526 526 874 500 539 539 539 539 278 278 278 278 567 546 552 552 552 552 552 602 552 536 536 536 536 429 566 429 626 526 626 526 626 526 656 500
+        - {from: 266, widths: 656 500 656 500 673 573 712 603 567 539}
+        - {from: 278, widths: 567 539 567 539 567 539}
+        - {from: 286, widths: 710 560 710 560 710 560}
+        - {from: 294, widths: 710 581}
+        - {from: 298, widths: 414 278}
+        - {from: 302, widths: 414 278}
+        - {from: 305, widths: "278"}
+        - {from: 310, widths: 627 490}
+        - {from: 315, widths: 539 239 539 239}
+        - {from: 321, widths: 573 237 689 546 689 546 689 546}
+        - {from: 336, widths: 727 552 1052 927 618 340}
+        - {from: 344, widths: 618 340 596 471}
+        - {from: 350, widths: 596 471 596 471 558 324 558 324}
+        - {from: 362, widths: 690 536}
+        - {from: 366, widths: 690 536 690 536 690 536}
+        - {from: 376, widths: 595 607 460 607 460 607 460}
+        - {from: 402, widths: "321"}
+        - {from: 536, widths: 596 471 558 324}
+        - {from: 710, widths: 429 429}
+        - {from: 728, widths: 399 214 253 263 435 414}
+        - {from: 768, widths: 0 0 0 0 0}
+        - {from: 774, widths: 0 0 0}
+        - {from: 778, widths: 0 0 0}
+        - {from: 806, widths: 0 0 0}
+        - {from: 916, widths: "759"}
+        - {from: 937, widths: "687"}
+        - {from: 956, widths: "538"}
+        - {from: 960, widths: "591"}
+        - {from: 8211, widths: 480 800}
+        - {from: 8216, widths: 235 235 235}
+        - {from: 8220, widths: 398 398 398}
+        - {from: 8224, widths: 541 541 438}
+        - {from: 8230, widths: "696"}
+        - {from: 8240, widths: "1328"}
+        - {from: 8249, widths: 353 353}
+        - {from: 8260, widths: "586"}
+        - {from: 8308, widths: "412"}
+        - {from: 8364, widths: "664"}
+        - {from: 8467, widths: "450"}
+        - {from: 8482, widths: "848"}
+        - {from: 8494, widths: "622"}
+        - {from: 8706, widths: "582"}
+        - {from: 8719, widths: "585"}
+        - {from: 8721, widths: 587 602}
+        - {from: 8725, widths: "598"}
+        - {from: 8729, widths: 235 582}
+        - {from: 8734, widths: "773"}
+        - {from: 8747, widths: "458"}
+        - {from: 8776, widths: "581"}
+        - {from: 8800, widths: "602"}
+        - {from: 8804, widths: 579 579}
+        - {from: 9674, widths: "561"}
+  photo: {kind: image, file: ../../../media/diagram.png, width: 640, height: 400}
+  narration:
+    kind: audio
+    file: ../../../media/narration.wav
+    duration: 6
+    cues: {intro: 0, engine: 2, tokens: 4}
+  clip:
+    kind: video
+    file: ../../../media/clip.mp4
+    width: 320
+    height: 180
+    duration: 3

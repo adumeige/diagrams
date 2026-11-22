@@ -1,0 +1,3 @@
+# One resolved scene and image per entry (spec section 19, animation fixtures).
+- {name: wide, states: {camera: wide}}
+- {name: zooming_out, from: {camera: close}, states: {camera: wide}, time: 0.5}

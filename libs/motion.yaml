@@ -1,0 +1,124 @@
+# Motion clips (spec section 12): templates whose body is a time item. Use them in a timeline,
+# a transition body, or as a node's `enter` and `exit`, where `target` defaults to the node itself.
+format: diagrams/0.1
+templates:
+  fade_in:
+    description: Fades a node in from transparent.
+    params:
+      target: {type: path, description: The node to fade}
+      duration: {type: number, default: 0.4}
+      to: {type: number, default: 1, description: Opacity at the end}
+      ease: {type: enum, values: [linear, in, out, in_out], default: out}
+    body:
+      track: opacity
+      target: "=params.target"
+      keys:
+        - {at: 0, value: 0}
+        - {at: "=params.duration", value: "=params.to", ease: "=params.ease"}
+
+  fade_out:
+    description: Fades a node out to transparent.
+    params:
+      target: {type: path}
+      duration: {type: number, default: 0.4}
+      from: {type: number, default: 1, description: Opacity at the start}
+      ease: {type: enum, values: [linear, in, out, in_out], default: in}
+    body:
+      track: opacity
+      target: "=params.target"
+      keys:
+        - {at: 0, value: "=params.from"}
+        - {at: "=params.duration", value: 0, ease: "=params.ease"}
+
+  draw_stroke:
+    description: Draws a node's stroke from its start, as if by hand; arrowheads show at the end.
+    params:
+      target: {type: path}
+      duration: {type: number, default: 0.6}
+      ease: {type: enum, values: [linear, in, out, in_out], default: in_out}
+    body:
+      track: draw
+      target: "=params.target"
+      keys:
+        - {at: 0, value: 0}
+        - {at: "=params.duration", value: 1, ease: "=params.ease"}
+
+  pop_in:
+    description: Grows a node from nothing with a slight overshoot, fading it in.
+    params:
+      target: {type: path}
+      duration: {type: number, default: 0.45}
+    body:
+      parallel:
+        - track: scale
+          target: "=params.target"
+          keys:
+            - {at: 0, value: 0.2}
+            - {at: "=params.duration * 0.7", value: 1.08, ease: out}
+            - {at: "=params.duration", value: 1, ease: in_out}
+        - track: opacity
+          target: "=params.target"
+          keys:
+            - {at: 0, value: 0}
+            - {at: "=params.duration * 0.5", value: 1, ease: out}
+
+  pulse:
+    description: Scales a node up and back, to draw the eye.
+    params:
+      target: {type: path}
+      duration: {type: number, default: 0.6}
+      amount: {type: number, default: 1.15, description: The largest scale}
+    body:
+      track: scale
+      target: "=params.target"
+      keys:
+        - {at: 0, value: 1}
+        - {at: "=params.duration / 2", value: "=params.amount", ease: out}
+        - {at: "=params.duration", value: 1, ease: in}
+
+  color_to:
+    description: Changes a color property (fill by default) from one color to another.
+    params:
+      target: {type: path}
+      property: {type: enum, values: [fill, stroke], default: fill}
+      from: {type: color}
+      to: {type: color}
+      duration: {type: number, default: 0.4}
+    body:
+      track: "=params.property"
+      target: "=params.target"
+      keys:
+        - {at: 0, value: "=params.from"}
+        - {at: "=params.duration", value: "=params.to", ease: in_out}
+
+  move:
+    description: Moves a node from one point to another (its `at`, in its parent's frame).
+    params:
+      target: {type: path}
+      from: {type: object, fields: {x: number, y: number}}
+      to: {type: object, fields: {x: number, y: number}}
+      duration: {type: number, default: 0.6}
+      ease: {type: enum, values: [linear, in, out, in_out], default: in_out}
+    body:
+      track: at
+      target: "=params.target"
+      keys:
+        - {at: 0, value: "=params.from"}
+        - {at: "=params.duration", value: "=params.to", ease: "=params.ease"}
+
+  travel:
+    description: Moves a node along a connector's route, from its start to its end.
+    params:
+      target: {type: path, description: The node that travels}
+      along: {type: path, description: The connector it follows}
+      duration: {type: number, default: 0.8}
+      ease: {type: enum, values: [linear, in, out, in_out], default: in_out}
+      from: {type: number, default: 0, description: "Fraction of the route at the start: 1 travels backward"}
+      to: {type: number, default: 1, description: Fraction of the route at the end}
+    body:
+      track: at
+      target: "=params.target"
+      along: "=params.along"
+      keys:
+        - {at: 0, value: "=params.from"}
+        - {at: "=params.duration", value: "=params.to", ease: "=params.ease"}

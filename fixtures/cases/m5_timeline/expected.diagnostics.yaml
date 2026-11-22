@@ -1,0 +1,5 @@
+- code: blend_overlap
+  severity: warning
+  path: scene.timeline.parallel
+  source: {file: input.authored.yaml, line: 31, column: 16}
+  message: "'a.at.x' is driven by two tracks at once in the scene timeline (1s to 2s); numbers add up, other values take the higher source"

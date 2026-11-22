@@ -1,0 +1,49 @@
+format: diagrams/0.1
+title: Trivial scene
+viewport: {width: 400, height: 240}
+scene:
+  layout: free
+  rotation: 0
+  scale: 1
+  opacity: 1
+  present: true
+  children:
+    - id: card
+      shape: rect
+      layer: default
+      at: {x: 40, y: 40}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      width: {sub: [{ref: viewport.width}, 80]}
+      height: 160
+      corner_radius: 12
+      fill: "#f4f1ea"
+      stroke: "#2d3436"
+      stroke_width: 2
+    - id: dot
+      shape: circle
+      layer: default
+      at: {x: 72, y: 96}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      radius: 24
+      fill: "#e17055"
+      stroke: "#00000000"
+      stroke_width: 1
+    - id: label
+      shape: text
+      layer: default
+      at: {x: 128, y: 98}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      text: "Hello, diagrams"
+      font_size: 24
+      fill: "#2d3436"
+      text_align: start
+      wrap: false

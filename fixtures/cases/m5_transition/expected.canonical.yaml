@@ -1,0 +1,109 @@
+format: diagrams/0.1
+viewport: {width: 480, height: 240}
+imports: {motion: ../../../libs/motion.yaml, paper: ../../../themes/paper.yaml}
+base_theme: paper
+scene:
+  layout: free
+  rotation: 0
+  scale: 1
+  opacity: 1
+  present: true
+  states:
+    defaults: {duration: 0.6, ease: linear}
+    cumulative: false
+    sequence:
+      - {id: one}
+      - id: two
+        set: {box.at.x: 330, box.at.y: 40, note.present: true, old.present: false}
+    transitions:
+      - from: one
+        to: two
+        sequence: [{use: motion.pulse, target: box, duration: 0.4}, {auto: all}]
+  children:
+    - id: hub
+      shape: rect
+      layer: default
+      at: {x: 30, y: 90}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      width: 70
+      height: 50
+      corner_radius: 0
+      fill: "#636e72"
+      stroke: "#000000"
+      stroke_width: 0
+    - id: box
+      shape: rect
+      layer: default
+      at: {x: 180, y: 140}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      width: 90
+      height: 50
+      corner_radius: 0
+      fill: {ref: theme.accent}
+      stroke: "#000000"
+      stroke_width: 0
+    - id: label
+      shape: text
+      layer: default
+      at: {x: 0, y: 0}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      attach: {anchor: north, to: box.south, gap: 4}
+      text: moving
+      font_size: 14
+      fill: "#2d3436"
+      text_align: start
+      wrap: false
+    - id: wire
+      shape: connector
+      layer: default
+      at: {x: 0, y: 0}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      from: hub
+      to: box
+      route: straight
+      marker_start: none
+      marker_end: arrow
+      stroke: "#2d3436"
+      stroke_width: 2
+    - id: old
+      shape: rect
+      layer: default
+      at: {x: 30, y: 180}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      exit: {use: motion.fade_out, duration: 0.3}
+      width: 70
+      height: 30
+      corner_radius: 0
+      fill: "#b2bec3"
+      stroke: "#000000"
+      stroke_width: 0
+    - id: note
+      shape: rect
+      layer: default
+      at: {x: 330, y: 160}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: false
+      enter: {use: motion.fade_in, duration: 0.4}
+      width: 90
+      height: 40
+      corner_radius: 0
+      fill: "#00b894"
+      stroke: "#000000"
+      stroke_width: 0

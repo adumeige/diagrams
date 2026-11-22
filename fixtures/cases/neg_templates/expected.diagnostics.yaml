@@ -1,0 +1,56 @@
+- code: schema
+  severity: error
+  path: lib.templates.badge.params.size.default
+  source: {file: lib.yaml, line: 7, column: 37}
+  message: "default: 'size' is a number, found 'big'"
+- code: path_unresolved
+  severity: error
+  path: lib.templates.badge.body.text
+  source: {file: lib.yaml, line: 12, column: 13}
+  message: "'params.lable': the template declares no parameter 'lable'; parameters: label, size, kind"
+- code: template_cycle
+  severity: error
+  path: scene
+  source: {file: input.authored.yaml, line: 12, column: 7}
+  message: template 'lib.ping' uses itself through lib.ping -> lib.pong -> lib.ping
+- code: path_unresolved
+  severity: error
+  path: scene.use
+  source: {file: input.authored.yaml, line: 9, column: 13}
+  message: "unknown template 'badge': a template is used through its library's alias, such as 'uml.badge'"
+- code: path_unresolved
+  severity: error
+  path: scene.use
+  source: {file: input.authored.yaml, line: 10, column: 13}
+  message: "unknown template 'lib.nothing': library 'lib' has no template 'nothing'; templates: badge, ping, pong, box"
+- code: schema
+  severity: error
+  path: scene.kind
+  source: {file: input.authored.yaml, line: 11, column: 39}
+  message: "'kind' is one of info, warn, found 'alert'"
+- code: schema
+  severity: error
+  path: scene.colour
+  source: {file: input.authored.yaml, line: 11, column: 54}
+  message: "'colour' is neither a parameter of lib.badge (parameters: label, size, kind) nor a node property"
+- code: schema
+  severity: error
+  path: scene
+  source: {file: input.authored.yaml, line: 11, column: 7}
+  message: lib.badge requires 'label'
+- code: token_missing
+  severity: error
+  path: scene
+  source: {file: input.authored.yaml, line: 11, column: 13}
+  message: "lib.badge expects token 'primary', which no theme in scope provides; no theme is in scope (set 'base_theme')"
+  data: {token: primary}
+- code: schema
+  severity: error
+  path: b.slots.footer
+  source: {file: input.authored.yaml, line: 15, column: 23}
+  message: "lib.box has no slot 'footer'; slots: default"
+- code: encapsulation
+  severity: warning
+  path: scene.from
+  source: {file: input.authored.yaml, line: 17, column: 32}
+  message: "'b.inner' reaches inside b past the interface of lib.box; it exports no parts"

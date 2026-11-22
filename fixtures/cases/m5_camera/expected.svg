@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="270" viewBox="0 0 480 270">
+  <defs><style>
+    @font-face { font-family: "diagrams-body"; src: url("../../../fonts/AtkinsonHyperlegible-Regular.ttf"); }
+  </style></defs>
+  <rect width="100%" height="100%" fill="#faf8f3"/>
+  <g data-path="scene">
+    <rect data-path="band" transform="matrix(3.3 0 0 3.3 -403.5 130.25)" width="480" height="40" fill="#e6eaed"/>
+    <g data-path="stage" transform="matrix(3.3 0 0 3.3 -57 -208)">
+      <rect data-path="stage.a" transform="translate(40 80)" width="100" height="60" fill="#e17055"/>
+      <rect data-path="stage.b" transform="translate(320 160)" width="100" height="60" fill="#636e72"/>
+      <g>
+        <polyline points="140,110 230,110 230,190 308,190" fill="none" stroke="#2d3436" stroke-width="2"/>
+        <polygon points="320,190 308,194.8 308,185.2" fill="#2d3436" stroke="#2d3436" stroke-width="2" stroke-linejoin="miter"/>
+      </g>
+    </g>
+    <g data-path="title" transform="translate(16 10)" font-family="diagrams-body" font-size="18" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+      <text x="0 11.808 21.276 36.414 46.116 52.236" y="17.1" xml:space="preserve">Camera</text>
+    </g>
+  </g>
+</svg>

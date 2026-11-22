@@ -1,0 +1,101 @@
+{
+  "format": "diagrams/0.1",
+  "viewport": {"width": 480, "height": 270},
+  "time": 0.5,
+  "background": "#faf8f3",
+  "states": {"camera": "wide"},
+  "camera": {"center": [160, 130], "zoom": 1.972442, "rotation": 0, "into": [0, 40, 480, 230]},
+  "root": {
+    "path": "scene",
+    "loc": "scene",
+    "kind": "container",
+    "layer": "default",
+    "box": [0, 10, 480, 210],
+    "local": [0, 10, 480, 210],
+    "transform": [1, 0, 0, 1, 0, 0],
+    "opacity": 1,
+    "children": [
+      {
+        "path": "band",
+        "loc": "scene/0",
+        "kind": "rect",
+        "layer": "back",
+        "box": [-186.04741, 128.372037, 946.772023, 78.897669],
+        "local": [0, 0, 480, 40],
+        "transform": [1.972442, 0, 0, 1.972442, -186.04741, 128.372037],
+        "opacity": 1,
+        "fill": "#e6eaed",
+        "stroke": "#000000",
+        "stroke_width": 0
+      },
+      {
+        "path": "stage",
+        "loc": "scene/1",
+        "kind": "container",
+        "layer": "default",
+        "box": [3.306994, 56.377914, 749.527851, 276.14184],
+        "local": [40, 80, 380, 140],
+        "transform": [1.972442, 0, 0, 1.972442, -75.590674, -101.417423],
+        "opacity": 1,
+        "children": [
+          {
+            "path": "stage.a",
+            "loc": "scene/1/0",
+            "kind": "rect",
+            "layer": "default",
+            "box": [3.306994, 56.377914, 197.244171, 118.346503],
+            "local": [0, 0, 100, 60],
+            "transform": [1, 0, 0, 1, 40, 80],
+            "opacity": 1,
+            "fill": "#e17055",
+            "stroke": "#000000",
+            "stroke_width": 0
+          },
+          {
+            "path": "stage.b",
+            "loc": "scene/1/1",
+            "kind": "rect",
+            "layer": "default",
+            "box": [555.590674, 214.173251, 197.244171, 118.346503],
+            "local": [0, 0, 100, 60],
+            "transform": [1, 0, 0, 1, 320, 160],
+            "opacity": 1,
+            "fill": "#636e72",
+            "stroke": "#000000",
+            "stroke_width": 0
+          },
+          {
+            "path": null,
+            "loc": "scene/1/2",
+            "kind": "connector",
+            "layer": "default",
+            "box": [200.551166, 115.551166, 355.039509, 167.263057],
+            "local": [140, 110, 180, 84.8],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "stroke": "#2d3436",
+            "stroke_width": 2,
+            "points": [[140, 110], [230, 110], [230, 190], [308, 190]],
+            "markers": [
+              {"kind": "arrow", "points": [[320, 190], [308, 194.8], [308, 185.2]]}
+            ]
+          }
+        ]
+      },
+      {
+        "path": "title",
+        "loc": "scene/2",
+        "kind": "text",
+        "layer": "hud",
+        "box": [16, 10, 61.704, 22.32],
+        "local": [0, 0, 61.704, 22.32],
+        "transform": [1, 0, 0, 1, 16, 10],
+        "opacity": 1,
+        "fill": "#2d3436",
+        "font": "body",
+        "font_size": 18,
+        "lines": [{"text": "Camera", "x": 0, "baseline": 17.1, "width": 61.704}]
+      }
+    ]
+  }
+}

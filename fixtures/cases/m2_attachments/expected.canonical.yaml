@@ -1,0 +1,192 @@
+format: diagrams/0.1
+viewport: {width: 600, height: 360}
+scene:
+  layout: free
+  rotation: 0
+  scale: 1
+  opacity: 1
+  present: true
+  children:
+    - id: team
+      layout: free
+      layer: default
+      at: {x: 60, y: 60}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      children:
+        - id: box
+          shape: rect
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          width: 160
+          height: 90
+          corner_radius: 0
+          fill: "#dfe6e9"
+          stroke: "#2d3436"
+          stroke_width: 1
+        - id: name
+          shape: text
+          layer: default
+          at: {x: 12, y: 10}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          text: Team
+          font_size: 18
+          fill: "#000000"
+          text_align: start
+          wrap: false
+    - id: note
+      shape: rect
+      layer: default
+      at: {x: 0, y: 0}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      attach: {anchor: west, to: team.box, gap: 40}
+      width: 120
+      height: 50
+      corner_radius: 0
+      fill: "#ffeaa7"
+      stroke: "#2d3436"
+      stroke_width: 1
+    - id: under_note
+      shape: rect
+      layer: default
+      at: {x: 0, y: 0}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      attach: {anchor: north, to: note.south, gap: 12}
+      width: 80
+      height: 30
+      corner_radius: 0
+      fill: "#fab1a0"
+      stroke: "#000000"
+      stroke_width: 1
+    - id: pin
+      shape: circle
+      layer: default
+      at: {x: 0, y: 0}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      attach: {to: team.name.north_east, offset: {x: 6, y: -6}}
+      radius: 8
+      fill: "#d63031"
+      stroke: "#000000"
+      stroke_width: 0
+    - id: tilted
+      layout: free
+      layer: default
+      at: {x: 120, y: 230}
+      rotation: -20
+      scale: 1
+      opacity: 1
+      present: true
+      children:
+        - id: plate
+          shape: rect
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          width: 140
+          height: 50
+          corner_radius: 0
+          fill: "#a29bfe"
+          stroke: "#000000"
+          stroke_width: 1
+    - id: tag
+      shape: rect
+      layer: default
+      at: {x: 0, y: 0}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      attach: {anchor: west, to: tilted.plate.east, gap: 10}
+      width: 50
+      height: 24
+      corner_radius: 0
+      fill: "#6c5ce7"
+      stroke: "#000000"
+      stroke_width: 1
+    - id: below
+      shape: rect
+      layer: default
+      at: {x: {ref: team.left}, y: {add: [{ref: team.bottom}, 20]}}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      width: {ref: team.width}
+      height: 16
+      corner_radius: 0
+      fill: "#636e72"
+      stroke: "#000000"
+      stroke_width: 1
+    - id: caption
+      shape: text
+      layer: default
+      at: {x: {add: [{ref: below.right}, 8]}, y: {ref: below.top}}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      text: width of team
+      font_size: 12
+      fill: "#000000"
+      text_align: start
+      wrap: false
+    - id: strip
+      layout: row
+      layer: default
+      at: {x: 380, y: 280}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      gap: 6
+      children:
+        - id: s1
+          shape: rect
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          width: 30
+          height: 30
+          corner_radius: 0
+          fill: "#00b894"
+          stroke: "#000000"
+          stroke_width: 1
+        - id: s2
+          shape: rect
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          attach: {to: note}
+          width: 30
+          height: 30
+          corner_radius: 0
+          fill: "#00cec9"
+          stroke: "#000000"
+          stroke_width: 1

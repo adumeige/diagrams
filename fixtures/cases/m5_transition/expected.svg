@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="240" viewBox="0 0 480 240">
+  <defs><style>
+    @font-face { font-family: "diagrams-body"; src: url("../../../fonts/AtkinsonHyperlegible-Regular.ttf"); }
+  </style></defs>
+  <rect width="100%" height="100%" fill="#faf8f3"/>
+  <g data-path="scene">
+    <rect data-path="hub" transform="translate(30 90)" width="70" height="50" fill="#636e72"/>
+    <rect data-path="box" transform="translate(180 140)" width="90" height="50" fill="#e17055"/>
+    <g data-path="label" transform="translate(202.474 194)" font-family="diagrams-body" font-size="14" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+      <text x="0 11.774 19.502 25.676 29.568 37.212" y="13.3" xml:space="preserve">moving</text>
+    </g>
+    <g data-path="wire">
+      <polyline points="100,125.9375 168.54624,147.3582" fill="none" stroke="#2d3436" stroke-width="2"/>
+      <polygon points="180,150.9375 167.11452,151.939704 169.97796,142.776696" fill="#2d3436" stroke="#2d3436" stroke-width="2" stroke-linejoin="miter"/>
+    </g>
+    <rect data-path="old" transform="translate(30 180)" width="70" height="30" fill="#b2bec3"/>
+  </g>
+</svg>

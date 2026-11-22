@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="420" viewBox="0 0 640 420">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <g data-path="scene">
+    <g data-path="rows" transform="translate(20 20)">
+      <g data-path="rows.start_row">
+        <rect width="40" height="20" fill="#74b9ff" stroke="#000000" stroke-width="1"/>
+        <rect transform="translate(48 0)" width="40" height="50" fill="#0984e3" stroke="#000000" stroke-width="1"/>
+        <ellipse transform="translate(96 0)" cx="12" cy="12" rx="12" ry="12" fill="#6c5ce7" stroke="#000000" stroke-width="1"/>
+      </g>
+      <g data-path="rows.center_row" transform="translate(0 66)">
+        <rect transform="translate(0 15)" width="40" height="20" fill="#74b9ff" stroke="#000000" stroke-width="1"/>
+        <rect transform="translate(48 0)" width="40" height="50" fill="#0984e3" stroke="#000000" stroke-width="1"/>
+        <rect transform="matrix(0.707107 0.707107 -0.707107 0.707107 117.213203 3.786797)" width="30" height="30" fill="#a29bfe" stroke="#000000" stroke-width="1"/>
+      </g>
+      <g data-path="rows.stretch_row" transform="translate(0 132)">
+        <rect transform="translate(6 6)" width="40" height="50" fill="#55efc4" stroke="#000000" stroke-width="1"/>
+        <rect transform="translate(54 6)" width="40" height="50" fill="#00b894" stroke="#000000" stroke-width="1"/>
+        <g transform="translate(102 6)" font-family="Helvetica, Arial, sans-serif" font-size="14" fill="#000000">
+          <text x="0" y="11.977" xml:space="preserve">stretch</text>
+        </g>
+      </g>
+    </g>
+    <g data-path="col" transform="translate(260 20)">
+      <rect transform="translate(10 4)" width="120" height="24" fill="#fab1a0" stroke="#000000" stroke-width="1"/>
+      <rect transform="translate(70 34)" width="60" height="24" fill="#e17055" stroke="#000000" stroke-width="1"/>
+      <g transform="translate(57.62 64)" font-family="Helvetica, Arial, sans-serif" font-size="14" fill="#000000">
+        <text x="0" y="11.977" xml:space="preserve">aligned end</text>
+      </g>
+    </g>
+    <g data-path="table" transform="translate(420 20)">
+      <rect transform="translate(0 10)" width="50" height="30" fill="#ffeaa7" stroke="#000000" stroke-width="1"/>
+      <rect transform="translate(71 10)" width="30" height="30" fill="#fdcb6e" stroke="#000000" stroke-width="1"/>
+      <rect transform="translate(122 0)" width="40" height="50" fill="#e1b12c" stroke="#000000" stroke-width="1"/>
+      <ellipse transform="translate(15 56)" cx="10" cy="10" rx="10" ry="10" fill="#fdcb6e" stroke="#000000" stroke-width="1"/>
+      <rect transform="translate(56 56)" width="60" height="20" fill="#ffeaa7" stroke="#000000" stroke-width="1"/>
+    </g>
+    <g data-path="badge" transform="translate(260 200)">
+      <ellipse cx="70" cy="35" rx="70" ry="35" fill="#dfe6e9" stroke="#2d3436" stroke-width="1"/>
+      <g transform="translate(38.986 24.2)" font-family="Helvetica, Arial, sans-serif" font-size="18" fill="#000000">
+        <text x="0" y="15.399" xml:space="preserve">stacked</text>
+      </g>
+    </g>
+    <g data-path="frame" transform="translate(20 260)">
+      <rect transform="translate(10 10)" width="80" height="100" fill="#81ecec"/>
+      <g data-path="frame.inner" transform="translate(100 10)">
+        <rect width="100" height="20" fill="#00cec9" stroke="#000000" stroke-width="1"/>
+        <rect transform="translate(0 24)" width="60" height="20" fill="#00cec9" stroke="#000000" stroke-width="1"/>
+      </g>
+      <ellipse transform="translate(210 10)" cx="30" cy="50" rx="30" ry="50" fill="#81ecec" stroke="#000000" stroke-width="1"/>
+    </g>
+  </g>
+</svg>

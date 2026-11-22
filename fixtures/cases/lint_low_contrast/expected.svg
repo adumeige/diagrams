@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="140" viewBox="0 0 360 140">
+  <defs><style>
+    @font-face { font-family: "diagrams-body"; src: url("../../../fonts/AtkinsonHyperlegible-Regular.ttf"); }
+  </style></defs>
+  <rect width="100%" height="100%" fill="#faf8f3"/>
+  <g data-path="scene">
+    <g data-path="faint" transform="translate(20 16)" font-family="diagrams-body" font-size="16" style="font-kerning: none; font-variant-ligatures: none" fill="#c8c8c8">
+      <text x="0 9.616 18.032 21.856 30.48 34.96 40.144 48.768 56.144 61.328 65.808 74.64 83.376 87.856 93.04 101.776 110.4 114.88 123.936 132.352 141.312" y="15.2" xml:space="preserve">Pale text on the page</text>
+    </g>
+    <g data-path="readable" transform="translate(20 44)" font-family="diagrams-body" font-size="16" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+      <text x="0 6.624 15.36 23.2 27.68 36.512 45.248 49.728 54.912 63.648 72.272 76.752 85.808 94.224 103.184" y="15.2" xml:space="preserve">Ink on the page</text>
+    </g>
+    <g data-path="banner" transform="translate(20 76)">
+      <rect data-path="banner.bg" width="320" height="44" fill="#fdcb6e"/>
+      <g data-path="banner.on_yellow" transform="translate(12 12)" font-family="diagrams-body" font-size="16" style="font-kerning: none; font-variant-ligatures: none" fill="#ffffff">
+        <text x="0 13.44 22.176 26.624 31.808 40.432 44.912 53.744 62.48 66.96 73.824 82.448 86.272 90.096 98.928" y="15.2" xml:space="preserve">White on yellow</text>
+      </g>
+      <g data-path="banner.large" transform="translate(170 6)" font-family="diagrams-body" font-size="28" style="font-kerning: none; font-variant-ligatures: none" fill="#d35400">
+        <text x="0 15.092 29.82 39.34 55.02" y="26.6" xml:space="preserve">Large</text>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,191 @@
+format: diagrams/0.1
+viewport: {width: 640, height: 400}
+scene:
+  layout: free
+  rotation: 0
+  scale: 1
+  opacity: 1
+  present: true
+  layers: [edges, default, labels]
+  children:
+    - id: a
+      shape: rect
+      layer: default
+      at: {x: 40, y: 40}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      width: 120
+      height: 60
+      corner_radius: 0
+      fill: "#dfe6e9"
+      stroke: "#2d3436"
+      stroke_width: 1
+    - id: b
+      shape: circle
+      layer: default
+      at: {x: 300, y: 150}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      radius: 40
+      fill: "#ffeaa7"
+      stroke: "#2d3436"
+      stroke_width: 1
+    - id: c
+      shape: rect
+      layer: default
+      at: {x: 480, y: 40}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      width: 120
+      height: 60
+      corner_radius: 0
+      fill: "#dfe6e9"
+      stroke: "#2d3436"
+      stroke_width: 1
+    - id: group
+      layout: free
+      layer: default
+      at: {x: 40, y: 260}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      children:
+        - id: dd
+          shape: rect
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          width: 120
+          height: 60
+          corner_radius: 0
+          fill: "#dfe6e9"
+          stroke: "#2d3436"
+          stroke_width: 1
+    - id: e
+      shape: rect
+      layer: default
+      at: {x: 480, y: 280}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      width: 120
+      height: 60
+      corner_radius: 0
+      fill: "#dfe6e9"
+      stroke: "#2d3436"
+      stroke_width: 1
+    - id: ab
+      shape: connector
+      layer: edges
+      at: {x: 0, y: 0}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      from: a
+      to: b
+      route: straight
+      marker_start: none
+      marker_end: none
+      stroke: "#2d3436"
+      stroke_width: 2
+    - id: bc
+      shape: connector
+      layer: edges
+      at: {x: 0, y: 0}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      from: b
+      to: c.west
+      route: straight
+      marker_start: none
+      marker_end: none
+      stroke: "#2d3436"
+      stroke_width: 2
+    - id: ac
+      shape: connector
+      layer: edges
+      at: {x: 0, y: 0}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      from: a.north
+      to: c.north
+      route: orthogonal
+      marker_start: none
+      marker_end: none
+      stroke: "#0984e3"
+      stroke_width: 2
+    - id: de
+      shape: connector
+      layer: edges
+      at: {x: 0, y: 0}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      from: group.dd
+      to: e
+      route: orthogonal
+      marker_start: none
+      marker_end: none
+      stroke: "#00b894"
+      stroke_width: 2
+    - id: ad
+      shape: connector
+      layer: edges
+      at: {x: 0, y: 0}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      from: a
+      to: group.dd
+      route: orthogonal
+      marker_start: none
+      marker_end: none
+      stroke: "#e17055"
+      stroke_width: 2
+    - id: rel
+      shape: connector
+      layer: edges
+      at: {x: 0, y: 0}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      from: b.south
+      to: de.mid
+      route: straight
+      marker_start: none
+      marker_end: none
+      stroke: "#6c5ce7"
+      stroke_width: 1
+    - id: label
+      shape: text
+      layer: labels
+      at: {x: 0, y: 0}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      attach: {anchor: south, to: ab.mid, gap: 4}
+      text: mid
+      font_size: 12
+      fill: "#000000"
+      text_align: start
+      wrap: false

@@ -1,0 +1,75 @@
+{
+  "format": "diagrams/0.1",
+  "viewport": {"width": 480, "height": 240},
+  "time": 0.7,
+  "background": "#faf8f3",
+  "states": {"scene": "two"},
+  "root": {
+    "path": "scene",
+    "loc": "scene",
+    "kind": "container",
+    "layer": "default",
+    "box": [30, 65, 315, 140],
+    "local": [30, 65, 315, 140],
+    "transform": [1, 0, 0, 1, 0, 0],
+    "opacity": 1,
+    "children": [
+      {
+        "path": "hub",
+        "loc": "scene/0",
+        "kind": "rect",
+        "layer": "default",
+        "box": [30, 90, 70, 50],
+        "local": [0, 0, 70, 50],
+        "transform": [1, 0, 0, 1, 30, 90],
+        "opacity": 1,
+        "fill": "#636e72",
+        "stroke": "#000000",
+        "stroke_width": 0
+      },
+      {
+        "path": "box",
+        "loc": "scene/1",
+        "kind": "rect",
+        "layer": "default",
+        "box": [255, 90, 90, 50],
+        "local": [0, 0, 90, 50],
+        "transform": [1, 0, 0, 1, 255, 90],
+        "opacity": 1,
+        "fill": "#e17055",
+        "stroke": "#000000",
+        "stroke_width": 0
+      },
+      {
+        "path": "label",
+        "loc": "scene/2",
+        "kind": "text",
+        "layer": "default",
+        "box": [277.474, 144, 45.052, 17.36],
+        "local": [0, 0, 45.052, 17.36],
+        "transform": [1, 0, 0, 1, 277.474, 144],
+        "opacity": 1,
+        "fill": "#2d3436",
+        "font": "body",
+        "font_size": 14,
+        "lines": [{"text": "moving", "x": 0, "baseline": 13.3, "width": 45.052}]
+      },
+      {
+        "path": "wire",
+        "loc": "scene/3",
+        "kind": "connector",
+        "layer": "default",
+        "box": [100, 110.2, 155, 9.6],
+        "local": [100, 110.2, 155, 9.6],
+        "transform": [1, 0, 0, 1, 0, 0],
+        "opacity": 1,
+        "stroke": "#2d3436",
+        "stroke_width": 2,
+        "points": [[100, 115], [243, 115]],
+        "markers": [
+          {"kind": "arrow", "points": [[255, 115], [243, 119.8], [243, 110.2]]}
+        ]
+      }
+    ]
+  }
+}

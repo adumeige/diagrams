@@ -1,0 +1,150 @@
+# Building blocks for slide decks: titles, bullet lists, cards, step badges and a progress row.
+# Expects a theme with the tokens ink, muted, primary, surface and stroke (themes/paper.yaml has them).
+#
+# Bullets reveal step by step: give each slide a state that sets `<bullets>.shown`.
+format: diagrams/0.1
+title: Deck
+templates:
+  heading:
+    description: A slide heading, with an optional kicker line above it.
+    params:
+      text: {type: string}
+      kicker: {type: string, default: ""}
+      size: {type: number, default: 44}
+      align: {type: enum, values: [start, center, end], default: start}
+    exports:
+      parts: [label]
+      tokens: [ink, primary]
+    body:
+      layout: column
+      gap: 6
+      align: "=params.align"
+      children:
+        - {if: "params.kicker != ''", shape: text, text: "=params.kicker", font_size: "=params.size * 0.4", fill: "=theme.primary"}
+        - {shape: text, id: label, text: "=params.text", font_size: "=params.size", fill: "=theme.ink"}
+
+  bullets:
+    description: A bullet list. Items past 'shown' are not present, so they can appear one by one.
+    params:
+      items: {type: list, item: {type: string}}
+      size: {type: number, default: 26}
+      width: {type: number, default: 760}
+      shown: {type: number, default: 1000, description: How many items are present}
+    exports:
+      tokens: [ink, primary]
+    body:
+      layout: column
+      gap: "=params.size * 0.55"
+      children:
+        - for_each: params.items
+          as: text
+          id: item
+          do:
+            layout: row
+            gap: "=params.size * 0.6"
+            present: "=index < params.shown"
+            children:
+              - layout: column
+                padding: {top: "=params.size * 0.44"}
+                children:
+                  - {shape: circle, radius: "=params.size * 0.17", fill: "=theme.primary", stroke_width: 0}
+              - {shape: text, text: "=text", font_size: "=params.size", width: "=params.width", wrap: true, fill: "=theme.ink"}
+
+  card:
+    description: A rounded card with a title and a body text.
+    params:
+      title: {type: string}
+      text: {type: string, default: ""}
+      width: {type: number, default: 300}
+      accent: {type: color, default: "#2d6cdf"}
+    exports:
+      anchors: [north, south, east, west]
+      tokens: [surface, stroke, ink, muted]
+    body:
+      layout: stack
+      align: stretch
+      children:
+        - {shape: rect, width: 0, height: 0, corner_radius: 12, fill: "=theme.surface", stroke: "=theme.stroke", stroke_width: 1.5}
+        - layout: column
+          gap: 8
+          padding: {x: 20, y: 16}
+          children:
+            - {shape: rect, width: 36, height: 5, corner_radius: 2.5, fill: "=params.accent", stroke_width: 0}
+            - {shape: text, text: "=params.title", font_size: 22, fill: "=theme.ink", width: "=params.width - 40", wrap: true}
+            - {if: "params.text != ''", shape: text, text: "=params.text", font_size: 16, fill: "=theme.muted", width: "=params.width - 40", wrap: true}
+
+  badge:
+    description: A round badge with a short label, such as a step number.
+    params:
+      label: {type: string}
+      radius: {type: number, default: 22}
+      color: {type: color, default: "#2d6cdf"}
+    outline: ellipse
+    body:
+      layout: stack
+      align: center
+      children:
+        - {shape: circle, radius: "=params.radius", fill: "=params.color", stroke_width: 0}
+        - {shape: text, text: "=params.label", font_size: "=params.radius", fill: "#ffffff"}
+
+  progress:
+    description: A row of dots, one per step (the names of the steps), the current one highlighted.
+    params:
+      steps: {type: list, item: {type: string}}
+      current: {type: number, default: 0, description: "Index of the current step, from 0"}
+    exports:
+      tokens: [primary, muted]
+    body:
+      layout: row
+      gap: 10
+      align: center
+      children:
+        - for_each: params.steps
+          as: step
+          do:
+            - {if: "index == params.current", shape: rect, width: 28, height: 10, corner_radius: 5, fill: "=theme.primary", stroke_width: 0}
+            - {if: "index != params.current", shape: circle, radius: 5, fill: "=theme.muted", stroke_width: 0}
+
+  pill:
+    description: A rounded box around a short text. With a width, the text wraps and centers.
+    params:
+      text: {type: string}
+      color: {type: color, default: "#2d6cdf"}
+      ink: {type: color, default: "#ffffff"}
+      size: {type: number, default: 18}
+      width: {type: number, default: 0, description: "0 sizes the box to its text"}
+      radius: {type: number, default: 10}
+    exports:
+      anchors: [north, south, east, west]
+    body:
+      layout: stack
+      align: stretch
+      children:
+        - {shape: rect, width: 0, height: 0, corner_radius: "=params.radius", fill: "=params.color", stroke_width: 0}
+        - layout: column
+          align: center
+          padding: {x: "=params.size * 0.8", y: "=params.size * 0.5"}
+          children:
+            - {if: "params.width == 0", shape: text, text: "=params.text", font_size: "=params.size", fill: "=params.ink"}
+            - {if: "params.width > 0", shape: text, text: "=params.text", font_size: "=params.size", fill: "=params.ink", width: "=params.width - params.size * 1.6", text_align: center, wrap: true}
+
+  link:
+    description: >-
+      An arrow with an optional label at its middle. The label sits on the side the middle's outward
+      direction points to (above a left-to-right arrow); label_side is the label's own anchor that
+      touches that point: south above, north below, west right, east left.
+    params:
+      from: {type: path}
+      to: {type: path}
+      label: {type: string, default: ""}
+      color: {type: color, default: "#636e72"}
+      label_color: {type: color, default: "#636e72"}
+      width: {type: number, default: 2}
+      route: {type: enum, values: [straight, orthogonal], default: straight}
+      label_side: {type: enum, values: [south, north, east, west], default: south}
+    exports:
+      parts: [line]
+    body:
+      children:
+        - {shape: connector, id: line, from: "=params.from", to: "=params.to", route: "=params.route", stroke: "=params.color", stroke_width: "=params.width", marker_end: arrow}
+        - {if: "params.label != ''", shape: text, text: "=params.label", font_size: 15, fill: "=params.label_color", attach: {anchor: "=params.label_side", to: line.mid, gap: 8}}

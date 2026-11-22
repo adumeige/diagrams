@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="300" viewBox="0 0 480 300">
+  <defs><style>
+    @font-face { font-family: "diagrams-body"; src: url("../../../fonts/AtkinsonHyperlegible-Regular.ttf"); }
+  </style></defs>
+  <rect width="100%" height="100%" fill="#faf8f3"/>
+  <g data-path="scene">
+    <g data-path="heading" transform="translate(24 20)" font-family="diagrams-body" font-size="28" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+      <text x="0 15.624 31.08 44.8 59.892 75.18 88.368 96.208 110.936 126.224 142.016 149.856 158.564 174.02 189.308 198.38" y="26.6" xml:space="preserve">Tokens and fonts</text>
+    </g>
+    <g data-path="light" transform="translate(24 80)">
+      <rect data-path="light.box" width="200" height="120" rx="8" fill="#ffffff" stroke="#2d3436" stroke-width="2"/>
+      <ellipse data-path="light.dot" transform="translate(16 16)" cx="10" cy="10" rx="10" ry="10" fill="#2d6cdf"/>
+      <g data-path="light.label" transform="translate(16 48)" font-family="diagrams-body" font-size="16" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+        <text x="42.208 52.112 60.528 68.064 76.688 81.168 86.352 95.088 103.712 117.168" y="15.2" xml:space="preserve">Base theme</text>
+        <text x="43.568 51.104 59.728 67.728 76.56 85.296 94.32 98.8 102.624 107.072 115.808" y="35.04" xml:space="preserve">second line</text>
+      </g>
+    </g>
+    <g data-path="dark_card" transform="translate(256 80)">
+      <rect data-path="dark_card.box" width="200" height="120" rx="8" fill="#2d3436" stroke="#dfe6e9" stroke-width="2"/>
+      <ellipse data-path="dark_card.dot" transform="translate(16 16)" cx="10" cy="10" rx="10" ry="10" fill="#74b9ff"/>
+      <g data-path="dark_card.label" transform="translate(16 48)" font-family="diagrams-body" font-size="16" style="font-kerning: none; font-variant-ligatures: none" fill="#f5f6fa">
+        <text x="42.448 47.632 56.368 64.992 78.448 87.072 90.352 94.832 103.856 112.272 117.712" y="15.2" xml:space="preserve">theme: dark</text>
+      </g>
+    </g>
+    <g data-path="override" transform="translate(24 220)">
+      <rect data-path="override.bar" width="432" height="40" rx="20" fill="#e17055" stroke="#2d3436" stroke-width="4"/>
+      <g data-path="override.note" transform="translate(20 5)" font-family="diagrams-body" font-size="24" style="font-kerning: none; font-variant-ligatures: none" fill="#ffffff">
+        <text x="0 17.448 28.032 40.968 49.128 57.288 63.96 77.496 91.032 103.968 117.072 123.792 137.376 145.536 152.208 172.392 185.016 193.176 203.472 208.392 215.112 226.416 234.192 242.352 255.6 267.36 280.296 287.016" y="22.8" xml:space="preserve">Overridden primary, stroke 4</text>
+      </g>
+    </g>
+  </g>
+</svg>

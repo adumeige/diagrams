@@ -1,0 +1,94 @@
+{
+  "format": "diagrams/0.1",
+  "viewport": {"width": 300, "height": 200},
+  "time": 0,
+  "root": {
+    "path": "scene",
+    "loc": "scene",
+    "kind": "container",
+    "layer": "default",
+    "box": [40, 20, 200, 150],
+    "local": [40, 20, 200, 150],
+    "transform": [1, 0, 0, 1, 0, 0],
+    "opacity": 1,
+    "children": [
+      {
+        "path": "lower",
+        "loc": "scene/2",
+        "kind": "rect",
+        "layer": "back",
+        "box": [40, 20, 120, 80],
+        "local": [0, 0, 120, 80],
+        "transform": [1, 0, 0, 1, 40, 20],
+        "opacity": 1,
+        "fill": "#0984e3",
+        "stroke": "#000000",
+        "stroke_width": 1
+      },
+      {
+        "path": "middle",
+        "loc": "scene/1",
+        "kind": "rect",
+        "layer": "default",
+        "box": [70, 40, 120, 80],
+        "local": [0, 0, 120, 80],
+        "transform": [1, 0, 0, 1, 70, 40],
+        "opacity": 1,
+        "fill": "#fdcb6e",
+        "stroke": "#000000",
+        "stroke_width": 1
+      },
+      {
+        "path": "upper",
+        "loc": "scene/0",
+        "kind": "rect",
+        "layer": "front",
+        "box": [100, 60, 120, 80],
+        "local": [0, 0, 120, 80],
+        "transform": [1, 0, 0, 1, 100, 60],
+        "opacity": 1,
+        "fill": "#e17055",
+        "stroke": "#000000",
+        "stroke_width": 1
+      },
+      {
+        "path": "group",
+        "loc": "scene/3",
+        "kind": "container",
+        "layer": "front",
+        "box": [180, 110, 60, 60],
+        "local": [0, 0, 60, 60],
+        "transform": [1, 0, 0, 1, 180, 110],
+        "opacity": 1,
+        "children": [
+          {
+            "path": "group.b",
+            "loc": "scene/3/1",
+            "kind": "circle",
+            "layer": "default",
+            "box": [200, 130, 40, 40],
+            "local": [0, 0, 40, 40],
+            "transform": [1, 0, 0, 1, 20, 20],
+            "opacity": 1,
+            "fill": "#00cec9",
+            "stroke": "#000000",
+            "stroke_width": 1
+          },
+          {
+            "path": "group.a",
+            "loc": "scene/3/0",
+            "kind": "circle",
+            "layer": "under",
+            "box": [180, 110, 60, 60],
+            "local": [0, 0, 60, 60],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "fill": "#6c5ce7",
+            "stroke": "#000000",
+            "stroke_width": 1
+          }
+        ]
+      }
+    ]
+  }
+}

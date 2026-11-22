@@ -1,0 +1,15 @@
+- code: attach_cycle
+  severity: error
+  path: a
+  source: {file: input.authored.yaml, line: 6, column: 7}
+  message: the position of 'a' depends on itself through attachments or geometry references
+- code: attach_cycle
+  severity: error
+  path: c
+  source: {file: input.authored.yaml, line: 8, column: 7}
+  message: the position of 'c' depends on itself through attachments or geometry references
+- code: attach_cycle
+  severity: error
+  path: e
+  source: {file: input.authored.yaml, line: 10, column: 7}
+  message: the size of 'e' depends on itself through attachments or geometry references

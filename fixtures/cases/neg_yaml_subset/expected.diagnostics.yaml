@@ -1,0 +1,5 @@
+- code: yaml_subset
+  severity: error
+  path: ""
+  source: {file: input.authored.yaml, line: 7, column: 13}
+  message: "plain scalar 'yes' could be read as a boolean, number or null; quote it"

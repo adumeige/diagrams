@@ -1,0 +1,94 @@
+format: diagrams/0.1
+viewport: {width: 200, height: 100}
+imports: {paper: ../../../themes/paper.yaml, missing: ./no_such_theme.yaml}
+base_theme: paperr
+styles: {bad: {fill: 12}}
+scene:
+  layout: free
+  rotation: 0
+  scale: 1
+  opacity: 1
+  present: true
+  children:
+    - id: a
+      shape: rect
+      layer: default
+      at: {x: 0, y: 0}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      width: 10
+      height: 10
+      corner_radius: 0
+      fill: {ref: theme.secondary}
+      stroke: "#000000"
+      stroke_width: 1
+    - id: b
+      shape: rect
+      layer: default
+      at: {x: 0, y: 0}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      style: card
+      width: 10
+      height: 10
+      corner_radius: 0
+      fill: "#ffffff"
+      stroke: "#000000"
+      stroke_width: 1
+    - id: c
+      shape: text
+      layer: default
+      at: {x: 0, y: 0}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      text: hi
+      font: serif
+      font_size: 16
+      fill: "#000000"
+      text_align: start
+      wrap: false
+    - id: node_d
+      shape: rect
+      layer: default
+      at: {x: 0, y: 0}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      theme: nope
+      width: 10
+      height: 10
+      corner_radius: 0
+      fill: "#ffffff"
+      stroke: "#000000"
+      stroke_width: 1
+    - id: e
+      layout: free
+      layer: default
+      at: {x: 0, y: 0}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      theme: {primary: [1, 2]}
+      children:
+        - id: f
+          shape: rect
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          width: 10
+          height: 10
+          corner_radius: 0
+          fill: {ref: theme.colors.red}
+          stroke: "#000000"
+          stroke_width: 1

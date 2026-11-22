@@ -1,0 +1,60 @@
+- code: attach_cycle
+  severity: error
+  path: holder.attach.to
+  source: {file: input.authored.yaml, line: 9, column: 20}
+  message: "'holder.inner' is the node itself or inside it: its position would depend on itself"
+- code: path_unresolved
+  severity: error
+  path: a.attach.to
+  source: {file: input.authored.yaml, line: 10, column: 64}
+  message: "'nowhere' matches no node in scope"
+- code: schema
+  severity: error
+  path: b.attach.extra
+  source: {file: input.authored.yaml, line: 11, column: 116}
+  message: "unknown key 'extra' in attach; expected one of to, anchor, gap, offset, policy"
+- code: path_unresolved
+  severity: error
+  path: b.attach.to
+  source: {file: input.authored.yaml, line: 11, column: 64}
+  message: "'top_left' is not an anchor of a; anchors: center, north, south, east, west, north_east, north_west, south_east, south_west"
+- code: schema
+  severity: error
+  path: b.attach.anchor
+  source: {file: input.authored.yaml, line: 11, column: 84}
+  message: "'anchor' is one of center, north, south, east, west, north_east, north_west, south_east, south_west"
+- code: schema
+  severity: error
+  path: b.attach.policy
+  source: {file: input.authored.yaml, line: 11, column: 100}
+  message: "'stretch' needs two attached anchors; only connectors have them in 0.1"
+- code: path_unresolved
+  severity: error
+  path: c.attach.to
+  source: {file: input.authored.yaml, line: 13, column: 64}
+  message: "'hidden' is not present, so nothing can attach to it"
+- code: path_unresolved
+  severity: error
+  path: k.to
+  source: {file: input.authored.yaml, line: 14, column: 46}
+  message: "'mid' is not an anchor of a; anchors: center, north, south, east, west, north_east, north_west, south_east, south_west"
+- code: schema
+  severity: error
+  path: k2
+  source: {file: input.authored.yaml, line: 15, column: 7}
+  message: a connector requires 'to'
+- code: path_unresolved
+  severity: error
+  path: f.width
+  source: {file: input.authored.yaml, line: 16, column: 35}
+  message: "'a.size': 'size' is not a geometry property of a; expected one of x, y, width, height, left, right, top, bottom, center_x, center_y or <anchor>.x / .y"
+- code: path_unresolved
+  severity: error
+  path: f.height
+  source: {file: input.authored.yaml, line: 16, column: 54}
+  message: "'nobody.height' matches no node in scope"
+- code: schema
+  severity: error
+  path: g
+  source: {file: input.authored.yaml, line: 17, column: 7}
+  message: a grid requires 'columns'

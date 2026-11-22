@@ -1,0 +1,55 @@
+- code: schema
+  severity: error
+  path: scene.timeline.sequence
+  source: {file: input.authored.yaml, line: 16, column: 9}
+  message: "a time item has exactly one of track, sequence, parallel, stagger, wait, use, auto; found none"
+- code: schema
+  severity: error
+  path: scene.timeline.sequence.keys
+  source: {file: input.authored.yaml, line: 18, column: 40}
+  message: keyframes are listed in time order
+- code: timing_cycle
+  severity: error
+  path: scene.timeline.sequence
+  source: {file: input.authored.yaml, line: 19, column: 9}
+  message: the timing references of this container form a loop
+- code: path_unresolved
+  severity: error
+  path: scene.timeline.sequence.with
+  source: {file: input.authored.yaml, line: 21, column: 25}
+  message: "'nowhere' is neither an item of this container nor a media node"
+- code: path_unresolved
+  severity: error
+  path: scene.timeline.sequence.use
+  source: {file: input.authored.yaml, line: 22, column: 15}
+  message: unknown clip 'motion.spin'
+- code: schema
+  severity: error
+  path: scene.timeline.sequence.use
+  source: {file: input.authored.yaml, line: 23, column: 15}
+  message: "'deck.badge' is a shape template; a timeline uses clips (templates whose body is a time item)"
+- code: schema
+  severity: error
+  path: scene.timeline.sequence.auto
+  source: {file: input.authored.yaml, line: 29, column: 16}
+  message: "'auto' stands for the automatic transition and is only allowed in a transition body"
+- code: schema
+  severity: error
+  path: scene.timeline.sequence
+  source: {file: input.authored.yaml, line: 24, column: 16}
+  message: "'p.text': tracks cannot drive template parameters in 0.1; animate a part's property, or set the parameter from a state"
+- code: path_unresolved
+  severity: error
+  path: scene.timeline.sequence
+  source: {file: input.authored.yaml, line: 27, column: 16}
+  message: "'along: a' does not name a connector"
+- code: schema
+  severity: error
+  path: scene.use
+  source: {file: input.authored.yaml, line: 34, column: 13}
+  message: "'motion.fade_in' is a clip: it plays in a timeline (timeline, enter, exit, a transition), not in the scene"
+- code: schema
+  severity: error
+  path: camera.focus
+  source: {file: input.authored.yaml, line: 12, column: 26}
+  message: "'focus' is not a camera property; the camera has fit, padding, into, center, zoom, rotation, attach, states, state"

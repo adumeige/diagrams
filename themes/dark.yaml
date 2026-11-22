@@ -1,0 +1,9 @@
+# Dark tokens with the same names as paper.yaml, to re-skin a subtree with `theme: dark`.
+format: diagrams/0.1
+title: Dark
+tokens:
+  surface: "#2d3436"
+  primary: "#74b9ff"
+  ink: "#f5f6fa"
+  muted: "#b2bec3"
+  stroke: "#dfe6e9"

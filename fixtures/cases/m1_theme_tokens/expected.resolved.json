@@ -1,0 +1,181 @@
+{
+  "format": "diagrams/0.1",
+  "viewport": {"width": 480, "height": 300},
+  "time": 0,
+  "background": "#faf8f3",
+  "root": {
+    "path": "scene",
+    "loc": "scene",
+    "kind": "container",
+    "layer": "default",
+    "box": [24, 20, 432, 240],
+    "local": [24, 20, 432, 240],
+    "transform": [1, 0, 0, 1, 0, 0],
+    "opacity": 1,
+    "children": [
+      {
+        "path": "heading",
+        "loc": "scene/0",
+        "kind": "text",
+        "layer": "default",
+        "box": [24, 20, 211.568, 34.72],
+        "local": [0, 0, 211.568, 34.72],
+        "transform": [1, 0, 0, 1, 24, 20],
+        "opacity": 1,
+        "fill": "#2d3436",
+        "font": "body",
+        "font_size": 28,
+        "lines": [{"text": "Tokens and fonts", "x": 0, "baseline": 26.6, "width": 211.568}]
+      },
+      {
+        "path": "light",
+        "loc": "scene/1",
+        "kind": "container",
+        "layer": "default",
+        "box": [24, 80, 200, 120],
+        "local": [0, 0, 200, 120],
+        "transform": [1, 0, 0, 1, 24, 80],
+        "opacity": 1,
+        "children": [
+          {
+            "path": "light.box",
+            "loc": "scene/1/0",
+            "kind": "rect",
+            "layer": "default",
+            "box": [24, 80, 200, 120],
+            "local": [0, 0, 200, 120],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "fill": "#ffffff",
+            "stroke": "#2d3436",
+            "stroke_width": 2,
+            "corner_radius": 8
+          },
+          {
+            "path": "light.dot",
+            "loc": "scene/1/1",
+            "kind": "circle",
+            "layer": "default",
+            "box": [40, 96, 20, 20],
+            "local": [0, 0, 20, 20],
+            "transform": [1, 0, 0, 1, 16, 16],
+            "opacity": 1,
+            "fill": "#2d6cdf",
+            "stroke": "#000000",
+            "stroke_width": 0
+          },
+          {
+            "path": "light.label",
+            "loc": "scene/1/2",
+            "kind": "text",
+            "layer": "default",
+            "box": [40, 128, 168, 39.68],
+            "local": [0, 0, 168, 39.68],
+            "transform": [1, 0, 0, 1, 16, 48],
+            "opacity": 1,
+            "fill": "#2d3436",
+            "font": "body",
+            "font_size": 16,
+            "lines": [
+              {"text": "Base theme", "x": 42.208, "baseline": 15.2, "width": 83.584},
+              {"text": "second line", "x": 43.568, "baseline": 35.04, "width": 80.864}
+            ]
+          }
+        ]
+      },
+      {
+        "path": "dark_card",
+        "loc": "scene/2",
+        "kind": "container",
+        "layer": "default",
+        "box": [256, 80, 200, 120],
+        "local": [0, 0, 200, 120],
+        "transform": [1, 0, 0, 1, 256, 80],
+        "opacity": 1,
+        "children": [
+          {
+            "path": "dark_card.box",
+            "loc": "scene/2/0",
+            "kind": "rect",
+            "layer": "default",
+            "box": [256, 80, 200, 120],
+            "local": [0, 0, 200, 120],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "fill": "#2d3436",
+            "stroke": "#dfe6e9",
+            "stroke_width": 2,
+            "corner_radius": 8
+          },
+          {
+            "path": "dark_card.dot",
+            "loc": "scene/2/1",
+            "kind": "circle",
+            "layer": "default",
+            "box": [272, 96, 20, 20],
+            "local": [0, 0, 20, 20],
+            "transform": [1, 0, 0, 1, 16, 16],
+            "opacity": 1,
+            "fill": "#74b9ff",
+            "stroke": "#000000",
+            "stroke_width": 0
+          },
+          {
+            "path": "dark_card.label",
+            "loc": "scene/2/2",
+            "kind": "text",
+            "layer": "default",
+            "box": [272, 128, 168, 19.84],
+            "local": [0, 0, 168, 19.84],
+            "transform": [1, 0, 0, 1, 16, 48],
+            "opacity": 1,
+            "fill": "#f5f6fa",
+            "font": "body",
+            "font_size": 16,
+            "lines": [{"text": "theme: dark", "x": 42.448, "baseline": 15.2, "width": 83.104}]
+          }
+        ]
+      },
+      {
+        "path": "override",
+        "loc": "scene/3",
+        "kind": "container",
+        "layer": "default",
+        "box": [24, 220, 432, 40],
+        "local": [0, 0, 432, 40],
+        "transform": [1, 0, 0, 1, 24, 220],
+        "opacity": 1,
+        "children": [
+          {
+            "path": "override.bar",
+            "loc": "scene/3/0",
+            "kind": "rect",
+            "layer": "default",
+            "box": [24, 220, 432, 40],
+            "local": [0, 0, 432, 40],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "fill": "#e17055",
+            "stroke": "#2d3436",
+            "stroke_width": 4,
+            "corner_radius": 20
+          },
+          {
+            "path": "override.note",
+            "loc": "scene/3/1",
+            "kind": "text",
+            "layer": "default",
+            "box": [44, 225, 301.752, 29.76],
+            "local": [0, 0, 301.752, 29.76],
+            "transform": [1, 0, 0, 1, 20, 5],
+            "opacity": 1,
+            "fill": "#ffffff",
+            "font": "body",
+            "font_size": 24,
+            "lines": [{"text": "Overridden primary, stroke 4", "x": 0, "baseline": 22.8, "width": 301.752}]
+          }
+        ]
+      }
+    ]
+  }
+}

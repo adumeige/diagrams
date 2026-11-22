@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="260" viewBox="0 0 480 260">
+  <rect width="100%" height="100%" fill="#faf8f3"/>
+  <g data-path="scene">
+    <rect data-path="a" transform="translate(40 100)" opacity="0" width="90" height="60" fill="#b2bec3"/>
+    <rect data-path="b" transform="translate(340 60)" opacity="0" width="90" height="60" fill="#b2bec3"/>
+    <polyline data-path="link" points="130,124 328.105265,97.585965" fill="none" stroke="#636e72" stroke-width="2" pathLength="1" stroke-dasharray="0 1"/>
+    <ellipse data-path="dot" transform="translate(123 117)" cx="7" cy="7" rx="7" ry="7" fill="#e17055"/>
+  </g>
+</svg>

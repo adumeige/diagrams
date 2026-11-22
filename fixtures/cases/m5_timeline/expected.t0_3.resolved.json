@@ -1,0 +1,77 @@
+{
+  "format": "diagrams/0.1",
+  "viewport": {"width": 480, "height": 260},
+  "time": 0.3,
+  "background": "#faf8f3",
+  "root": {
+    "path": "scene",
+    "loc": "scene",
+    "kind": "container",
+    "layer": "default",
+    "box": [46, 60, 384, 100],
+    "local": [46, 60, 384, 100],
+    "transform": [1, 0, 0, 1, 0, 0],
+    "opacity": 1,
+    "children": [
+      {
+        "path": "a",
+        "loc": "scene/0",
+        "kind": "rect",
+        "layer": "default",
+        "box": [46, 100, 90, 60],
+        "local": [0, 0, 90, 60],
+        "transform": [1, 0, 0, 1, 46, 100],
+        "opacity": 0.785139,
+        "fill": "#b2bec3",
+        "stroke": "#000000",
+        "stroke_width": 0
+      },
+      {
+        "path": "b",
+        "loc": "scene/1",
+        "kind": "rect",
+        "layer": "default",
+        "box": [340, 60, 90, 60],
+        "local": [0, 0, 90, 60],
+        "transform": [1, 0, 0, 1, 340, 60],
+        "opacity": 0.160572,
+        "fill": "#b2bec3",
+        "stroke": "#000000",
+        "stroke_width": 0
+      },
+      {
+        "path": "link",
+        "loc": "scene/2",
+        "kind": "connector",
+        "layer": "default",
+        "box": [136, 92.984016, 204, 30.893535],
+        "local": [136, 92.984016, 204, 30.893535],
+        "transform": [1, 0, 0, 1, 0, 0],
+        "opacity": 1,
+        "draw": 0,
+        "stroke": "#636e72",
+        "stroke_width": 2,
+        "points": [[136, 123.877551], [328.109546, 97.740198]],
+        "markers": [
+          {
+            "kind": "arrow",
+            "points": [[340, 96.122449], [328.756646, 102.496379], [327.462447, 92.984016]]
+          }
+        ]
+      },
+      {
+        "path": "dot",
+        "loc": "scene/3",
+        "kind": "circle",
+        "layer": "default",
+        "box": [129, 116.877551, 14, 14],
+        "local": [0, 0, 14, 14],
+        "transform": [1, 0, 0, 1, 129, 116.877551],
+        "opacity": 1,
+        "fill": "#e17055",
+        "stroke": "#000000",
+        "stroke_width": 0
+      }
+    ]
+  }
+}

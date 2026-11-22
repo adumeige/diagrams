@@ -1,0 +1,15 @@
+- code: low_contrast
+  severity: warning
+  path: faint
+  message: "text color #c8c8c8 on #faf8f3 has contrast 1.58:1, below 4.5:1"
+  data: {ratio: 1.58, foreground: "#c8c8c8", background: "#faf8f3"}
+- code: low_contrast
+  severity: warning
+  path: banner.on_yellow
+  message: "text color #ffffff on #fdcb6e has contrast 1.51:1, below 4.5:1"
+  data: {ratio: 1.51, foreground: "#ffffff", background: "#fdcb6e"}
+- code: low_contrast
+  severity: warning
+  path: banner.large
+  message: "text color #d35400 on #fdcb6e has contrast 2.77:1, below 3:1"
+  data: {ratio: 2.77, foreground: "#d35400", background: "#fdcb6e"}

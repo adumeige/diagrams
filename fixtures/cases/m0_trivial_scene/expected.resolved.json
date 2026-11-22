@@ -1,0 +1,57 @@
+{
+  "format": "diagrams/0.1",
+  "viewport": {"width": 400, "height": 240},
+  "time": 0,
+  "root": {
+    "path": "scene",
+    "loc": "scene",
+    "kind": "container",
+    "layer": "default",
+    "box": [40, 40, 320, 160],
+    "local": [40, 40, 320, 160],
+    "transform": [1, 0, 0, 1, 0, 0],
+    "opacity": 1,
+    "children": [
+      {
+        "path": "card",
+        "loc": "scene/0",
+        "kind": "rect",
+        "layer": "default",
+        "box": [40, 40, 320, 160],
+        "local": [0, 0, 320, 160],
+        "transform": [1, 0, 0, 1, 40, 40],
+        "opacity": 1,
+        "fill": "#f4f1ea",
+        "stroke": "#2d3436",
+        "stroke_width": 2,
+        "corner_radius": 12
+      },
+      {
+        "path": "dot",
+        "loc": "scene/1",
+        "kind": "circle",
+        "layer": "default",
+        "box": [72, 96, 48, 48],
+        "local": [0, 0, 48, 48],
+        "transform": [1, 0, 0, 1, 72, 96],
+        "opacity": 1,
+        "fill": "#e17055",
+        "stroke": "#00000000",
+        "stroke_width": 1
+      },
+      {
+        "path": "label",
+        "loc": "scene/2",
+        "kind": "text",
+        "layer": "default",
+        "box": [128, 98, 166.704, 28.8],
+        "local": [0, 0, 166.704, 28.8],
+        "transform": [1, 0, 0, 1, 128, 98],
+        "opacity": 1,
+        "fill": "#2d3436",
+        "font_size": 24,
+        "lines": [{"text": "Hello, diagrams", "x": 0, "baseline": 20.532, "width": 166.704}]
+      }
+    ]
+  }
+}

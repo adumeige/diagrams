@@ -1,0 +1,15 @@
+- code: out_of_view
+  severity: warning
+  path: band
+  message: node extends past the viewport
+  data: {left: 403.5, top: 0, right: 700.5, bottom: 0}
+- code: out_of_view
+  severity: warning
+  path: stage.b
+  message: node is entirely outside the viewport
+  data: {left: 0, top: 0, right: 849, bottom: 248}
+- code: out_of_view
+  severity: warning
+  path: scene/1/2
+  message: node extends past the viewport
+  data: {left: 0, top: 0, right: 519, bottom: 164.84}

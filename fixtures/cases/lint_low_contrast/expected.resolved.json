@@ -1,0 +1,99 @@
+{
+  "format": "diagrams/0.1",
+  "viewport": {"width": 360, "height": 140},
+  "time": 0,
+  "background": "#faf8f3",
+  "root": {
+    "path": "scene",
+    "loc": "scene",
+    "kind": "container",
+    "layer": "default",
+    "box": [20, 16, 320, 104],
+    "local": [20, 16, 320, 104],
+    "transform": [1, 0, 0, 1, 0, 0],
+    "opacity": 1,
+    "children": [
+      {
+        "path": "faint",
+        "loc": "scene/0",
+        "kind": "text",
+        "layer": "default",
+        "box": [20, 16, 149.936, 19.84],
+        "local": [0, 0, 149.936, 19.84],
+        "transform": [1, 0, 0, 1, 20, 16],
+        "opacity": 1,
+        "fill": "#c8c8c8",
+        "font": "body",
+        "font_size": 16,
+        "lines": [{"text": "Pale text on the page", "x": 0, "baseline": 15.2, "width": 149.936}]
+      },
+      {
+        "path": "readable",
+        "loc": "scene/1",
+        "kind": "text",
+        "layer": "default",
+        "box": [20, 44, 111.808, 19.84],
+        "local": [0, 0, 111.808, 19.84],
+        "transform": [1, 0, 0, 1, 20, 44],
+        "opacity": 1,
+        "fill": "#2d3436",
+        "font": "body",
+        "font_size": 16,
+        "lines": [{"text": "Ink on the page", "x": 0, "baseline": 15.2, "width": 111.808}]
+      },
+      {
+        "path": "banner",
+        "loc": "scene/2",
+        "kind": "container",
+        "layer": "default",
+        "box": [20, 76, 320, 44],
+        "local": [0, 0, 320, 44],
+        "transform": [1, 0, 0, 1, 20, 76],
+        "opacity": 1,
+        "children": [
+          {
+            "path": "banner.bg",
+            "loc": "scene/2/0",
+            "kind": "rect",
+            "layer": "default",
+            "box": [20, 76, 320, 44],
+            "local": [0, 0, 320, 44],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "fill": "#fdcb6e",
+            "stroke": "#000000",
+            "stroke_width": 0
+          },
+          {
+            "path": "banner.on_yellow",
+            "loc": "scene/2/1",
+            "kind": "text",
+            "layer": "default",
+            "box": [32, 88, 109.392, 19.84],
+            "local": [0, 0, 109.392, 19.84],
+            "transform": [1, 0, 0, 1, 12, 12],
+            "opacity": 1,
+            "fill": "#ffffff",
+            "font": "body",
+            "font_size": 16,
+            "lines": [{"text": "White on yellow", "x": 0, "baseline": 15.2, "width": 109.392}]
+          },
+          {
+            "path": "banner.large",
+            "loc": "scene/2/2",
+            "kind": "text",
+            "layer": "default",
+            "box": [190, 82, 70.112, 34.72],
+            "local": [0, 0, 70.112, 34.72],
+            "transform": [1, 0, 0, 1, 170, 6],
+            "opacity": 1,
+            "fill": "#d35400",
+            "font": "body",
+            "font_size": 28,
+            "lines": [{"text": "Large", "x": 0, "baseline": 26.6, "width": 70.112}]
+          }
+        ]
+      }
+    ]
+  }
+}

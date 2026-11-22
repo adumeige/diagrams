@@ -1,0 +1,27 @@
+# Milestone 0: the full pipeline on a trivial scene.
+format: diagrams/0.1
+title: Trivial scene
+viewport: {width: 400, height: 240}
+scene:
+  children:
+    - shape: rect
+      id: card
+      at: {x: 40, y: 40}
+      width: "=viewport.width - 80"
+      height: 160
+      corner_radius: 12
+      fill: "#f4f1ea"
+      stroke: "#2d3436"
+      stroke_width: 2
+    - shape: circle
+      id: dot
+      at: {x: 72, y: 96}
+      radius: 24
+      fill: "#e17055"
+      stroke: "#00000000"
+    - shape: text
+      id: label
+      at: {x: 128, y: 98}
+      text: Hello, diagrams
+      font_size: 24
+      fill: "#2d3436"

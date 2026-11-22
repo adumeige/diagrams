@@ -1,0 +1,5 @@
+- code: attach_ignored
+  severity: warning
+  path: strip.s2.attach
+  source: {file: input.authored.yaml, line: 34, column: 81}
+  message: the parent lays out its children (row); the container wins and 'attach' is ignored

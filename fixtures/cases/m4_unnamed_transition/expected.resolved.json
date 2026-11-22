@@ -1,0 +1,151 @@
+{
+  "format": "diagrams/0.1",
+  "viewport": {"width": 360, "height": 200},
+  "time": 0,
+  "background": "#faf8f3",
+  "states": {"scene": "one"},
+  "root": {
+    "path": "scene",
+    "loc": "scene",
+    "kind": "container",
+    "layer": "default",
+    "box": [0, 0, 340, 180],
+    "local": [0, 0, 340, 180],
+    "transform": [1, 0, 0, 1, 0, 0],
+    "opacity": 1,
+    "children": [
+      {
+        "path": "a",
+        "loc": "scene/0",
+        "kind": "rect",
+        "layer": "default",
+        "box": [20, 20, 80, 40],
+        "local": [0, 0, 80, 40],
+        "transform": [1, 0, 0, 1, 20, 20],
+        "opacity": 1,
+        "fill": "#b2bec3",
+        "stroke": "#000000",
+        "stroke_width": 0
+      },
+      {
+        "path": "b",
+        "loc": "scene/1",
+        "kind": "rect",
+        "layer": "default",
+        "box": [260, 20, 80, 40],
+        "local": [0, 0, 80, 40],
+        "transform": [1, 0, 0, 1, 260, 20],
+        "opacity": 1,
+        "fill": "#b2bec3",
+        "stroke": "#000000",
+        "stroke_width": 0
+      },
+      {
+        "path": "hot",
+        "loc": "scene/2",
+        "kind": "rect",
+        "layer": "default",
+        "box": [140, 140, 80, 40],
+        "local": [0, 0, 80, 40],
+        "transform": [1, 0, 0, 1, 140, 140],
+        "opacity": 1,
+        "fill": "#b2bec3",
+        "stroke": "#000000",
+        "stroke_width": 0
+      },
+      {
+        "path": null,
+        "loc": "scene/3",
+        "kind": "container",
+        "template": "deck.link",
+        "layer": "default",
+        "box": [0, 0, 0, 0],
+        "local": [0, 0, 0, 0],
+        "transform": [1, 0, 0, 1, 0, 0],
+        "opacity": 1,
+        "children": [
+          {
+            "path": "line",
+            "loc": "scene/3/0",
+            "kind": "connector",
+            "layer": "default",
+            "box": [100, 35.2, 160, 9.6],
+            "local": [100, 35.2, 160, 9.6],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "stroke": "#636e72",
+            "stroke_width": 2,
+            "points": [[100, 40], [248, 40]],
+            "markers": [
+              {"kind": "arrow", "points": [[260, 40], [248, 44.8], [248, 35.2]]}
+            ]
+          }
+        ]
+      },
+      {
+        "path": null,
+        "loc": "scene/4",
+        "kind": "container",
+        "template": "deck.link",
+        "layer": "default",
+        "box": [0, 0, 0, 0],
+        "local": [0, 0, 0, 0],
+        "transform": [1, 0, 0, 1, 0, 0],
+        "opacity": 1,
+        "children": [
+          {
+            "path": "line",
+            "loc": "scene/4/0",
+            "kind": "connector",
+            "layer": "default",
+            "box": [200, 60, 80, 80],
+            "local": [200, 60, 80, 80],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "stroke": "#636e72",
+            "stroke_width": 2,
+            "points": [[280, 60], [208.485281, 131.514719]],
+            "markers": [
+              {
+                "kind": "arrow",
+                "points": [[200, 140], [205.091169, 128.120606], [211.879394, 134.908831]]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "path": null,
+        "loc": "scene/5",
+        "kind": "container",
+        "template": "deck.link",
+        "layer": "default",
+        "box": [0, 0, 0, 0],
+        "local": [0, 0, 0, 0],
+        "transform": [1, 0, 0, 1, 0, 0],
+        "opacity": 1,
+        "children": [
+          {
+            "path": "line",
+            "loc": "scene/5/0",
+            "kind": "connector",
+            "layer": "default",
+            "box": [80, 60, 80, 80],
+            "local": [80, 60, 80, 80],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "stroke": "#636e72",
+            "stroke_width": 2,
+            "points": [[160, 140], [88.485281, 68.485281]],
+            "markers": [
+              {
+                "kind": "arrow",
+                "points": [[80, 60], [91.879394, 65.091169], [85.091169, 71.879394]]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

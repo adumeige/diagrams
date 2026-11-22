@@ -1,0 +1,36 @@
+# Templates from a library (spec section 9): parameters, keyed lists through for_each, if,
+# templates using templates (association -> relation), markers, and a path to an exported part.
+format: diagrams/0.1
+viewport: {width: 760, height: 420}
+imports:
+  uml: ../../../libs/uml.yaml
+  paper: ../../../themes/paper.yaml
+base_theme: paper
+scene:
+  layers: [edges, default]
+  children:
+    - use: uml.class
+      id: team
+      at: {x: 40, y: 40}
+      name: Team
+      attributes: [name: String, country: String]
+      operations:
+        - squad: "(): Player[]"
+    - use: uml.class
+      id: player
+      at: {x: 440, y: 40}
+      name: Player
+      stereotype: entity
+      attributes: [name: String, position: Position, caps: Int]
+    - use: uml.class
+      id: person
+      at: {x: 460, y: 300}
+      name: Person
+      abstract: true
+    - {use: uml.aggregation, id: lineup, layer: edges, from: team, to: player, label: lineup, from_mult: "1", to_mult: "23"}
+    - {use: uml.generalization, layer: edges, from: player, to: person}
+    - use: uml.note
+      id: squad_note
+      text: "Matchday squad: 15 starters and 8 replacements"
+      attach: {anchor: north, to: lineup.line.mid, gap: -110}
+    - {shape: connector, from: squad_note, to: team.attributes, stroke: "#636e72", marker_end: arrow}

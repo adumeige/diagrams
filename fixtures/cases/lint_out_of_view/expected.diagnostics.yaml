@@ -1,0 +1,15 @@
+- code: out_of_view
+  severity: warning
+  path: spill
+  message: node extends past the viewport
+  data: {left: 0, top: 0, right: 40, bottom: 0}
+- code: out_of_view
+  severity: warning
+  path: far.lost
+  message: node is entirely outside the viewport
+  data: {left: 0, top: 0, right: 220, bottom: 300}
+- code: text_too_small
+  severity: warning
+  path: tiny
+  message: "text renders at 6 units, below 9"
+  data: {size: 6}

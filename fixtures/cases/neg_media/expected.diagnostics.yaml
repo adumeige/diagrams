@@ -1,0 +1,30 @@
+- code: schema
+  severity: error
+  path: assets.model
+  source: {file: input.authored.yaml, line: 9, column: 17}
+  message: "asset kind 'mesh' is not one of font, image, audio, video"
+- code: schema
+  severity: error
+  path: empty
+  source: {file: input.authored.yaml, line: 12, column: 7}
+  message: an image requires 'asset'
+- code: path_unresolved
+  severity: error
+  path: missing.asset
+  source: {file: input.authored.yaml, line: 13, column: 42}
+  message: no 'assets' map declares 'logo'; declare it in the document or an imported file
+- code: schema
+  severity: error
+  path: wrong.asset
+  source: {file: input.authored.yaml, line: 14, column: 40}
+  message: asset 'photo' is an image; this node shows a video
+- code: schema
+  severity: error
+  path: voice_node.volume
+  source: {file: input.authored.yaml, line: 15, column: 60}
+  message: "'volume' is at least 0"
+- code: schema
+  severity: error
+  path: odd
+  source: {file: input.authored.yaml, line: 16, column: 15}
+  message: "unknown media kind hologram; expected one of image, video, audio"

@@ -1,0 +1,19 @@
+# Light theme. Font: Atkinson Hyperlegible (SIL OFL 1.1, see ../fonts/OFL.txt).
+format: diagrams/0.1
+title: Paper
+assets:
+  body: {kind: font, file: ../fonts/AtkinsonHyperlegible-Regular.ttf}
+tokens:
+  background: "#faf8f3"
+  surface: "#ffffff"
+  primary: "#2d6cdf"
+  accent: "#e17055"
+  ink: "#2d3436"
+  muted: "#636e72"
+  stroke: "#2d3436"
+  stroke_width: 2
+  radius: 8
+  font_body: body
+styles:
+  card: {fill: "=theme.surface", stroke: "=theme.stroke", stroke_width: "=theme.stroke_width", corner_radius: "=theme.radius"}
+  caption: {fill: "=theme.muted", font_size: 13}

@@ -1,0 +1,5 @@
+# One resolved scene and image per entry (spec section 19, animation fixtures).
+- {name: two, states: {scene: two}}
+- {name: pulse, from: {scene: one}, states: {scene: two}, time: 0.2}
+- {name: moving, from: {scene: one}, states: {scene: two}, time: 0.7}
+- {name: entering, from: {scene: one}, states: {scene: two}, time: 1.2}

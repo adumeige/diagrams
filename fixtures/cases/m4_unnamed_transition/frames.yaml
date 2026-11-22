@@ -1,0 +1,2 @@
+# One resolved scene and image per entry (spec section 19, animation fixtures).
+- {name: half, from: {scene: one}, states: {scene: two}, time: 0.25}

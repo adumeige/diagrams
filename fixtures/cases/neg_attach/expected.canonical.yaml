@@ -1,0 +1,144 @@
+format: diagrams/0.1
+viewport: {width: 200, height: 200}
+scene:
+  layout: free
+  rotation: 0
+  scale: 1
+  opacity: 1
+  present: true
+  children:
+    - id: holder
+      layout: free
+      layer: default
+      at: {x: 0, y: 0}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      attach: {to: holder.inner}
+      children:
+        - id: inner
+          shape: rect
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          width: 10
+          height: 10
+          corner_radius: 0
+          fill: "#ffffff"
+          stroke: "#000000"
+          stroke_width: 1
+    - id: a
+      shape: rect
+      layer: default
+      at: {x: 0, y: 0}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      attach: {to: nowhere}
+      width: 10
+      height: 10
+      corner_radius: 0
+      fill: "#ffffff"
+      stroke: "#000000"
+      stroke_width: 1
+    - id: b
+      shape: rect
+      layer: default
+      at: {x: 0, y: 0}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      attach: {to: a.top_left, anchor: middle, policy: stretch, extra: 1}
+      width: 10
+      height: 10
+      corner_radius: 0
+      fill: "#ffffff"
+      stroke: "#000000"
+      stroke_width: 1
+    - id: hidden
+      shape: rect
+      layer: default
+      at: {x: 0, y: 0}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: false
+      width: 10
+      height: 10
+      corner_radius: 0
+      fill: "#ffffff"
+      stroke: "#000000"
+      stroke_width: 1
+    - id: c
+      shape: rect
+      layer: default
+      at: {x: 0, y: 0}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      attach: {to: hidden}
+      width: 10
+      height: 10
+      corner_radius: 0
+      fill: "#ffffff"
+      stroke: "#000000"
+      stroke_width: 1
+    - id: k
+      shape: connector
+      layer: default
+      at: {x: 0, y: 0}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      from: a
+      to: a.mid
+      route: straight
+      marker_start: none
+      marker_end: none
+      stroke: "#000000"
+      stroke_width: 1
+    - id: k2
+      shape: connector
+      layer: default
+      at: {x: 0, y: 0}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      from: a
+      route: straight
+      marker_start: none
+      marker_end: none
+      stroke: "#000000"
+      stroke_width: 1
+    - id: f
+      shape: rect
+      layer: default
+      at: {x: 0, y: 0}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      width: {ref: a.size}
+      height: {ref: nobody.height}
+      corner_radius: 0
+      fill: "#ffffff"
+      stroke: "#000000"
+      stroke_width: 1
+    - id: g
+      layout: grid
+      layer: default
+      at: {x: 0, y: 0}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      children: []

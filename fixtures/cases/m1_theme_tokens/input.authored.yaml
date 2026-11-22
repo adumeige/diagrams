@@ -1,0 +1,36 @@
+# Theme tokens (spec section 10): a base theme, token references, subtree overrides by map and by
+# theme alias, the `background` token, and text measured with the theme's font from the manifest.
+format: diagrams/0.1
+title: Theme tokens
+viewport: {width: 480, height: 300}
+imports:
+  paper: ../../../themes/paper.yaml
+  dark: ../../../themes/dark.yaml
+base_theme: paper
+scene:
+  children:
+    - shape: text
+      id: heading
+      at: {x: 24, y: 20}
+      text: Tokens and fonts
+      font_size: 28
+      fill: "=theme.ink"
+    - id: light
+      at: {x: 24, y: 80}
+      children:
+        - {shape: rect, id: box, width: 200, height: 120, corner_radius: "=theme.radius", fill: "=theme.surface", stroke: "=theme.stroke", stroke_width: "=theme.stroke_width"}
+        - {shape: circle, id: dot, at: {x: 16, y: 16}, radius: 10, fill: "=theme.primary", stroke_width: 0}
+        - {shape: text, id: label, at: {x: 16, y: 48}, width: 168, text_align: center, text: "Base theme\nsecond line", fill: "=theme.ink"}
+    - id: dark_card
+      at: {x: 256, y: 80}
+      theme: dark
+      children:
+        - {shape: rect, id: box, width: 200, height: 120, corner_radius: "=theme.radius", fill: "=theme.surface", stroke: "=theme.stroke", stroke_width: "=theme.stroke_width"}
+        - {shape: circle, id: dot, at: {x: 16, y: 16}, radius: 10, fill: "=theme.primary", stroke_width: 0}
+        - {shape: text, id: label, at: {x: 16, y: 48}, width: 168, text_align: center, text: "theme: dark", fill: "=theme.ink"}
+    - id: override
+      at: {x: 24, y: 220}
+      theme: {primary: "=theme.accent", stroke_width: 4}
+      children:
+        - {shape: rect, id: bar, width: 432, height: 40, corner_radius: 20, fill: "=theme.primary", stroke: "=theme.stroke", stroke_width: "=theme.stroke_width"}
+        - {shape: text, id: note, at: {x: 20, y: 5}, text: "Overridden primary, stroke 4", font_size: 24, fill: "#ffffff"}

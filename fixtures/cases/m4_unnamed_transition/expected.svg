@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="200" viewBox="0 0 360 200">
+  <rect width="100%" height="100%" fill="#faf8f3"/>
+  <g data-path="scene">
+    <rect data-path="a" transform="translate(20 20)" width="80" height="40" fill="#b2bec3"/>
+    <rect data-path="b" transform="translate(260 20)" width="80" height="40" fill="#b2bec3"/>
+    <rect data-path="hot" transform="translate(140 140)" width="80" height="40" fill="#b2bec3"/>
+    <g>
+      <g data-path="line">
+        <polyline points="100,40 248,40" fill="none" stroke="#636e72" stroke-width="2"/>
+        <polygon points="260,40 248,44.8 248,35.2" fill="#636e72" stroke="#636e72" stroke-width="2" stroke-linejoin="miter"/>
+      </g>
+    </g>
+    <g>
+      <g data-path="line">
+        <polyline points="280,60 208.485281,131.514719" fill="none" stroke="#636e72" stroke-width="2"/>
+        <polygon points="200,140 205.091169,128.120606 211.879394,134.908831" fill="#636e72" stroke="#636e72" stroke-width="2" stroke-linejoin="miter"/>
+      </g>
+    </g>
+    <g>
+      <g data-path="line">
+        <polyline points="160,140 88.485281,68.485281" fill="none" stroke="#636e72" stroke-width="2"/>
+        <polygon points="80,60 91.879394,65.091169 85.091169,71.879394" fill="#636e72" stroke="#636e72" stroke-width="2" stroke-linejoin="miter"/>
+      </g>
+    </g>
+  </g>
+</svg>

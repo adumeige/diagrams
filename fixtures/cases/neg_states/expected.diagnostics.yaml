@@ -1,0 +1,77 @@
+- code: schema
+  severity: error
+  path: scene.states.defaults.ease
+  source: {file: input.authored.yaml, line: 9, column: 37}
+  message: "an easing is one of linear, in, out, in_out or {bezier: [x1, y1, x2, y2]}, found string"
+- code: path_unresolved
+  severity: error
+  path: scene.states.transitions
+  source: {file: input.authored.yaml, line: 16, column: 24}
+  message: no state 's7' in this container
+- code: extends_cycle
+  severity: error
+  path: scene.states.s2
+  source: {file: input.authored.yaml, line: 12, column: 9}
+  message: the extends chain of 's2' loops
+- code: extends_cycle
+  severity: error
+  path: scene.states.s3
+  source: {file: input.authored.yaml, line: 13, column: 9}
+  message: the extends chain of 's3' loops
+- code: path_unresolved
+  severity: error
+  path: scene.states.s4.extends
+  source: {file: input.authored.yaml, line: 14, column: 27}
+  message: no state 's9' in this container
+- code: path_unresolved
+  severity: error
+  path: scene.states.s1.nothing.present
+  source: {file: input.authored.yaml, line: 11, column: 41}
+  message: "'nothing.present' matches no node or property in the scope of scene"
+- code: schema
+  severity: error
+  path: scene.states.s1.a.colour
+  source: {file: input.authored.yaml, line: 11, column: 57}
+  message: "'colour' is not a property a state can set on a"
+- code: schema
+  severity: error
+  path: scene.states.s1.a
+  source: {file: input.authored.yaml, line: 11, column: 71}
+  message: "'a' names a node; a state sets one of its properties, such as 'a.present'"
+- code: schema
+  severity: error
+  path: scene.states.s3.box.state
+  source: {file: input.authored.yaml, line: 13, column: 48}
+  message: "box owns no state container, so its 'state' cannot be set"
+- code: schema
+  severity: error
+  path: scene.states.s3.a.present
+  source: {file: input.authored.yaml, line: 13, column: 65}
+  message: "'present' is true or false, found string"
+- code: schema
+  severity: error
+  path: box.state
+  source: {file: input.authored.yaml, line: 20, column: 14}
+  message: "'state' needs a state container ('states') on the same node"
+- code: schema
+  severity: error
+  path: box.states
+  source: {file: input.authored.yaml, line: 21, column: 15}
+  message: "a state container has exactly one of sequence, tree, graph, bag; found sequence, bag"
+- code: encapsulation
+  severity: warning
+  path: "c.states.lit.list.item[1].present"
+  source: {file: input.authored.yaml, line: 24, column: 80}
+  message: "'list.item[1].present' reaches inside list past the interface of deck.bullets; exported parts: none"
+- code: token_missing
+  severity: error
+  path: list
+  source: {file: input.authored.yaml, line: 25, column: 13}
+  message: "deck.bullets expects token 'ink', which no theme in scope provides; no theme is in scope (set 'base_theme')"
+  data: {token: ink}
+- code: token_missing
+  severity: error
+  path: list
+  source: {file: input.authored.yaml, line: 25, column: 13}
+  message: "deck.bullets expects token 'primary', which no theme in scope provides; no theme is in scope (set 'base_theme')"
+  data: {token: primary}

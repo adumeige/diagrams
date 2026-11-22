@@ -1,0 +1,21 @@
+# A library with mistakes of its own, and two templates that use each other.
+format: diagrams/0.1
+templates:
+  badge:
+    params:
+      label: {type: string}
+      size: {type: number, default: "big"}
+      kind: {type: enum, values: [info, warn], default: info}
+    exports: {tokens: [primary]}
+    body:
+      shape: text
+      text: "=params.lable"
+  ping: {params: {}, body: {use: pong}}
+  pong: {params: {}, body: {use: ping}}
+  box:
+    params: {}
+    body:
+      layout: column
+      children:
+        - {shape: rect, id: inner, width: 10, height: 10}
+        - {slot: default}

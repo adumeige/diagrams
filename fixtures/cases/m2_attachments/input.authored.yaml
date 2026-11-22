@@ -1,0 +1,34 @@
+# Directed attachments and geometry references (spec sections 6 and 9).
+format: diagrams/0.1
+viewport: {width: 600, height: 360}
+scene:
+  children:
+    - id: team
+      at: {x: 60, y: 60}
+      children:
+        - {shape: rect, id: box, width: 160, height: 90, fill: "#dfe6e9", stroke: "#2d3436"}
+        - {shape: text, id: name, at: {x: 12, y: 10}, text: "Team", font_size: 18}
+    # a note to the right of the box: its west anchor meets the box's east anchor, 40 units out
+    - {shape: rect, id: note, width: 120, height: 50, fill: "#ffeaa7", stroke: "#2d3436", attach: {anchor: west, to: team.box, gap: 40}}
+    # chained: under the note, attached to its south anchor
+    - {shape: rect, id: under_note, width: 80, height: 30, fill: "#fab1a0", attach: {anchor: north, to: note.south, gap: 12}}
+    # anchor plus offset, into a node deep in another subtree
+    - {shape: circle, id: pin, radius: 8, fill: "#d63031", stroke_width: 0, attach: {to: team.name.north_east, offset: {x: 6, y: -6}}}
+    # rotated target: the attachment follows its world frame
+    - id: tilted
+      at: {x: 120, y: 230}
+      rotation: -20
+      children:
+        - {shape: rect, id: plate, width: 140, height: 50, fill: "#a29bfe"}
+    - {shape: rect, id: tag, width: 50, height: 24, fill: "#6c5ce7", attach: {anchor: west, to: tilted.plate.east, gap: 10}}
+    # geometry references: same frame as `at`
+    - {shape: rect, id: below, at: {x: "=team.left", y: "=team.bottom + 20"}, width: "=team.width", height: 16, fill: "#636e72"}
+    - {shape: text, id: caption, at: {x: "=below.right + 8", y: "=below.top"}, text: "width of team", font_size: 12}
+    # inside a row, the container wins
+    - id: strip
+      at: {x: 380, y: 280}
+      layout: row
+      gap: 6
+      children:
+        - {shape: rect, id: s1, width: 30, height: 30, fill: "#00b894"}
+        - {shape: rect, id: s2, width: 30, height: 30, fill: "#00cec9", attach: {to: note}}

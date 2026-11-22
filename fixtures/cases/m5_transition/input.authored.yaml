@@ -1,0 +1,44 @@
+# Transitions (spec section 13): an explicit body (a clip, then the automatic diff), a node with an
+# exit clip, a node with an enter clip, and a connector and an attached label derived again on every
+# frame from the interpolated boxes.
+format: diagrams/0.1
+viewport: {width: 480, height: 240}
+imports:
+  motion: ../../../libs/motion.yaml
+  paper: ../../../themes/paper.yaml
+base_theme: paper
+scene:
+  states:
+    defaults: {duration: 0.6, ease: linear}
+    sequence:
+      - id: one
+      - id: two
+        set: {box.at.x: 330, box.at.y: 40, note.present: true, old.present: false}
+    transitions:
+      - from: one
+        to: two
+        sequence:
+          - {use: motion.pulse, target: box, duration: 0.4}
+          - {auto: all}
+  children:
+    - {shape: rect, id: hub, at: {x: 30, y: 90}, width: 70, height: 50, fill: "#636e72", stroke_width: 0}
+    - {shape: rect, id: box, at: {x: 180, y: 140}, width: 90, height: 50, fill: "=theme.accent", stroke_width: 0}
+    - {shape: text, id: label, text: moving, font_size: 14, fill: "#2d3436", attach: {anchor: north, to: box.south, gap: 4}}
+    - {shape: connector, id: wire, from: hub, to: box, stroke: "#2d3436", stroke_width: 2, marker_end: arrow}
+    - shape: rect
+      id: old
+      at: {x: 30, y: 180}
+      width: 70
+      height: 30
+      fill: "#b2bec3"
+      stroke_width: 0
+      exit: {use: motion.fade_out, duration: 0.3}
+    - shape: rect
+      id: note
+      present: false
+      at: {x: 330, y: 160}
+      width: 90
+      height: 40
+      fill: "#00b894"
+      stroke_width: 0
+      enter: {use: motion.fade_in, duration: 0.4}
