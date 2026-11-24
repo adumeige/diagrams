@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="320" viewBox="0 0 640 320">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <g data-path="scene">
+    <rect data-path="solid" transform="translate(40 40)" width="120" height="70" fill="#ffffff" stroke="#2d3436" stroke-width="2"/>
+    <rect data-path="box" transform="translate(220 40)" width="120" height="70" rx="10" fill="#dfe6e9" stroke="#2d3436" stroke-width="2" stroke-dasharray="8 5"/>
+    <ellipse data-path="oval" transform="translate(400 40)" cx="80" cy="35" rx="80" ry="35" fill="#ffeaa7" stroke="#d63031" stroke-width="2" stroke-dasharray="2 4"/>
+    <polyline data-path="zigzag" transform="translate(40 160)" points="0,40 40,0 80,40 120,0" fill="none" stroke="#0984e3" stroke-width="3" stroke-dasharray="10 4 2"/>
+    <path data-path="wave" transform="translate(220 160)" d="M0 20 C30 -10 60 50 120 20" fill="#000000" fill-opacity="0" stroke="#00b894" stroke-width="2" stroke-dasharray="6 3"/>
+    <g data-path="link">
+      <polyline points="160,75 207.4,75" fill="none" stroke="#2d3436" stroke-width="1.5" stroke-dasharray="6 4"/>
+      <polygon points="220,75 207.4,80.775 207.4,69.225" fill="none" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+    </g>
+    <g data-path="back">
+      <polyline points="296.8,110 400,110" fill="none" stroke="#6c5ce7" stroke-width="1.5" stroke-dasharray="4 4"/>
+      <polyline points="389.5,114.725 400,110 389.5,105.275" fill="none" stroke="#6c5ce7" stroke-width="1.5" stroke-linejoin="miter"/>
+      <polygon points="280,110 288.4,105.8 296.8,110 288.4,114.2" fill="#6c5ce7" stroke="#6c5ce7" stroke-width="1.5" stroke-linejoin="miter"/>
+    </g>
+  </g>
+</svg>

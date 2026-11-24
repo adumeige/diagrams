@@ -1,0 +1,57 @@
+# UML use case diagram (libs/uml.yaml): actors, a system boundary, use cases, associations,
+# include, extend with a condition, and generalization between actors.
+#   diagrams render examples/uml_use_cases.yaml --out uml_use_cases.png --scale 2
+format: diagrams/0.1
+title: "UML: shop use cases"
+viewport: {width: 1000, height: 380}
+imports:
+  uml: ../libs/uml.yaml
+  paper: ../themes/paper.yaml
+base_theme: paper
+scene:
+  layers: [backdrop, relations, default]
+  children:
+    - {shape: rect, layer: backdrop, width: "=viewport.width", height: "=viewport.height", fill: "=theme.background", stroke_width: 0}
+    - id: board
+      at: {x: 40, y: 30}
+      layout: row
+      gap: 90
+      align: center
+      children:
+        - layout: column
+          gap: 90
+          align: center
+          children:
+            - {use: uml.actor, id: customer, name: Customer}
+            - {use: uml.actor, id: member, name: Member}
+        - use: uml.system
+          id: shop
+          name: Online shop
+          children:
+            - layout: row
+              gap: 170
+              align: center
+              children:
+                - layout: column
+                  gap: 36
+                  align: center
+                  children:
+                    - {use: uml.use_case, id: browse, name: Browse catalog}
+                    - {use: uml.use_case, id: checkout, name: Check out}
+                    - {use: uml.use_case, id: track, name: Track order}
+                - layout: column
+                  gap: 36
+                  align: center
+                  children:
+                    - {use: uml.use_case, id: pay, name: Pay}
+                    - {use: uml.use_case, id: coupon, name: Apply coupon}
+                    - {use: uml.use_case, id: sign_in, name: Sign in}
+        - {use: uml.actor, id: bank, name: Bank}
+    - {use: uml.link, layer: relations, from: board.customer.figure, to: board.shop.browse}
+    - {use: uml.link, layer: relations, from: board.customer.figure, to: board.shop.checkout}
+    - {use: uml.link, layer: relations, from: board.member.figure, to: board.shop.track}
+    - {use: uml.generalization, layer: relations, from: board.member.figure, to: board.customer, route: straight}
+    - {use: uml.include, layer: relations, from: board.shop.checkout, to: board.shop.pay}
+    - {use: uml.extend, layer: relations, from: board.shop.coupon, to: board.shop.checkout, condition: code entered, label_anchor: north}
+    - {use: uml.include, layer: relations, from: board.shop.track, to: board.shop.sign_in}
+    - {use: uml.link, layer: relations, from: board.bank.figure, to: board.shop.pay}

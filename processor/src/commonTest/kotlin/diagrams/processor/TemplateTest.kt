@@ -28,6 +28,17 @@ class TemplateTest {
                       id: row
                       do: {shape: rect, width: "=it.value * 10", height: "=index + 1"}
                     - {slot: default}
+              table:
+                params:
+                  rows: {type: list, keyed: true, item: {type: string}, default: []}
+                exports: {parts: [row]}
+                body:
+                  layout: column
+                  children:
+                    - for_each: params.rows
+                      as: r
+                      id: row
+                      do: {shape: text, text: "=r.value"}
         """.trimIndent(),
     )
     private val loader = ImportLoader { path, _ -> files[path]?.let { LoadedFile(it, path) } }
@@ -62,6 +73,23 @@ class TemplateTest {
         assertNotNull(index.resolve("l.dot", from)?.node?.takeIf { it.id == "dot" })
         assertEquals(null, index.resolve("l.heading", from)!!.breach)
         assertEquals("l", index.resolve("l.row[a]", from)!!.breach?.path)
+    }
+
+    @Test
+    fun exportingAForEachExportsItsItems() {
+        val r = process(
+            """
+              children:
+                - use: lib.table
+                  id: t
+                  rows: [a: first, b: second]
+            """.trimIndent().prependIndent("  "),
+        )
+        assertTrue(!r.hasErrors, r.diagnostics.joinToString("\n"))
+        val index = NodeIndex(Expander(r.environment, DiagnosticSink()).expand(r.canonical!!))
+        val m = index.resolve("t.row[b]", index.root!!)!!
+        assertEquals("t.row[b]", m.node.path)
+        assertEquals(null, m.breach, "row is exported, so are its items")
     }
 
     @Test

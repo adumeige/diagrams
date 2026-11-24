@@ -93,7 +93,7 @@ object Transitions {
                 world = world,
                 box = world.apply(local),
                 opacity = lerp(an.opacity, bn.opacity, p),
-                paint = Paint(color(an.paint.fill, bn.paint.fill, p), color(an.paint.stroke, bn.paint.stroke, p), lerp(an.paint.strokeWidth, bn.paint.strokeWidth, p)),
+                paint = Paint(color(an.paint.fill, bn.paint.fill, p), color(an.paint.stroke, bn.paint.stroke, p), lerp(an.paint.strokeWidth, bn.paint.strokeWidth, p), if (p < 0.5) an.paint.dash else bn.paint.dash),
                 geometry = geometry(an.geometry, bn.geometry, p),
                 children = bn.children.mapNotNull { build(it, world) },
                 template = bn.template,

@@ -188,11 +188,13 @@ class NodeIndex(tree: ENode?) {
     /**
      * Stepping from [via] to [target] reaches past a template's interface unless the path is written
      * inside that instance, or [target] is a part the instance exports and the step starts at the instance.
+     * Exporting the id of a `for_each` exports its items, `step[m2]` with `step`.
      */
     private fun breachOf(from: NodeInfo, via: NodeInfo, target: NodeInfo): NodeInfo? {
         val owner = target.owner ?: return null
         if (from.isInside(owner) && from !== owner) return null
-        if (via === owner && target.id != null && target.id in owner.template?.exports?.parts.orEmpty()) return null
+        val part = target.id?.substringBefore('[')
+        if (via === owner && part != null && part in owner.template?.exports?.parts.orEmpty()) return null
         return owner
     }
 }

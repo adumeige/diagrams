@@ -1,0 +1,123 @@
+{
+  "format": "diagrams/0.1",
+  "viewport": {"width": 640, "height": 320},
+  "time": 0,
+  "root": {
+    "path": "scene",
+    "loc": "scene",
+    "kind": "container",
+    "layer": "default",
+    "box": [40, 40, 520, 170],
+    "local": [40, 40, 520, 170],
+    "transform": [1, 0, 0, 1, 0, 0],
+    "opacity": 1,
+    "children": [
+      {
+        "path": "solid",
+        "loc": "scene/0",
+        "kind": "rect",
+        "layer": "default",
+        "box": [40, 40, 120, 70],
+        "local": [0, 0, 120, 70],
+        "transform": [1, 0, 0, 1, 40, 40],
+        "opacity": 1,
+        "fill": "#ffffff",
+        "stroke": "#2d3436",
+        "stroke_width": 2
+      },
+      {
+        "path": "box",
+        "loc": "scene/1",
+        "kind": "rect",
+        "layer": "default",
+        "box": [220, 40, 120, 70],
+        "local": [0, 0, 120, 70],
+        "transform": [1, 0, 0, 1, 220, 40],
+        "opacity": 1,
+        "fill": "#dfe6e9",
+        "stroke": "#2d3436",
+        "stroke_width": 2,
+        "stroke_dash": [8, 5],
+        "corner_radius": 10
+      },
+      {
+        "path": "oval",
+        "loc": "scene/2",
+        "kind": "ellipse",
+        "layer": "default",
+        "box": [400, 40, 160, 70],
+        "local": [0, 0, 160, 70],
+        "transform": [1, 0, 0, 1, 400, 40],
+        "opacity": 1,
+        "fill": "#ffeaa7",
+        "stroke": "#d63031",
+        "stroke_width": 2,
+        "stroke_dash": [2, 4]
+      },
+      {
+        "path": "zigzag",
+        "loc": "scene/3",
+        "kind": "polyline",
+        "layer": "default",
+        "box": [40, 160, 120, 40],
+        "local": [0, 0, 120, 40],
+        "transform": [1, 0, 0, 1, 40, 160],
+        "opacity": 1,
+        "stroke": "#0984e3",
+        "stroke_width": 3,
+        "stroke_dash": [10, 4, 2],
+        "points": [[0, 40], [40, 0], [80, 40], [120, 0]]
+      },
+      {
+        "path": "wave",
+        "loc": "scene/4",
+        "kind": "path",
+        "layer": "default",
+        "box": [220, 150, 120, 60],
+        "local": [0, -10, 120, 60],
+        "transform": [1, 0, 0, 1, 220, 160],
+        "opacity": 1,
+        "fill": "#00000000",
+        "stroke": "#00b894",
+        "stroke_width": 2,
+        "stroke_dash": [6, 3],
+        "segments": [["M", 0, 20], ["C", 30, -10, 60, 50, 120, 20]]
+      },
+      {
+        "path": "link",
+        "loc": "scene/5",
+        "kind": "connector",
+        "layer": "default",
+        "box": [160, 69.225, 60, 11.55],
+        "local": [160, 69.225, 60, 11.55],
+        "transform": [1, 0, 0, 1, 0, 0],
+        "opacity": 1,
+        "stroke": "#2d3436",
+        "stroke_width": 1.5,
+        "stroke_dash": [6, 4],
+        "points": [[160, 75], [207.4, 75]],
+        "markers": [
+          {"kind": "triangle", "points": [[220, 75], [207.4, 80.775], [207.4, 69.225]]}
+        ]
+      },
+      {
+        "path": "back",
+        "loc": "scene/6",
+        "kind": "connector",
+        "layer": "default",
+        "box": [280, 105.275, 120, 9.45],
+        "local": [280, 105.275, 120, 9.45],
+        "transform": [1, 0, 0, 1, 0, 0],
+        "opacity": 1,
+        "stroke": "#6c5ce7",
+        "stroke_width": 1.5,
+        "stroke_dash": [4, 4],
+        "points": [[296.8, 110], [400, 110]],
+        "markers": [
+          {"kind": "open_arrow", "points": [[389.5, 114.725], [400, 110], [389.5, 105.275]]},
+          {"kind": "diamond", "points": [[280, 110], [288.4, 105.8], [296.8, 110], [288.4, 114.2]]}
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,96 @@
+# UML component and deployment diagrams (libs/uml.yaml): components with a port, provided and
+# required interfaces, an assembly; nodes, an execution environment, artifacts, a manifest
+# dependency, communication paths.
+#   diagrams render examples/uml_components.yaml --out uml_components.png --scale 2
+format: diagrams/0.1
+title: "UML: shop components and deployment"
+viewport: {width: 1220, height: 490}
+imports:
+  uml: ../libs/uml.yaml
+  paper: ../themes/paper.yaml
+base_theme: paper
+scene:
+  layers: [backdrop, relations, default]
+  children:
+    - {shape: rect, layer: backdrop, width: "=viewport.width", height: "=viewport.height", fill: "=theme.background", stroke_width: 0}
+    - id: frames
+      at: {x: 30, y: 24}
+      layout: row
+      gap: 40
+      align: start
+      children:
+        - use: uml.frame
+          id: parts
+          kind: cmp
+          name: Shop
+          children:
+            - layout: column
+              gap: 70
+              align: start
+              children:
+                - layout: row
+                  gap: 100
+                  align: center
+                  children:
+                    - {use: uml.component, id: web, name: Storefront}
+                    - {use: uml.assembly, id: orders_api, name: Orders}
+                    - use: uml.component
+                      id: ordering_svc
+                      name: Ordering
+                      children:
+                        - {use: uml.artifact, id: rules, name: pricing.rules, stereotype: file}
+                - layout: row
+                  gap: 100
+                  align: center
+                  children:
+                    - {use: uml.component, id: checkout, name: Checkout}
+                    - {use: uml.required_interface, id: needs_pay, name: Payments, facing: east}
+                    - {use: uml.provided_interface, id: gives_pay, name: Payments}
+                    - {use: uml.component, id: billing, name: Billing}
+        - use: uml.frame
+          id: deployment
+          kind: deployment
+          name: Production
+          children:
+            - layout: row
+              gap: 70
+              align: start
+              children:
+                - use: uml.node
+                  id: browser
+                  name: Browser
+                  stereotype: device
+                  children:
+                    - {use: uml.artifact, id: bundle, name: shop.js}
+                - use: uml.node
+                  id: server
+                  name: app-01
+                  stereotype: device
+                  children:
+                    - use: uml.node
+                      id: jvm
+                      name: JVM 21
+                      stereotype: executionEnvironment
+                      children:
+                        - {use: uml.artifact, id: jar, name: shop.jar}
+            - layout: row
+              gap: 150
+              align: start
+              children:
+                - {use: uml.component, id: ordering_c, name: Ordering}
+                - use: uml.node
+                  id: db
+                  name: db-01
+                  stereotype: device
+                  children:
+                    - {use: uml.artifact, id: schema, name: shop.sql, stereotype: schema}
+    # a port on the border of Ordering, and the lines to the interfaces
+    - {use: uml.port, id: in_port, attach: {anchor: center, to: frames.parts.ordering_svc.west}}
+    - {use: uml.link, layer: relations, from: frames.parts.web, to: frames.parts.orders_api.cup, route: straight}
+    - {use: uml.link, layer: relations, from: in_port, to: frames.parts.orders_api.ball, route: straight}
+    - {use: uml.link, layer: relations, from: frames.parts.checkout, to: frames.parts.needs_pay.cup, route: straight}
+    - {use: uml.link, layer: relations, from: frames.parts.billing, to: frames.parts.gives_pay.ball, route: straight}
+    # communication paths and a manifestation
+    - {use: uml.link, layer: relations, from: frames.deployment.browser, to: frames.deployment.server, label: HTTPS, route: straight}
+    - {use: uml.link, layer: relations, from: frames.deployment.server, to: frames.deployment.db, label: JDBC, route: straight, label_anchor: west, label_gap: -6}
+    - {use: uml.manifest, layer: relations, from: frames.deployment.server.jvm.jar, to: frames.deployment.ordering_c, route: straight, label_anchor: north_east, label_gap: -4}

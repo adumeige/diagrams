@@ -170,6 +170,10 @@ object RasterRenderer {
                         // a partly drawn stroke: one dash as long as that fraction of the outline
                         val len = length(shape)
                         BasicStroke(p.strokeWidth.toFloat(), BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10f, floatArrayOf((len * n.draw).toFloat().coerceAtLeast(0.001f), (len + 1).toFloat()), 0f)
+                    } else if (p.dash.isNotEmpty()) {
+                        // `stroke_dash`: an odd-length pattern repeats twice, as in SVG
+                        val d = (if (p.dash.size % 2 == 1) p.dash + p.dash else p.dash).map { it.toFloat().coerceAtLeast(0.001f) }
+                        BasicStroke(p.strokeWidth.toFloat(), BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10f, d.toFloatArray(), 0f)
                     } else {
                         BasicStroke(p.strokeWidth.toFloat(), BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER)
                     }

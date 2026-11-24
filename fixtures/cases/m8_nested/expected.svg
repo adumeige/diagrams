@@ -168,7 +168,7 @@
         <g transform="translate(320.674279 124.08)" font-family="diagrams-body" font-size="12" style="font-kerning: none; font-variant-ligatures: none" fill="#636e72">
           <text x="0 6.624 13.056 16.944 19.812 23.148 29.7" y="11.4" xml:space="preserve">outline</text>
         </g>
-        <g transform="translate(311.381666 92.184465)" font-family="diagrams-body" font-size="12" style="font-kerning: none; font-variant-ligatures: none" fill="#636e72">
+        <g transform="translate(294.211518 96.181013)" font-family="diagrams-body" font-size="12" style="font-kerning: none; font-variant-ligatures: none" fill="#636e72">
           <text x="0 6.888 9.348 11.808" y="11.4" xml:space="preserve">3..*</text>
         </g>
       </g>

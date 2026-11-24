@@ -1,21 +1,78 @@
-# UML class diagrams: classes, notes and the usual relations.
-# Expects a theme with the tokens surface, stroke, ink and muted (themes/paper.yaml has them).
+# UML 2.5: the structure, use case, activity, state machine and sequence diagrams.
+#
+#   Classes and objects       class, interface, enumeration, data_type, object, package, note
+#   Relations                 association, link, aggregation, composition, generalization,
+#                             realization, dependency, note_link (and relation, their base)
+#   Components and deployment component, port, provided_interface, required_interface, assembly,
+#                             node, artifact, deploy, manifest
+#   Use cases                 actor, use_case, system, include, extend
+#   Activities                initial, final, flow_final, action, object_node, decision, merge,
+#                             fork, join, send_signal, accept_event, accept_time, partition,
+#                             region, flow
+#   State machines            state, choice, junction, history, terminate, entry_point,
+#                             exit_point, separator, transition (initial and final as above)
+#   Sequences                 lifeline, message, self_message, fragment, operand, interaction_use
+#   Any diagram               frame (the "sd", "act", "stm", "pkg" heading), note, note_link
+#
+# Expects a theme with the tokens surface, stroke, ink and muted (themes/paper.yaml and
+# themes/dark.yaml have them). examples/uml_*.yaml show every template at work.
+#
+# Conventions:
+#   - Dependencies, realizations, includes, extends, replies and lifelines are dashed (stroke_dash).
+#   - An object's name, and a static member, are underlined: a rule drawn under the text (0.1 has
+#     no text decoration). Abstract elements carry {abstract} under their name (no italic font).
+#   - Relations, flows and transitions take route: layout by default, which follows the route a
+#     layered or tree container supplies and is a straight line anywhere else. Their label sits on
+#     the connector's 'label' anchor, label_gap away along its left normal (above a left-to-right
+#     line); a negative label_gap puts it on the other side.
+#   - Declare relations, flows and transitions in a free container next to the rows, columns or
+#     grids that place the elements, never inside them (they would take a slot). Containers that
+#     take children (package, system, node, component, partition, state, frame, fragment) are
+#     scopes: reach what they hold through them ('from: billing.invoice').
+#
+# Sequence diagrams: put the lifelines in a row with align: end, so that their steps line up
+# whatever their heads (an actor's is taller). A lifeline is a column of steps, a keyed list with
+# the same keys on every lifeline of the diagram: step m3 sits at the same height on all of them,
+# and a message joins two steps ('from: "client.step[m3]"', quoted because of the brackets). The
+# value of a step is what the lifeline shows there: '' its dashed line, start, on, end or once an
+# activation bar, none nothing, create its head, destroy its end. A fragment, an operand or an
+# interaction use is placed with geometry expressions on the steps:
+# 'at: {x: "=client.left - 16", y: "=client.step[m2].top"}'; leave an empty step for the tag of
+# each fragment. Paint fragments above the lifelines (a layer after theirs).
 format: diagrams/0.1
 title: UML
 styles:
   box: {fill: "=theme.surface", stroke: "=theme.stroke", stroke_width: 1.5}
+  rounded: {fill: "=theme.surface", stroke: "=theme.stroke", stroke_width: 1.5, corner_radius: 12}
+  container: {fill: "#00000000", stroke: "=theme.stroke", stroke_width: 1.5}
+  container_rounded: {fill: "#00000000", stroke: "=theme.stroke", stroke_width: 1.5, corner_radius: 12}
+  dashed_frame: {fill: "#00000000", stroke: "=theme.muted", stroke_width: 1.5, stroke_dash: [6, 4]}
+  solid: {fill: "=theme.stroke", stroke: "=theme.stroke", stroke_width: 1.5}
+  rule: {fill: "=theme.stroke", stroke_width: 0}
+  wire: {stroke: "=theme.stroke", stroke_width: 1.5}
+  dashed_wire: {stroke: "=theme.stroke", stroke_width: 1.5, stroke_dash: [6, 4]}
+  lifeline: {stroke: "=theme.muted", stroke_width: 1.2, stroke_dash: [6, 4]}
+  member: {font_size: 13, fill: "=theme.ink"}
+  keyword: {font_size: 12, fill: "=theme.muted"}
 templates:
+
+  # ---- classes and objects ----------------------------------------------------------------------
+
   class:
-    description: A class box with its name, attributes and operations.
+    description: >-
+      A class with its name, attributes and operations. A member's key is its name and its value
+      the rest of its signature: 'total: Money' shows as 'total: Money', 'pay: "(amount: Money)"'
+      as 'pay(amount: Money)'. Start a key with '+', '-', '#' or '~' in the value for visibility.
     params:
       name: {type: string, description: Class name}
       stereotype: {type: string, default: "", description: "Shown above the name, in guillemets"}
       abstract: {type: boolean, default: false}
       attributes: {type: list, keyed: true, item: {type: string}, default: [], description: "'- name: Type' items"}
       operations: {type: list, keyed: true, item: {type: string}, default: [], description: "'- name: \"(args): Result\"' items"}
+      static: {type: list, item: {type: string}, default: [], description: "Static members, underlined, shown first in the attributes: 'count: Int'"}
     exports:
       anchors: [north, south, east, west]
-      parts: [header, attributes, operations]
+      parts: [header, attributes, operations, attribute, operation]
       tokens: [surface, stroke, ink, muted]
     body:
       layout: column
@@ -42,6 +99,16 @@ templates:
               padding: {x: 10, y: 6}
               gap: 3
               children:
+                - for_each: params.static
+                  as: member
+                  do:
+                    layout: row
+                    children:
+                      - layout: column
+                        align: stretch
+                        children:
+                          - {shape: text, text: "=member", style: member}
+                          - {shape: rect, width: 0, height: 1, style: rule}
                 - for_each: params.attributes
                   as: attr
                   id: attribute
@@ -60,60 +127,1113 @@ templates:
                   id: operation
                   do: {shape: text, text: "=op.key + op.value", font_size: 13, fill: "=theme.ink"}
 
+  interface:
+    description: An interface, with «interface» above its name and the operations it declares.
+    params:
+      name: {type: string}
+      attributes: {type: list, keyed: true, item: {type: string}, default: []}
+      operations: {type: list, keyed: true, item: {type: string}, default: []}
+    exports:
+      anchors: [north, south, east, west]
+      parts: [header, attributes, operations, attribute, operation]
+      tokens: [surface, stroke, ink, muted]
+    body: {use: class, name: "=params.name", stereotype: interface, attributes: "=params.attributes", operations: "=params.operations"}
+
+  data_type:
+    description: "A data type (a value without identity), or a primitive type with primitive: true."
+    params:
+      name: {type: string}
+      primitive: {type: boolean, default: false}
+      attributes: {type: list, keyed: true, item: {type: string}, default: []}
+      operations: {type: list, keyed: true, item: {type: string}, default: []}
+    exports:
+      anchors: [north, south, east, west]
+      parts: [header, attributes, operations, attribute, operation]
+      tokens: [surface, stroke, ink, muted]
+    body:
+      children:
+        - {if: "not params.primitive", use: class, name: "=params.name", stereotype: dataType, attributes: "=params.attributes", operations: "=params.operations"}
+        - {if: params.primitive, use: class, name: "=params.name", stereotype: primitive, attributes: "=params.attributes", operations: "=params.operations"}
+
+  enumeration:
+    description: An enumeration and its literals.
+    params:
+      name: {type: string}
+      literals: {type: list, item: {type: string}, default: []}
+    exports:
+      anchors: [north, south, east, west]
+      parts: [header, literals]
+      tokens: [surface, stroke, ink, muted]
+    body:
+      layout: column
+      align: stretch
+      children:
+        - id: header
+          layout: stack
+          align: stretch
+          children:
+            - {shape: rect, width: 0, height: 0, style: box}
+            - layout: column
+              align: center
+              padding: {x: 14, y: 8}
+              children:
+                - {shape: text, text: "«enumeration»", style: keyword}
+                - {shape: text, text: "=params.name", font_size: 16, fill: "=theme.ink"}
+        - id: literals
+          layout: stack
+          align: stretch
+          children:
+            - {shape: rect, width: 0, height: 0, style: box}
+            - layout: column
+              padding: {x: 10, y: 6}
+              gap: 3
+              children:
+                - for_each: params.literals
+                  as: literal
+                  do: {shape: text, text: "=literal", style: member}
+
+  object:
+    description: >-
+      An instance: 'name : Class' underlined, and the values of its attributes ('total: "120 EUR"' shows
+      'total = 120 EUR') in values. Leave name empty for an anonymous instance (': Class').
+    params:
+      name: {type: string, default: ""}
+      classifier: {type: string, default: "", description: The class it instantiates}
+      values: {type: list, keyed: true, item: {type: string}, default: [], description: "The values of its attributes ('slots' in UML)"}
+    exports:
+      anchors: [north, south, east, west]
+      parts: [header, values, value]
+      tokens: [surface, stroke, ink]
+    body:
+      layout: column
+      align: stretch
+      children:
+        - id: header
+          layout: stack
+          align: stretch
+          children:
+            - {shape: rect, width: 0, height: 0, style: box}
+            - layout: column
+              align: center
+              padding: {x: 14, y: 8}
+              children:
+                - layout: column
+                  align: stretch
+                  children:
+                    - {if: "params.classifier != ''", shape: text, text: "=params.name + ' : ' + params.classifier", font_size: 15, fill: "=theme.ink"}
+                    - {if: "params.classifier == ''", shape: text, text: "=params.name", font_size: 15, fill: "=theme.ink"}
+                    - {shape: rect, width: 0, height: 1, style: rule}
+        - id: values
+          layout: stack
+          align: stretch
+          children:
+            - {shape: rect, width: 0, height: 0, style: box}
+            - layout: column
+              padding: {x: 10, y: 6}
+              gap: 3
+              children:
+                - for_each: params.values
+                  as: s
+                  id: value
+                  do: {shape: text, text: "=s.key + ' = ' + s.value", style: member}
+
+  package:
+    description: A package, its name in the tab; its children go in its body.
+    params:
+      name: {type: string}
+      stereotype: {type: string, default: ""}
+    exports:
+      anchors: [north, south, east, west]
+      parts: [tab]
+      tokens: [surface, stroke, ink, muted]
+    body:
+      layout: column
+      align: start
+      children:
+        - id: tab
+          layout: stack
+          align: stretch
+          children:
+            - {shape: rect, width: 0, height: 0, style: box}
+            - layout: column
+              padding: {x: 10, y: 4}
+              children:
+                - {if: "params.stereotype != ''", shape: text, text: "='«' + params.stereotype + '»'", style: keyword}
+                - {shape: text, text: "=params.name", font_size: 14, fill: "=theme.ink"}
+        - layout: stack
+          align: stretch
+          children:
+            - {shape: rect, width: 0, height: 0, style: container}
+            - layout: column
+              padding: 16
+              gap: 12
+              children:
+                - {shape: rect, width: "=tab.width + 24", height: 0, fill: "#00000000", stroke_width: 0}
+                - {slot: default}
+
   note:
-    description: A note with free text.
+    description: A note (comment) with a folded corner. Link it to what it explains with note_link.
     params:
       text: {type: string}
       width: {type: number, default: 180}
     exports:
-      tokens: [ink, muted]
+      anchors: [north, south, east, west]
+      parts: [paper]
+      tokens: [surface, ink, muted]
     body:
-      layout: stack
-      align: stretch
       children:
-        - {shape: rect, width: 0, height: 0, fill: "#fff8d6", stroke: "=theme.muted", stroke_width: 1}
-        - layout: column
-          padding: 10
+        - shape: polygon
+          points: [{x: 0, y: 0}, {x: "=paper.right - 12", y: 0}, {x: "=paper.right", y: 12}, {x: "=paper.right", y: "=paper.bottom"}, {x: 0, y: "=paper.bottom"}]
+          fill: "=theme.surface"
+          stroke: "=theme.muted"
+          stroke_width: 1
+        - shape: polyline
+          points: [{x: "=paper.right - 12", y: 0}, {x: "=paper.right - 12", y: 12}, {x: "=paper.right", y: 12}]
+          stroke: "=theme.muted"
+          stroke_width: 1
+        - id: paper
+          layout: column
+          padding: {left: 10, top: 10, right: 16, bottom: 10}
           children:
-            - {shape: text, text: "=params.text", width: "=params.width - 20", font_size: 12, fill: "=theme.ink", wrap: true}
+            - {shape: text, text: "=params.text", width: "=params.width - 26", font_size: 12, fill: "=theme.ink", wrap: true}
+
+  # ---- relations --------------------------------------------------------------------------------
 
   relation:
-    description: "A connector between two elements, with an optional label and multiplicities. In a graph container (layered, tree), 'route: layout' follows the route the container supplies."
+    description: >-
+      A connector between two elements, with an optional label and multiplicities; the base of the
+      other relations. dashed: true for dependencies and realizations.
     params:
       from: {type: path}
       to: {type: path}
       label: {type: string, default: ""}
       from_mult: {type: string, default: ""}
       to_mult: {type: string, default: ""}
-      head: {type: enum, values: [none, arrow, open_arrow, triangle, diamond, open_diamond], default: none}
-      tail: {type: enum, values: [none, arrow, open_arrow, triangle, diamond, open_diamond], default: none}
-      route: {type: enum, values: [straight, orthogonal, layout], default: orthogonal}
+      from_role: {type: string, default: ""}
+      to_role: {type: string, default: ""}
+      head: {type: enum, values: [none, arrow, open_arrow, triangle, diamond, open_diamond, circle, open_circle], default: none}
+      tail: {type: enum, values: [none, arrow, open_arrow, triangle, diamond, open_diamond, circle, open_circle], default: none}
+      dashed: {type: boolean, default: false}
+      route: {type: enum, values: [orthogonal, straight, layout], default: orthogonal}
+      label_anchor: {type: enum, values: [center, north, south, east, west, north_east, north_west, south_east, south_west], default: south, description: "The label's own anchor that meets the line"}
+      label_gap: {type: number, default: 4, description: "Distance from the middle of the line; negative for the other side"}
     exports:
       parts: [line]
       tokens: [stroke, muted]
     body:
       children:
-        - {shape: connector, id: line, from: "=params.from", to: "=params.to", route: "=params.route", stroke: "=theme.stroke", stroke_width: 1.5, marker_end: "=params.head", marker_start: "=params.tail"}
-        - {if: "params.label != ''", shape: text, text: "=params.label", font_size: 12, fill: "=theme.muted", attach: {anchor: south, to: line.label, gap: 4}}
-        - {if: "params.from_mult != ''", shape: text, text: "=params.from_mult", font_size: 12, fill: "=theme.muted", attach: {anchor: south_west, to: line.start, gap: -18}}
-        - {if: "params.to_mult != ''", shape: text, text: "=params.to_mult", font_size: 12, fill: "=theme.muted", attach: {anchor: south_west, to: line.end, gap: -18}}
+        - {if: "not params.dashed", shape: connector, id: line, from: "=params.from", to: "=params.to", route: "=params.route", marker_end: "=params.head", marker_start: "=params.tail", style: wire}
+        - {if: params.dashed, shape: connector, id: line, from: "=params.from", to: "=params.to", route: "=params.route", marker_end: "=params.head", marker_start: "=params.tail", style: dashed_wire}
+        - {if: "params.label != ''", shape: text, text: "=params.label", font_size: 12, fill: "=theme.muted", attach: {anchor: "=params.label_anchor", to: line.label, gap: "=params.label_gap"}}
+        - {if: "params.from_mult != ''", shape: text, text: "=params.from_mult", font_size: 12, fill: "=theme.muted", attach: {anchor: south_west, to: line.start, gap: -22}}
+        - {if: "params.to_mult != ''", shape: text, text: "=params.to_mult", font_size: 12, fill: "=theme.muted", attach: {anchor: south_east, to: line.end, gap: -22}}
+        - {if: "params.from_role != ''", shape: text, text: "=params.from_role", font_size: 12, fill: "=theme.muted", attach: {anchor: north_west, to: line.start, gap: -22}}
+        - {if: "params.to_role != ''", shape: text, text: "=params.to_role", font_size: 12, fill: "=theme.muted", attach: {anchor: north_east, to: line.end, gap: -22}}
 
   association:
-    params: {from: path, to: path, label: {type: string, default: ""}, from_mult: {type: string, default: ""}, to_mult: {type: string, default: ""}, route: {type: enum, values: [straight, orthogonal, layout], default: orthogonal}}
+    description: A navigable association, open arrow at 'to'. See link for one without direction.
+    params: {from: path, to: path, label: {type: string, default: ""}, from_mult: {type: string, default: ""}, to_mult: {type: string, default: ""}, from_role: {type: string, default: ""}, to_role: {type: string, default: ""}, route: {type: enum, values: [orthogonal, straight, layout], default: orthogonal}, label_gap: {type: number, default: 4}, label_anchor: {type: enum, values: [center, north, south, east, west, north_east, north_west, south_east, south_west], default: south}}
     exports: {parts: [line], tokens: [stroke, muted]}
-    body: {use: relation, from: "=params.from", to: "=params.to", label: "=params.label", from_mult: "=params.from_mult", to_mult: "=params.to_mult", route: "=params.route", head: open_arrow}
+    body: {use: relation, from: "=params.from", to: "=params.to", label: "=params.label", from_mult: "=params.from_mult", to_mult: "=params.to_mult", from_role: "=params.from_role", to_role: "=params.to_role", route: "=params.route", label_gap: "=params.label_gap", label_anchor: "=params.label_anchor", head: open_arrow}
+
+  link:
+    description: >-
+      A plain line: an association without direction, an actor's link to a use case, a
+      communication path between nodes, or the line from a component to an interface it provides
+      or requires.
+    params: {from: path, to: path, label: {type: string, default: ""}, from_mult: {type: string, default: ""}, to_mult: {type: string, default: ""}, from_role: {type: string, default: ""}, to_role: {type: string, default: ""}, route: {type: enum, values: [orthogonal, straight, layout], default: layout}, label_gap: {type: number, default: 4}, label_anchor: {type: enum, values: [center, north, south, east, west, north_east, north_west, south_east, south_west], default: south}}
+    exports: {parts: [line], tokens: [stroke, muted]}
+    body: {use: relation, from: "=params.from", to: "=params.to", label: "=params.label", from_mult: "=params.from_mult", to_mult: "=params.to_mult", from_role: "=params.from_role", to_role: "=params.to_role", route: "=params.route", label_gap: "=params.label_gap", label_anchor: "=params.label_anchor"}
 
   aggregation:
-    params: {from: path, to: path, label: {type: string, default: ""}, from_mult: {type: string, default: ""}, to_mult: {type: string, default: ""}, route: {type: enum, values: [straight, orthogonal, layout], default: orthogonal}}
+    description: A shared aggregation, hollow diamond at 'from' (the whole).
+    params: {from: path, to: path, label: {type: string, default: ""}, from_mult: {type: string, default: ""}, to_mult: {type: string, default: ""}, from_role: {type: string, default: ""}, to_role: {type: string, default: ""}, route: {type: enum, values: [orthogonal, straight, layout], default: orthogonal}, label_gap: {type: number, default: 4}, label_anchor: {type: enum, values: [center, north, south, east, west, north_east, north_west, south_east, south_west], default: south}}
     exports: {parts: [line], tokens: [stroke, muted]}
-    body: {use: relation, from: "=params.from", to: "=params.to", label: "=params.label", from_mult: "=params.from_mult", to_mult: "=params.to_mult", route: "=params.route", tail: open_diamond}
+    body: {use: relation, from: "=params.from", to: "=params.to", label: "=params.label", from_mult: "=params.from_mult", to_mult: "=params.to_mult", from_role: "=params.from_role", to_role: "=params.to_role", route: "=params.route", label_gap: "=params.label_gap", label_anchor: "=params.label_anchor", tail: open_diamond}
 
   composition:
-    params: {from: path, to: path, label: {type: string, default: ""}, from_mult: {type: string, default: ""}, to_mult: {type: string, default: ""}, route: {type: enum, values: [straight, orthogonal, layout], default: orthogonal}}
+    description: A composition, filled diamond at 'from' (the whole).
+    params: {from: path, to: path, label: {type: string, default: ""}, from_mult: {type: string, default: ""}, to_mult: {type: string, default: ""}, from_role: {type: string, default: ""}, to_role: {type: string, default: ""}, route: {type: enum, values: [orthogonal, straight, layout], default: orthogonal}, label_gap: {type: number, default: 4}, label_anchor: {type: enum, values: [center, north, south, east, west, north_east, north_west, south_east, south_west], default: south}}
     exports: {parts: [line], tokens: [stroke, muted]}
-    body: {use: relation, from: "=params.from", to: "=params.to", label: "=params.label", from_mult: "=params.from_mult", to_mult: "=params.to_mult", route: "=params.route", tail: diamond}
+    body: {use: relation, from: "=params.from", to: "=params.to", label: "=params.label", from_mult: "=params.from_mult", to_mult: "=params.to_mult", from_role: "=params.from_role", to_role: "=params.to_role", route: "=params.route", label_gap: "=params.label_gap", label_anchor: "=params.label_anchor", tail: diamond}
 
   generalization:
-    params: {from: path, to: path, route: {type: enum, values: [straight, orthogonal, layout], default: orthogonal}}
+    description: From the specific element to the general one, hollow triangle at 'to'.
+    params: {from: path, to: path, route: {type: enum, values: [orthogonal, straight, layout], default: orthogonal}}
     exports: {parts: [line], tokens: [stroke, muted]}
     body: {use: relation, from: "=params.from", to: "=params.to", route: "=params.route", head: triangle}
+
+  realization:
+    description: From the implementation to the interface or specification it realizes, dashed with a hollow triangle.
+    params: {from: path, to: path, route: {type: enum, values: [orthogonal, straight, layout], default: orthogonal}}
+    exports: {parts: [line], tokens: [stroke, muted]}
+    body: {use: relation, from: "=params.from", to: "=params.to", route: "=params.route", head: triangle, dashed: true}
+
+  dependency:
+    description: "From the client to the supplier it depends on, dashed with an open arrow; label is usually a keyword: «use», «import», «create»."
+    params: {from: path, to: path, label: {type: string, default: ""}, route: {type: enum, values: [orthogonal, straight, layout], default: layout}, label_gap: {type: number, default: 4}, label_anchor: {type: enum, values: [center, north, south, east, west, north_east, north_west, south_east, south_west], default: south}}
+    exports: {parts: [line], tokens: [stroke, muted]}
+    body: {use: relation, from: "=params.from", to: "=params.to", label: "=params.label", route: "=params.route", label_gap: "=params.label_gap", label_anchor: "=params.label_anchor", head: open_arrow, dashed: true}
+
+  note_link:
+    description: "A dashed line from a note to what it explains, or from an association class to its association ('to: orders.line.label')."
+    params: {from: path, to: path, route: {type: enum, values: [orthogonal, straight, layout], default: straight}}
+    exports: {parts: [line], tokens: [stroke, muted]}
+    body: {use: relation, from: "=params.from", to: "=params.to", route: "=params.route", dashed: true}
+
+  # ---- components and deployment ----------------------------------------------------------------
+
+  component:
+    description: A component, with the component icon; its parts go inside.
+    params:
+      name: {type: string}
+      stereotype: {type: string, default: component}
+    exports:
+      anchors: [north, south, east, west]
+      tokens: [surface, stroke, ink, muted]
+    body:
+      layout: stack
+      align: stretch
+      children:
+        - {shape: rect, width: 0, height: 0, style: container}
+        - layout: column
+          padding: {x: 14, y: 10}
+          gap: 10
+          children:
+            - layout: row
+              gap: 18
+              align: start
+              children:
+                - layout: column
+                  align: center
+                  children:
+                    - {if: "params.stereotype != ''", shape: text, text: "='«' + params.stereotype + '»'", style: keyword}
+                    - {shape: text, text: "=params.name", font_size: 15, fill: "=theme.ink"}
+                - children:
+                    - {shape: rect, at: {x: 5, y: 0}, width: 14, height: 18, style: box}
+                    - {shape: rect, at: {x: 0, y: 3}, width: 10, height: 4, style: box}
+                    - {shape: rect, at: {x: 0, y: 11}, width: 10, height: 4, style: box}
+            - layout: column
+              align: center
+              gap: 10
+              children:
+                - {slot: default}
+
+  port:
+    description: "A port, a small square. Attach its center to the edge of its component ('attach: {anchor: center, to: billing.east}')."
+    params:
+      name: {type: string, default: ""}
+    exports:
+      anchors: [north, south, east, west]
+      parts: [square]
+      tokens: [surface, stroke, muted]
+    body:
+      children:
+        - {shape: rect, id: square, width: 12, height: 12, style: box}
+        - {if: "params.name != ''", shape: text, text: "=params.name", style: keyword, attach: {anchor: south_west, to: square.north_east, gap: 2}}
+
+  provided_interface:
+    description: A provided interface, a ball with its name; link the component to its 'ball'.
+    params:
+      name: {type: string, default: ""}
+    outline: ellipse
+    exports:
+      anchors: [north, south, east, west]
+      parts: [ball]
+      tokens: [surface, stroke, muted]
+    body:
+      children:
+        - {shape: circle, id: ball, radius: 8, style: box}
+        - {if: "params.name != ''", shape: text, text: "=params.name", style: keyword, attach: {anchor: north, to: ball.south, gap: 4}}
+
+  required_interface:
+    description: >-
+      A required interface, a socket opening toward 'facing' (where the providing ball is); link
+      the component to its 'cup'.
+    params:
+      name: {type: string, default: ""}
+      facing: {type: enum, values: [east, west, north, south], default: east}
+    exports:
+      anchors: [north, south, east, west]
+      parts: [cup]
+      tokens: [stroke, muted]
+    body:
+      children:
+        - id: cup
+          children:
+            - {if: "params.facing == 'east'", shape: path, d: "M12 0 C 5.4 0, 0 5.4, 0 12 C 0 18.6, 5.4 24, 12 24", style: wire}
+            - {if: "params.facing == 'west'", shape: path, d: "M0 0 C 6.6 0, 12 5.4, 12 12 C 12 18.6, 6.6 24, 0 24", style: wire}
+            - {if: "params.facing == 'south'", shape: path, d: "M0 12 C 0 5.4, 5.4 0, 12 0 C 18.6 0, 24 5.4, 24 12", style: wire}
+            - {if: "params.facing == 'north'", shape: path, d: "M0 0 C 0 6.6, 5.4 12, 12 12 C 18.6 12, 24 6.6, 24 0", style: wire}
+        - {if: "params.name != ''", shape: text, text: "=params.name", style: keyword, attach: {anchor: north, to: cup.south, gap: 4}}
+
+  assembly:
+    description: An assembly, ball in socket; link the provider to its 'ball' and the client to its 'cup'.
+    params:
+      name: {type: string, default: ""}
+    exports:
+      anchors: [north, south, east, west]
+      parts: [ball, cup]
+      tokens: [surface, stroke, muted]
+    body:
+      children:
+        - {shape: path, id: cup, d: "M14 0 C 6.3 0, 0 6.3, 0 14 C 0 21.7, 6.3 28, 14 28", style: wire}
+        - {shape: circle, id: ball, at: {x: 6, y: 6}, radius: 8, style: box}
+        - {if: "params.name != ''", shape: text, text: "=params.name", style: keyword, attach: {anchor: north, to: cup.south, gap: 4}}
+
+  node:
+    description: >-
+      A deployment node, drawn as a box in perspective: a device, an execution environment (set
+      the stereotype) or a plain node. Artifacts and nested nodes go inside, in a row.
+    params:
+      name: {type: string}
+      stereotype: {type: string, default: "", description: "device, executionEnvironment..."}
+    exports:
+      anchors: [north, south, east, west]
+      tokens: [surface, stroke, ink, muted]
+    body:
+      layers: [faces, default]
+      children:
+        - layout: stack
+          align: stretch
+          children:
+            - {shape: rect, id: extent, width: 0, height: 0, fill: "#00000000", stroke_width: 0}
+            - layout: column
+              padding: {left: 14, top: 24, right: 26, bottom: 12}
+              gap: 10
+              children:
+                - layout: column
+                  children:
+                    - {if: "params.stereotype != ''", shape: text, text: "='«' + params.stereotype + '»'", style: keyword}
+                    - {shape: text, text: "=params.name", font_size: 15, fill: "=theme.ink"}
+                - layout: row
+                  gap: 14
+                  align: start
+                  children:
+                    - {slot: default}
+        - layer: faces
+          children:
+            - shape: polygon
+              points: [{x: 0, y: 12}, {x: 12, y: 0}, {x: "=extent.right", y: 0}, {x: "=extent.right", y: "=extent.bottom - 12"}, {x: "=extent.right - 12", y: "=extent.bottom"}, {x: 0, y: "=extent.bottom"}]
+              style: container
+            - shape: polygon
+              points: [{x: 0, y: 12}, {x: "=extent.right - 12", y: 12}, {x: "=extent.right - 12", y: "=extent.bottom"}, {x: 0, y: "=extent.bottom"}]
+              style: container
+            - shape: line
+              points: [{x: "=extent.right - 12", y: 12}, {x: "=extent.right", y: 0}]
+              style: wire
+
+  artifact:
+    description: An artifact (a file, a package, an executable), with the document icon.
+    params:
+      name: {type: string}
+      stereotype: {type: string, default: artifact}
+    exports:
+      anchors: [north, south, east, west]
+      tokens: [surface, stroke, ink, muted]
+    body:
+      layout: stack
+      align: stretch
+      children:
+        - {shape: rect, width: 0, height: 0, style: box}
+        - layout: row
+          padding: {x: 12, y: 8}
+          gap: 14
+          align: start
+          children:
+            - layout: column
+              align: center
+              children:
+                - {if: "params.stereotype != ''", shape: text, text: "='«' + params.stereotype + '»'", style: keyword}
+                - {shape: text, text: "=params.name", font_size: 14, fill: "=theme.ink"}
+            - children:
+                - {shape: polygon, points: [{x: 0, y: 0}, {x: 9, y: 0}, {x: 13, y: 4}, {x: 13, y: 17}, {x: 0, y: 17}], style: box}
+                - {shape: polyline, points: [{x: 9, y: 0}, {x: 9, y: 4}, {x: 13, y: 4}], stroke: "=theme.stroke", stroke_width: 1}
+
+  deploy:
+    description: An artifact deployed on a node, «deploy».
+    params: {from: path, to: path, route: {type: enum, values: [orthogonal, straight, layout], default: layout}, label_gap: {type: number, default: 4}, label_anchor: {type: enum, values: [center, north, south, east, west, north_east, north_west, south_east, south_west], default: south}}
+    exports: {parts: [line], tokens: [stroke, muted]}
+    body: {use: dependency, from: "=params.from", to: "=params.to", label: "«deploy»", route: "=params.route", label_gap: "=params.label_gap", label_anchor: "=params.label_anchor"}
+
+  manifest:
+    description: An artifact that manifests a component, «manifest».
+    params: {from: path, to: path, route: {type: enum, values: [orthogonal, straight, layout], default: layout}, label_gap: {type: number, default: 4}, label_anchor: {type: enum, values: [center, north, south, east, west, north_east, north_west, south_east, south_west], default: south}}
+    exports: {parts: [line], tokens: [stroke, muted]}
+    body: {use: dependency, from: "=params.from", to: "=params.to", label: "«manifest»", route: "=params.route", label_gap: "=params.label_gap", label_anchor: "=params.label_anchor"}
+
+  # ---- use cases --------------------------------------------------------------------------------
+
+  actor:
+    description: An actor, a stick figure with its name.
+    params:
+      name: {type: string}
+    exports:
+      anchors: [north, south, east, west]
+      parts: [figure]
+      tokens: [stroke, ink]
+    body:
+      layout: column
+      align: center
+      gap: 6
+      children:
+        - id: figure
+          children:
+            - {shape: circle, at: {x: 7, y: 0}, radius: 8, fill: "#00000000", style: wire}
+            - {shape: line, points: [{x: 15, y: 16}, {x: 15, y: 36}], style: wire}
+            - {shape: line, points: [{x: 2, y: 23}, {x: 28, y: 23}], style: wire}
+            - {shape: polyline, points: [{x: 3, y: 52}, {x: 15, y: 36}, {x: 27, y: 52}], style: wire}
+        - {shape: text, text: "=params.name", font_size: 13, fill: "=theme.ink"}
+
+  use_case:
+    description: A use case, its name in an ellipse.
+    params:
+      name: {type: string}
+      width: {type: number, default: 0, description: "Wraps the name at this width; 0 keeps it on one line"}
+    outline: ellipse
+    exports:
+      anchors: [north, south, east, west]
+      tokens: [surface, stroke, ink]
+    body:
+      layout: stack
+      align: stretch
+      children:
+        - {shape: ellipse, width: 0, height: 0, style: box}
+        - layout: column
+          align: center
+          padding: {x: 26, y: 16}
+          children:
+            - {if: "params.width == 0", shape: text, text: "=params.name", font_size: 14, fill: "=theme.ink"}
+            - {if: "params.width > 0", shape: text, text: "=params.name", width: "=params.width", wrap: true, text_align: center, font_size: 14, fill: "=theme.ink"}
+
+  system:
+    description: The subject of use cases, a boundary with its name; the use cases go inside, in a column.
+    params:
+      name: {type: string}
+    exports:
+      anchors: [north, south, east, west]
+      tokens: [surface, stroke, ink]
+    body:
+      layout: stack
+      align: stretch
+      children:
+        - {shape: rect, width: 0, height: 0, style: container}
+        - layout: column
+          align: center
+          padding: 18
+          gap: 22
+          children:
+            - {shape: text, text: "=params.name", font_size: 15, fill: "=theme.ink"}
+            - {slot: default}
+
+  include:
+    description: From the including use case to the included one, «include».
+    params: {from: path, to: path, route: {type: enum, values: [orthogonal, straight, layout], default: layout}, label_gap: {type: number, default: 4}, label_anchor: {type: enum, values: [center, north, south, east, west, north_east, north_west, south_east, south_west], default: south}}
+    exports: {parts: [line], tokens: [stroke, muted]}
+    body: {use: dependency, from: "=params.from", to: "=params.to", label: "«include»", route: "=params.route", label_gap: "=params.label_gap", label_anchor: "=params.label_anchor"}
+
+  extend:
+    description: From the extending use case to the extended one, «extend», with an optional condition.
+    params: {from: path, to: path, condition: {type: string, default: ""}, route: {type: enum, values: [orthogonal, straight, layout], default: layout}, label_gap: {type: number, default: 4}, label_anchor: {type: enum, values: [center, north, south, east, west, north_east, north_west, south_east, south_west], default: south}}
+    exports: {parts: [line], tokens: [stroke, muted]}
+    body:
+      children:
+        - {if: "params.condition == ''", use: dependency, id: rel, from: "=params.from", to: "=params.to", label: "«extend»", route: "=params.route", label_gap: "=params.label_gap", label_anchor: "=params.label_anchor"}
+        - {if: "params.condition != ''", use: dependency, id: rel, from: "=params.from", to: "=params.to", label: "='«extend» [' + params.condition + ']'", route: "=params.route", label_gap: "=params.label_gap", label_anchor: "=params.label_anchor"}
+
+  # ---- activities -------------------------------------------------------------------------------
+
+  initial:
+    description: The initial node of an activity, or the initial pseudostate of a state machine.
+    outline: ellipse
+    exports: {anchors: [north, south, east, west], tokens: [stroke]}
+    body: {shape: circle, radius: 9, style: solid}
+
+  final:
+    description: The final node of an activity, or the final state of a state machine.
+    outline: ellipse
+    exports: {anchors: [north, south, east, west], tokens: [surface, stroke]}
+    body:
+      children:
+        - {shape: circle, radius: 12, style: box}
+        - {shape: circle, at: {x: 5, y: 5}, radius: 7, style: solid}
+
+  flow_final:
+    description: A flow final node, ending one flow only.
+    outline: ellipse
+    exports: {anchors: [north, south, east, west], tokens: [surface, stroke]}
+    body:
+      children:
+        - {shape: circle, radius: 11, style: box}
+        - {shape: line, points: [{x: 3.2, y: 3.2}, {x: 18.8, y: 18.8}], style: wire}
+        - {shape: line, points: [{x: 18.8, y: 3.2}, {x: 3.2, y: 18.8}], style: wire}
+
+  action:
+    description: "An action, a rounded box. call: true marks a call behavior action (the rake icon)."
+    params:
+      name: {type: string}
+      width: {type: number, default: 0, description: "Wraps the name at this width; 0 keeps it on one line"}
+      call: {type: boolean, default: false}
+    exports:
+      anchors: [north, south, east, west]
+      tokens: [surface, stroke, ink]
+    body:
+      layout: stack
+      align: stretch
+      children:
+        - {shape: rect, width: 0, height: 0, style: rounded}
+        - layout: row
+          align: center
+          padding: {x: 16, y: 10}
+          gap: 10
+          children:
+            - {if: "params.width == 0", shape: text, text: "=params.name", font_size: 14, fill: "=theme.ink"}
+            - {if: "params.width > 0", shape: text, text: "=params.name", width: "=params.width", wrap: true, text_align: center, font_size: 14, fill: "=theme.ink"}
+            - if: params.call
+              children:
+                - {shape: line, points: [{x: 6, y: 0}, {x: 6, y: 14}], style: wire}
+                - {shape: polyline, points: [{x: 0, y: 14}, {x: 0, y: 7}, {x: 12, y: 7}, {x: 12, y: 14}], style: wire}
+
+  object_node:
+    description: An object node, the data an activity passes along, with its state in brackets.
+    params:
+      name: {type: string}
+      in_state: {type: string, default: ""}
+    exports:
+      anchors: [north, south, east, west]
+      tokens: [surface, stroke, ink, muted]
+    body:
+      layout: stack
+      align: stretch
+      children:
+        - {shape: rect, width: 0, height: 0, style: box}
+        - layout: column
+          align: center
+          padding: {x: 14, y: 8}
+          children:
+            - {shape: text, text: "=params.name", font_size: 14, fill: "=theme.ink"}
+            - {if: "params.in_state != ''", shape: text, text: "='[' + params.in_state + ']'", style: keyword}
+
+  decision:
+    description: A decision node (or a choice pseudostate), a diamond. Put the guards on the outgoing flows.
+    exports: {anchors: [north, south, east, west], tokens: [surface, stroke]}
+    body: {shape: polygon, points: [{x: 16, y: 0}, {x: 32, y: 16}, {x: 16, y: 32}, {x: 0, y: 16}], style: box}
+
+  merge:
+    description: A merge node, a diamond where alternative flows meet.
+    exports: {anchors: [north, south, east, west], tokens: [surface, stroke]}
+    body: {shape: polygon, points: [{x: 16, y: 0}, {x: 32, y: 16}, {x: 16, y: 32}, {x: 0, y: 16}], style: box}
+
+  fork:
+    description: A fork node, a bar that splits a flow into concurrent ones.
+    params:
+      length: {type: number, default: 90}
+      vertical: {type: boolean, default: false}
+    exports: {anchors: [north, south, east, west], tokens: [stroke]}
+    body:
+      children:
+        - {if: "not params.vertical", shape: rect, width: "=params.length", height: 6, style: solid}
+        - {if: params.vertical, shape: rect, width: 6, height: "=params.length", style: solid}
+
+  join:
+    description: A join node, a bar where concurrent flows wait for one another.
+    params:
+      length: {type: number, default: 90}
+      vertical: {type: boolean, default: false}
+    exports: {anchors: [north, south, east, west], tokens: [stroke]}
+    body: {use: fork, length: "=params.length", vertical: "=params.vertical"}
+
+  send_signal:
+    description: A send signal action, a box pointing toward the receiver.
+    params:
+      name: {type: string}
+    exports:
+      anchors: [north, south, east, west]
+      parts: [label]
+      tokens: [surface, stroke, ink]
+    body:
+      children:
+        - shape: polygon
+          points: [{x: 0, y: 0}, {x: "=label.right", y: 0}, {x: "=label.right + 16", y: "=label.center_y"}, {x: "=label.right", y: "=label.bottom"}, {x: 0, y: "=label.bottom"}]
+          style: box
+        - id: label
+          layout: column
+          padding: {x: 14, y: 10}
+          children:
+            - {shape: text, text: "=params.name", font_size: 14, fill: "=theme.ink"}
+
+  accept_event:
+    description: An accept event action, a box with a notch where the event comes in.
+    params:
+      name: {type: string}
+    exports:
+      anchors: [north, south, east, west]
+      parts: [label]
+      tokens: [surface, stroke, ink]
+    body:
+      children:
+        - shape: polygon
+          points: [{x: 0, y: 0}, {x: "=label.right", y: 0}, {x: "=label.right", y: "=label.bottom"}, {x: 0, y: "=label.bottom"}, {x: 14, y: "=label.center_y"}]
+          style: box
+        - id: label
+          layout: column
+          padding: {left: 24, top: 10, right: 14, bottom: 10}
+          children:
+            - {shape: text, text: "=params.name", font_size: 14, fill: "=theme.ink"}
+
+  accept_time:
+    description: An accept time event action, an hourglass with the time it waits for.
+    params:
+      name: {type: string}
+    exports:
+      anchors: [north, south, east, west]
+      parts: [glass]
+      tokens: [surface, stroke, ink]
+    body:
+      layout: column
+      align: center
+      gap: 4
+      children:
+        - {shape: polygon, id: glass, points: [{x: 0, y: 0}, {x: 20, y: 0}, {x: 0, y: 26}, {x: 20, y: 26}], style: box}
+        - {shape: text, text: "=params.name", font_size: 13, fill: "=theme.ink"}
+
+  partition:
+    description: >-
+      An activity partition (swimlane), its name in a header; its actions go inside, in a column.
+      Put the partitions in a row with align: stretch so that they share a height.
+    params:
+      name: {type: string}
+      width: {type: number, default: 220}
+    exports:
+      anchors: [north, south, east, west]
+      parts: [header]
+      tokens: [surface, stroke, ink]
+    body:
+      layout: stack
+      align: stretch
+      children:
+        - {shape: rect, width: 0, height: 0, fill: "#00000000", stroke: "=theme.stroke", stroke_width: 1.5}
+        - layout: column
+          align: stretch
+          children:
+            - id: header
+              layout: stack
+              align: stretch
+              children:
+                - {shape: rect, width: 0, height: 0, style: box}
+                - layout: column
+                  align: center
+                  padding: 8
+                  children:
+                    - {shape: text, text: "=params.name", font_size: 14, fill: "=theme.ink"}
+            - layout: column
+              align: center
+              padding: 18
+              gap: 26
+              children:
+                - {shape: rect, width: "=params.width - 36", height: 0, fill: "#00000000", stroke_width: 0}
+                - {slot: default}
+
+  region:
+    description: An interruptible activity region, a dashed rounded frame; its actions go inside, in a column.
+    params:
+      name: {type: string, default: ""}
+    exports:
+      anchors: [north, south, east, west]
+      tokens: [muted]
+    body:
+      layout: stack
+      align: stretch
+      children:
+        - {shape: rect, width: 0, height: 0, corner_radius: 14, style: dashed_frame}
+        - layout: column
+          align: stretch
+          padding: 16
+          gap: 12
+          children:
+            - {if: "params.name != ''", shape: text, text: "=params.name", style: keyword}
+            - layout: column
+              align: center
+              gap: 24
+              children:
+                - {slot: default}
+
+  flow:
+    description: A control or object flow, with an optional guard ('[paid]') and name.
+    params:
+      from: {type: path}
+      to: {type: path}
+      guard: {type: string, default: ""}
+      label: {type: string, default: ""}
+      route: {type: enum, values: [layout, straight, orthogonal], default: layout}
+      label_anchor: {type: enum, values: [center, north, south, east, west, north_east, north_west, south_east, south_west], default: center}
+      label_gap: {type: number, default: 14}
+    exports:
+      parts: [line]
+      tokens: [stroke, muted]
+    body:
+      children:
+        - {shape: connector, id: line, from: "=params.from", to: "=params.to", route: "=params.route", marker_end: open_arrow, style: wire}
+        - layout: column
+          align: center
+          attach: {anchor: "=params.label_anchor", to: line.label, gap: "=params.label_gap"}
+          children:
+            - {if: "params.guard != ''", shape: text, text: "='[' + params.guard + ']'", font_size: 12, fill: "=theme.muted"}
+            - {if: "params.label != ''", shape: text, text: "=params.label", font_size: 12, fill: "=theme.muted"}
+
+  # ---- state machines ---------------------------------------------------------------------------
+
+  state:
+    description: >-
+      A state, a rounded box with its name and its internal behaviours (on_entry, on_do, on_exit,
+      shown as 'entry / ...'). composite: true opens a compartment for its substates, which go
+      inside; separate orthogonal regions with a separator.
+    params:
+      name: {type: string}
+      on_entry: {type: string, default: ""}
+      on_do: {type: string, default: ""}
+      on_exit: {type: string, default: ""}
+      internal: {type: list, keyed: true, item: {type: string}, default: [], description: "Internal transitions: 'refresh: \"/ redraw()\"'"}
+      composite: {type: boolean, default: false}
+    exports:
+      anchors: [north, south, east, west]
+      parts: [header]
+      tokens: [surface, stroke, ink, muted]
+    body:
+      layout: stack
+      align: stretch
+      children:
+        - {if: "not params.composite", shape: rect, width: 0, height: 0, style: rounded}
+        - {if: params.composite, shape: rect, width: 0, height: 0, style: container_rounded}
+        - layout: column
+          align: stretch
+          children:
+            - id: header
+              layout: column
+              align: center
+              padding: {x: 16, y: 8}
+              children:
+                - {shape: text, text: "=params.name", font_size: 14, fill: "=theme.ink"}
+            - if: "params.on_entry != '' or params.on_do != '' or params.on_exit != ''"
+              layout: column
+              align: stretch
+              children:
+                - {shape: rect, width: 0, height: 1.5, fill: "=theme.stroke", stroke_width: 0}
+                - layout: column
+                  padding: {x: 12, y: 6}
+                  gap: 2
+                  children:
+                    - {if: "params.on_entry != ''", shape: text, text: "='entry / ' + params.on_entry", font_size: 12, fill: "=theme.ink"}
+                    - {if: "params.on_do != ''", shape: text, text: "='do / ' + params.on_do", font_size: 12, fill: "=theme.ink"}
+                    - {if: "params.on_exit != ''", shape: text, text: "='exit / ' + params.on_exit", font_size: 12, fill: "=theme.ink"}
+                    - for_each: params.internal
+                      as: t
+                      do: {shape: text, text: "=t.key + ' ' + t.value", font_size: 12, fill: "=theme.ink"}
+            - if: params.composite
+              layout: column
+              align: stretch
+              children:
+                - {shape: rect, width: 0, height: 1.5, fill: "=theme.stroke", stroke_width: 0}
+                - layout: column
+                  align: center
+                  padding: 16
+                  gap: 16
+                  children:
+                    - {slot: default}
+
+  choice:
+    description: A choice pseudostate, a diamond; put the guards on the outgoing transitions.
+    exports: {anchors: [north, south, east, west], tokens: [surface, stroke]}
+    body: {shape: polygon, points: [{x: 13, y: 0}, {x: 26, y: 13}, {x: 13, y: 26}, {x: 0, y: 13}], style: box}
+
+  junction:
+    description: A junction pseudostate, a small filled circle.
+    outline: ellipse
+    exports: {anchors: [north, south, east, west], tokens: [stroke]}
+    body: {shape: circle, radius: 6, style: solid}
+
+  history:
+    description: "A history pseudostate, H (shallow) or H* with deep: true."
+    params:
+      deep: {type: boolean, default: false}
+    outline: ellipse
+    exports: {anchors: [north, south, east, west], tokens: [surface, stroke, ink]}
+    body:
+      layout: stack
+      align: center
+      children:
+        - {shape: circle, radius: 13, style: box}
+        - {if: "not params.deep", shape: text, text: H, font_size: 13, fill: "=theme.ink"}
+        - {if: params.deep, shape: text, text: "H*", font_size: 13, fill: "=theme.ink"}
+
+  terminate:
+    description: A terminate pseudostate, a cross.
+    exports: {anchors: [north, south, east, west], tokens: [stroke]}
+    body:
+      children:
+        - {shape: line, points: [{x: 0, y: 0}, {x: 18, y: 18}], style: wire}
+        - {shape: line, points: [{x: 18, y: 0}, {x: 0, y: 18}], style: wire}
+
+  entry_point:
+    description: An entry point, a small circle; attach its center to the border of its state.
+    params:
+      name: {type: string, default: ""}
+    outline: ellipse
+    exports: {anchors: [north, south, east, west], parts: [point], tokens: [surface, stroke, muted]}
+    body:
+      children:
+        - {shape: circle, id: point, radius: 7, style: box}
+        - {if: "params.name != ''", shape: text, text: "=params.name", style: keyword, attach: {anchor: south_west, to: point.north_east, gap: 2}}
+
+  exit_point:
+    description: An exit point, a small crossed circle; attach its center to the border of its state.
+    params:
+      name: {type: string, default: ""}
+    outline: ellipse
+    exports: {anchors: [north, south, east, west], parts: [point], tokens: [surface, stroke, muted]}
+    body:
+      children:
+        - {shape: circle, id: point, radius: 7, style: box}
+        - {shape: line, points: [{x: 2.5, y: 2.5}, {x: 11.5, y: 11.5}], style: wire}
+        - {shape: line, points: [{x: 11.5, y: 2.5}, {x: 2.5, y: 11.5}], style: wire}
+        - {if: "params.name != ''", shape: text, text: "=params.name", style: keyword, attach: {anchor: south_west, to: point.north_east, gap: 2}}
+
+  separator:
+    description: A dashed rule between the orthogonal regions of a composite state, or wherever a dashed division is needed.
+    params:
+      length: {type: number, default: 200}
+      vertical: {type: boolean, default: false}
+    exports: {tokens: [muted]}
+    body:
+      children:
+        - {if: "not params.vertical", shape: line, points: [{x: 0, y: 0}, {x: "=params.length", y: 0}], style: lifeline}
+        - {if: params.vertical, shape: line, points: [{x: 0, y: 0}, {x: 0, y: "=params.length"}], style: lifeline}
+
+  transition:
+    description: A transition, labelled 'trigger [guard] / effect' (each part optional).
+    params:
+      from: {type: path}
+      to: {type: path}
+      trigger: {type: string, default: ""}
+      guard: {type: string, default: ""}
+      effect: {type: string, default: ""}
+      route: {type: enum, values: [layout, straight, orthogonal], default: layout}
+      label_anchor: {type: enum, values: [center, north, south, east, west, north_east, north_west, south_east, south_west], default: center}
+      label_gap: {type: number, default: 14}
+    exports:
+      parts: [line]
+      tokens: [stroke, muted]
+    body:
+      children:
+        - {shape: connector, id: line, from: "=params.from", to: "=params.to", route: "=params.route", marker_end: open_arrow, style: wire}
+        - layout: row
+          gap: 4
+          attach: {anchor: "=params.label_anchor", to: line.label, gap: "=params.label_gap"}
+          children:
+            - {if: "params.trigger != ''", shape: text, text: "=params.trigger", font_size: 12, fill: "=theme.ink"}
+            - {if: "params.guard != ''", shape: text, text: "='[' + params.guard + ']'", font_size: 12, fill: "=theme.muted"}
+            - {if: "params.effect != ''", shape: text, text: "='/ ' + params.effect", font_size: 12, fill: "=theme.muted"}
+
+  # ---- sequences --------------------------------------------------------------------------------
+
+  lifeline:
+    description: >-
+      A lifeline: its head ('name : Class', or a stick figure with actor: true), then one step per
+      item of steps, each step_height high. A step's value is what the lifeline shows there: ''
+      the dashed line, start, on, end or once an activation bar, none nothing (before it is
+      created), create its head (the target of a create message; set created: true so that it has
+      no head at the top), destroy a cross where it ends (set tail: false).
+    params:
+      name: {type: string}
+      actor: {type: boolean, default: false}
+      steps: {type: list, keyed: true, item: {type: string}, default: []}
+      step_height: {type: number, default: 36}
+      created: {type: boolean, default: false, description: "Its head is at its 'create' step, not at the top"}
+      tail: {type: boolean, default: true, description: The dashed line past its last step}
+    exports:
+      anchors: [north, south, east, west]
+      parts: [head, step]
+      tokens: [surface, stroke, ink, muted]
+    body:
+      layout: column
+      align: center
+      children:
+        - id: head
+          children:
+            - if: "not params.actor and not params.created"
+              layout: stack
+              align: stretch
+              children:
+                - {shape: rect, width: 0, height: 0, style: box}
+                - layout: column
+                  align: center
+                  padding: {x: 14, y: 8}
+                  children:
+                    - {shape: text, text: "=params.name", font_size: 14, fill: "=theme.ink"}
+            - if: "not params.actor and params.created"
+              opacity: 0
+              layout: column
+              padding: {x: 14, y: 8}
+              children:
+                - {shape: text, text: "=params.name", font_size: 14, fill: "=theme.ink"}
+            - {if: params.actor, use: actor, name: "=params.name"}
+        - {if: "not params.created", shape: line, points: [{x: 0, y: 0}, {x: 0, y: 14}], style: lifeline}
+        - {if: params.created, shape: rect, width: 0, height: 14, fill: "#00000000", stroke_width: 0}
+        - for_each: params.steps
+          as: s
+          id: step
+          do:
+            layout: stack
+            align: center
+            height: "=params.step_height"
+            children:
+              - {if: "s.value == ''", shape: line, points: [{x: 0, y: 0}, {x: 0, y: "=params.step_height"}], style: lifeline}
+              - {if: "s.value == 'none'", shape: rect, width: 0, height: "=params.step_height", fill: "#00000000", stroke_width: 0}
+              - if: "s.value == 'start' or s.value == 'on' or s.value == 'end' or s.value == 'once'"
+                children:
+                  - {shape: rect, width: 12, height: "=params.step_height", fill: "=theme.surface", stroke_width: 0}
+                  - {shape: line, points: [{x: 0, y: -0.75}, {x: 0, y: "=params.step_height + 0.75"}], style: wire}
+                  - {shape: line, points: [{x: 12, y: -0.75}, {x: 12, y: "=params.step_height + 0.75"}], style: wire}
+                  - {if: "s.value == 'start' or s.value == 'once'", shape: line, points: [{x: 0, y: 0}, {x: 12, y: 0}], style: wire}
+                  - {if: "s.value == 'end' or s.value == 'once'", shape: line, points: [{x: 0, y: "=params.step_height"}, {x: 12, y: "=params.step_height"}], style: wire}
+              - if: "s.value == 'create'"
+                layout: stack
+                align: stretch
+                children:
+                  - {shape: rect, width: 0, height: 0, style: box}
+                  - layout: column
+                    align: center
+                    padding: {x: 14, y: 8}
+                    children:
+                      - {shape: text, text: "=params.name", font_size: 14, fill: "=theme.ink"}
+              - if: "s.value == 'destroy'"
+                children:
+                  - {shape: line, points: [{x: 0, y: 0}, {x: 0, y: "=params.step_height / 2 - 8"}], style: lifeline}
+                  - {shape: line, points: [{x: -8, y: "=params.step_height / 2 - 8"}, {x: 8, y: "=params.step_height / 2 + 8"}], style: wire}
+                  - {shape: line, points: [{x: 8, y: "=params.step_height / 2 - 8"}, {x: -8, y: "=params.step_height / 2 + 8"}], style: wire}
+        - {if: params.tail, shape: line, points: [{x: 0, y: 0}, {x: 0, y: 18}], style: lifeline}
+        - {if: "not params.tail", shape: rect, width: 0, height: 18, fill: "#00000000", stroke_width: 0}
+
+  message:
+    description: >-
+      A message between two steps of two lifelines: sync (filled arrow), async (open arrow),
+      reply (dashed, open arrow) or create (dashed, open arrow, to the head of the new lifeline).
+    params:
+      from: {type: path}
+      to: {type: path}
+      label: {type: string, default: ""}
+      kind: {type: enum, values: [sync, async, reply, create], default: sync}
+    exports:
+      parts: [line]
+      tokens: [stroke, ink]
+    body:
+      children:
+        - {if: "params.kind == 'sync'", shape: connector, id: line, from: "=params.from", to: "=params.to", route: straight, marker_end: arrow, style: wire}
+        - {if: "params.kind == 'async'", shape: connector, id: line, from: "=params.from", to: "=params.to", route: straight, marker_end: open_arrow, style: wire}
+        - {if: "params.kind == 'reply' or params.kind == 'create'", shape: connector, id: line, from: "=params.from", to: "=params.to", route: straight, marker_end: open_arrow, style: dashed_wire}
+        - {if: "params.label != ''", shape: text, text: "=params.label", font_size: 12, fill: "=theme.ink", attach: {anchor: south, to: line.label, gap: 0, offset: {x: 0, y: -3}}}
+
+  self_message:
+    description: >-
+      A message a lifeline sends to itself, a loop down to the next step. Attach its north_west to
+      the step it leaves from: 'attach: {anchor: north_west, to: "server.step[m3].east"}'.
+    params:
+      label: {type: string, default: ""}
+      height: {type: number, default: 36, description: "The step height of the lifeline"}
+      reply: {type: boolean, default: false}
+    exports:
+      anchors: [north_west]
+      parts: [loop]
+      tokens: [stroke, ink]
+    body:
+      children:
+        - {if: "not params.reply", shape: polyline, id: loop, points: [{x: 0, y: 0}, {x: 34, y: 0}, {x: 34, y: "=params.height"}, {x: 9, y: "=params.height"}], style: wire}
+        - {if: params.reply, shape: polyline, id: loop, points: [{x: 0, y: 0}, {x: 34, y: 0}, {x: 34, y: "=params.height"}, {x: 9, y: "=params.height"}], style: dashed_wire}
+        - {shape: polygon, points: [{x: 0, y: "=params.height"}, {x: 10, y: "=params.height - 4"}, {x: 10, y: "=params.height + 4"}], style: solid}
+        - {if: "params.label != ''", shape: text, at: {x: 40, y: "=params.height / 2 - 8"}, text: "=params.label", font_size: 12, fill: "=theme.ink"}
+
+  fragment:
+    description: >-
+      A combined fragment: its operator in the corner tag (alt, opt, loop, par, break, critical,
+      neg, strict, seq, ignore, consider, assert) and the guard of its first operand. Place it over
+      the steps it covers and give it a size; its children (operands) are placed by their 'at'.
+    params:
+      operator: {type: string}
+      guard: {type: string, default: ""}
+      width: {type: number}
+      height: {type: number}
+    exports:
+      anchors: [north, south, east, west]
+      parts: [tag]
+      tokens: [surface, stroke, ink, muted]
+    body:
+      children:
+        - {shape: rect, width: "=params.width", height: "=params.height", fill: "#00000000", stroke: "=theme.stroke", stroke_width: 1.5}
+        - shape: polygon
+          points: [{x: 0, y: 0}, {x: "=tag.right + 6", y: 0}, {x: "=tag.right + 6", y: "=tag.bottom - 4"}, {x: "=tag.right", y: "=tag.bottom + 2"}, {x: 0, y: "=tag.bottom + 2"}]
+          style: box
+        - {shape: text, id: tag, at: {x: 8, y: 4}, text: "=params.operator", font_size: 13, fill: "=theme.ink"}
+        - {if: "params.guard != ''", shape: text, at: {x: "=tag.right + 18", y: 4}, text: "='[' + params.guard + ']'", font_size: 12, fill: "=theme.muted"}
+        - {slot: default}
+
+  operand:
+    description: The start of a further operand of a fragment, a dashed line across it with its guard ('else').
+    params:
+      guard: {type: string, default: ""}
+      width: {type: number}
+    exports:
+      tokens: [stroke, muted]
+    body:
+      children:
+        - {shape: line, points: [{x: 0, y: 0}, {x: "=params.width", y: 0}], stroke: "=theme.stroke", stroke_width: 1.2, stroke_dash: [6, 4]}
+        - {if: "params.guard != ''", shape: text, at: {x: 10, y: 4}, text: "='[' + params.guard + ']'", font_size: 12, fill: "=theme.muted"}
+
+  interaction_use:
+    description: A reference to another interaction, the 'ref' frame with its name in the middle.
+    params:
+      name: {type: string}
+      width: {type: number}
+      height: {type: number, default: 48}
+    exports:
+      anchors: [north, south, east, west]
+      parts: [tag]
+      tokens: [surface, stroke, ink]
+    body:
+      children:
+        - {shape: rect, width: "=params.width", height: "=params.height", style: box}
+        - shape: polygon
+          points: [{x: 0, y: 0}, {x: "=tag.right + 6", y: 0}, {x: "=tag.right + 6", y: "=tag.bottom - 4"}, {x: "=tag.right", y: "=tag.bottom + 2"}, {x: 0, y: "=tag.bottom + 2"}]
+          style: box
+        - {shape: text, id: tag, at: {x: 8, y: 4}, text: ref, font_size: 13, fill: "=theme.ink"}
+        - {shape: text, at: {x: 0, y: "=params.height / 2 - 4"}, width: "=params.width", text_align: center, text: "=params.name", font_size: 14, fill: "=theme.ink"}
+
+  # ---- any diagram ------------------------------------------------------------------------------
+
+  frame:
+    description: >-
+      The frame of a diagram, its kind and name in the corner tag: 'sd Checkout', 'act Ship order',
+      'stm Order', 'pkg Billing', 'uc Shop'. Its children go inside, in a column.
+    params:
+      kind: {type: string, description: "sd, act, stm, pkg, cmp, uc, class..."}
+      name: {type: string}
+    exports:
+      anchors: [north, south, east, west]
+      parts: [tag]
+      tokens: [surface, stroke, ink]
+    body:
+      children:
+        - layout: stack
+          align: stretch
+          children:
+            - {shape: rect, width: 0, height: 0, fill: "#00000000", stroke: "=theme.stroke", stroke_width: 1.5}
+            - layout: column
+              padding: {left: 20, top: 44, right: 20, bottom: 20}
+              gap: 20
+              children:
+                - {shape: rect, width: "=tag.width + 38", height: 0, fill: "#00000000", stroke_width: 0}
+                - {slot: default}
+        - shape: polygon
+          points: [{x: 0, y: 0}, {x: "=tag.right + 8", y: 0}, {x: "=tag.right + 8", y: "=tag.bottom - 4"}, {x: "=tag.right + 2", y: "=tag.bottom + 3"}, {x: 0, y: "=tag.bottom + 3"}]
+          style: box
+        - {shape: text, id: tag, at: {x: 8, y: 5}, text: "=params.kind + ' ' + params.name", font_size: 13, fill: "=theme.ink"}
+

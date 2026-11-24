@@ -745,6 +745,11 @@ class Validator(private val sink: DiagnosticSink, private val env: Environment =
             }
             PType.POINT -> point(x, dp, path)
             PType.POINTS -> if (x !is Value.List) error(path, "'${prop.name}' is a list of {x, y} points", dp) else x.items.forEachIndexed { i, p -> point(p, dp.index(i), path) }
+            PType.NUMBERS -> if (x !is Value.List || x.items.any { it !is Value.Num || it.value < 0 }) {
+                error(path, "'${prop.name}' is a list of numbers, none negative", dp)
+            } else if (x.items.isNotEmpty() && x.items.all { (it as Value.Num).value == 0.0 }) {
+                error(path, "'${prop.name}' needs a length above zero", dp)
+            }
             PType.NODES -> if (x !is Value.List) error(path, "'children' is a list of nodes", dp)
             PType.LAYERS -> layers(x, dp, path)
             PType.ANY -> {}

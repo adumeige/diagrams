@@ -325,6 +325,7 @@ Look comes from theme tokens and named styles, applied explicitly. There are no 
 
 - An override crosses template boundaries. It is the sanctioned way to re-skin a library element locally, without a path into its internals.
 - Only tokens cascade. Property values do not: setting `fill` on a group does not affect its children.
+- A stroke is solid unless `stroke_dash` gives its dash and gap lengths, repeated from the start of the outline: `stroke_dash: [6, 4]`. It applies to every stroked primitive, connectors included; connector markers stay solid. A partly drawn stroke (`draw` below 1) ignores the pattern. Like any property, it can sit in a named style (`dashed: {stroke_dash: [6, 4]}`).
 - Text properties are inherited through tokens such as `font_body`.
 - A token override is a property. A state can set it and a transition can tween it, so switching a subtree from light to dark is an ordinary state change.
 - A token reference stays live: when a token's value in scope changes, every property that references it is re-evaluated.
@@ -739,3 +740,4 @@ The 31 decisions taken on 17 November 2026, in the order they were made.
 | 29 | Geometry in transitions | Re-route connectors every frame | Interpolated paths look wrong when spatial relations change |
 | 30 | Imports | Local file references behind aliases | Enough for now; a registry can follow without changing documents |
 | 31 | Units, axes, camera | Logical pixels, top-left origin, y down; camera with `fit`, attachment, screen-space layers | Matches SVG, Canvas and what models have learned |
+| 32 | Dashed strokes | `stroke_dash`, a list of dash and gap lengths, on every stroked primitive (24 November 2026) | UML and most notations tell relations apart by dashed lines; a double outline or a muted colour is no substitute |

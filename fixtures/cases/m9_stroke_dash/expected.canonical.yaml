@@ -1,0 +1,109 @@
+format: diagrams/0.1
+title: Dashed strokes
+viewport: {width: 640, height: 320}
+styles: {dashed: {stroke: "#2d3436", stroke_width: 2, stroke_dash: [8, 5]}}
+scene:
+  layout: free
+  rotation: 0
+  scale: 1
+  opacity: 1
+  present: true
+  children:
+    - id: solid
+      shape: rect
+      layer: default
+      at: {x: 40, y: 40}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      width: 120
+      height: 70
+      corner_radius: 0
+      fill: "#ffffff"
+      stroke: "#2d3436"
+      stroke_width: 2
+    - id: box
+      shape: rect
+      layer: default
+      at: {x: 220, y: 40}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      style: dashed
+      width: 120
+      height: 70
+      corner_radius: 10
+      fill: "#dfe6e9"
+    - id: oval
+      shape: ellipse
+      layer: default
+      at: {x: 400, y: 40}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      width: 160
+      height: 70
+      fill: "#ffeaa7"
+      stroke: "#d63031"
+      stroke_width: 2
+      stroke_dash: [2, 4]
+    - id: zigzag
+      shape: polyline
+      layer: default
+      at: {x: 40, y: 160}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      points: [{x: 0, y: 40}, {x: 40, y: 0}, {x: 80, y: 40}, {x: 120, y: 0}]
+      stroke: "#0984e3"
+      stroke_width: 3
+      stroke_dash: [10, 4, 2]
+    - id: wave
+      shape: path
+      layer: default
+      at: {x: 220, y: 160}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      d: "M0 20 C 30 -10, 60 50, 120 20"
+      fill: "#00000000"
+      stroke: "#00b894"
+      stroke_width: 2
+      stroke_dash: [6, 3]
+    - id: link
+      shape: connector
+      layer: default
+      at: {x: 0, y: 0}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      from: solid
+      to: box
+      route: layout
+      marker_start: none
+      marker_end: triangle
+      stroke: "#2d3436"
+      stroke_width: 1.5
+      stroke_dash: [6, 4]
+    - id: back
+      shape: connector
+      layer: default
+      at: {x: 0, y: 0}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      from: box.south
+      to: oval.south_west
+      route: orthogonal
+      marker_start: diamond
+      marker_end: open_arrow
+      stroke: "#6c5ce7"
+      stroke_width: 1.5
+      stroke_dash: [4, 4]

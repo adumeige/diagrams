@@ -16,7 +16,7 @@
 #   - A leg carries its cardinality at its middle. A relative identifier is a leg with
 #     identifying: true: the cardinality is shown in parentheses.
 #   - In a table, a primary key column is underlined and a foreign key column is prefixed with '#'.
-#   - An external actor has a double outline (0.1 has no dashed strokes).
+#   - An external actor has a double outline.
 #   - Names and properties are free text ("Date de commande"), so they are plain lists and not
 #     keyed ones.
 #
@@ -26,8 +26,7 @@
 # a long label is kept clear of a slanted line.
 #
 # An operation has up to four emission rules, rule1 to rule4, each an exported part: a result is
-# linked from '<operation>.rule1'. They are fixed parameters because the items of a for_each
-# cannot be exported parts in 0.1.
+# linked from '<operation>.rule1'. They are fixed parameters, so that their names are known.
 #
 # Graph layouts (docs/graph-layouts.md): legs and arrows take route: layout by default, which follows
 # the route a layered or tree container supplies and is a straight line anywhere else, and their

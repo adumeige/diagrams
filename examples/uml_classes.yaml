@@ -1,0 +1,95 @@
+# UML class and object diagrams (libs/uml.yaml): classes, an interface, an enumeration, a data
+# type, a package, objects, a note, and every relation.
+#   diagrams render examples/uml_classes.yaml --out uml_classes.png --scale 2
+format: diagrams/0.1
+title: "UML: an online shop"
+viewport: {width: 1180, height: 700}
+imports:
+  uml: ../libs/uml.yaml
+  paper: ../themes/paper.yaml
+base_theme: paper
+scene:
+  layers: [backdrop, relations, default]
+  children:
+    - {shape: rect, layer: backdrop, width: "=viewport.width", height: "=viewport.height", fill: "=theme.background", stroke_width: 0}
+    - use: uml.frame
+      id: diagram
+      at: {x: 30, y: 24}
+      kind: class
+      name: Shop
+      children:
+        - layout: grid
+          columns: 4
+          gap: 80
+          align: center
+          children:
+            - use: uml.class
+              id: customer
+              name: Customer
+              static: ["count: Int"]
+              attributes: [name: String, email: Email]
+              operations:
+                - place: "(cart: Cart): Order"
+            - use: uml.class
+              id: order
+              name: Order
+              attributes: [number: String, placed: DateTime, status: OrderStatus]
+              operations:
+                - total: "(): Money"
+                - cancel: "()"
+            - use: uml.class
+              id: line_item
+              name: LineItem
+              attributes: [quantity: Int, price: Money]
+            - use: uml.package
+              id: catalog
+              name: catalog
+              children:
+                - use: uml.class
+                  id: product
+                  name: Product
+                  attributes: [sku: String, title: String]
+            - use: uml.class
+              id: payment
+              name: Payment
+              abstract: true
+              attributes: [amount: Money]
+            - use: uml.enumeration
+              id: status
+              name: OrderStatus
+              literals: [PLACED, PAID, SHIPPED, CANCELLED]
+            - use: uml.note
+              id: rule
+              text: The price is copied from the product when the order is placed.
+              width: 190
+            - use: uml.data_type
+              id: money
+              name: Money
+              attributes: [amount: Decimal, currency: String]
+            - layout: row
+              gap: 30
+              align: start
+              children:
+                - {use: uml.class, id: transfer, name: BankTransfer, attributes: [iban: String]}
+                - {use: uml.class, id: card, name: CardPayment, attributes: [last4: String]}
+            - use: uml.interface
+              id: gateway
+              name: PaymentGateway
+              operations:
+                - charge: "(amount: Money): Receipt"
+            - {use: uml.class, id: stripe, name: StripeGateway, stereotype: adapter}
+            - use: uml.object
+              id: sample
+              name: o42
+              classifier: Order
+              values: [number: "'2026-0042'", status: PAID]
+    - {use: uml.association, layer: relations, from: diagram.customer, to: diagram.order, label: places, from_mult: "1", to_mult: "0..*"}
+    - {use: uml.composition, layer: relations, from: diagram.order, to: diagram.line_item, from_mult: "1", to_mult: "1..*"}
+    - {use: uml.dependency, layer: relations, from: diagram.line_item, to: diagram.catalog, label: «import», route: straight}
+    - {use: uml.dependency, layer: relations, from: diagram.order, to: diagram.status, label: «use», route: straight, label_anchor: west, label_gap: -8}
+    - {use: uml.aggregation, layer: relations, from: diagram.order, to: diagram.payment, label: payments, from_mult: "1", to_mult: "0..*", route: straight}
+    - {use: uml.generalization, layer: relations, from: diagram.transfer, to: diagram.payment}
+    - {use: uml.generalization, layer: relations, from: diagram.card, to: diagram.payment}
+    - {use: uml.dependency, layer: relations, from: diagram.card, to: diagram.gateway, label: «use», route: straight}
+    - {use: uml.realization, layer: relations, from: diagram.stripe, to: diagram.gateway}
+    - {use: uml.note_link, layer: relations, from: diagram.rule, to: diagram.line_item}

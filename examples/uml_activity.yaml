@@ -1,0 +1,83 @@
+# UML activity diagram (libs/uml.yaml): partitions, initial and final nodes, actions (one a call
+# behavior action), a decision and a merge, a fork and a join, signals, a time event, an object
+# node, a flow final, and an interruptible region.
+#   diagrams render examples/uml_activity.yaml --out uml_activity.png --scale 2
+format: diagrams/0.1
+title: "UML: fulfil an order"
+viewport: {width: 900, height: 820}
+imports:
+  uml: ../libs/uml.yaml
+  paper: ../themes/paper.yaml
+base_theme: paper
+scene:
+  layers: [backdrop, relations, default]
+  children:
+    - {shape: rect, layer: backdrop, width: "=viewport.width", height: "=viewport.height", fill: "=theme.background", stroke_width: 0}
+    - use: uml.frame
+      id: act
+      at: {x: 30, y: 24}
+      kind: act
+      name: Fulfil order
+      children:
+        - layout: row
+          align: stretch
+          children:
+            - use: uml.partition
+              id: customer
+              name: Customer
+              width: 240
+              children:
+                - {use: uml.initial, id: begin}
+                - {use: uml.action, id: place, name: Place order}
+                - {shape: rect, width: 10, height: 388, fill: "#00000000", stroke_width: 0}
+                - {use: uml.accept_event, id: receive, name: Parcel received}
+                - {use: uml.final, id: done}
+            - use: uml.partition
+              id: shop
+              name: Shop
+              width: 320
+              children:
+                - {shape: rect, width: 10, height: 40, fill: "#00000000", stroke_width: 0}
+                - {use: uml.action, id: check, name: Check stock}
+                - {use: uml.decision, id: in_stock}
+                - {use: uml.merge, id: merged}
+                - {use: uml.fork, id: split}
+                - layout: row
+                  gap: 30
+                  align: center
+                  children:
+                    - {use: uml.action, id: invoice, name: Send invoice, call: true}
+                    - {use: uml.action, id: pack, name: Pack parcel}
+                - {use: uml.join, id: both}
+                - {use: uml.send_signal, id: ship, name: Ship parcel}
+                - {use: uml.object_node, id: parcel, name: Parcel, in_state: shipped}
+            - use: uml.partition
+              id: supplier
+              name: Supplier
+              width: 240
+              children:
+                - {shape: rect, width: 10, height: 150, fill: "#00000000", stroke_width: 0}
+                - use: uml.region
+                  id: restock
+                  name: timeout
+                  children:
+                    - {use: uml.action, id: order_more, name: Order stock}
+                    - {use: uml.accept_time, id: wait, name: 3 days}
+                - {use: uml.flow_final, id: give_up}
+    - {use: uml.flow, layer: relations, from: act.customer.begin, to: act.customer.place}
+    - {use: uml.flow, layer: relations, from: act.customer.place, to: act.shop.check, route: orthogonal}
+    - {use: uml.flow, layer: relations, from: act.shop.check, to: act.shop.in_stock}
+    - {use: uml.flow, layer: relations, from: act.shop.in_stock, to: act.shop.merged, guard: in stock, label_anchor: west, label_gap: 10}
+    - {use: uml.flow, layer: relations, from: act.shop.in_stock, to: act.supplier.restock.order_more.north, guard: out of stock, route: orthogonal, label_anchor: south, label_gap: 4}
+    - {use: uml.flow, layer: relations, from: act.supplier.restock.order_more, to: act.shop.merged.east, route: orthogonal}
+    - {use: uml.flow, layer: relations, from: act.supplier.restock.order_more, to: act.supplier.restock.wait}
+    - {use: uml.flow, layer: relations, from: act.supplier.restock.wait, to: act.supplier.give_up}
+    - {use: uml.flow, layer: relations, from: act.shop.merged, to: act.shop.split}
+    - {use: uml.flow, layer: relations, from: act.shop.split, to: act.shop.invoice}
+    - {use: uml.flow, layer: relations, from: act.shop.split, to: act.shop.pack}
+    - {use: uml.flow, layer: relations, from: act.shop.invoice, to: act.shop.both}
+    - {use: uml.flow, layer: relations, from: act.shop.pack, to: act.shop.both}
+    - {use: uml.flow, layer: relations, from: act.shop.both, to: act.shop.ship}
+    - {use: uml.flow, layer: relations, from: act.shop.ship, to: act.shop.parcel}
+    - {use: uml.flow, layer: relations, from: act.shop.parcel, to: act.customer.receive, route: orthogonal}
+    - {use: uml.flow, layer: relations, from: act.customer.receive, to: act.customer.done}

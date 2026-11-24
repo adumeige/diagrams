@@ -1,0 +1,1241 @@
+{
+  "format": "diagrams/0.1",
+  "viewport": {"width": 900, "height": 520},
+  "time": 0,
+  "background": "#faf8f3",
+  "root": {
+    "path": "scene",
+    "loc": "scene",
+    "kind": "container",
+    "layer": "default",
+    "box": [0, 0, 810.624, 360.22],
+    "local": [0, 0, 810.624, 360.22],
+    "transform": [1, 0, 0, 1, 0, 0],
+    "opacity": 1,
+    "children": [
+      {
+        "path": null,
+        "loc": "scene/5",
+        "kind": "container",
+        "template": "uml.realization",
+        "layer": "relations",
+        "box": [0, 0, 0, 0],
+        "local": [0, 0, 0, 0],
+        "transform": [1, 0, 0, 1, 0, 0],
+        "opacity": 1,
+        "children": [
+          {
+            "path": "line",
+            "loc": "scene/5/0",
+            "kind": "connector",
+            "layer": "default",
+            "box": [316.036, 94.138523, 166, 22.042842],
+            "local": [316.036, 94.138523, 166, 22.042842],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "stroke": "#2d3436",
+            "stroke_width": 1.5,
+            "stroke_dash": [6, 4],
+            "points": [[316.036, 116.181364], [469.506472, 99.881223]],
+            "markers": [
+              {
+                "kind": "triangle",
+                "points": [[482.036, 98.550458], [470.116406, 105.623923], [468.896538, 94.138523]]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "path": null,
+        "loc": "scene/6",
+        "kind": "container",
+        "template": "uml.note_link",
+        "layer": "relations",
+        "box": [0, 0, 0, 0],
+        "local": [0, 0, 0, 0],
+        "transform": [1, 0, 0, 1, 0, 0],
+        "opacity": 1,
+        "children": [
+          {
+            "path": "line",
+            "loc": "scene/6/0",
+            "kind": "connector",
+            "layer": "default",
+            "box": [150, 93.86, 50, 0],
+            "local": [150, 93.86, 50, 0],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "stroke": "#2d3436",
+            "stroke_width": 1.5,
+            "stroke_dash": [6, 4],
+            "points": [[150, 93.86], [200, 93.86]]
+          }
+        ]
+      },
+      {
+        "path": null,
+        "loc": "scene/7",
+        "kind": "container",
+        "template": "uml.transition",
+        "layer": "relations",
+        "box": [0, 0, 0, 0],
+        "local": [0, 0, 0, 0],
+        "transform": [1, 0, 0, 1, 0, 0],
+        "opacity": 1,
+        "children": [
+          {
+            "path": "line",
+            "loc": "scene/7/0",
+            "kind": "connector",
+            "layer": "default",
+            "box": [82.46953, 197.999986, 9.449986, 112.860014],
+            "local": [82.46953, 197.999986, 9.449986, 112.860014],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "stroke": "#2d3436",
+            "stroke_width": 1.5,
+            "points": [[87.015721, 197.999986], [87.212864, 310.86]],
+            "markers": [
+              {
+                "kind": "open_arrow",
+                "points": [[82.46953, 300.36827], [87.212864, 310.86], [91.919515, 300.351762]]
+              }
+            ]
+          },
+          {
+            "path": null,
+            "loc": "scene/7/1",
+            "kind": "container",
+            "layer": "default",
+            "box": [94.442271, 246.965538, 13.344, 14.88],
+            "local": [0, 0, 13.344, 14.88],
+            "transform": [1, 0, 0, 1, 94.442271, 246.965538],
+            "opacity": 1,
+            "children": [
+              {
+                "path": null,
+                "loc": "scene/7/1/0",
+                "kind": "text",
+                "layer": "default",
+                "box": [94.442271, 246.965538, 13.344, 14.88],
+                "local": [0, 0, 13.344, 14.88],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "fill": "#2d3436",
+                "font": "body",
+                "font_size": 12,
+                "lines": [{"text": "go", "x": 0, "baseline": 11.4, "width": 13.344}]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "path": null,
+        "loc": "scene/8",
+        "kind": "container",
+        "template": "uml.dependency",
+        "layer": "relations",
+        "box": [0, 0, 0, 0],
+        "local": [0, 0, 0, 0],
+        "transform": [1, 0, 0, 1, 0, 0],
+        "opacity": 1,
+        "children": [
+          {
+            "path": "line",
+            "loc": "scene/8/0",
+            "kind": "connector",
+            "layer": "default",
+            "box": [570.36, 89.135, 50, 9.45],
+            "local": [570.36, 89.135, 50, 9.45],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "stroke": "#2d3436",
+            "stroke_width": 1.5,
+            "stroke_dash": [6, 4],
+            "points": [[620.36, 93.86], [570.36, 93.86]],
+            "markers": [
+              {
+                "kind": "open_arrow",
+                "points": [[580.86, 89.135], [570.36, 93.86], [580.86, 98.585]]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "path": "through",
+        "loc": "scene/9",
+        "kind": "container",
+        "template": "uml.association",
+        "layer": "relations",
+        "box": [0, 0, 0, 0],
+        "local": [0, 0, 0, 0],
+        "transform": [1, 0, 0, 1, 0, 0],
+        "opacity": 1,
+        "children": [
+          {
+            "path": "through.line",
+            "loc": "scene/9/0",
+            "kind": "connector",
+            "layer": "default",
+            "box": [144.484, 311.242425, 615.516, 16.693218],
+            "local": [144.484, 311.242425, 615.516, 16.693218],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "stroke": "#2d3436",
+            "stroke_width": 1.5,
+            "points": [[144.484, 311.242425], [760, 323.41925]],
+            "markers": [
+              {
+                "kind": "open_arrow",
+                "points": [[749.408597, 327.935643], [760, 323.41925], [749.595511, 318.487492]]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "path": "shelf",
+        "loc": "scene/0",
+        "kind": "container",
+        "layer": "default",
+        "box": [30, 30, 662.164, 127.72],
+        "local": [0, 0, 662.164, 127.72],
+        "transform": [1, 0, 0, 1, 30, 30],
+        "opacity": 1,
+        "children": [
+          {
+            "path": "shelf.memo",
+            "loc": "scene/0/0",
+            "kind": "container",
+            "template": "uml.note",
+            "layer": "default",
+            "box": [30, 76.42, 120, 34.88],
+            "local": [0, 0, 120, 34.88],
+            "transform": [1, 0, 0, 1, 0, 46.42],
+            "opacity": 1,
+            "children": [
+              {
+                "path": null,
+                "loc": "scene/0/0/0",
+                "kind": "polygon",
+                "layer": "default",
+                "box": [30, 76.42, 120, 34.88],
+                "local": [0, 0, 120, 34.88],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "fill": "#ffffff",
+                "stroke": "#636e72",
+                "stroke_width": 1,
+                "points": [[0, 0], [108, 0], [120, 12], [120, 34.88], [0, 34.88]]
+              },
+              {
+                "path": null,
+                "loc": "scene/0/0/1",
+                "kind": "polyline",
+                "layer": "default",
+                "box": [138, 76.42, 12, 12],
+                "local": [108, 0, 12, 12],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "stroke": "#636e72",
+                "stroke_width": 1,
+                "points": [[108, 0], [108, 12], [120, 12]]
+              },
+              {
+                "path": "shelf.memo.paper",
+                "loc": "scene/0/0/2",
+                "kind": "container",
+                "layer": "default",
+                "box": [30, 76.42, 120, 34.88],
+                "local": [0, 0, 120, 34.88],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "children": [
+                  {
+                    "path": null,
+                    "loc": "scene/0/0/2/0",
+                    "kind": "text",
+                    "layer": "default",
+                    "box": [40, 86.42, 94, 14.88],
+                    "local": [0, 0, 94, 14.88],
+                    "transform": [1, 0, 0, 1, 10, 10],
+                    "opacity": 1,
+                    "fill": "#2d3436",
+                    "font": "body",
+                    "font_size": 12,
+                    "lines": [{"text": "A note in a row", "x": 0, "baseline": 11.4, "width": 79.236}]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "shelf.host",
+            "loc": "scene/0/1",
+            "kind": "container",
+            "template": "uml.node",
+            "layer": "default",
+            "box": [200, 30, 142.036, 127.72],
+            "local": [0, 0, 142.036, 127.72],
+            "transform": [1, 0, 0, 1, 170, 0],
+            "opacity": 1,
+            "children": [
+              {
+                "path": null,
+                "loc": "scene/0/1/1",
+                "kind": "container",
+                "layer": "faces",
+                "box": [200, 30, 142.036, 127.72],
+                "local": [0, 0, 142.036, 127.72],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "children": [
+                  {
+                    "path": null,
+                    "loc": "scene/0/1/1/0",
+                    "kind": "polygon",
+                    "layer": "default",
+                    "box": [200, 30, 142.036, 127.72],
+                    "local": [0, 0, 142.036, 127.72],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "fill": "#00000000",
+                    "stroke": "#2d3436",
+                    "stroke_width": 1.5,
+                    "points": [
+                      [0, 12],
+                      [12, 0],
+                      [142.036, 0],
+                      [142.036, 115.72],
+                      [130.036, 127.72],
+                      [0, 127.72]
+                    ]
+                  },
+                  {
+                    "path": null,
+                    "loc": "scene/0/1/1/1",
+                    "kind": "polygon",
+                    "layer": "default",
+                    "box": [200, 42, 130.036, 115.72],
+                    "local": [0, 12, 130.036, 115.72],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "fill": "#00000000",
+                    "stroke": "#2d3436",
+                    "stroke_width": 1.5,
+                    "points": [[0, 12], [130.036, 12], [130.036, 127.72], [0, 127.72]]
+                  },
+                  {
+                    "path": null,
+                    "loc": "scene/0/1/1/2",
+                    "kind": "line",
+                    "layer": "default",
+                    "box": [330.036, 30, 12, 12],
+                    "local": [130.036, 0, 12, 12],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "stroke": "#2d3436",
+                    "stroke_width": 1.5,
+                    "points": [[130.036, 12], [142.036, 0]]
+                  }
+                ]
+              },
+              {
+                "path": null,
+                "loc": "scene/0/1/0",
+                "kind": "container",
+                "layer": "default",
+                "box": [200, 30, 142.036, 127.72],
+                "local": [0, 0, 142.036, 127.72],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "children": [
+                  {
+                    "path": "shelf.host.extent",
+                    "loc": "scene/0/1/0/0",
+                    "kind": "rect",
+                    "layer": "default",
+                    "box": [200, 30, 142.036, 127.72],
+                    "local": [0, 0, 142.036, 127.72],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "fill": "#00000000",
+                    "stroke": "#000000",
+                    "stroke_width": 0
+                  },
+                  {
+                    "path": null,
+                    "loc": "scene/0/1/0/1",
+                    "kind": "container",
+                    "layer": "default",
+                    "box": [200, 30, 142.036, 127.72],
+                    "local": [0, 0, 142.036, 127.72],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "children": [
+                      {
+                        "path": null,
+                        "loc": "scene/0/1/0/1/0",
+                        "kind": "container",
+                        "layer": "default",
+                        "box": [214, 54, 47.82, 33.48],
+                        "local": [0, 0, 47.82, 33.48],
+                        "transform": [1, 0, 0, 1, 14, 24],
+                        "opacity": 1,
+                        "children": [
+                          {
+                            "path": null,
+                            "loc": "scene/0/1/0/1/0/0",
+                            "kind": "text",
+                            "layer": "default",
+                            "box": [214, 54, 47.82, 14.88],
+                            "local": [0, 0, 47.82, 14.88],
+                            "transform": [1, 0, 0, 1, 0, 0],
+                            "opacity": 1,
+                            "fill": "#636e72",
+                            "font": "body",
+                            "font_size": 12,
+                            "lines": [{"text": "«device»", "x": 0, "baseline": 11.4, "width": 47.82}]
+                          },
+                          {
+                            "path": null,
+                            "loc": "scene/0/1/0/1/0/1",
+                            "kind": "text",
+                            "layer": "default",
+                            "box": [214, 68.88, 46.14, 18.6],
+                            "local": [0, 0, 46.14, 18.6],
+                            "transform": [1, 0, 0, 1, 0, 14.88],
+                            "opacity": 1,
+                            "fill": "#2d3436",
+                            "font": "body",
+                            "font_size": 15,
+                            "lines": [{"text": "app-01", "x": 0, "baseline": 14.25, "width": 46.14}]
+                          }
+                        ]
+                      },
+                      {
+                        "path": null,
+                        "loc": "scene/0/1/0/1/1",
+                        "kind": "container",
+                        "layer": "default",
+                        "box": [214, 97.48, 102.036, 48.24],
+                        "local": [0, 0, 102.036, 48.24],
+                        "transform": [1, 0, 0, 1, 14, 67.48],
+                        "opacity": 1,
+                        "children": [
+                          {
+                            "path": "shelf.host.jar",
+                            "loc": "scene/0/1/0/1/1/0",
+                            "kind": "container",
+                            "template": "uml.artifact",
+                            "layer": "default",
+                            "box": [214, 97.48, 102.036, 48.24],
+                            "local": [0, 0, 102.036, 48.24],
+                            "transform": [1, 0, 0, 1, 0, 0],
+                            "opacity": 1,
+                            "children": [
+                              {
+                                "path": null,
+                                "loc": "scene/0/1/0/1/1/0/0",
+                                "kind": "rect",
+                                "layer": "default",
+                                "box": [214, 97.48, 102.036, 48.24],
+                                "local": [0, 0, 102.036, 48.24],
+                                "transform": [1, 0, 0, 1, 0, 0],
+                                "opacity": 1,
+                                "fill": "#ffffff",
+                                "stroke": "#2d3436",
+                                "stroke_width": 1.5
+                              },
+                              {
+                                "path": null,
+                                "loc": "scene/0/1/0/1/1/0/1",
+                                "kind": "container",
+                                "layer": "default",
+                                "box": [214, 97.48, 102.036, 48.24],
+                                "local": [0, 0, 102.036, 48.24],
+                                "transform": [1, 0, 0, 1, 0, 0],
+                                "opacity": 1,
+                                "children": [
+                                  {
+                                    "path": null,
+                                    "loc": "scene/0/1/0/1/1/0/1/0",
+                                    "kind": "container",
+                                    "layer": "default",
+                                    "box": [226, 105.48, 51.036, 32.24],
+                                    "local": [0, 0, 51.036, 32.24],
+                                    "transform": [1, 0, 0, 1, 12, 8],
+                                    "opacity": 1,
+                                    "children": [
+                                      {
+                                        "path": null,
+                                        "loc": "scene/0/1/0/1/1/0/1/0/0",
+                                        "kind": "text",
+                                        "layer": "default",
+                                        "box": [226, 105.48, 51.036, 14.88],
+                                        "local": [0, 0, 51.036, 14.88],
+                                        "transform": [1, 0, 0, 1, 0, 0],
+                                        "opacity": 1,
+                                        "fill": "#636e72",
+                                        "font": "body",
+                                        "font_size": 12,
+                                        "lines": [
+                                          {
+                                            "text": "«artifact»",
+                                            "x": 0,
+                                            "baseline": 11.4,
+                                            "width": 51.036
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "path": null,
+                                        "loc": "scene/0/1/0/1/1/0/1/0/1",
+                                        "kind": "text",
+                                        "layer": "default",
+                                        "box": [227.298, 120.36, 48.44, 17.36],
+                                        "local": [0, 0, 48.44, 17.36],
+                                        "transform": [1, 0, 0, 1, 1.298, 14.88],
+                                        "opacity": 1,
+                                        "fill": "#2d3436",
+                                        "font": "body",
+                                        "font_size": 14,
+                                        "lines": [
+                                          {
+                                            "text": "shop.jar",
+                                            "x": 0,
+                                            "baseline": 13.3,
+                                            "width": 48.44
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "path": null,
+                                    "loc": "scene/0/1/0/1/1/0/1/1",
+                                    "kind": "container",
+                                    "layer": "default",
+                                    "box": [291.036, 105.48, 13, 17],
+                                    "local": [0, 0, 13, 17],
+                                    "transform": [1, 0, 0, 1, 77.036, 8],
+                                    "opacity": 1,
+                                    "children": [
+                                      {
+                                        "path": null,
+                                        "loc": "scene/0/1/0/1/1/0/1/1/0",
+                                        "kind": "polygon",
+                                        "layer": "default",
+                                        "box": [291.036, 105.48, 13, 17],
+                                        "local": [0, 0, 13, 17],
+                                        "transform": [1, 0, 0, 1, 0, 0],
+                                        "opacity": 1,
+                                        "fill": "#ffffff",
+                                        "stroke": "#2d3436",
+                                        "stroke_width": 1.5,
+                                        "points": [[0, 0], [9, 0], [13, 4], [13, 17], [0, 17]]
+                                      },
+                                      {
+                                        "path": null,
+                                        "loc": "scene/0/1/0/1/1/0/1/1/1",
+                                        "kind": "polyline",
+                                        "layer": "default",
+                                        "box": [300.036, 105.48, 4, 4],
+                                        "local": [9, 0, 4, 4],
+                                        "transform": [1, 0, 0, 1, 0, 0],
+                                        "opacity": 1,
+                                        "stroke": "#2d3436",
+                                        "stroke_width": 1,
+                                        "points": [[9, 0], [9, 4], [13, 4]]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "shelf.spacer",
+            "loc": "scene/0/2",
+            "kind": "rect",
+            "layer": "default",
+            "box": [392.036, 63.86, 40, 60],
+            "local": [0, 0, 40, 60],
+            "transform": [1, 0, 0, 1, 362.036, 33.86],
+            "opacity": 1,
+            "fill": "#00000000",
+            "stroke": "#000000",
+            "stroke_width": 0
+          },
+          {
+            "path": "shelf.api",
+            "loc": "scene/0/3",
+            "kind": "container",
+            "template": "uml.interface",
+            "layer": "default",
+            "box": [482.036, 62.5, 88.324, 62.72],
+            "local": [0, 0, 88.324, 62.72],
+            "transform": [1, 0, 0, 1, 452.036, 32.5],
+            "opacity": 1,
+            "children": [
+              {
+                "path": "shelf.api.header",
+                "loc": "scene/0/3/0",
+                "kind": "container",
+                "layer": "default",
+                "box": [482.036, 62.5, 88.324, 50.72],
+                "local": [0, 0, 88.324, 50.72],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "children": [
+                  {
+                    "path": null,
+                    "loc": "scene/0/3/0/0",
+                    "kind": "rect",
+                    "layer": "default",
+                    "box": [482.036, 62.5, 88.324, 50.72],
+                    "local": [0, 0, 88.324, 50.72],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "fill": "#ffffff",
+                    "stroke": "#2d3436",
+                    "stroke_width": 1.5
+                  },
+                  {
+                    "path": null,
+                    "loc": "scene/0/3/0/1",
+                    "kind": "container",
+                    "layer": "default",
+                    "box": [482.036, 62.5, 88.324, 50.72],
+                    "local": [0, 0, 88.324, 50.72],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "children": [
+                      {
+                        "path": null,
+                        "loc": "scene/0/3/0/1/0",
+                        "kind": "text",
+                        "layer": "default",
+                        "box": [496.036, 70.5, 60.324, 14.88],
+                        "local": [0, 0, 60.324, 14.88],
+                        "transform": [1, 0, 0, 1, 14, 8],
+                        "opacity": 1,
+                        "fill": "#636e72",
+                        "font": "body",
+                        "font_size": 12,
+                        "lines": [{"text": "«interface»", "x": 0, "baseline": 11.4, "width": 60.324}]
+                      },
+                      {
+                        "path": null,
+                        "loc": "scene/0/3/0/1/1",
+                        "kind": "text",
+                        "layer": "default",
+                        "box": [514.438, 85.38, 23.52, 19.84],
+                        "local": [0, 0, 23.52, 19.84],
+                        "transform": [1, 0, 0, 1, 32.402, 22.88],
+                        "opacity": 1,
+                        "fill": "#2d3436",
+                        "font": "body",
+                        "font_size": 16,
+                        "lines": [{"text": "Api", "x": 0, "baseline": 15.2, "width": 23.52}]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "path": "shelf.api.attributes",
+                "loc": "scene/0/3/1",
+                "kind": "container",
+                "layer": "default",
+                "box": [482.036, 113.22, 88.324, 6],
+                "local": [0, 0, 88.324, 6],
+                "transform": [1, 0, 0, 1, 0, 50.72],
+                "opacity": 1,
+                "children": [
+                  {
+                    "path": null,
+                    "loc": "scene/0/3/1/0",
+                    "kind": "rect",
+                    "layer": "default",
+                    "box": [482.036, 113.22, 88.324, 6],
+                    "local": [0, 0, 88.324, 6],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "fill": "#ffffff",
+                    "stroke": "#2d3436",
+                    "stroke_width": 1.5
+                  },
+                  {
+                    "path": null,
+                    "loc": "scene/0/3/1/1",
+                    "kind": "container",
+                    "layer": "default",
+                    "box": [482.036, 113.22, 88.324, 6],
+                    "local": [0, 0, 88.324, 6],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "path": "shelf.api.operations",
+                "loc": "scene/0/3/2",
+                "kind": "container",
+                "layer": "default",
+                "box": [482.036, 119.22, 88.324, 6],
+                "local": [0, 0, 88.324, 6],
+                "transform": [1, 0, 0, 1, 0, 56.72],
+                "opacity": 1,
+                "children": [
+                  {
+                    "path": null,
+                    "loc": "scene/0/3/2/0",
+                    "kind": "rect",
+                    "layer": "default",
+                    "box": [482.036, 119.22, 88.324, 6],
+                    "local": [0, 0, 88.324, 6],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "fill": "#ffffff",
+                    "stroke": "#2d3436",
+                    "stroke_width": 1.5
+                  },
+                  {
+                    "path": null,
+                    "loc": "scene/0/3/2/1",
+                    "kind": "container",
+                    "layer": "default",
+                    "box": [482.036, 119.22, 88.324, 6],
+                    "local": [0, 0, 88.324, 6],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "shelf.ship",
+            "loc": "scene/0/4",
+            "kind": "container",
+            "template": "uml.send_signal",
+            "layer": "default",
+            "box": [620.36, 75.18, 71.804, 37.36],
+            "local": [0, 0, 71.804, 37.36],
+            "transform": [1, 0, 0, 1, 590.36, 45.18],
+            "opacity": 1,
+            "children": [
+              {
+                "path": null,
+                "loc": "scene/0/4/0",
+                "kind": "polygon",
+                "layer": "default",
+                "box": [620.36, 75.18, 71.804, 37.36],
+                "local": [0, 0, 71.804, 37.36],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "fill": "#ffffff",
+                "stroke": "#2d3436",
+                "stroke_width": 1.5,
+                "points": [[0, 0], [55.804, 0], [71.804, 18.68], [55.804, 37.36], [0, 37.36]]
+              },
+              {
+                "path": "shelf.ship.label",
+                "loc": "scene/0/4/1",
+                "kind": "container",
+                "layer": "default",
+                "box": [620.36, 75.18, 55.804, 37.36],
+                "local": [0, 0, 55.804, 37.36],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "children": [
+                  {
+                    "path": null,
+                    "loc": "scene/0/4/1/0",
+                    "kind": "text",
+                    "layer": "default",
+                    "box": [634.36, 85.18, 27.804, 17.36],
+                    "local": [0, 0, 27.804, 17.36],
+                    "transform": [1, 0, 0, 1, 14, 10],
+                    "opacity": 1,
+                    "fill": "#2d3436",
+                    "font": "body",
+                    "font_size": 14,
+                    "lines": [{"text": "Ship", "x": 0, "baseline": 13.3, "width": 27.804}]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "path": "busy",
+        "loc": "scene/1",
+        "kind": "container",
+        "template": "uml.state",
+        "layer": "default",
+        "box": [30, 260, 114.484, 100.22],
+        "local": [0, 0, 114.484, 100.22],
+        "transform": [1, 0, 0, 1, 30, 260],
+        "opacity": 1,
+        "children": [
+          {
+            "path": null,
+            "loc": "scene/1/0",
+            "kind": "rect",
+            "layer": "default",
+            "box": [30, 260, 114.484, 100.22],
+            "local": [0, 0, 114.484, 100.22],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "fill": "#00000000",
+            "stroke": "#2d3436",
+            "stroke_width": 1.5,
+            "corner_radius": 12
+          },
+          {
+            "path": null,
+            "loc": "scene/1/1",
+            "kind": "container",
+            "layer": "default",
+            "box": [30, 260, 114.484, 100.22],
+            "local": [0, 0, 114.484, 100.22],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "children": [
+              {
+                "path": "busy.header",
+                "loc": "scene/1/1/0",
+                "kind": "container",
+                "layer": "default",
+                "box": [30, 260, 114.484, 33.36],
+                "local": [0, 0, 114.484, 33.36],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "children": [
+                  {
+                    "path": null,
+                    "loc": "scene/1/1/0/0",
+                    "kind": "text",
+                    "layer": "default",
+                    "box": [72.857, 268, 28.77, 17.36],
+                    "local": [0, 0, 28.77, 17.36],
+                    "transform": [1, 0, 0, 1, 42.857, 8],
+                    "opacity": 1,
+                    "fill": "#2d3436",
+                    "font": "body",
+                    "font_size": 14,
+                    "lines": [{"text": "Busy", "x": 0, "baseline": 13.3, "width": 28.77}]
+                  }
+                ]
+              },
+              {
+                "path": null,
+                "loc": "scene/1/1/1",
+                "kind": "container",
+                "layer": "default",
+                "box": [30, 293.36, 114.484, 66.86],
+                "local": [0, 0, 114.484, 66.86],
+                "transform": [1, 0, 0, 1, 0, 33.36],
+                "opacity": 1,
+                "children": [
+                  {
+                    "path": null,
+                    "loc": "scene/1/1/1/0",
+                    "kind": "rect",
+                    "layer": "default",
+                    "box": [30, 293.36, 114.484, 1.5],
+                    "local": [0, 0, 114.484, 1.5],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "fill": "#2d3436",
+                    "stroke": "#000000",
+                    "stroke_width": 0
+                  },
+                  {
+                    "path": null,
+                    "loc": "scene/1/1/1/1",
+                    "kind": "container",
+                    "layer": "default",
+                    "box": [30, 294.86, 114.484, 65.36],
+                    "local": [0, 0, 114.484, 65.36],
+                    "transform": [1, 0, 0, 1, 0, 1.5],
+                    "opacity": 1,
+                    "children": [
+                      {
+                        "path": "busy.inner",
+                        "loc": "scene/1/1/1/1/0",
+                        "kind": "container",
+                        "template": "uml.state",
+                        "layer": "default",
+                        "box": [46, 310.86, 82.484, 33.36],
+                        "local": [0, 0, 82.484, 33.36],
+                        "transform": [1, 0, 0, 1, 16, 16],
+                        "opacity": 1,
+                        "children": [
+                          {
+                            "path": null,
+                            "loc": "scene/1/1/1/1/0/0",
+                            "kind": "rect",
+                            "layer": "default",
+                            "box": [46, 310.86, 82.484, 33.36],
+                            "local": [0, 0, 82.484, 33.36],
+                            "transform": [1, 0, 0, 1, 0, 0],
+                            "opacity": 1,
+                            "fill": "#ffffff",
+                            "stroke": "#2d3436",
+                            "stroke_width": 1.5,
+                            "corner_radius": 12
+                          },
+                          {
+                            "path": null,
+                            "loc": "scene/1/1/1/1/0/1",
+                            "kind": "container",
+                            "layer": "default",
+                            "box": [46, 310.86, 82.484, 33.36],
+                            "local": [0, 0, 82.484, 33.36],
+                            "transform": [1, 0, 0, 1, 0, 0],
+                            "opacity": 1,
+                            "children": [
+                              {
+                                "path": "busy.inner.header",
+                                "loc": "scene/1/1/1/1/0/1/0",
+                                "kind": "container",
+                                "layer": "default",
+                                "box": [46, 310.86, 82.484, 33.36],
+                                "local": [0, 0, 82.484, 33.36],
+                                "transform": [1, 0, 0, 1, 0, 0],
+                                "opacity": 1,
+                                "children": [
+                                  {
+                                    "path": null,
+                                    "loc": "scene/1/1/1/1/0/1/0/0",
+                                    "kind": "text",
+                                    "layer": "default",
+                                    "box": [62, 318.86, 50.484, 17.36],
+                                    "local": [0, 0, 50.484, 17.36],
+                                    "transform": [1, 0, 0, 1, 16, 8],
+                                    "opacity": 1,
+                                    "fill": "#2d3436",
+                                    "font": "body",
+                                    "font_size": 14,
+                                    "lines": [{"text": "Working", "x": 0, "baseline": 13.3, "width": 50.484}]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "path": "init",
+        "loc": "scene/2",
+        "kind": "circle",
+        "template": "uml.initial",
+        "layer": "default",
+        "box": [78, 180, 18, 18],
+        "local": [0, 0, 18, 18],
+        "transform": [1, 0, 0, 1, 78, 180],
+        "opacity": 1,
+        "fill": "#2d3436",
+        "stroke": "#2d3436",
+        "stroke_width": 1.5
+      },
+      {
+        "path": "wall",
+        "loc": "scene/3",
+        "kind": "container",
+        "template": "uml.class",
+        "layer": "default",
+        "box": [520, 300, 57.504, 47.84],
+        "local": [0, 0, 57.504, 47.84],
+        "transform": [1, 0, 0, 1, 520, 300],
+        "opacity": 1,
+        "children": [
+          {
+            "path": "wall.header",
+            "loc": "scene/3/0",
+            "kind": "container",
+            "layer": "default",
+            "box": [520, 300, 57.504, 35.84],
+            "local": [0, 0, 57.504, 35.84],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "children": [
+              {
+                "path": null,
+                "loc": "scene/3/0/0",
+                "kind": "rect",
+                "layer": "default",
+                "box": [520, 300, 57.504, 35.84],
+                "local": [0, 0, 57.504, 35.84],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "fill": "#ffffff",
+                "stroke": "#2d3436",
+                "stroke_width": 1.5
+              },
+              {
+                "path": null,
+                "loc": "scene/3/0/1",
+                "kind": "container",
+                "layer": "default",
+                "box": [520, 300, 57.504, 35.84],
+                "local": [0, 0, 57.504, 35.84],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "children": [
+                  {
+                    "path": null,
+                    "loc": "scene/3/0/1/0",
+                    "kind": "text",
+                    "layer": "default",
+                    "box": [534, 308, 29.504, 19.84],
+                    "local": [0, 0, 29.504, 19.84],
+                    "transform": [1, 0, 0, 1, 14, 8],
+                    "opacity": 1,
+                    "fill": "#2d3436",
+                    "font": "body",
+                    "font_size": 16,
+                    "lines": [{"text": "Wall", "x": 0, "baseline": 15.2, "width": 29.504}]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "wall.attributes",
+            "loc": "scene/3/1",
+            "kind": "container",
+            "layer": "default",
+            "box": [520, 335.84, 57.504, 6],
+            "local": [0, 0, 57.504, 6],
+            "transform": [1, 0, 0, 1, 0, 35.84],
+            "opacity": 1,
+            "children": [
+              {
+                "path": null,
+                "loc": "scene/3/1/0",
+                "kind": "rect",
+                "layer": "default",
+                "box": [520, 335.84, 57.504, 6],
+                "local": [0, 0, 57.504, 6],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "fill": "#ffffff",
+                "stroke": "#2d3436",
+                "stroke_width": 1.5
+              },
+              {
+                "path": null,
+                "loc": "scene/3/1/1",
+                "kind": "container",
+                "layer": "default",
+                "box": [520, 335.84, 57.504, 6],
+                "local": [0, 0, 57.504, 6],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "children": []
+              }
+            ]
+          },
+          {
+            "path": "wall.operations",
+            "loc": "scene/3/2",
+            "kind": "container",
+            "layer": "default",
+            "box": [520, 341.84, 57.504, 6],
+            "local": [0, 0, 57.504, 6],
+            "transform": [1, 0, 0, 1, 0, 41.84],
+            "opacity": 1,
+            "children": [
+              {
+                "path": null,
+                "loc": "scene/3/2/0",
+                "kind": "rect",
+                "layer": "default",
+                "box": [520, 341.84, 57.504, 6],
+                "local": [0, 0, 57.504, 6],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "fill": "#ffffff",
+                "stroke": "#2d3436",
+                "stroke_width": 1.5
+              },
+              {
+                "path": null,
+                "loc": "scene/3/2/1",
+                "kind": "container",
+                "layer": "default",
+                "box": [520, 341.84, 57.504, 6],
+                "local": [0, 0, 57.504, 6],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "path": "far",
+        "loc": "scene/4",
+        "kind": "container",
+        "template": "uml.class",
+        "layer": "default",
+        "box": [760, 300, 50.624, 47.84],
+        "local": [0, 0, 50.624, 47.84],
+        "transform": [1, 0, 0, 1, 760, 300],
+        "opacity": 1,
+        "children": [
+          {
+            "path": "far.header",
+            "loc": "scene/4/0",
+            "kind": "container",
+            "layer": "default",
+            "box": [760, 300, 50.624, 35.84],
+            "local": [0, 0, 50.624, 35.84],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "children": [
+              {
+                "path": null,
+                "loc": "scene/4/0/0",
+                "kind": "rect",
+                "layer": "default",
+                "box": [760, 300, 50.624, 35.84],
+                "local": [0, 0, 50.624, 35.84],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "fill": "#ffffff",
+                "stroke": "#2d3436",
+                "stroke_width": 1.5
+              },
+              {
+                "path": null,
+                "loc": "scene/4/0/1",
+                "kind": "container",
+                "layer": "default",
+                "box": [760, 300, 50.624, 35.84],
+                "local": [0, 0, 50.624, 35.84],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "children": [
+                  {
+                    "path": null,
+                    "loc": "scene/4/0/1/0",
+                    "kind": "text",
+                    "layer": "default",
+                    "box": [774, 308, 22.624, 19.84],
+                    "local": [0, 0, 22.624, 19.84],
+                    "transform": [1, 0, 0, 1, 14, 8],
+                    "opacity": 1,
+                    "fill": "#2d3436",
+                    "font": "body",
+                    "font_size": 16,
+                    "lines": [{"text": "Far", "x": 0, "baseline": 15.2, "width": 22.624}]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "far.attributes",
+            "loc": "scene/4/1",
+            "kind": "container",
+            "layer": "default",
+            "box": [760, 335.84, 50.624, 6],
+            "local": [0, 0, 50.624, 6],
+            "transform": [1, 0, 0, 1, 0, 35.84],
+            "opacity": 1,
+            "children": [
+              {
+                "path": null,
+                "loc": "scene/4/1/0",
+                "kind": "rect",
+                "layer": "default",
+                "box": [760, 335.84, 50.624, 6],
+                "local": [0, 0, 50.624, 6],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "fill": "#ffffff",
+                "stroke": "#2d3436",
+                "stroke_width": 1.5
+              },
+              {
+                "path": null,
+                "loc": "scene/4/1/1",
+                "kind": "container",
+                "layer": "default",
+                "box": [760, 335.84, 50.624, 6],
+                "local": [0, 0, 50.624, 6],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "children": []
+              }
+            ]
+          },
+          {
+            "path": "far.operations",
+            "loc": "scene/4/2",
+            "kind": "container",
+            "layer": "default",
+            "box": [760, 341.84, 50.624, 6],
+            "local": [0, 0, 50.624, 6],
+            "transform": [1, 0, 0, 1, 0, 41.84],
+            "opacity": 1,
+            "children": [
+              {
+                "path": null,
+                "loc": "scene/4/2/0",
+                "kind": "rect",
+                "layer": "default",
+                "box": [760, 341.84, 50.624, 6],
+                "local": [0, 0, 50.624, 6],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "fill": "#ffffff",
+                "stroke": "#2d3436",
+                "stroke_width": 1.5
+              },
+              {
+                "path": null,
+                "loc": "scene/4/2/1",
+                "kind": "container",
+                "layer": "default",
+                "box": [760, 341.84, 50.624, 6],
+                "local": [0, 0, 50.624, 6],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "children": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

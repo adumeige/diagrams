@@ -1,0 +1,123 @@
+format: diagrams/0.1
+viewport: {width: 900, height: 520}
+imports: {uml: ../../../libs/uml.yaml, paper: ../../../themes/paper.yaml}
+base_theme: paper
+scene:
+  layout: free
+  rotation: 0
+  scale: 1
+  opacity: 1
+  present: true
+  layers: [relations, default]
+  children:
+    - id: shelf
+      layout: row
+      layer: default
+      at: {x: 30, y: 30}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      gap: 50
+      align: center
+      children:
+        - {id: memo, use: uml.note, text: A note in a row, width: 120}
+        - id: host
+          use: uml.node
+          name: app-01
+          stereotype: device
+          children: [{id: jar, use: uml.artifact, name: shop.jar, stereotype: artifact}]
+        - id: spacer
+          shape: rect
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          width: 40
+          height: 60
+          corner_radius: 0
+          fill: "#00000000"
+          stroke: "#000000"
+          stroke_width: 0
+        - {id: api, use: uml.interface, name: Api, attributes: [], operations: []}
+        - {id: ship, use: uml.send_signal, name: Ship}
+    - id: busy
+      use: uml.state
+      at: {x: 30, y: 260}
+      name: Busy
+      on_entry: ""
+      on_do: ""
+      on_exit: ""
+      internal: []
+      composite: true
+      children:
+        - id: inner
+          use: uml.state
+          name: Working
+          on_entry: ""
+          on_do: ""
+          on_exit: ""
+          internal: []
+          composite: false
+    - {id: init, use: uml.initial, at: {x: 78, y: 180}}
+    - id: wall
+      use: uml.class
+      at: {x: 520, y: 300}
+      name: Wall
+      stereotype: ""
+      abstract: false
+      attributes: []
+      operations: []
+      static: []
+    - id: far
+      use: uml.class
+      at: {x: 760, y: 300}
+      name: Far
+      stereotype: ""
+      abstract: false
+      attributes: []
+      operations: []
+      static: []
+    - use: uml.realization
+      layer: relations
+      from: shelf.host.jar
+      to: shelf.api
+      route: straight
+    - use: uml.note_link
+      layer: relations
+      from: shelf.memo
+      to: shelf.host
+      route: straight
+    - use: uml.transition
+      layer: relations
+      from: init
+      to: busy.inner
+      trigger: go
+      guard: ""
+      effect: ""
+      route: layout
+      label_anchor: center
+      label_gap: 14
+    - use: uml.dependency
+      layer: relations
+      from: shelf.ship
+      to: shelf.api
+      label: ""
+      route: straight
+      label_gap: 4
+      label_anchor: south
+    - id: through
+      use: uml.association
+      layer: relations
+      from: busy
+      to: far
+      label: ""
+      from_mult: ""
+      to_mult: ""
+      from_role: ""
+      to_role: ""
+      route: straight
+      label_gap: 4
+      label_anchor: south

@@ -76,7 +76,8 @@ class ResolvedNode(
     ) = ResolvedNode(ref, loc, kind, layer, local, transform, world, box, opacity, paint, geometry, children, template, draw, route, routeLabel)
 }
 
-data class Paint(val fill: String?, val stroke: String?, val strokeWidth: Double)
+/** [dash] is the stroke's dash pattern, empty when it is solid (`stroke_dash`). */
+data class Paint(val fill: String?, val stroke: String?, val strokeWidth: Double, val dash: List<Double> = emptyList())
 
 sealed interface Geometry {
     data object Group : Geometry
@@ -271,7 +272,7 @@ private class Finisher(private val e: Engine, private val sink: DiagnosticSink) 
         val children = n.children.withIndex()
             .sortedWith(compareBy({ layerIndex(order, it.value) }, { it.index }))
             .map { finish(it.value, false) }
-        val paint = Paint(e.color(n, "fill"), e.color(n, "stroke"), e.num(n, "stroke_width", 0.0))
+        val paint = Paint(e.color(n, "fill"), e.color(n, "stroke"), e.num(n, "stroke_width", 0.0), e.dash(n))
         val local: Box
         val geometry: Geometry
         var p = paint
@@ -436,6 +437,7 @@ fun ResolvedNode.toValue(): Value {
     paint.stroke?.let {
         out["stroke"] = Value.Str(it)
         out["stroke_width"] = Value.Num(paint.strokeWidth)
+        if (paint.dash.isNotEmpty()) out["stroke_dash"] = Value.List(paint.dash.map { Value.Num(it) })
     }
     when (val g = geometry) {
         Geometry.Group -> {}

@@ -159,6 +159,13 @@ private fun contrast(scene: ResolvedScene, config: LintConfig, report: (Resolved
 
 private val SHAPES = setOf("rect", "ellipse", "circle", "polygon", "path")
 
+/** Whether a shape shows: a stroke, or a fill that is not fully transparent. */
+private fun paints(n: ResolvedNode): Boolean {
+    fun visible(c: String?) = c != null && !(c.length == 9 && c.endsWith("00"))
+    val p = n.paint
+    return n.opacity > 0 && ((visible(p.stroke) && p.strokeWidth > 0) || visible(p.fill))
+}
+
 private fun r2(d: Double) = kotlin.math.round(d * 100) / 100
 
 /**
@@ -219,25 +226,32 @@ private fun crosses(a: diagrams.resolver.Point, b: diagrams.resolver.Point, box:
 
 /**
  * `connector_crosses_shape`: a connector running through a shape's box. Shapes containing either
- * end of the connector are its ends (or hold them) and are skipped.
+ * end of the connector are its ends (or hold them) and are skipped, and so are the parts of a
+ * template instance that holds an end (entering a composite state crosses its compartment rule),
+ * and shapes that paint nothing (spacers).
  */
 private fun crossings(scene: ResolvedScene, report: (ResolvedNode, String, Value.Map) -> Unit) {
-    val shapes = mutableListOf<ResolvedNode>()
+    // each shape, with the boxes of the template instances it is a part of
+    val shapes = mutableListOf<Pair<ResolvedNode, List<diagrams.resolver.Box>>>()
     val connectors = mutableListOf<ResolvedNode>()
-    scene.root.walk { n ->
+    fun visit(n: ResolvedNode, instances: List<diagrams.resolver.Box>) {
         when {
             n.kind == "connector" -> connectors += n
-            n.kind in SHAPES -> shapes += n
+            n.kind in SHAPES && paints(n) -> shapes += n to instances
         }
+        val inner = if (n.template != null) instances + n.box else instances
+        n.children.forEach { visit(it, inner) }
     }
+    visit(scene.root, emptyList())
     for (c in connectors) {
         val pts = (c.geometry as? Geometry.Poly)?.points?.map { c.world.apply(it) } ?: continue
         if (pts.size < 2) continue
         val first = pts.first()
         val last = pts.last()
         fun holds(b: diagrams.resolver.Box, p: diagrams.resolver.Point) = p.x >= b.x - 0.5 && p.x <= b.right + 0.5 && p.y >= b.y - 0.5 && p.y <= b.bottom + 0.5
-        for (s in shapes) {
+        for ((s, instances) in shapes) {
             if (holds(s.box, first) || holds(s.box, last)) continue
+            if (instances.any { holds(it, first) || holds(it, last) }) continue
             if (pts.zipWithNext().any { (a, b) -> crosses(a, b, s.box, 0.5) }) {
                 report(c, "connector runs through ${s.label}", Value.map("shape" to Value.Str(s.label)))
             }

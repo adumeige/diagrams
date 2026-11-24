@@ -18,6 +18,7 @@ scene:
       abstract: false
       attributes: [{name: String}, {country: String}]
       operations: [{squad: "(): Player[]"}]
+      static: []
     - id: player
       use: uml.class
       at: {x: 440, y: 40}
@@ -26,6 +27,7 @@ scene:
       abstract: false
       attributes: [{name: String}, {position: Position}, {caps: Int}]
       operations: []
+      static: []
     - id: person
       use: uml.class
       at: {x: 460, y: 300}
@@ -34,6 +36,7 @@ scene:
       abstract: true
       attributes: []
       operations: []
+      static: []
     - id: lineup
       use: uml.aggregation
       layer: edges
@@ -42,7 +45,11 @@ scene:
       label: lineup
       from_mult: "1"
       to_mult: "23"
+      from_role: ""
+      to_role: ""
       route: orthogonal
+      label_gap: 4
+      label_anchor: south
     - use: uml.generalization
       layer: edges
       from: player

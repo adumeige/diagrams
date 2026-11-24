@@ -235,6 +235,7 @@ scene:
           abstract: true
           attributes: []
           operations: [{area: "(): Number"}]
+          static: []
         - id: disc
           use: uml.class
           name: Circle
@@ -242,6 +243,7 @@ scene:
           abstract: false
           attributes: [{radius: Number}]
           operations: []
+          static: []
         - id: polygon_class
           use: uml.class
           name: Polygon
@@ -249,6 +251,7 @@ scene:
           abstract: false
           attributes: []
           operations: []
+          static: []
         - id: vertex
           use: uml.class
           name: Point
@@ -256,6 +259,7 @@ scene:
           abstract: false
           attributes: [{x: Number}, {y: Number}]
           operations: []
+          static: []
         - id: canvas
           use: uml.class
           name: Canvas
@@ -263,6 +267,7 @@ scene:
           abstract: false
           attributes: []
           operations: []
+          static: []
         - {use: uml.generalization, from: disc, to: figure, route: layout}
         - {use: uml.generalization, from: polygon_class, to: figure, route: layout}
         - use: uml.composition
@@ -271,11 +276,19 @@ scene:
           label: outline
           from_mult: ""
           to_mult: 3..*
+          from_role: ""
+          to_role: ""
           route: layout
+          label_gap: 4
+          label_anchor: south
         - use: uml.association
           from: canvas
           to: figure
           label: shapes
           from_mult: ""
           to_mult: ""
+          from_role: ""
+          to_role: ""
           route: layout
+          label_gap: 4
+          label_anchor: south

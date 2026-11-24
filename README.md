@@ -173,7 +173,8 @@ Choices made where the addendum is silent:
 
 A library is an imported file with `templates` (and optionally `styles`). A template declares a
 parameter schema, an interface and a body; an instance passes parameters as sibling keys of `use`.
-[libs/uml.yaml](libs/uml.yaml) (classes, notes, relations), [libs/merise.yaml](libs/merise.yaml)
+[libs/uml.yaml](libs/uml.yaml) (UML class, object, package, component, deployment, use case, activity,
+state machine and sequence diagrams; one example per family in `examples/uml_*.yaml`), [libs/merise.yaml](libs/merise.yaml)
 (the Merise data, processing and flow models; [examples/merise_festival.yaml](examples/merise_festival.yaml)
 is an MCD placed by a `force` container) and [libs/deck.yaml](libs/deck.yaml) (headings, bullets,
 cards, badges, progress dots) are complete examples.

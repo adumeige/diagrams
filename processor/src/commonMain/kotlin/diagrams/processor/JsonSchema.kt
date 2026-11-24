@@ -188,6 +188,7 @@ object JsonSchema {
             PType.ID -> ref("id")
             PType.POINT -> ref("point")
             PType.POINTS -> obj("type" to s("array"), "items" to ref("point"))
+            PType.NUMBERS -> obj("type" to s("array"), "items" to obj("type" to s("number"), "minimum" to Value.Num(0.0)))
             PType.NODES -> obj("type" to s("array"), "items" to ref("node"))
             PType.LAYERS -> obj("type" to s("array"), "items" to anyOf(obj("type" to s("string")), obj("type" to s("object"), "properties" to obj("name" to obj("type" to s("string"))), "required" to arr(listOf(s("name"))))))
             PType.ANY -> obj()

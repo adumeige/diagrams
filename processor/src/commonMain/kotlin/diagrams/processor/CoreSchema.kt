@@ -12,6 +12,7 @@ enum class PType(val scalar: Boolean) {
     ID(false),
     POINT(false),
     POINTS(false),
+    NUMBERS(false),
     NODES(false),
     LAYERS(false),
     ANY(false),
@@ -84,6 +85,8 @@ object CoreSchema {
         fill?.let { Prop("fill", PType.COLOR, str(it)) },
         Prop("stroke", PType.COLOR, str("#000000")),
         Prop("stroke_width", PType.NUMBER, num(1)),
+        // dash and gap lengths along the stroke, repeated from its start: [6, 4]; absent or [] is solid
+        Prop("stroke_dash", PType.NUMBERS),
         // the fraction of the stroke drawn, from its start: animated by clips such as motion.draw_stroke
         Prop("draw", PType.NUMBER),
     )

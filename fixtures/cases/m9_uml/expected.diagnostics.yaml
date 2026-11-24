@@ -1,0 +1,5 @@
+- code: connector_crosses_shape
+  severity: warning
+  path: through.line
+  message: connector runs through scene/3/0/0
+  data: {shape: scene/3/0/0}

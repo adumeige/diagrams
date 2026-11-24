@@ -1,0 +1,105 @@
+# UML state machine (libs/uml.yaml): initial and final states, simple states with internal
+# behaviours, a composite state with two orthogonal regions, a choice, a junction, a shallow
+# history, entry and exit points, a terminate pseudostate, and transitions with trigger, guard
+# and effect.
+#   diagrams render examples/uml_states.yaml --out uml_states.png --scale 2
+format: diagrams/0.1
+title: "UML: order states"
+viewport: {width: 860, height: 600}
+imports:
+  uml: ../libs/uml.yaml
+  paper: ../themes/paper.yaml
+base_theme: paper
+scene:
+  layers: [backdrop, relations, default]
+  children:
+    - {shape: rect, layer: backdrop, width: "=viewport.width", height: "=viewport.height", fill: "=theme.background", stroke_width: 0}
+    - use: uml.frame
+      id: stm
+      at: {x: 30, y: 24}
+      kind: stm
+      name: Order
+      children:
+        - layout: row
+          gap: 90
+          align: start
+          children:
+            - layout: column
+              gap: 56
+              align: center
+              children:
+                - {use: uml.initial, id: init}
+                - {use: uml.state, id: placed, name: Placed, on_entry: reserve stock}
+                - {use: uml.choice, id: paid_how}
+                - {use: uml.junction, id: stop}
+                - {use: uml.state, id: cancelled, name: Cancelled, on_entry: release stock}
+            - layout: column
+              children:
+                - {shape: rect, width: 10, height: 60, fill: "#00000000", stroke_width: 0}
+                - use: uml.state
+                  id: active
+                  name: Being prepared
+                  composite: true
+                  children:
+                    - layout: row
+                      gap: 34
+                      align: start
+                      children:
+                        - layout: column
+                          gap: 34
+                          align: center
+                          children:
+                            - layout: row
+                              gap: 50
+                              align: center
+                              children:
+                                - {use: uml.history, id: back}
+                                - {use: uml.initial, id: init}
+                            - {use: uml.state, id: picking, name: Picking, on_do: scan items}
+                            - {use: uml.state, id: packed, name: Packed}
+                            - {use: uml.final, id: end1}
+                        - {use: uml.separator, length: 330, vertical: true}
+                        - layout: column
+                          gap: 34
+                          align: center
+                          children:
+                            - {use: uml.initial, id: init2}
+                            - {use: uml.state, id: invoicing, name: Invoicing}
+                            - {use: uml.state, id: invoiced, name: Invoiced}
+                            - {use: uml.final, id: end2}
+            - layout: column
+              gap: 50
+              align: center
+              children:
+                - {shape: rect, width: 10, height: 140, fill: "#00000000", stroke_width: 0}
+                - use: uml.state
+                  id: shipped
+                  name: Shipped
+                  on_entry: notify customer
+                  on_exit: close tracking
+                  internal:
+                    - track: "/ update eta"
+                - layout: row
+                  gap: 70
+                  align: center
+                  children:
+                    - {use: uml.final, id: done}
+                    - {use: uml.terminate, id: lost}
+    - {use: uml.entry_point, id: resume, name: resume, attach: {anchor: center, to: stm.active.north_west, offset: {x: 46, y: 0}}}
+    - {use: uml.exit_point, id: aborted, name: aborted, attach: {anchor: center, to: stm.active.west, offset: {x: 0, y: 160}}}
+    - {use: uml.transition, layer: relations, from: stm.init, to: stm.placed}
+    - {use: uml.transition, layer: relations, from: stm.placed, to: stm.paid_how, trigger: pay, label_anchor: west, label_gap: 10}
+    - {use: uml.transition, layer: relations, from: stm.paid_how, to: stm.active, guard: accepted, effect: start, label_anchor: south, label_gap: 4}
+    - {use: uml.transition, layer: relations, from: stm.paid_how, to: stm.stop, guard: refused, label_anchor: west, label_gap: 10}
+    - {use: uml.transition, layer: relations, from: aborted, to: stm.stop, trigger: cancel, label_anchor: south_west, label_gap: -6}
+    - {use: uml.transition, layer: relations, from: stm.stop, to: stm.cancelled}
+    - {use: uml.transition, layer: relations, from: stm.active.init, to: stm.active.picking}
+    - {use: uml.transition, layer: relations, from: resume, to: stm.active.back}
+    - {use: uml.transition, layer: relations, from: stm.active.picking, to: stm.active.packed, trigger: all scanned, label_anchor: west, label_gap: 10}
+    - {use: uml.transition, layer: relations, from: stm.active.packed, to: stm.active.end1}
+    - {use: uml.transition, layer: relations, from: stm.active.init2, to: stm.active.invoicing}
+    - {use: uml.transition, layer: relations, from: stm.active.invoicing, to: stm.active.invoiced, trigger: sent, label_anchor: west, label_gap: 10}
+    - {use: uml.transition, layer: relations, from: stm.active.invoiced, to: stm.active.end2}
+    - {use: uml.transition, layer: relations, from: stm.active, to: stm.shipped, trigger: hand over, label_anchor: south, label_gap: 4}
+    - {use: uml.transition, layer: relations, from: stm.shipped, to: stm.done, trigger: delivered, label_anchor: east, label_gap: -10}
+    - {use: uml.transition, layer: relations, from: stm.shipped, to: stm.lost, trigger: lost, label_anchor: west, label_gap: 8}

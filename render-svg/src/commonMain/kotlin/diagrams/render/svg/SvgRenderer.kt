@@ -93,7 +93,9 @@ object SvgRenderer {
         val t = transform(node.transform)
         val p = node.paint
         // a partly drawn stroke: the dash pattern covers that fraction of the outline (spec: `draw`)
-        val dash = if (node.draw < 1.0) " pathLength=\"1\" stroke-dasharray=\"${n(node.draw)} 1\"" else ""
+        // `stroke_dash` otherwise; markers stay solid
+        val pattern = if (p.dash.isNotEmpty() && p.stroke != null) " stroke-dasharray=\"${p.dash.joinToString(" ") { n(it) }}\"" else ""
+        val dash = if (node.draw < 1.0) " pathLength=\"1\" stroke-dasharray=\"${n(node.draw)} 1\"" else pattern
         when (val g = node.geometry) {
             Geometry.Group -> {
                 if (node.children.isEmpty()) return
@@ -106,7 +108,7 @@ object SvgRenderer {
                 sb.append("$pad<rect$id$t$op width=\"${n(g.width)}\" height=\"${n(g.height)}\"$r${paintAttrs(p.fill, p.stroke, p.strokeWidth)}$dash/>\n")
             }
             is Geometry.Ellipse -> sb.append(
-                "$pad<ellipse$id$t$op cx=\"${n(g.cx)}\" cy=\"${n(g.cy)}\" rx=\"${n(g.rx)}\" ry=\"${n(g.ry)}\"${paintAttrs(p.fill, p.stroke, p.strokeWidth)}/>\n",
+                "$pad<ellipse$id$t$op cx=\"${n(g.cx)}\" cy=\"${n(g.cy)}\" rx=\"${n(g.rx)}\" ry=\"${n(g.ry)}\"${paintAttrs(p.fill, p.stroke, p.strokeWidth)}$pattern/>\n",
             )
             is Geometry.Poly -> {
                 val tag = if (g.closed) "polygon" else "polyline"
@@ -116,7 +118,7 @@ object SvgRenderer {
                     sb.append("$pad<$tag$id$t$op points=\"$pts\"${paintAttrs(p.fill, p.stroke, p.strokeWidth)}$dash/>\n")
                 } else {
                     sb.append("$pad<g$id$t$op>\n")
-                    sb.append("$pad  <$tag points=\"$pts\"${paintAttrs(p.fill, p.stroke, p.strokeWidth)}/>\n")
+                    sb.append("$pad  <$tag points=\"$pts\"${paintAttrs(p.fill, p.stroke, p.strokeWidth)}$pattern/>\n")
                     for (m in g.markers) {
                         val mt = if (m.closed) "polygon" else "polyline"
                         val mp = m.points.joinToString(" ") { "${n(it.x)},${n(it.y)}" }

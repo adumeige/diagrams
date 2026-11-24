@@ -1,0 +1,44 @@
+# UML library (libs/uml.yaml) at work in a row: templates that draw from the positions of their
+# own parts (the note's folded corner, the node in perspective, the send signal's point) placed by
+# a container, dashed relations, a composite state entered by a transition (which crosses its
+# compartment rule without a lint finding), a spacer that paints nothing, and one real crossing.
+format: diagrams/0.1
+viewport: {width: 900, height: 520}
+imports:
+  uml: ../../../libs/uml.yaml
+  paper: ../../../themes/paper.yaml
+base_theme: paper
+scene:
+  layers: [relations, default]
+  children:
+    - id: shelf
+      at: {x: 30, y: 30}
+      layout: row
+      gap: 50
+      align: center
+      children:
+        - {use: uml.note, id: memo, text: A note in a row, width: 120}
+        - use: uml.node
+          id: host
+          name: app-01
+          stereotype: device
+          children:
+            - {use: uml.artifact, id: jar, name: shop.jar}
+        - {shape: rect, id: spacer, width: 40, height: 60, fill: "#00000000", stroke_width: 0}
+        - {use: uml.interface, id: api, name: Api}
+        - {use: uml.send_signal, id: ship, name: Ship}
+    - use: uml.state
+      id: busy
+      at: {x: 30, y: 260}
+      name: Busy
+      composite: true
+      children:
+        - {use: uml.state, id: inner, name: Working}
+    - {use: uml.initial, id: init, at: {x: 78, y: 180}}
+    - {use: uml.class, id: wall, at: {x: 520, y: 300}, name: Wall}
+    - {use: uml.class, id: far, at: {x: 760, y: 300}, name: Far}
+    - {use: uml.realization, layer: relations, from: shelf.host.jar, to: shelf.api, route: straight}
+    - {use: uml.note_link, layer: relations, from: shelf.memo, to: shelf.host}
+    - {use: uml.transition, layer: relations, from: init, to: busy.inner, trigger: go}
+    - {use: uml.dependency, layer: relations, from: shelf.ship, to: shelf.api, route: straight}
+    - {use: uml.association, id: through, layer: relations, from: busy, to: far, route: straight}

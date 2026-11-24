@@ -231,13 +231,18 @@ internal class Engine(
      */
     private fun geometryValue(ref: String, n: RNode, dp: DataPath, path: String): Double? {
         val (t, rest) = target(ref, n, dp, path) ?: return null
-        val frame = n.parent?.let { world(it).inverse() } ?: Matrix.IDENTITY
+        // Only positions need the frame: a size read from inside a container that is being laid out
+        // does not depend on where that container is placed. A position goes through the nearest
+        // ancestor [n]'s parent and the target share, never through world coordinates, so that a
+        // template can draw from its parts' positions while its container is still placing it.
+        val local by lazy { if (t.isConnector) null else between(n.parent, t) }
+        val frame by lazy { n.parent?.let { world(it).inverse() } ?: Matrix.IDENTITY }
         if (rest.size == 1) {
             when (rest[0]) {
                 "width" -> return finalBox(t).width
                 "height" -> return finalBox(t).height
             }
-            val b = frame.apply(worldBox(t))
+            val b = local?.apply(finalBox(t)) ?: frame.apply(worldBox(t))
             return when (rest[0]) {
                 "x", "left" -> b.x
                 "y", "top" -> b.y
@@ -252,15 +257,38 @@ internal class Engine(
             }
         }
         if (rest.size == 2 && GeometryRefs.isAnchor(rest[0], t.info) && (rest[1] == "x" || rest[1] == "y")) {
-            val p = frame.apply(anchor(t, rest[0]).first)
+            val p = local?.apply(compass(finalBox(t), rest[0]).first) ?: frame.apply(anchor(t, rest[0]).first)
             return if (rest[1] == "x") p.x else p.y
         }
         sink.error(Codes.PATH_UNRESOLVED, path, "'$ref' does not name a geometry value", dp)
         return null
     }
 
+    /** [t]'s placement in the frame of [from], through their nearest common ancestor; null when there is none. */
+    private fun between(from: RNode?, t: RNode): Matrix? {
+        if (from == null) return null
+        val above = generateSequence(from) { it.parent }.toSet()
+        val common = generateSequence(t) { it.parent }.firstOrNull { it in above } ?: return null
+        val down = relative(common, t) ?: return null
+        val up = relative(common, from) ?: return null
+        return up.inverse() * down
+    }
+
+    /** [t]'s placement in the frame of [ancestor], when [t] is under it; null otherwise. */
+    private fun relative(ancestor: RNode?, t: RNode): Matrix? {
+        if (ancestor == null) return null
+        if (t === ancestor) return Matrix.IDENTITY
+        val chain = generateSequence(t) { it.parent }.takeWhile { it !== ancestor }.toList()
+        if (chain.last().parent !== ancestor) return null
+        return chain.asReversed().fold(Matrix.IDENTITY) { m, x -> m * placement(x) }
+    }
+
     private fun prop(n: RNode, key: String): Value? = eval(n.node[key], n, n.tokens, n.dp.key(key), "${n.path}.$key")
     fun text(n: RNode, key: String): String? = str(n, key)
+
+    /** `stroke_dash`: the dash and gap lengths, empty for a solid stroke. */
+    fun dash(n: RNode): List<Double> =
+        (prop(n, "stroke_dash") as? Value.List)?.items?.mapNotNull { (it as? Value.Num)?.value }?.takeIf { d -> d.any { it > 0 } }.orEmpty()
     fun num(n: RNode, key: String, default: Double): Double = (prop(n, key) as? Value.Num)?.value ?: default
     private fun numOrNull(n: RNode, key: String): Double? = (prop(n, key) as? Value.Num)?.value
     private fun str(n: RNode, key: String): String? = (prop(n, key) as? Value.Str)?.value
