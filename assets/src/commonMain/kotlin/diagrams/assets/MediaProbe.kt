@@ -16,7 +16,11 @@ object MediaProbe {
         else -> MediaFacts()
     }
 
-    private fun u8(b: ByteArray, i: Int) = b[i].toInt() and 0xff
+    /** Every read is checked: a truncated or malformed file is a [MediaFormatException], never a crash. */
+    private fun u8(b: ByteArray, i: Int): Int {
+        if (i < 0 || i >= b.size) throw MediaFormatException("the file is truncated or malformed (read at byte $i of ${b.size})")
+        return b[i].toInt() and 0xff
+    }
     private fun be16(b: ByteArray, i: Int) = (u8(b, i) shl 8) or u8(b, i + 1)
     private fun be32(b: ByteArray, i: Int) = (u8(b, i).toLong() shl 24) or (u8(b, i + 1).toLong() shl 16) or (u8(b, i + 2).toLong() shl 8) or u8(b, i + 3).toLong()
     private fun le16(b: ByteArray, i: Int) = u8(b, i) or (u8(b, i + 1) shl 8)
@@ -65,19 +69,21 @@ object MediaProbe {
         var dataSize = 0L
         val cuePoints = LinkedHashMap<Long, Long>() // cue id to sample offset
         val labels = LinkedHashMap<Long, String>()
-        var i = 12
+        var i = 12L
         while (i + 8 <= b.size) {
-            val id = tag(b, i)
-            val size = le32(b, i + 4)
-            val body = i + 8
+            val id = tag(b, i.toInt())
+            // sizes are unsigned 32-bit: kept as Long so that a huge one ends the walk and never wraps
+            val size = le32(b, i.toInt() + 4)
+            val body = i.toInt() + 8
             when (id) {
                 "fmt " -> {
                     rate = le32(b, body + 4)
                     bytesPerSecond = le32(b, body + 8)
                 }
-                "data" -> dataSize = size
+                // a streamed file may declare more data than it holds
+                "data" -> dataSize = minOf(size, (b.size - body).toLong())
                 "cue " -> {
-                    val n = le32(b, body).toInt()
+                    val n = minOf(le32(b, body), (b.size / 24).toLong()).toInt()
                     for (k in 0 until n) {
                         val e = body + 4 + k * 24
                         if (e + 24 > b.size) break
@@ -85,21 +91,23 @@ object MediaProbe {
                     }
                 }
                 "LIST" -> if (tag(b, body) == "adtl") {
-                    var j = body + 4
-                    val end = minOf(b.size, body + size.toInt())
+                    var j = body + 4L
+                    val end = minOf(b.size.toLong(), body + size)
                     while (j + 8 <= end) {
-                        val sub = tag(b, j)
-                        val sz = le32(b, j + 4).toInt()
-                        if (sub == "labl" || sub == "note") {
-                            val cueId = le32(b, j + 8)
-                            val text = b.copyOfRange(j + 12, minOf(j + 8 + sz, b.size)).decodeToString().trimEnd('\u0000')
+                        val at = j.toInt()
+                        val sub = tag(b, at)
+                        val sz = le32(b, at + 4)
+                        if ((sub == "labl" || sub == "note") && sz >= 4) {
+                            val cueId = le32(b, at + 8)
+                            val textEnd = minOf(j + 8 + sz, end).toInt()
+                            val text = if (textEnd > at + 12) b.copyOfRange(at + 12, textEnd).decodeToString().trimEnd('\u0000') else ""
                             if (sub == "labl" || cueId !in labels) labels[cueId] = text
                         }
                         j += 8 + sz + (sz and 1)
                     }
                 }
             }
-            i = body + size.toInt() + (size.toInt() and 1)
+            i = body + size + (size and 1)
         }
         if (bytesPerSecond == 0L || rate == 0L) throw MediaFormatException("no 'fmt ' chunk in the WAV data")
         val cues = LinkedHashMap<String, Double>()
@@ -139,7 +147,7 @@ object MediaProbe {
                             if (scale > 0) be32(b, i + header + 16).toDouble() / scale else null
                         }
                     }
-                    "tkhd" -> {
+                    "tkhd" -> if (end - 8 >= i + header) {
                         // width and height are 16.16 fixed point at the end of the box; audio tracks have 0
                         val w = be32(b, end - 8) / 65536.0
                         val h = be32(b, end - 4) / 65536.0

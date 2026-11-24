@@ -26,6 +26,9 @@ object Markers {
         val pts = points.toMutableList()
         val out = mutableListOf<Marker>()
         val len = 6 + 3 * strokeWidth
+        fun shown(kind: String?) = kind != null && kind != "none"
+        // two markers on one segment share it: each may take half, so that neither swallows the other
+        val share = if (points.size == 2 && shown(start) && shown(end)) 0.5 else 1.0
         fun one(kind: String?, tip: Point, from: Point, setTip: (Point) -> Unit) {
             if (kind == null || kind == "none") return
             val dx = tip.x - from.x
@@ -53,10 +56,11 @@ object Markers {
                 }
             }
             out += m
-            if (back > 0) setTip(at(minOf(back, l), 0.0))
+            if (back > 0) setTip(at(minOf(back, l * share), 0.0))
         }
-        one(end, pts.last(), pts[pts.size - 2]) { pts[pts.size - 1] = it }
-        one(start, pts.first(), pts[1]) { pts[0] = it }
+        // both read the route as given: shortening one end must not change the other's direction or length
+        one(end, points.last(), points[points.size - 2]) { pts[pts.size - 1] = it }
+        one(start, points.first(), points[1]) { pts[0] = it }
         return Result(pts, out)
     }
 }

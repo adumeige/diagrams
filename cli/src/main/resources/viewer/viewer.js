@@ -36,6 +36,7 @@ function draw() {
   if (!svg) {
     stage.innerHTML = '<div id="empty">The document has errors: see Diagnostics.</div>';
     overlay.innerHTML = "";
+    viewport = null; // nothing is drawn: the overlay has nothing to align with
     return;
   }
   stage.innerHTML = svg;
@@ -57,6 +58,7 @@ function drawOverlay() {
     if (b && selected !== "scene") boxes.push([JSON.parse(b), "#2d6cdf"]);
   }
   const svgEl = stage.querySelector("svg");
+  if (!svgEl) return;
   const r = svgEl.getBoundingClientRect(), o = overlay.getBoundingClientRect();
   const rects = boxes.map(([b, c]) => `<rect x="${b[0] - 3}" y="${b[1] - 3}" width="${b[2] + 6}" height="${b[3] + 6}" fill="none" stroke="${c}" stroke-width="2" stroke-dasharray="5 3" rx="3"/>`).join("");
   overlay.innerHTML = `<svg viewBox="0 0 ${viewport.w} ${viewport.h}" style="position:absolute;left:${r.left - o.left}px;top:${r.top - o.top}px;width:${r.width}px;height:${r.height}px">${rects}</svg>`;

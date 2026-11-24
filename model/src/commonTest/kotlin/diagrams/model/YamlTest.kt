@@ -127,6 +127,18 @@ class ExprTest {
     }
 
     @Test
+    fun stackedUnariesAndNegativeLiteralsReadBack() {
+        val neg = Expr.Op("neg", listOf(Expr.Lit(Value.num(-2))))
+        assertEquals("=-(-2)", Exprs.print(neg))
+        for (e in listOf(neg, Expr.Op("neg", listOf(Expr.Op("neg", listOf(Expr.Ref("x"))))), Expr.Op("not", listOf(Expr.Op("not", listOf(Expr.Ref("done"))))))) {
+            assertEquals(e, Exprs.parse(Exprs.print(e)), Exprs.print(e))
+        }
+        assertEquals(neg, Exprs.parse("=--2"))
+        assertEquals(Expr.Lit(Value.num(-3)), Exprs.parse("=-3"))
+        assertEquals(Value.Bool(true), Exprs.eval(Exprs.parse("=not not true")) { throw ExprEvalException(it) })
+    }
+
+    @Test
     fun choosesOneBranch() {
         val env = mapOf("dashed" to Value.Bool(true), "w" to Value.num(10))
         fun ev(s: String) = Exprs.eval(Exprs.parse(s)) { env[it] ?: throw ExprEvalException("no $it") }

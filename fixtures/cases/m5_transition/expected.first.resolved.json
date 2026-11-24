@@ -1,0 +1,91 @@
+{
+  "format": "diagrams/0.1",
+  "viewport": {"width": 480, "height": 240},
+  "time": 0,
+  "background": "#faf8f3",
+  "states": {"scene": "two"},
+  "root": {
+    "path": "scene",
+    "loc": "scene",
+    "kind": "container",
+    "layer": "default",
+    "box": [30, 90, 240, 120],
+    "local": [30, 90, 240, 120],
+    "transform": [1, 0, 0, 1, 0, 0],
+    "opacity": 1,
+    "children": [
+      {
+        "path": "hub",
+        "loc": "scene/0",
+        "kind": "rect",
+        "layer": "default",
+        "box": [30, 90, 70, 50],
+        "local": [0, 0, 70, 50],
+        "transform": [1, 0, 0, 1, 30, 90],
+        "opacity": 1,
+        "fill": "#636e72",
+        "stroke": "#000000",
+        "stroke_width": 0
+      },
+      {
+        "path": "box",
+        "loc": "scene/1",
+        "kind": "rect",
+        "layer": "default",
+        "box": [180, 140, 90, 50],
+        "local": [0, 0, 90, 50],
+        "transform": [1, 0, 0, 1, 180, 140],
+        "opacity": 1,
+        "fill": "#e17055",
+        "stroke": "#000000",
+        "stroke_width": 0
+      },
+      {
+        "path": "label",
+        "loc": "scene/2",
+        "kind": "text",
+        "layer": "default",
+        "box": [202.474, 194, 45.052, 17.36],
+        "local": [0, 0, 45.052, 17.36],
+        "transform": [1, 0, 0, 1, 202.474, 194],
+        "opacity": 1,
+        "fill": "#2d3436",
+        "font": "body",
+        "font_size": 14,
+        "lines": [{"text": "moving", "x": 0, "baseline": 13.3, "width": 45.052}]
+      },
+      {
+        "path": "wire",
+        "loc": "scene/3",
+        "kind": "connector",
+        "layer": "default",
+        "box": [100, 125.9375, 80, 26.002204],
+        "local": [100, 125.9375, 80, 26.002204],
+        "transform": [1, 0, 0, 1, 0, 0],
+        "opacity": 1,
+        "stroke": "#2d3436",
+        "stroke_width": 2,
+        "points": [[100, 125.9375], [168.54624, 147.3582]],
+        "markers": [
+          {
+            "kind": "arrow",
+            "points": [[180, 150.9375], [167.11452, 151.939704], [169.97796, 142.776696]]
+          }
+        ]
+      },
+      {
+        "path": "old",
+        "loc": "scene/4",
+        "kind": "rect",
+        "layer": "default",
+        "box": [30, 180, 70, 30],
+        "local": [0, 0, 70, 30],
+        "transform": [1, 0, 0, 1, 30, 180],
+        "opacity": 1,
+        "fill": "#b2bec3",
+        "stroke": "#000000",
+        "stroke_width": 0
+      }
+    ]
+  }
+}

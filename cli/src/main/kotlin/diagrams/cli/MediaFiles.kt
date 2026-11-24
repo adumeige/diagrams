@@ -15,7 +15,13 @@ import kotlin.math.roundToLong
  * video frames decoded by ffmpeg when it is installed. Without ffmpeg a video draws a placeholder.
  */
 class MediaFiles(private val assets: FileAssets, private val ffmpeg: String?) {
-    private val frames = HashMap<Pair<String, Long>, BufferedImage?>()
+    /**
+     * The frames decoded last, most recent last. An export asks for a new time at every frame, so the
+     * cache only serves a frame drawn again (several nodes on one asset, a paused clip): it stays small.
+     */
+    private val frames = object : LinkedHashMap<Pair<String, Long>, BufferedImage?>(16, 0.75f, true) {
+        override fun removeEldestEntry(eldest: MutableMap.MutableEntry<Pair<String, Long>, BufferedImage?>): Boolean = size > MAX_FRAMES
+    }
 
     fun raster(manifest: AssetManifest, o: RasterRenderer.Options): RasterRenderer.Options {
         val videos = assets.mediaFiles(manifest, "video")
@@ -44,16 +50,21 @@ class MediaFiles(private val assets: FileAssets, private val ffmpeg: String?) {
         else -> "application/octet-stream"
     }
 
-    /** One frame of a video file at [t] seconds, decoded by ffmpeg; frames are cached by millisecond. */
+    /** One frame of a video file at [t] seconds, decoded by ffmpeg; the last few are cached by millisecond. */
     @Synchronized
     private fun frame(file: File?, t: Double): BufferedImage? {
         if (file == null || ffmpeg == null || !file.isFile) return null
         val key = file.path to (t * 1000).roundToLong()
-        return frames.getOrPut(key) {
-            val p = ProcessBuilder(ffmpeg, "-loglevel", "error", "-ss", "%.3f".format(t), "-i", file.path, "-frames:v", "1", "-f", "image2pipe", "-vcodec", "png", "-").start()
-            val bytes = p.inputStream.readBytes()
-            p.waitFor()
-            if (bytes.isEmpty()) null else ImageIO.read(bytes.inputStream())
-        }
+        if (key in frames) return frames[key]
+        val p = ProcessBuilder(ffmpeg, "-loglevel", "error", "-ss", "%.3f".format(t), "-i", file.path, "-frames:v", "1", "-f", "image2pipe", "-vcodec", "png", "-").start()
+        val bytes = p.inputStream.readBytes()
+        p.waitFor()
+        val img = if (bytes.isEmpty()) null else ImageIO.read(bytes.inputStream())
+        frames[key] = img
+        return img
+    }
+
+    private companion object {
+        const val MAX_FRAMES = 8
     }
 }

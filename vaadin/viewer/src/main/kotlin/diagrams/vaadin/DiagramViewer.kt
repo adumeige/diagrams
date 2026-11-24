@@ -43,17 +43,21 @@ class DiagramViewer() : Component(), HasSize, HasStyle {
     /** The document shown. Setting it starts over: first states, clock at zero. See [reload] to keep them. */
     var bundle: DiagramBundle?
         get() = current
-        set(value) {
-            current = value
-            send(value, keep = false)
-        }
+        set(value) = show(value, keep = false, assets = emptyList())
 
     private var current: DiagramBundle? = null
 
     /** Shows [bundle] and keeps the states and the clock where they are, as a live edit would. */
-    fun reload(bundle: DiagramBundle) {
+    fun reload(bundle: DiagramBundle) = show(bundle, keep = true, assets = emptyList())
+
+    /** Shows [bundle], whose assets this component serves through [assets]; those of the document it replaces are released. */
+    private fun show(bundle: DiagramBundle?, keep: Boolean, assets: List<StreamRegistration>) {
+        val previous = assetRegistrations.toList()
+        assetRegistrations.clear()
+        assetRegistrations += assets
         current = bundle
-        send(bundle, keep = true)
+        send(bundle, keep)
+        previous.forEach { it.unregister() }
     }
 
     private fun send(bundle: DiagramBundle?, keep: Boolean) {
@@ -74,15 +78,19 @@ class DiagramViewer() : Component(), HasSize, HasStyle {
     @JvmOverloads
     fun load(main: String, files: DiagramFiles, keepState: Boolean = false): DiagramBundle {
         val session = VaadinSession.getCurrent() ?: error("no Vaadin session: load a document from the UI thread")
-        val previous = assetRegistrations.toList()
-        assetRegistrations.clear()
-        val b = DiagramBundle.load(main, files) { asset ->
-            val r = session.resourceRegistry.registerResource(AssetDownload(asset.bytes, asset.contentType), element)
-            assetRegistrations += r
-            r.resourceUri.toString()
+        val registered = mutableListOf<StreamRegistration>()
+        val b = try {
+            DiagramBundle.load(main, files) { asset ->
+                val r = session.resourceRegistry.registerResource(AssetDownload(asset.bytes, asset.contentType), element)
+                registered += r
+                r.resourceUri.toString()
+            }
+        } catch (e: Exception) {
+            // nothing is shown in its place: what this attempt registered goes, the document on screen keeps its assets
+            registered.forEach { it.unregister() }
+            throw e
         }
-        if (keepState) reload(b) else bundle = b
-        previous.forEach { it.unregister() }
+        show(b, keepState, registered)
         return b
     }
 

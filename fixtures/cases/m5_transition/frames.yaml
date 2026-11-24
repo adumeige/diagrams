@@ -3,3 +3,4 @@
 - {name: pulse, from: {scene: one}, states: {scene: two}, time: 0.2}
 - {name: moving, from: {scene: one}, states: {scene: two}, time: 0.7}
 - {name: entering, from: {scene: one}, states: {scene: two}, time: 1.2}
+- {name: first, from: {scene: one}, states: {scene: two}, time: 0}

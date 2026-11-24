@@ -113,7 +113,9 @@ class Transition internal constructor(private val a: Raw, private val b: Raw) {
         if (t >= duration) return b.scene
         val p = auto?.let { if (it.duration <= 0) (if (t >= it.start) 1.0 else 0.0) else Easing.of(it.ease)((t - it.start) / it.duration) } ?: 0.0
         var scene = when {
-            t <= 0.0 -> a.scene
+            // the source scene still holds the exiting nodes: with exit clips, which graft them back
+            // below, the first frame is interpolated like the others, or they would be drawn twice
+            t <= 0.0 && exits.isEmpty() -> a.scene
             p >= 1.0 -> b.scene
             // from the first instant, exiting nodes are gone (spec section 13): interpolate even at 0
             else -> rederive(Transitions.frame(a.scene, b.scene, maxOf(p, 1e-9)))

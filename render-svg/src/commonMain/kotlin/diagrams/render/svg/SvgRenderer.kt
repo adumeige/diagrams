@@ -108,7 +108,7 @@ object SvgRenderer {
                 sb.append("$pad<rect$id$t$op width=\"${n(g.width)}\" height=\"${n(g.height)}\"$r${paintAttrs(p.fill, p.stroke, p.strokeWidth)}$dash/>\n")
             }
             is Geometry.Ellipse -> sb.append(
-                "$pad<ellipse$id$t$op cx=\"${n(g.cx)}\" cy=\"${n(g.cy)}\" rx=\"${n(g.rx)}\" ry=\"${n(g.ry)}\"${paintAttrs(p.fill, p.stroke, p.strokeWidth)}$pattern/>\n",
+                "$pad<ellipse$id$t$op cx=\"${n(g.cx)}\" cy=\"${n(g.cy)}\" rx=\"${n(g.rx)}\" ry=\"${n(g.ry)}\"${paintAttrs(p.fill, p.stroke, p.strokeWidth)}$dash/>\n",
             )
             is Geometry.Poly -> {
                 val tag = if (g.closed) "polygon" else "polyline"

@@ -115,7 +115,8 @@ object Exprs {
         is Expr.Ref -> e.path
         is Expr.Op -> when (e.op) {
             "min", "max", "abs", "count", CHOOSE -> e.op + e.args.joinToString(", ", "(", ")") { printBare(it) }
-            "neg" -> "-" + wrap(e.args[0], 6, strict = true)
+            // a negative literal is parenthesized: `--2` would not read back as this expression
+            "neg" -> "-" + e.args[0].let { a -> if (a is Expr.Lit && a.value is Value.Num && printBare(a).startsWith("-")) "(${printBare(a)})" else wrap(a, 6, strict = true) }
             "not" -> "not " + wrap(e.args[0], 6, strict = true)
             else -> {
                 val p = prec(e)
@@ -424,12 +425,15 @@ private class ExprParser(private val src: String) {
     private fun unary(): Expr = when {
         isSym("-") -> {
             i++
-            val operand = primary()
-            if (operand is Expr.Lit && operand.value is Value.Num) Expr.Lit(Value.Num(-(operand.value as Value.Num).value)) else Expr.Op("neg", listOf(operand))
+            // a minus sign right before a number is that number's sign; anything else is negated,
+            // another unary included (`--x`, `-(-2)`), so that what the printer writes reads back the same
+            val literal = peek() is TNum
+            val operand = unary()
+            if (literal && operand is Expr.Lit && operand.value is Value.Num) Expr.Lit(Value.Num(-(operand.value as Value.Num).value)) else Expr.Op("neg", listOf(operand))
         }
         isKw("not") -> {
             i++
-            Expr.Op("not", listOf(primary()))
+            Expr.Op("not", listOf(unary()))
         }
         else -> primary()
     }

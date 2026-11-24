@@ -46,7 +46,7 @@ commands (spec section 16):
 
 options:
   --out FILE           write the output to FILE instead of stdout
-  --diagnostics FMT    text (default, on stderr), yaml or json (on stdout for validate and lint)
+  --diagnostics FMT    text (default), yaml or json; on stdout for validate and lint, on stderr otherwise
   --manifest FILE      asset manifest written by probe; without it, fonts are probed on the fly
   --state S            current states: 'owner=state,...', or a state of the scene's container alone
   --time T             seconds on the scene clock: timelines play to that moment
@@ -111,10 +111,12 @@ private class Cli(val args: Args, val file: File) {
     }
 
     fun printDiagnostics(ds: List<Diagnostic>, toStdout: Boolean) {
+        // stdout belongs to the command's own output: diagnostics go there only when they are the output
+        val out = if (toStdout) System.out else System.err
         when (diagFormat) {
-            "yaml" -> print(if (ds.isEmpty()) "[]\n" else YamlWriter.write(ds.toValue()))
-            "json" -> print(JsonWriter.write(ds.toValue()))
-            else -> ds.forEach { (if (toStdout) System.out else System.err).println(it) }
+            "yaml" -> out.print(if (ds.isEmpty()) "[]\n" else YamlWriter.write(ds.toValue()))
+            "json" -> out.print(JsonWriter.write(ds.toValue()))
+            else -> ds.forEach { out.println(it) }
         }
     }
 

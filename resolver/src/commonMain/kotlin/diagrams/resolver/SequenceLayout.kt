@@ -218,13 +218,16 @@ internal object SequenceLayout {
 
         // ---- everything to the right of zero
         var participants = (0 until n).map { Box(cx[it] - ps[it].w / 2, top[it], ps[it].w, bottom[it] - top[it]) }
-        val minX = min(participants.minOfOrNull { it.x } ?: 0.0, nodes.values.minOfOrNull { it.x } ?: 0.0)
+        // what the messages draw counts too: a self message on the last line loops and labels past it
+        val drawn = routes.flatten().map { it.x to it.x } +
+            messages.indices.mapNotNull { i -> labels[i]?.let { (it.x - messages[i].labelW / 2) to (it.x + messages[i].labelW / 2) } }
+        val minX = listOfNotNull(participants.minOfOrNull { it.x }, nodes.values.minOfOrNull { it.x }, drawn.minOfOrNull { it.first }).minOrNull() ?: 0.0
         val shift = -minX
         participants = participants.map { Box(it.x + shift, it.y, it.width, it.height) }
         val shifted = nodes.mapValues { (_, b) -> Box(b.x + shift, b.y, b.width, b.height) }
         val shiftedRoutes = routes.map { r -> r.map { Point(it.x + shift, it.y) } }
         val shiftedLabels = labels.map { p -> p?.let { Point(it.x + shift, it.y) } }
-        val width = max(participants.maxOfOrNull { it.right } ?: 0.0, shifted.values.maxOfOrNull { it.right } ?: 0.0)
+        val width = listOfNotNull(participants.maxOfOrNull { it.right }, shifted.values.maxOfOrNull { it.right }, drawn.maxOfOrNull { it.second + shift }).maxOrNull() ?: 0.0
         return Result(participants, shifted, shiftedRoutes, shiftedLabels, width, end, warnings)
     }
 }
