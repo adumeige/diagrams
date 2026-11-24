@@ -140,7 +140,7 @@ A node is placed by its container, by an attachment, or by its own coordinates, 
 - A container sizes to its content unless `width` or `height` is set. Text is measured by the core (section 16).
 - In a `free` container, a child is placed by `at: {x, y}` in the parent's frame. This is the mode for drawing a complex shape.
 - Free relational placement ("right of A") is not part of 0.1.
-- `layered`, `tree`, `circular` and `force` place their children from the connectors between them. They are specified in the addendum [graph-layouts.md](graph-layouts.md), with the contract every layout kind declares.
+- `layered`, `tree`, `circular` and `force` place their children from the connectors between them. They are specified in the addendum [graph-layouts.md](graph-layouts.md), with the contract every layout kind declares. `sequence`, which places participants and messages in rows from their order, is designed in [sequence-layout.md](sequence-layout.md) and not yet implemented.
 
 **Anchors**
 - A fixed anchor is a named point in a node's local frame. Every node has `center`, `north`, `south`, `east`, `west`, `north_east`, `north_west`, `south_east`, `south_west`. Shapes and templates can declare more, such as `port_2`.
