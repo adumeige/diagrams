@@ -29,9 +29,22 @@ class LayoutKind(
 
 object Layouts {
     /** Options of the graph kinds. On a container of another kind they are reported as `hint_ignored`. */
-    val GRAPH_OPTIONS = setOf("direction", "rank_gap", "ordering", "radial", "level_gap", "radius", "start_angle", "seed", "link_distance")
+    val GRAPH_OPTIONS = setOf("direction", "rank_gap", "ordering", "radial", "level_gap", "radius", "start_angle", "seed", "link_distance", "row_gap", "fragment_padding")
     val NODE_HINTS = setOf("rank", "pinned")
-    val EDGE_HINTS = setOf("constrain")
+
+    /**
+     * What a library declares on the body root of a template (`sequence: {role: participant}`):
+     * never reported outside the layout that reads it, since one template serves in any container.
+     */
+    val DECLARATIONS = setOf("sequence")
+
+    /** Keys of the `sequence` hint (sequence layout addendum, section 2). */
+    val SEQUENCE_KEYS = setOf("role", "lifespan", "on", "from", "to", "covers")
+    val EDGE_HINTS = setOf("constrain", "parallel")
+
+    /** Roles in a sequence container (sequence layout addendum, section 2). */
+    val ROLES = setOf("participant", "message", "fragment", "operand", "activation", "reference")
+    val LIFESPANS = setOf("full", "created", "destroyed", "both")
 
     val DIRECTIONS = setOf("down", "right", "up", "left")
     val ORDERINGS = setOf("auto", "declared")
@@ -64,6 +77,16 @@ object Layouts {
         ),
         LayoutKind("circular", options = setOf("gap", "radius", "start_angle"), graph = true, gestures = listOf("move")),
         LayoutKind("force", options = setOf("seed", "link_distance"), nodeHints = setOf("pinned"), pins = true, graph = true, gestures = listOf("set pinned")),
+        LayoutKind(
+            "sequence",
+            options = setOf("gap", "row_gap", "fragment_padding"),
+            nodeHints = setOf("sequence"),
+            edgeHints = setOf("parallel"),
+            routes = true,
+            labels = true,
+            // participants and messages are reordered; nothing is pinned
+            gestures = listOf("move"),
+        ),
     )
 
     val kinds: Map<String, LayoutKind> = all.associateBy { it.name }

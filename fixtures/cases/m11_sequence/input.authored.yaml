@@ -1,0 +1,45 @@
+# The sequence layout (docs/sequence-layout.md): participants side by side, one row per message in
+# order, parallel messages sharing a row, a self message, a lifeline created then destroyed, an
+# alt whose second operand holds a nested opt, a reference across two lifelines, nested activations,
+# a note attached to a lifeline, and options gap, row_gap and fragment_padding.
+format: diagrams/0.1
+viewport: {width: 700, height: 640}
+imports: {uml: ../../../libs/uml.yaml, paper: ../../../themes/paper.yaml}
+base_theme: paper
+scene:
+  children:
+    - id: talk
+      at: {x: 30, y: 20}
+      layout: sequence
+      gap: 50
+      row_gap: 12
+      fragment_padding: 14
+      children:
+        - {use: uml.lifeline, id: client, name: ": Client"}
+        - {use: uml.lifeline, id: api, name: ": Api"}
+        - {use: uml.lifeline, id: job, name: ": Job", created: true, destroyed: true}
+        - {use: uml.lifeline, id: store, name: ": Store"}
+        - {use: uml.activation, "on": api, from: ask, to: answer}
+        - {use: uml.activation, "on": api, from: think, to: think}
+        - {use: uml.message, id: ask, from: client, to: api, label: "ask()"}
+        - {use: uml.message, id: think, from: api, to: api, label: "plan()"}
+        - use: uml.fragment
+          operator: alt
+          guard: cached
+          children:
+            - {use: uml.message, id: hit, from: api, to: store, label: "read()"}
+            - use: uml.operand
+              guard: else
+              children:
+                - {use: uml.message, id: spawn, from: api, to: job, label: "new()", kind: create}
+                - {use: uml.message, id: fetch, from: job, to: store, label: "load()", kind: async}
+                - {use: uml.message, id: log, from: job, to: api, label: "progress", kind: async, parallel: true}
+                - use: uml.fragment
+                  operator: opt
+                  guard: slow
+                  children:
+                    - {use: uml.message, id: warn, from: job, to: api, label: "late()", kind: async}
+                - {use: uml.message, id: stop, from: api, to: job, label: "stop()", kind: async}
+        - {use: uml.message, id: answer, from: api, to: client, label: result, kind: reply}
+        - {use: uml.interaction_use, name: Audit, covers: [api, store]}
+    - {use: uml.note, text: Retries are the client's job., width: 120, attach: {anchor: west, to: talk.store, gap: 16}}

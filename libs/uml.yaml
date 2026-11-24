@@ -11,7 +11,8 @@
 #                             region, flow
 #   State machines            state, choice, junction, history, terminate, entry_point,
 #                             exit_point, separator, transition (initial and final as above)
-#   Sequences                 lifeline, message, self_message, fragment, operand, interaction_use
+#   Sequences                 lifeline, message, activation, fragment, operand, interaction_use,
+#                             self_message (free containers)
 #   Any diagram               frame (the "sd", "act", "stm", "pkg" heading), note, note_link
 #
 # Expects a theme with the tokens surface, stroke, ink and muted (themes/paper.yaml and
@@ -30,7 +31,12 @@
 #     take children (package, system, node, component, partition, state, frame, fragment) are
 #     scopes: reach what they hold through them ('from: billing.invoice').
 #
-# Sequence diagrams: put the lifelines in a row with align: end, so that their steps line up
+# Sequence diagrams: in a container with layout: sequence (docs/sequence-layout.md), write the
+# lifelines, then the activations (so that what follows paints over them), then the messages in
+# order; nest messages in fragments, and a fragment's further operands after its first messages.
+# Activations name messages by id; references list the lifelines they cover ('covers').
+#
+# In a free container instead, put the lifelines in a row with align: end, so that their steps line up
 # whatever their heads (an actor's is taller). A lifeline is a column of steps, a keyed list with
 # the same keys on every lifeline of the diagram: step m3 sits at the same height on all of them,
 # and a message joins two steps ('from: "client.step[m3]"', quoted because of the brackets). The
@@ -1006,29 +1012,39 @@ templates:
 
   lifeline:
     description: >-
-      A lifeline: its head ('name : Class', or a stick figure with actor: true), then one step per
-      item of steps, each step_height high. A step's value is what the lifeline shows there: ''
-      the dashed line, start, on, end or once an activation bar, none nothing (before it is
-      created), create its head (the target of a create message; set created: true so that it has
-      no head at the top), destroy a cross where it ends (set tail: false).
+      A lifeline: its head ('name : Class', or a stick figure with actor: true) and its dashed line.
+      In a sequence container (layout: sequence) the layout places it and runs its line down to the
+      last message; created starts it at the message that creates it, destroyed ends it with a cross.
+      In a free container, give it steps instead: one per item, each step_height high, whose value
+      is what it shows there: '' the line, start, on, end or once an activation bar, none nothing,
+      create its head, destroy its end (and tail: false).
     params:
       name: {type: string}
       actor: {type: boolean, default: false}
-      steps: {type: list, keyed: true, item: {type: string}, default: []}
+      created: {type: boolean, default: false, description: "Starts at the message that creates it"}
+      destroyed: {type: boolean, default: false, description: "In a sequence container: ends with a cross at the last message it receives"}
+      steps: {type: list, keyed: true, item: {type: string}, default: [], description: "In a free container only"}
       step_height: {type: number, default: 36}
-      created: {type: boolean, default: false, description: "Its head is at its 'create' step, not at the top"}
       tail: {type: boolean, default: true, description: The dashed line past its last step}
     exports:
       anchors: [north, south, east, west]
       parts: [head, step]
       tokens: [surface, stroke, ink, muted]
     body:
+      sequence: {role: participant, lifespan: "=choose(params.created, choose(params.destroyed, 'both', 'created'), choose(params.destroyed, 'destroyed', 'full'))"}
       layout: column
       align: center
+      underlay:
+        # in a sequence container, the line runs from the head to the bottom the layout gave
+        - {if: "count(params.steps) == 0 and not params.destroyed", shape: line, points: [{x: "=host.width / 2", y: "=head.bottom"}, {x: "=host.width / 2", y: "=host.height"}], style: lifeline}
+        - {if: "count(params.steps) == 0 and params.destroyed", shape: line, points: [{x: "=host.width / 2", y: "=head.bottom"}, {x: "=host.width / 2", y: "=host.height - 8"}], style: lifeline}
+      overlay:
+        - {if: "count(params.steps) == 0 and params.destroyed", shape: line, points: [{x: "=host.width / 2 - 8", y: "=host.height - 16"}, {x: "=host.width / 2 + 8", y: "=host.height"}], style: wire}
+        - {if: "count(params.steps) == 0 and params.destroyed", shape: line, points: [{x: "=host.width / 2 + 8", y: "=host.height - 16"}, {x: "=host.width / 2 - 8", y: "=host.height"}], style: wire}
       children:
         - id: head
           children:
-            - if: "not params.actor and not params.created"
+            - if: "not params.actor and (not params.created or count(params.steps) == 0)"
               layout: stack
               align: stretch
               children:
@@ -1038,15 +1054,15 @@ templates:
                   padding: {x: 14, y: 8}
                   children:
                     - {shape: text, text: "=params.name", font_size: 14, fill: "=theme.ink"}
-            - if: "not params.actor and params.created"
+            - if: "not params.actor and params.created and count(params.steps) > 0"
               opacity: 0
               layout: column
               padding: {x: 14, y: 8}
               children:
                 - {shape: text, text: "=params.name", font_size: 14, fill: "=theme.ink"}
             - {if: params.actor, use: actor, name: "=params.name"}
-        - {if: "not params.created", shape: line, points: [{x: 0, y: 0}, {x: 0, y: 14}], style: lifeline}
-        - {if: params.created, min_height: 14, children: []}
+        - {if: "count(params.steps) > 0 and not params.created", shape: line, points: [{x: 0, y: 0}, {x: 0, y: 14}], style: lifeline}
+        - {if: "count(params.steps) > 0 and params.created", min_height: 14, children: []}
         - for_each: params.steps
           as: s
           id: step
@@ -1078,8 +1094,8 @@ templates:
                   - {shape: line, points: [{x: 0, y: 0}, {x: 0, y: "=params.step_height / 2 - 8"}], style: lifeline}
                   - {shape: line, points: [{x: -8, y: "=params.step_height / 2 - 8"}, {x: 8, y: "=params.step_height / 2 + 8"}], style: wire}
                   - {shape: line, points: [{x: 8, y: "=params.step_height / 2 - 8"}, {x: -8, y: "=params.step_height / 2 + 8"}], style: wire}
-        - {if: params.tail, shape: line, points: [{x: 0, y: 0}, {x: 0, y: 18}], style: lifeline}
-        - {if: "not params.tail", min_height: 18, children: []}
+        - {if: "count(params.steps) > 0 and params.tail", shape: line, points: [{x: 0, y: 0}, {x: 0, y: 18}], style: lifeline}
+        - {if: "count(params.steps) > 0 and not params.tail", min_height: 18, children: []}
 
   message:
     description: >-
@@ -1090,12 +1106,13 @@ templates:
       to: {type: path}
       label: {type: string, default: ""}
       kind: {type: enum, values: [sync, async, reply, create], default: sync}
+      parallel: {type: boolean, default: false, description: "In a sequence container: shares the previous message's row"}
     exports:
       parts: [line]
       tokens: [stroke, ink]
     body:
       children:
-        - {shape: connector, id: line, from: "=params.from", to: "=params.to", route: straight, marker_end: "=choose(params.kind == 'sync', 'arrow', 'open_arrow')", style: "=choose(params.kind == 'reply' or params.kind == 'create', 'dashed_wire', 'wire')"}
+        - {shape: connector, id: line, from: "=params.from", to: "=params.to", route: straight, parallel: "=params.parallel", marker_end: "=choose(params.kind == 'sync', 'arrow', 'open_arrow')", style: "=choose(params.kind == 'reply' or params.kind == 'create', 'dashed_wire', 'wire')"}
         - {if: "params.label != ''", shape: text, text: "=params.label", font_size: 12, fill: "=theme.ink", attach: {to: line.label, side: above, gap: 3}}
 
   self_message:
@@ -1119,57 +1136,94 @@ templates:
   fragment:
     description: >-
       A combined fragment: its operator in the corner tag (alt, opt, loop, par, break, critical,
-      neg, strict, seq, ignore, consider, assert) and the guard of its first operand. Place it over
-      the steps it covers and give it a size; its children (operands) are placed by their 'at'.
+      neg, strict, seq, ignore, consider, assert) and the guard of its first operand. In a sequence
+      container, nest its messages in it, and its further operands (uml.operand) after them: the
+      layout sizes it. In a free container, place it over the steps it covers, give it a width and
+      a height, and place its operands by their 'at'.
     params:
       operator: {type: string}
       guard: {type: string, default: ""}
-      width: {type: number}
-      height: {type: number}
+      width: {type: number, default: 0, description: In a free container}
+      height: {type: number, default: 0, description: In a free container}
+      covers: {type: list, item: {type: path}, default: [], description: "In a sequence container: more lifelines to span"}
     exports:
       anchors: [north, south, east, west]
       parts: [tag]
       tokens: [surface, stroke, ink, muted]
     body:
-      children:
-        - {shape: rect, width: "=params.width", height: "=params.height", fill: "#00000000", stroke: "=theme.stroke", stroke_width: 1.5}
+      sequence: {role: fragment, covers: "=params.covers"}
+      min_width: "=params.width"
+      min_height: "=params.height"
+      underlay:
+        - {shape: rect, width: "=host.width", height: "=host.height", fill: "#00000000", stroke: "=theme.stroke", stroke_width: 1.5}
+      overlay:
         - shape: polygon
           points: [{x: 0, y: 0}, {x: "=tag.right + 6", y: 0}, {x: "=tag.right + 6", y: "=tag.bottom - 4"}, {x: "=tag.right", y: "=tag.bottom + 2"}, {x: 0, y: "=tag.bottom + 2"}]
           style: box
         - {shape: text, id: tag, at: {x: 8, y: 4}, text: "=params.operator", font_size: 13, fill: "=theme.ink"}
         - {if: "params.guard != ''", shape: text, at: {x: "=tag.right + 18", y: 4}, text: "='[' + params.guard + ']'", font_size: 12, fill: "=theme.muted"}
+      children:
         - {slot: default}
 
   operand:
-    description: The start of a further operand of a fragment, a dashed line across it with its guard ('else').
+    description: >-
+      A further operand of a fragment, a dashed line across it with its guard ('else'). In a
+      sequence container, nest its messages in it; in a free container, give it the fragment's width
+      and place it by its 'at'.
     params:
       guard: {type: string, default: ""}
-      width: {type: number}
+      width: {type: number, default: 0, description: In a free container}
     exports:
       tokens: [stroke, muted]
     body:
-      children:
-        - {shape: line, points: [{x: 0, y: 0}, {x: "=params.width", y: 0}], stroke: "=theme.stroke", stroke_width: 1.2, stroke_dash: [6, 4]}
+      sequence: {role: operand}
+      min_width: "=params.width"
+      overlay:
+        - {shape: line, points: [{x: 0, y: 0}, {x: "=host.width", y: 0}], stroke: "=theme.stroke", stroke_width: 1.2, stroke_dash: [6, 4]}
         - {if: "params.guard != ''", shape: text, at: {x: 10, y: 4}, text: "='[' + params.guard + ']'", font_size: 12, fill: "=theme.muted"}
+      children:
+        - {slot: default}
 
   interaction_use:
-    description: A reference to another interaction, the 'ref' frame with its name in the middle.
+    description: >-
+      A reference to another interaction, the 'ref' frame with its name in the middle. In a sequence
+      container it takes a row across the lifelines listed in its 'covers'; in a free container,
+      give it a width.
     params:
       name: {type: string}
-      width: {type: number}
-      height: {type: number, default: 48}
+      covers: {type: list, item: {type: path}, default: [], description: "In a sequence container: the lifelines it spans"}
+      width: {type: number, default: 0, description: In a free container}
+      height: {type: number, default: 40}
     exports:
       anchors: [north, south, east, west]
       parts: [tag]
       tokens: [surface, stroke, ink]
     body:
-      children:
-        - {shape: rect, width: "=params.width", height: "=params.height", style: box}
+      sequence: {role: reference, covers: "=params.covers"}
+      min_width: "=params.width"
+      min_height: "=params.height"
+      underlay:
+        - {shape: rect, width: "=host.width", height: "=host.height", style: box}
+      overlay:
         - shape: polygon
           points: [{x: 0, y: 0}, {x: "=tag.right + 6", y: 0}, {x: "=tag.right + 6", y: "=tag.bottom - 4"}, {x: "=tag.right", y: "=tag.bottom + 2"}, {x: 0, y: "=tag.bottom + 2"}]
           style: box
         - {shape: text, id: tag, at: {x: 8, y: 4}, text: ref, font_size: 13, fill: "=theme.ink"}
-        - {shape: text, at: {x: 0, y: "=params.height / 2 - 4"}, width: "=params.width", text_align: center, text: "=params.name", font_size: 14, fill: "=theme.ink"}
+        - {shape: text, at: {x: "=tag.right + 10", y: "=host.height / 2 - 8"}, width: "=host.width - tag.right - 20", text_align: center, text: "=params.name", font_size: 14, fill: "=theme.ink"}
+      children: []
+
+  activation:
+    description: >-
+      An activation bar in a sequence container: on a lifeline, from a message to the same or a
+      later one. Name the messages with ids: '{use: uml.activation, "on": web, from: order, to: done}'
+      ('on' is quoted: YAML reads a bare on as true).
+    params:
+      "on": {type: path, description: The lifeline}
+      from: {type: path, description: The first message the bar covers}
+      to: {type: path, description: The last message the bar covers}
+    exports:
+      tokens: [surface, stroke]
+    body: {shape: rect, sequence: {role: activation, "on": "=params.on", from: "=params.from", to: "=params.to"}, width: 12, height: 12, style: box}
 
   # ---- any diagram ------------------------------------------------------------------------------
 

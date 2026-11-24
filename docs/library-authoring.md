@@ -31,10 +31,13 @@ same points earlier, which is what made them core issues.
 | 12 | Paths that sit inside a template's own parts were computed through world coordinates, so a template placed by a row or a column cycled | None possible | Fixed: geometry goes through the nearest common ancestor, sizes need no frame |
 | 13 | Keyed items of an exported `for_each` (`step[m3]`) raised encapsulation warnings | None | Fixed: exporting the id exports the items |
 | 14 | No dashed strokes | Double outlines, muted colours | Fixed: `stroke_dash` (spec 10; decision 32) |
-| 15 | Sequence diagrams: step lists shared by every lifeline, fragments placed by expressions | Step lists and geometry expressions | Designed: [sequence-layout.md](sequence-layout.md) |
+| 15 | Sequence diagrams: step lists shared by every lifeline, fragments placed by expressions | Step lists and geometry expressions | Fixed: the `sequence` layout ([sequence-layout.md](sequence-layout.md); decision 42) |
 | 16 | No italic font for abstract names | `{abstract}` under the name | Open: a theme with font styles |
 | 17 | `host` is a reserved root, so a node cannot be named `host`, a natural name in deployment diagrams | Rename the node | Accepted: shadowing would let a user's child replace the container in a library's decorations, silently |
 | 18 | Paths with brackets must be quoted in YAML (`"web.step[m3]"`) | Quotes | Accepted: a YAML rule; the error says so |
+| 19 | Messages nested in an unnamed fragment could not be named from outside it (an unnamed instance was opaque) | IDs on every fragment and longer paths | Fixed: an unnamed instance is transparent for what fills its slots (spec 9; decision 43) |
+| 20 | Making the sequence hints properties of every node (`role`, `on`, `covers`) took those names from every library's parameters: Merise's `leg` has a `role` | None: the libraries broke | Fixed: a layout kind's hints live in one map property, `sequence` (decision 44). Rule for the core: every property added to all nodes is a parameter name taken from all libraries |
+| 21 | `on` must be quoted as a key in YAML: a bare `on` reads as true | Quotes (`"on": web`) | Accepted: a YAML rule; the template's description says so |
 
 ## Checklist for a new library
 

@@ -1,0 +1,191 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="640" viewBox="0 0 700 640">
+  <defs><style>
+    @font-face { font-family: "diagrams-body"; src: url("../../../fonts/AtkinsonHyperlegible-Regular.ttf"); }
+  </style></defs>
+  <rect width="100%" height="100%" fill="#faf8f3"/>
+  <g data-path="scene">
+    <g data-path="talk" transform="translate(30 20)">
+      <g data-path="talk.client">
+        <polyline points="35.469,33.36 35.469,499.08" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+        <g data-path="talk.client.head">
+          <g>
+            <rect width="70.938" height="33.36" fill="#ffffff" stroke="#2d3436" stroke-width="1.5"/>
+            <g>
+              <g transform="translate(14 8)" font-family="diagrams-body" font-size="14" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+                <text x="0 2.87 6.79 15.974 19.32 23.212 30.758 38.402" y="13.3" xml:space="preserve">: Client</text>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+      <g data-path="talk.api" transform="translate(120.938 0)">
+        <polyline points="27.685,33.36 27.685,499.08" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+        <g data-path="talk.api.head">
+          <g>
+            <rect width="55.37" height="33.36" fill="#ffffff" stroke="#2d3436" stroke-width="1.5"/>
+            <g>
+              <g transform="translate(14 8)" font-family="diagrams-body" font-size="14" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+                <text x="0 2.87 6.79 15.554 23.478" y="13.3" xml:space="preserve">: Api</text>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+      <g data-path="talk.job" transform="translate(238.347 210.2)">
+        <polyline points="28.791,33.36 28.791,168" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+        <g data-path="talk.job.head">
+          <g>
+            <rect width="57.582" height="33.36" fill="#ffffff" stroke="#2d3436" stroke-width="1.5"/>
+            <g>
+              <g transform="translate(14 8)" font-family="diagrams-body" font-size="14" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+                <text x="0 2.87 6.79 13.93 21.658" y="13.3" xml:space="preserve">: Job</text>
+              </g>
+            </g>
+          </g>
+        </g>
+        <polyline points="20.791,160 36.791,176" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+        <polyline points="36.791,160 20.791,176" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+      </g>
+      <g data-path="talk.store" transform="translate(345.929 0)">
+        <polyline points="33.852,33.36 33.852,499.08" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+        <g data-path="talk.store.head">
+          <g>
+            <rect width="67.704" height="33.36" fill="#ffffff" stroke="#2d3436" stroke-width="1.5"/>
+            <g>
+              <g transform="translate(14 8)" font-family="diagrams-body" font-size="14" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+                <text x="0 2.87 6.79 15.134 19.67 27.398 32.158" y="13.3" xml:space="preserve">: Store</text>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+      <rect transform="translate(142.623 62.24)" width="12" height="370.84" fill="#ffffff" stroke="#2d3436" stroke-width="1.5"/>
+      <rect transform="translate(148.623 93.12)" width="12" height="16" fill="#ffffff" stroke="#2d3436" stroke-width="1.5"/>
+      <g data-path="talk.ask">
+        <g data-path="talk.ask.line">
+          <polyline points="35.469,70.24 132.123,70.24" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+          <polygon points="142.623,70.24 132.123,74.44 132.123,66.04" fill="#2d3436" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+        </g>
+        <g transform="translate(76.524 51.36)" font-family="diagrams-body" font-size="12" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+          <text x="0 6.312 11.964 17.844 21.444" y="11.4" xml:space="preserve">ask()</text>
+        </g>
+      </g>
+      <g data-path="talk.think">
+        <g data-path="talk.think.line">
+          <polyline points="160.623,101.12 190.623,101.12 190.623,119.12 165.123,119.12" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+          <polygon points="154.623,119.12 165.123,114.92 165.123,123.32" fill="#2d3436" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+        </g>
+        <g transform="translate(196.623 102.68)" font-family="diagrams-body" font-size="12" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+          <text x="0 6.792 9.66 15.972 22.524 26.124" y="11.4" xml:space="preserve">plan()</text>
+        </g>
+      </g>
+      <g transform="translate(114.623 131.12)">
+        <rect width="299.158" height="265.08" fill="#000000" fill-opacity="0" stroke="#2d3436" stroke-width="1.5"/>
+        <g data-path="talk.hit">
+          <g data-path="talk.hit.line">
+            <polyline points="40,44.88 254.658,44.88" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+            <polygon points="265.158,44.88 254.658,49.08 254.658,40.68" fill="#2d3436" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+          </g>
+          <g transform="translate(137.165 26)" font-family="diagrams-body" font-size="12" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+            <text x="0 4.08 10.548 16.86 23.628 27.228" y="11.4" xml:space="preserve">read()</text>
+          </g>
+        </g>
+        <g transform="translate(0 56.88)">
+          <g data-path="talk.spawn">
+            <g data-path="talk.spawn.line">
+              <polyline points="40,38.88 123.724,38.88" fill="none" stroke="#2d3436" stroke-width="1.5" stroke-dasharray="6 4"/>
+              <polyline points="113.224,43.605 123.724,38.88 113.224,34.155" fill="none" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+            </g>
+            <g transform="translate(67.828 20)" font-family="diagrams-body" font-size="12" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+              <text x="0 6.552 13.02 20.868 24.468" y="11.4" xml:space="preserve">new()</text>
+            </g>
+          </g>
+          <g data-path="talk.fetch">
+            <g data-path="talk.fetch.line">
+              <polyline points="152.515,86.44 265.158,86.44" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+              <polyline points="254.658,91.165 265.158,86.44 254.658,81.715" fill="none" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+            </g>
+            <g transform="translate(193.9505 67.56)" font-family="diagrams-body" font-size="12" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+              <text x="0 2.868 9.492 15.804 22.572 26.172" y="11.4" xml:space="preserve">load()</text>
+            </g>
+          </g>
+          <g data-path="talk.log">
+            <g data-path="talk.log.line">
+              <polyline points="152.515,86.44 40,86.44" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+              <polyline points="50.5,81.715 40,86.44 50.5,91.165" fill="none" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+            </g>
+            <g transform="translate(73.2235 67.56)" font-family="diagrams-body" font-size="12" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+              <text x="0 6.792 10.872 17.496 24.216 28.296 34.764 40.416" y="11.4" xml:space="preserve">progress</text>
+            </g>
+          </g>
+          <g transform="translate(14 98.44)">
+            <rect width="158.515" height="62.88" fill="#000000" fill-opacity="0" stroke="#2d3436" stroke-width="1.5"/>
+            <g data-path="talk.warn">
+              <g data-path="talk.warn.line">
+                <polyline points="138.515,44.88 26,44.88" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+                <polyline points="36.5,40.155 26,44.88 36.5,49.605" fill="none" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+              </g>
+              <g transform="translate(68.8895 26)" font-family="diagrams-body" font-size="12" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+                <text x="0 2.868 9.18 13.068 19.536 23.136" y="11.4" xml:space="preserve">late()</text>
+              </g>
+            </g>
+            <polygon points="0,0 32.746,0 32.746,16.12 26.746,22.12 0,22.12" fill="#ffffff" stroke="#2d3436" stroke-width="1.5"/>
+            <g data-path="talk.tag" transform="translate(8 4)" font-family="diagrams-body" font-size="13" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+              <text x="0 7.176 14.534" y="12.35" xml:space="preserve">opt</text>
+            </g>
+            <g transform="translate(44.746 4)" font-family="diagrams-body" font-size="12" style="font-kerning: none; font-variant-ligatures: none" fill="#636e72">
+              <text x="0 3.78 9.432 12.3 18.924 26.772" y="11.4" xml:space="preserve">[slow]</text>
+            </g>
+          </g>
+          <g data-path="talk.stop">
+            <g data-path="talk.stop.line">
+              <polyline points="40,190.2 152.515,190.2" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+              <polyline points="142.015,194.925 152.515,190.2 142.015,185.475" fill="none" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+            </g>
+            <g transform="translate(81.1795 171.32)" font-family="diagrams-body" font-size="12" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+              <text x="0 5.652 9.54 16.164 22.956 26.556" y="11.4" xml:space="preserve">stop()</text>
+            </g>
+          </g>
+          <polyline points="0,0 299.158,0" fill="none" stroke="#2d3436" stroke-width="1.2" stroke-dasharray="6 4"/>
+          <g transform="translate(10 4)" font-family="diagrams-body" font-size="12" style="font-kerning: none; font-variant-ligatures: none" fill="#636e72">
+            <text x="0 3.78 10.248 13.116 18.768 25.236" y="11.4" xml:space="preserve">[else]</text>
+          </g>
+        </g>
+        <polygon points="0,0 28.157,0 28.157,16.12 22.157,22.12 0,22.12" fill="#ffffff" stroke="#2d3436" stroke-width="1.5"/>
+        <g data-path="talk.tag" transform="translate(8 4)" font-family="diagrams-body" font-size="13" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+          <text x="0 6.838 9.945" y="12.35" xml:space="preserve">alt</text>
+        </g>
+        <g transform="translate(40.157 4)" font-family="diagrams-body" font-size="12" style="font-kerning: none; font-variant-ligatures: none" fill="#636e72">
+          <text x="0 3.78 9.78 16.092 22.092 28.644 35.112 41.88" y="11.4" xml:space="preserve">[cached]</text>
+        </g>
+      </g>
+      <g data-path="talk.answer">
+        <g data-path="talk.answer.line">
+          <polyline points="142.623,425.08 35.469,425.08" fill="none" stroke="#2d3436" stroke-width="1.5" stroke-dasharray="6 4"/>
+          <polyline points="45.969,420.355 35.469,425.08 45.969,429.805" fill="none" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+        </g>
+        <g transform="translate(74.352 406.2)" font-family="diagrams-body" font-size="12" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+          <text x="0 4.08 10.548 16.2 22.632 25.5" y="11.4" xml:space="preserve">result</text>
+        </g>
+      </g>
+      <g transform="translate(134.623 437.08)">
+        <rect width="259.158" height="40" fill="#ffffff" stroke="#2d3436" stroke-width="1.5"/>
+        <polygon points="0,0 29.47,0 29.47,16.12 23.47,22.12 0,22.12" fill="#ffffff" stroke="#2d3436" stroke-width="1.5"/>
+        <g data-path="talk.tag" transform="translate(8 4)" font-family="diagrams-body" font-size="13" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+          <text x="0 4.42 11.427" y="12.35" xml:space="preserve">ref</text>
+        </g>
+        <g transform="translate(33.47 12)" font-family="diagrams-body" font-size="14" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+          <text x="91.548 100.312 107.816 115.712 119.604" y="13.3" xml:space="preserve">Audit</text>
+        </g>
+      </g>
+    </g>
+    <g transform="translate(459.633 244.66)">
+      <polygon points="0,0 108,0 120,12 120,49.76 0,49.76" fill="#ffffff" stroke="#636e72" stroke-width="1"/>
+      <polyline points="108,0 108,12 120,12" fill="none" stroke="#636e72" stroke-width="1"/>
+      <g transform="translate(10 10)" font-family="diagrams-body" font-size="12" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+        <text x="0 7.416 13.884 17.772 21.852 25.188 31.656 37.308 40.668 46.98 51.06 57.528 60.888 64.776 71.328" y="11.4" xml:space="preserve">Retries are the</text>
+        <text x="0 6 8.868 12.204 18.672 25.224 29.112 31.032 36.684 40.044 43.092 49.716 56.508" y="26.28" xml:space="preserve">client's job.</text>
+      </g>
+    </g>
+  </g>
+</svg>

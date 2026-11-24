@@ -3,7 +3,7 @@
 A declarative language, written as YAML, for drawings, diagrams, slide decks and animations, and
 the toolset that validates, resolves and renders it. The design is in [docs/spec.md](docs/spec.md)
 (draft 0.1, snapshot of the shared spec) and its addenda [docs/graph-layouts.md](docs/graph-layouts.md) and
-[docs/sequence-layout.md](docs/sequence-layout.md) (designed, not implemented). Writing a library? Read
+[docs/sequence-layout.md](docs/sequence-layout.md). Writing a library? Read
 [docs/library-authoring.md](docs/library-authoring.md), the friction log every new library adds to.
 
 ## Status

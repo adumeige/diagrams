@@ -52,7 +52,7 @@
   severity: error
   path: h.layout
   source: {file: input.authored.yaml, line: 19, column: 23}
-  message: "'layout' is one of free, row, column, grid, stack, layered, tree, circular, force"
+  message: "'layout' is one of free, row, column, grid, stack, layered, tree, circular, force, sequence"
 - code: schema
   severity: error
   path: f.seed

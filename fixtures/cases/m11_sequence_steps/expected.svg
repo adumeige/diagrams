@@ -1,0 +1,584 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="860" viewBox="0 0 900 860">
+  <defs><style>
+    @font-face { font-family: "diagrams-body"; src: url("../../../fonts/AtkinsonHyperlegible-Regular.ttf"); }
+  </style></defs>
+  <rect width="100%" height="100%" fill="#faf8f3"/>
+  <g data-path="scene">
+    <rect width="900" height="860" fill="#faf8f3"/>
+    <g data-path="sd" transform="translate(30 24)">
+      <rect width="833.859" height="802.12" fill="#000000" fill-opacity="0" stroke="#2d3436" stroke-width="1.5"/>
+      <g transform="translate(20 64)">
+        <g data-path="sd.buyer">
+          <g data-path="sd.buyer.head">
+            <g>
+              <g data-path="sd.buyer.head.figure" transform="translate(12.6835 0)">
+                <ellipse transform="translate(7 0)" cx="8" cy="8" rx="8" ry="8" fill="#000000" fill-opacity="0" stroke="#2d3436" stroke-width="1.5"/>
+                <polyline points="15,16 15,36" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+                <polyline points="2,23 28,23" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+                <polyline points="3,52 15,36 27,52" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+              </g>
+              <g transform="translate(0 58)" font-family="diagrams-body" font-size="13" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+                <text x="0 8.528 15.496 21.619 25.831 33.007 43.94 50.947" y="12.35" xml:space="preserve">Customer</text>
+              </g>
+            </g>
+          </g>
+          <polyline transform="translate(27.6835 74.12)" points="0,0 0,14" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          <g data-path="sd.buyer.step[m1]" transform="translate(27.6835 88.12)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.buyer.step[m2]" transform="translate(27.6835 124.12)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.buyer.step[m3]" transform="translate(27.6835 160.12)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.buyer.step[m4]" transform="translate(27.6835 196.12)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.buyer.step[m5]" transform="translate(27.6835 232.12)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.buyer.step[m6]" transform="translate(27.6835 268.12)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.buyer.step[m7]" transform="translate(27.6835 304.12)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.buyer.step[m8]" transform="translate(27.6835 340.12)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.buyer.step[m9]" transform="translate(27.6835 376.12)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.buyer.step[m10]" transform="translate(27.6835 412.12)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.buyer.step[m11]" transform="translate(27.6835 448.12)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.buyer.step[m12]" transform="translate(27.6835 484.12)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.buyer.step[m13]" transform="translate(27.6835 520.12)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.buyer.step[m14]" transform="translate(27.6835 556.12)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.buyer.step[m15]" transform="translate(27.6835 592.12)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.buyer.step[m16]" transform="translate(27.6835 628.12)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.buyer.step[m17]" transform="translate(27.6835 664.12)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <polyline transform="translate(27.6835 700.12)" points="0,0 0,18" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+        </g>
+        <g data-path="sd.web" transform="translate(155.367 40.76)">
+          <g data-path="sd.web.head">
+            <g>
+              <rect width="96.726" height="33.36" fill="#ffffff" stroke="#2d3436" stroke-width="1.5"/>
+              <g>
+                <g transform="translate(14 8)" font-family="diagrams-body" font-size="14" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+                  <text x="0 2.87 6.79 15.134 19.67 27.398 32.158 39.704 44.058 48.818 56.546 64.19" y="13.3" xml:space="preserve">: Storefront</text>
+                </g>
+              </g>
+            </g>
+          </g>
+          <polyline transform="translate(48.363 33.36)" points="0,0 0,14" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          <g data-path="sd.web.step[m1]" transform="translate(42.363 47.36)">
+            <g>
+              <rect width="12" height="36" fill="#ffffff"/>
+              <polyline points="0,-0.75 0,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+              <polyline points="12,-0.75 12,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+              <polyline points="0,0 12,0" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+            </g>
+          </g>
+          <g data-path="sd.web.step[m2]" transform="translate(42.363 83.36)">
+            <g>
+              <rect width="12" height="36" fill="#ffffff"/>
+              <polyline points="0,-0.75 0,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+              <polyline points="12,-0.75 12,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+            </g>
+          </g>
+          <g data-path="sd.web.step[m3]" transform="translate(42.363 119.36)">
+            <g>
+              <rect width="12" height="36" fill="#ffffff"/>
+              <polyline points="0,-0.75 0,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+              <polyline points="12,-0.75 12,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+            </g>
+          </g>
+          <g data-path="sd.web.step[m4]" transform="translate(42.363 155.36)">
+            <g>
+              <rect width="12" height="36" fill="#ffffff"/>
+              <polyline points="0,-0.75 0,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+              <polyline points="12,-0.75 12,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+            </g>
+          </g>
+          <g data-path="sd.web.step[m5]" transform="translate(42.363 191.36)">
+            <g>
+              <rect width="12" height="36" fill="#ffffff"/>
+              <polyline points="0,-0.75 0,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+              <polyline points="12,-0.75 12,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+            </g>
+          </g>
+          <g data-path="sd.web.step[m6]" transform="translate(42.363 227.36)">
+            <g>
+              <rect width="12" height="36" fill="#ffffff"/>
+              <polyline points="0,-0.75 0,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+              <polyline points="12,-0.75 12,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+            </g>
+          </g>
+          <g data-path="sd.web.step[m7]" transform="translate(42.363 263.36)">
+            <g>
+              <rect width="12" height="36" fill="#ffffff"/>
+              <polyline points="0,-0.75 0,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+              <polyline points="12,-0.75 12,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+            </g>
+          </g>
+          <g data-path="sd.web.step[m8]" transform="translate(42.363 299.36)">
+            <g>
+              <rect width="12" height="36" fill="#ffffff"/>
+              <polyline points="0,-0.75 0,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+              <polyline points="12,-0.75 12,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+            </g>
+          </g>
+          <g data-path="sd.web.step[m9]" transform="translate(42.363 335.36)">
+            <g>
+              <rect width="12" height="36" fill="#ffffff"/>
+              <polyline points="0,-0.75 0,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+              <polyline points="12,-0.75 12,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+            </g>
+          </g>
+          <g data-path="sd.web.step[m10]" transform="translate(42.363 371.36)">
+            <g>
+              <rect width="12" height="36" fill="#ffffff"/>
+              <polyline points="0,-0.75 0,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+              <polyline points="12,-0.75 12,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+            </g>
+          </g>
+          <g data-path="sd.web.step[m11]" transform="translate(42.363 407.36)">
+            <g>
+              <rect width="12" height="36" fill="#ffffff"/>
+              <polyline points="0,-0.75 0,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+              <polyline points="12,-0.75 12,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+            </g>
+          </g>
+          <g data-path="sd.web.step[m12]" transform="translate(42.363 443.36)">
+            <g>
+              <rect width="12" height="36" fill="#ffffff"/>
+              <polyline points="0,-0.75 0,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+              <polyline points="12,-0.75 12,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+            </g>
+          </g>
+          <g data-path="sd.web.step[m13]" transform="translate(42.363 479.36)">
+            <g>
+              <rect width="12" height="36" fill="#ffffff"/>
+              <polyline points="0,-0.75 0,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+              <polyline points="12,-0.75 12,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+            </g>
+          </g>
+          <g data-path="sd.web.step[m14]" transform="translate(42.363 515.36)">
+            <g>
+              <rect width="12" height="36" fill="#ffffff"/>
+              <polyline points="0,-0.75 0,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+              <polyline points="12,-0.75 12,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+            </g>
+          </g>
+          <g data-path="sd.web.step[m15]" transform="translate(42.363 551.36)">
+            <g>
+              <rect width="12" height="36" fill="#ffffff"/>
+              <polyline points="0,-0.75 0,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+              <polyline points="12,-0.75 12,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+            </g>
+          </g>
+          <g data-path="sd.web.step[m16]" transform="translate(42.363 587.36)">
+            <g>
+              <rect width="12" height="36" fill="#ffffff"/>
+              <polyline points="0,-0.75 0,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+              <polyline points="12,-0.75 12,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+              <polyline points="0,36 12,36" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+            </g>
+          </g>
+          <g data-path="sd.web.step[m17]" transform="translate(48.363 623.36)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <polyline transform="translate(48.363 659.36)" points="0,0 0,18" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+        </g>
+        <g data-path="sd.orders" transform="translate(352.093 40.76)">
+          <g data-path="sd.orders.head">
+            <g>
+              <rect width="76.524" height="33.36" fill="#ffffff" stroke="#2d3436" stroke-width="1.5"/>
+              <g>
+                <g transform="translate(14 8)" font-family="diagrams-body" font-size="14" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+                  <text x="0 2.87 6.79 16.968 21.728 29.624 37.17 41.93" y="13.3" xml:space="preserve">: Orders</text>
+                </g>
+              </g>
+            </g>
+          </g>
+          <polyline transform="translate(38.262 33.36)" points="0,0 0,14" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          <g data-path="sd.orders.step[m1]" transform="translate(38.262 47.36)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.orders.step[m2]" transform="translate(38.262 83.36)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.orders.step[m3]" transform="translate(32.262 119.36)">
+            <g>
+              <rect width="12" height="36" fill="#ffffff"/>
+              <polyline points="0,-0.75 0,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+              <polyline points="12,-0.75 12,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+              <polyline points="0,0 12,0" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+            </g>
+          </g>
+          <g data-path="sd.orders.step[m4]" transform="translate(32.262 155.36)">
+            <g>
+              <rect width="12" height="36" fill="#ffffff"/>
+              <polyline points="0,-0.75 0,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+              <polyline points="12,-0.75 12,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+            </g>
+          </g>
+          <g data-path="sd.orders.step[m5]" transform="translate(32.262 191.36)">
+            <g>
+              <rect width="12" height="36" fill="#ffffff"/>
+              <polyline points="0,-0.75 0,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+              <polyline points="12,-0.75 12,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+            </g>
+          </g>
+          <g data-path="sd.orders.step[m6]" transform="translate(32.262 227.36)">
+            <g>
+              <rect width="12" height="36" fill="#ffffff"/>
+              <polyline points="0,-0.75 0,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+              <polyline points="12,-0.75 12,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+              <polyline points="0,36 12,36" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+            </g>
+          </g>
+          <g data-path="sd.orders.step[m7]" transform="translate(38.262 263.36)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.orders.step[m8]" transform="translate(38.262 299.36)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.orders.step[m9]" transform="translate(38.262 335.36)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.orders.step[m10]" transform="translate(38.262 371.36)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.orders.step[m11]" transform="translate(38.262 407.36)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.orders.step[m12]" transform="translate(32.262 443.36)">
+            <g>
+              <rect width="12" height="36" fill="#ffffff"/>
+              <polyline points="0,-0.75 0,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+              <polyline points="12,-0.75 12,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+              <polyline points="0,0 12,0" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+            </g>
+          </g>
+          <g data-path="sd.orders.step[m13]" transform="translate(32.262 479.36)">
+            <g>
+              <rect width="12" height="36" fill="#ffffff"/>
+              <polyline points="0,-0.75 0,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+              <polyline points="12,-0.75 12,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+              <polyline points="0,36 12,36" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+            </g>
+          </g>
+          <g data-path="sd.orders.step[m14]" transform="translate(38.262 515.36)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.orders.step[m15]" transform="translate(38.262 551.36)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.orders.step[m16]" transform="translate(38.262 587.36)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.orders.step[m17]" transform="translate(38.262 623.36)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <polyline transform="translate(38.262 659.36)" points="0,0 0,18" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+        </g>
+        <g data-path="sd.payment" transform="translate(528.617 40.76)">
+          <g data-path="sd.payment.head">
+            <g opacity="0">
+              <g transform="translate(14 8)" font-family="diagrams-body" font-size="14" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+                <text x="0 7.924 11.844 14.714 18.634 27.048 34.412 40.418 52.192 59.738 67.382" y="13.3" xml:space="preserve">p : Payment</text>
+              </g>
+            </g>
+          </g>
+          <g data-path="sd.payment.step[m8]" transform="translate(0 299.36)">
+            <g transform="translate(0 1.32)">
+              <rect width="99.918" height="33.36" fill="#ffffff" stroke="#2d3436" stroke-width="1.5"/>
+              <g>
+                <g transform="translate(14 8)" font-family="diagrams-body" font-size="14" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+                  <text x="0 7.924 11.844 14.714 18.634 27.048 34.412 40.418 52.192 59.738 67.382" y="13.3" xml:space="preserve">p : Payment</text>
+                </g>
+              </g>
+            </g>
+          </g>
+          <g data-path="sd.payment.step[m9]" transform="translate(43.959 335.36)">
+            <g>
+              <rect width="12" height="36" fill="#ffffff"/>
+              <polyline points="0,-0.75 0,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+              <polyline points="12,-0.75 12,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+              <polyline points="0,0 12,0" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+            </g>
+          </g>
+          <g data-path="sd.payment.step[m10]" transform="translate(43.959 371.36)">
+            <g>
+              <rect width="12" height="36" fill="#ffffff"/>
+              <polyline points="0,-0.75 0,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+              <polyline points="12,-0.75 12,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+            </g>
+          </g>
+          <g data-path="sd.payment.step[m11]" transform="translate(43.959 407.36)">
+            <g>
+              <rect width="12" height="36" fill="#ffffff"/>
+              <polyline points="0,-0.75 0,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+              <polyline points="12,-0.75 12,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+              <polyline points="0,36 12,36" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+            </g>
+          </g>
+          <g data-path="sd.payment.step[m12]" transform="translate(49.959 443.36)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.payment.step[m13]" transform="translate(49.959 479.36)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.payment.step[m14]" transform="translate(49.959 515.36)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.payment.step[m15]" transform="translate(49.959 551.36)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.payment.step[m16]" transform="translate(41.959 587.36)">
+            <g transform="translate(8 5)">
+              <polyline points="0,0 0,10" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+              <polyline points="-8,10 8,26" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+              <polyline points="8,10 -8,26" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+            </g>
+          </g>
+        </g>
+        <g data-path="sd.bank" transform="translate(728.535 40.76)">
+          <g data-path="sd.bank.head">
+            <g>
+              <rect width="65.324" height="33.36" fill="#ffffff" stroke="#2d3436" stroke-width="1.5"/>
+              <g>
+                <g transform="translate(14 8)" font-family="diagrams-body" font-size="14" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+                  <text x="0 2.87 6.79 15.456 22.82 30.464" y="13.3" xml:space="preserve">: Bank</text>
+                </g>
+              </g>
+            </g>
+          </g>
+          <polyline transform="translate(32.662 33.36)" points="0,0 0,14" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          <g data-path="sd.bank.step[m1]" transform="translate(32.662 47.36)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.bank.step[m2]" transform="translate(32.662 83.36)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.bank.step[m3]" transform="translate(32.662 119.36)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.bank.step[m4]" transform="translate(32.662 155.36)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.bank.step[m5]" transform="translate(32.662 191.36)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.bank.step[m6]" transform="translate(32.662 227.36)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.bank.step[m7]" transform="translate(32.662 263.36)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.bank.step[m8]" transform="translate(32.662 299.36)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.bank.step[m9]" transform="translate(32.662 335.36)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.bank.step[m10]" transform="translate(26.662 371.36)">
+            <g>
+              <rect width="12" height="36" fill="#ffffff"/>
+              <polyline points="0,-0.75 0,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+              <polyline points="12,-0.75 12,36.75" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+              <polyline points="0,0 12,0" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+              <polyline points="0,36 12,36" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+            </g>
+          </g>
+          <g data-path="sd.bank.step[m11]" transform="translate(32.662 407.36)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.bank.step[m12]" transform="translate(32.662 443.36)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.bank.step[m13]" transform="translate(32.662 479.36)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.bank.step[m14]" transform="translate(32.662 515.36)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.bank.step[m15]" transform="translate(32.662 551.36)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.bank.step[m16]" transform="translate(32.662 587.36)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <g data-path="sd.bank.step[m17]" transform="translate(32.662 623.36)">
+            <polyline points="0,0 0,36" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+          </g>
+          <polyline transform="translate(32.662 659.36)" points="0,0 0,18" fill="none" stroke="#636e72" stroke-width="1.2" stroke-dasharray="6 4"/>
+        </g>
+      </g>
+      <polygon points="0,0 90.594,0 90.594,17.12 84.594,24.12 0,24.12" fill="#ffffff" stroke="#2d3436" stroke-width="1.5"/>
+      <g data-path="sd.tag" transform="translate(8 5)" font-family="diagrams-body" font-size="13" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+        <text x="0 6.123 13.455 17.095 25.623 32.721 39.728 46.228 52.598 56.238 63.414 70.382" y="12.35" xml:space="preserve">sd Check out</text>
+      </g>
+    </g>
+    <g data-path="each_line" transform="translate(113.367 218.12)">
+      <rect width="449.25" height="176" fill="#000000" fill-opacity="0" stroke="#2d3436" stroke-width="1.5"/>
+      <polygon points="0,0 38.817,0 38.817,16.12 32.817,22.12 0,22.12" fill="#ffffff" stroke="#2d3436" stroke-width="1.5"/>
+      <g data-path="each_line.tag" transform="translate(8 4)" font-family="diagrams-body" font-size="13" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+        <text x="0 3.107 10.283 17.459" y="12.35" xml:space="preserve">loop</text>
+      </g>
+      <g transform="translate(50.817 4)" font-family="diagrams-body" font-size="12" style="font-kerning: none; font-variant-ligatures: none" fill="#636e72">
+        <text x="0 3.78 7.512 14.136 18.216 21.576 28.044 34.356 40.356 46.908 50.268 53.136 56.472 63.024 69.492" y="11.4" xml:space="preserve">[for each line]</text>
+      </g>
+    </g>
+    <g data-path="paid" transform="translate(101.367 398.12)">
+      <rect width="750.492" height="356" fill="#000000" fill-opacity="0" stroke="#2d3436" stroke-width="1.5"/>
+      <g transform="translate(0 254)">
+        <polyline points="0,0 750.492,0" fill="none" stroke="#2d3436" stroke-width="1.2" stroke-dasharray="6 4"/>
+        <g transform="translate(10 4)" font-family="diagrams-body" font-size="12" style="font-kerning: none; font-variant-ligatures: none" fill="#636e72">
+          <text x="0 3.78 10.248 13.116 18.768 25.236" y="11.4" xml:space="preserve">[else]</text>
+        </g>
+      </g>
+      <polygon points="0,0 28.157,0 28.157,16.12 22.157,22.12 0,22.12" fill="#ffffff" stroke="#2d3436" stroke-width="1.5"/>
+      <g data-path="paid.tag" transform="translate(8 4)" font-family="diagrams-body" font-size="13" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+        <text x="0 6.838 9.945" y="12.35" xml:space="preserve">alt</text>
+      </g>
+      <g transform="translate(40.157 4)" font-family="diagrams-body" font-size="12" style="font-kerning: none; font-variant-ligatures: none" fill="#636e72">
+        <text x="0 3.78 9.78 16.092 20.172 26.94 30.3 36.612 42.612 48.612 55.08 61.872 65.76 72.228 78.996" y="11.4" xml:space="preserve">[card accepted]</text>
+      </g>
+    </g>
+    <g>
+      <g data-path="line">
+        <polyline points="77.6835,194.12 237.23,194.12" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+        <polygon points="247.73,194.12 237.23,198.32 237.23,189.92" fill="#2d3436" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+      </g>
+      <g transform="translate(135.18475 176.24)" font-family="diagrams-body" font-size="12" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+        <text x="0 6 12.552 19.02 25.02 30.9 37.524 43.956 47.844 51.444" y="11.4" xml:space="preserve">checkout()</text>
+      </g>
+    </g>
+    <g>
+      <g data-path="line">
+        <polyline points="259.73,266.12 423.855,266.12" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+        <polygon points="434.355,266.12 423.855,270.32 423.855,261.92" fill="#2d3436" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+      </g>
+      <g transform="translate(310.2145 248.24)" font-family="diagrams-body" font-size="12" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+        <text x="0 6.312 13.08 19.848 26.316 29.652 36.204 42.672 46.272 49.608 53.496 59.964 70.056" y="11.4" xml:space="preserve">addLine(item)</text>
+      </g>
+    </g>
+    <g transform="translate(446.355 302.12)">
+      <polyline data-path="loop" points="0,0 34,0 34,36 9,36" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+      <polygon points="0,36 10,32 10,40" fill="#2d3436" stroke="#2d3436" stroke-width="1.5"/>
+      <g transform="translate(40 10)" font-family="diagrams-body" font-size="12" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+        <text x="0 6.792 10.872 14.208 20.208 26.676 30.276 33.612 37.5 43.968 54.06" y="11.4" xml:space="preserve">price(item)</text>
+      </g>
+    </g>
+    <g>
+      <g data-path="line">
+        <polyline points="434.355,374.12 259.73,374.12" fill="none" stroke="#2d3436" stroke-width="1.5" stroke-dasharray="6 4"/>
+        <polyline points="270.23,369.395 259.73,374.12 270.23,378.845" fill="none" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+      </g>
+      <g transform="translate(337.4305 356.24)" font-family="diagrams-body" font-size="12" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+        <text x="0 2.868 6.204 12.756" y="11.4" xml:space="preserve">line</text>
+      </g>
+    </g>
+    <g>
+      <g data-path="line">
+        <polyline points="259.73,446.12 578.617,446.12" fill="none" stroke="#2d3436" stroke-width="1.5" stroke-dasharray="6 4"/>
+        <polyline points="568.117,450.845 578.617,446.12 568.117,441.395" fill="none" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+      </g>
+      <g transform="translate(393.3495 428.24)" font-family="diagrams-body" font-size="12" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+        <text x="0 6.552 13.02 20.868 24.468 28.356 34.98 38.868 45.18 48.048" y="11.4" xml:space="preserve">new(total)</text>
+      </g>
+    </g>
+    <g>
+      <g data-path="line">
+        <polyline points="259.73,482.12 612.076,482.12" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+        <polygon points="622.576,482.12 612.076,486.32 612.076,477.92" fill="#2d3436" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+      </g>
+      <g transform="translate(412.947 464.24)" font-family="diagrams-body" font-size="12" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+        <text x="0 6.312 12.744 16.632 23.184 29.808 33.888 37.224 42.744 49.212 52.812" y="11.4" xml:space="preserve">authorize()</text>
+      </g>
+    </g>
+    <g>
+      <g data-path="line">
+        <polyline points="634.576,518.12 805.197,518.12" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+        <polyline points="794.697,522.845 805.197,518.12 794.697,513.395" fill="none" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+      </g>
+      <g transform="translate(686.6405 500.24)" font-family="diagrams-body" font-size="12" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+        <text x="0 6 12.552 18.864 22.944 29.664 36.132 39.732 45.732 52.044 56.124 62.892" y="11.4" xml:space="preserve">charge(card)</text>
+      </g>
+    </g>
+    <g>
+      <g data-path="line">
+        <polyline points="622.576,554.12 259.73,554.12" fill="none" stroke="#2d3436" stroke-width="1.5" stroke-dasharray="6 4"/>
+        <polyline points="270.23,549.395 259.73,554.12 270.23,558.845" fill="none" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+      </g>
+      <g transform="translate(413.163 536.24)" font-family="diagrams-body" font-size="12" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+        <text x="0 6.312 12.744 16.632 23.184 29.808 33.888 37.224 42.744 49.212" y="11.4" xml:space="preserve">authorized</text>
+      </g>
+    </g>
+    <g>
+      <g data-path="line">
+        <polyline points="259.73,590.12 423.855,590.12" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+        <polygon points="434.355,590.12 423.855,594.32 423.855,585.92" fill="#2d3436" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+      </g>
+      <g transform="translate(329.2225 572.24)" font-family="diagrams-body" font-size="12" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+        <text x="0 6.792 9.66 15.972 21.972 28.44 32.04" y="11.4" xml:space="preserve">place()</text>
+      </g>
+    </g>
+    <g>
+      <g data-path="line">
+        <polyline points="434.355,626.12 259.73,626.12" fill="none" stroke="#2d3436" stroke-width="1.5" stroke-dasharray="6 4"/>
+        <polyline points="270.23,621.395 259.73,626.12 270.23,630.845" fill="none" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+      </g>
+      <g transform="translate(333.0325 608.24)" font-family="diagrams-body" font-size="12" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+        <text x="0 6.624 10.704 17.472 23.94" y="11.4" xml:space="preserve">order</text>
+      </g>
+    </g>
+    <g>
+      <g data-path="line">
+        <polyline points="247.73,698.12 77.6835,698.12" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+        <polyline points="88.1835,693.395 77.6835,698.12 88.1835,702.845" fill="none" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+      </g>
+      <g transform="translate(129.64675 680.24)" font-family="diagrams-body" font-size="12" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+        <text x="0 6 12.312 16.392 23.16 26.52 30.6 37.068 40.8 47.232 52.884 59.352" y="11.4" xml:space="preserve">card refused</text>
+      </g>
+    </g>
+    <g>
+      <g data-path="line">
+        <polyline points="259.73,734.12 620.576,734.12" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+        <polyline points="610.076,738.845 620.576,734.12 610.076,729.395" fill="none" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+      </g>
+      <g transform="translate(422.747 716.24)" font-family="diagrams-body" font-size="12" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+        <text x="0 6 8.868 15.492 21.144 27.612 31.212" y="11.4" xml:space="preserve">close()</text>
+      </g>
+    </g>
+    <g data-path="notify" transform="translate(40 760.12)">
+      <rect width="272.093" height="30" fill="#ffffff" stroke="#2d3436" stroke-width="1.5"/>
+      <polygon points="0,0 29.47,0 29.47,16.12 23.47,22.12 0,22.12" fill="#ffffff" stroke="#2d3436" stroke-width="1.5"/>
+      <g data-path="notify.tag" transform="translate(8 4)" font-family="diagrams-body" font-size="13" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+        <text x="0 4.42 11.427" y="12.35" xml:space="preserve">ref</text>
+      </g>
+      <g transform="translate(33.47 7)" font-family="diagrams-body" font-size="14" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+        <text x="57.4785 65.8225 73.3685 81.0125 88.9085 92.8285 99.8285 107.5565 115.2005 119.5545 123.4465 128.2065 139.9805 147.3445 151.8805 155.7725 163.5005" y="13.3" xml:space="preserve">Send confirmation</text>
+      </g>
+    </g>
+  </g>
+</svg>

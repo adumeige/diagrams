@@ -140,7 +140,7 @@ A node is placed by its container, by an attachment, or by its own coordinates, 
 - A container sizes to its content unless `width` or `height` is set. Text is measured by the core (section 16).
 - In a `free` container, a child is placed by `at: {x, y}` in the parent's frame. This is the mode for drawing a complex shape.
 - Free relational placement ("right of A") is not part of 0.1.
-- `layered`, `tree`, `circular` and `force` place their children from the connectors between them. They are specified in the addendum [graph-layouts.md](graph-layouts.md), with the contract every layout kind declares. `sequence`, which places participants and messages in rows from their order, is designed in [sequence-layout.md](sequence-layout.md) and not yet implemented.
+- `layered`, `tree`, `circular` and `force` place their children from the connectors between them. They are specified in the addendum [graph-layouts.md](graph-layouts.md), with the contract every layout kind declares. `sequence`, which places participants and messages in rows from their order, is specified in [sequence-layout.md](sequence-layout.md).
 
 **Anchors**
 - A fixed anchor is a named point in a node's local frame. Every node has `center`, `north`, `south`, `east`, `west`, `north_east`, `north_west`, `south_east`, `south_west`. Shapes and templates can declare more, such as `port_2`.
@@ -294,7 +294,7 @@ A part of a body cannot take the name of a parameter: a state or a patch sets a 
 - Parameter substitution.
 - `for_each` over a list parameter. Each item carries its key.
 - `if` on an expression over parameters.
-- Slots: a `slot` placeholder in the body is filled by the instance's `children`. Named slots are filled through `slots`. What fills a slot belongs to the instance's scope wherever the body puts the slot, under a named part or not: `frame.customer`, never `frame.content.customer`. A child that takes the id of a part of the body is an error.
+- Slots: a `slot` placeholder in the body is filled by the instance's `children`. Named slots are filled through `slots`. What fills a slot belongs to the instance's scope wherever the body puts the slot, under a named part or not: `frame.customer`, never `frame.content.customer`. A child that takes the id of a part of the body is an error. An instance without an ID is transparent for what fills its slots, as an unnamed container is: messages nested in an unnamed fragment are named from the fragment's scope. Its parts stay hidden.
 - The closed expression set below.
 
 There are no user-defined functions, no recursion and no general loops. A template may use other templates, and the instantiation graph must be acyclic. Everything terminates and can be checked without running it.
@@ -779,3 +779,6 @@ The 31 decisions taken on 17 November 2026, in the order they were made.
 | 39 | Labels on connectors | `side` on an attachment to a connector point; the engine picks the anchor facing the line | Two libraries tuned label anchors and gaps by hand for each direction of line |
 | 40 | Points along connectors | `along` on an attachment to a connector point | Multiplicities and roles were placed with negative gaps |
 | 41 | Decorations | `underlay` and `overlay` on containers, with the `host` reference root | Shapes drawn from the size of what they surround needed a hidden stretched shape, a separate container and a layer to avoid a cycle |
+| 42 | Sequence layout | The `sequence` layout kind ([addendum](sequence-layout.md)): participants side by side, one row per message in order, fragments sized from what they hold | Step lists shared by every lifeline and fragments placed by expressions were the UML library's worst friction |
+| 43 | Unnamed instances | Transparent for what fills their slots; their parts stay hidden | Messages nested in an unnamed fragment must be named from outside it |
+| 44 | Layout hints of a kind | In one map property (`sequence: {...}`), not one property per hint | A property of every node is a parameter name no library can use: `role` broke Merise's legs |

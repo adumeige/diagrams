@@ -1,0 +1,10 @@
+- code: message_unplaced
+  severity: warning
+  path: talk.away.line
+  source: {file: input.authored.yaml, line: 18, column: 11}
+  message: an end of the message is not a participant of the sequence 'talk'; it is drawn straight
+- code: activation_range
+  severity: error
+  path: talk
+  source: {file: input.authored.yaml, line: 15, column: 11}
+  message: "an activation needs to be 'on' a participant, 'from' a message 'to' the same or a later one"

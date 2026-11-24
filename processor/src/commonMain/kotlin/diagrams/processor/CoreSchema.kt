@@ -82,6 +82,9 @@ object CoreSchema {
         // hints for the graph layout of the parent: `rank` in a layered container, `pinned` in a force one
         Prop("rank", PType.ANY),
         Prop("pinned", PType.POINT),
+        // what a child is to a sequence container, and its hints there, in one map so that a single
+        // name is taken from the parameters of every library (sequence layout addendum, section 2)
+        Prop("sequence", PType.ANY),
         Prop("state", PType.STRING),
         Prop("states", PType.ANY),
         Prop("enter", PType.ANY),
@@ -124,6 +127,8 @@ object CoreSchema {
             Prop("start_angle", PType.NUMBER),
             Prop("seed", PType.NUMBER),
             Prop("link_distance", PType.NUMBER),
+            Prop("row_gap", PType.NUMBER),
+            Prop("fragment_padding", PType.NUMBER),
             Prop("children", PType.NODES, Value.List(emptyList())),
             Prop("underlay", PType.NODES),
             Prop("overlay", PType.NODES),
@@ -159,6 +164,8 @@ object CoreSchema {
                 Prop("route", PType.ENUM, str("layout"), values = ROUTES),
                 // false: drawn, without influencing the ranks of a layered container
                 Prop("constrain", PType.BOOL),
+                // a message that shares the previous message's row in a sequence container
+                Prop("parallel", PType.BOOL),
                 Prop("marker_start", PType.ENUM, str("none"), values = MARKERS),
                 Prop("marker_end", PType.ENUM, str("none"), values = MARKERS),
             ) + paint(null),

@@ -1,0 +1,74 @@
+format: diagrams/0.1
+viewport: {width: 400, height: 300}
+imports: {uml: ../../../libs/uml.yaml, paper: ../../../themes/paper.yaml}
+base_theme: paper
+scene:
+  layout: free
+  rotation: 0
+  scale: 1
+  opacity: 1
+  present: true
+  children:
+    - id: outside
+      shape: rect
+      layer: default
+      at: {x: 320, y: 240}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      width: 40
+      height: 30
+      corner_radius: 0
+      fill: "#dfe6e9"
+      stroke: "#000000"
+      stroke_width: 1
+    - id: talk
+      layout: sequence
+      layer: default
+      at: {x: 0, y: 0}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      children:
+        - id: a
+          use: uml.lifeline
+          name: A
+          actor: false
+          created: false
+          destroyed: false
+          steps: []
+          step_height: 36
+          tail: true
+        - id: b
+          use: uml.lifeline
+          name: B
+          actor: false
+          created: false
+          destroyed: false
+          steps: []
+          step_height: 36
+          tail: true
+        - {use: uml.activation, "on": b, from: second, to: first}
+        - id: first
+          use: uml.message
+          from: a
+          to: b
+          label: one
+          kind: sync
+          parallel: false
+        - id: second
+          use: uml.message
+          from: b
+          to: a
+          label: two
+          kind: reply
+          parallel: false
+        - id: away
+          use: uml.message
+          from: a
+          to: outside
+          label: away
+          kind: sync
+          parallel: false

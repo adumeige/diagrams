@@ -1,0 +1,18 @@
+# Sequence layout errors and warnings: an activation whose span runs backward, and a message to
+# a node that is not a participant (drawn straight).
+format: diagrams/0.1
+viewport: {width: 400, height: 300}
+imports: {uml: ../../../libs/uml.yaml, paper: ../../../themes/paper.yaml}
+base_theme: paper
+scene:
+  children:
+    - {shape: rect, id: outside, at: {x: 320, y: 240}, width: 40, height: 30, fill: "#dfe6e9"}
+    - id: talk
+      layout: sequence
+      children:
+        - {use: uml.lifeline, id: a, name: A}
+        - {use: uml.lifeline, id: b, name: B}
+        - {use: uml.activation, "on": b, from: second, to: first}
+        - {use: uml.message, id: first, from: a, to: b, label: one}
+        - {use: uml.message, id: second, from: b, to: a, label: two, kind: reply}
+        - {use: uml.message, id: away, from: a, to: outside, label: away}

@@ -138,6 +138,21 @@ class TemplateTest {
     }
 
     @Test
+    fun anUnnamedInstanceShowsWhatFillsItsSlots() {
+        val r = process(
+            """
+              children:
+                - use: lib.panel
+                  children: [{shape: circle, id: dot, radius: 1}]
+            """.trimIndent().prependIndent("  "),
+        )
+        assertTrue(!r.hasErrors, r.diagnostics.joinToString("\n"))
+        val index = NodeIndex(Expander(r.environment, DiagnosticSink()).expand(r.canonical!!))
+        assertEquals("dot", index.resolve("dot", index.root!!)!!.node.path, "the author's child is named from the scene")
+        assertEquals(null, index.resolve("title", index.root!!), "the instance's parts stay hidden")
+    }
+
+    @Test
     fun aChildCannotTakeTheNameOfAPart() {
         val r = process(
             """

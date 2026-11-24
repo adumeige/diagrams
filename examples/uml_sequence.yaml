@@ -1,20 +1,17 @@
-# UML sequence diagram (libs/uml.yaml): an actor and lifelines, activations, synchronous,
-# asynchronous, reply and create messages, a self message, a lifeline created then destroyed,
-# loop and alt fragments, a second operand, and an interaction use.
-#
-# Every lifeline has the same steps: step mN sits at the same height on all of them, and a message
-# joins two steps. Steps without a message (m2, m7, m14, m17) leave room for the tag of a fragment
-# or the line between two operands. A fragment is placed over its steps with geometry expressions.
+# UML sequence diagram (libs/uml.yaml) in a sequence container (docs/sequence-layout.md): the
+# layout places the lifelines side by side and the messages in rows, in the order they are
+# written. Fragments hold their messages; activations name the messages they span. No coordinate,
+# no step and no expression.
 #   diagrams render examples/uml_sequence.yaml --out uml_sequence.png --scale 2
 format: diagrams/0.1
 title: "UML: check out"
-viewport: {width: 900, height: 860}
+viewport: {width: 820, height: 800}
 imports:
   uml: ../libs/uml.yaml
   paper: ../themes/paper.yaml
 base_theme: paper
 scene:
-  layers: [backdrop, default, fragments, messages, refs]
+  layers: [backdrop, default]
   children:
     - {shape: rect, layer: backdrop, width: "=viewport.width", height: "=viewport.height", fill: "=theme.background", stroke_width: 0}
     - use: uml.frame
@@ -23,74 +20,42 @@ scene:
       kind: sd
       name: Check out
       children:
-        - layout: row
-          gap: 100
-          align: end
+        - id: talk
+          layout: sequence
           children:
-            - use: uml.lifeline
-              id: buyer
-              name: Customer
-              actor: true
-              steps: [m1: "", m2: "", m3: "", m4: "", m5: "", m6: "", m7: "", m8: "", m9: "", m10: "", m11: "", m12: "", m13: "", m14: "", m15: "", m16: "", m17: ""]
-            - use: uml.lifeline
-              id: web
-              name: ": Storefront"
-              steps: [m1: start, m2: "on", m3: "on", m4: "on", m5: "on", m6: "on", m7: "on", m8: "on", m9: "on", m10: "on", m11: "on", m12: "on", m13: "on", m14: "on", m15: "on", m16: end, m17: ""]
-            - use: uml.lifeline
-              id: orders
-              name: ": Orders"
-              steps: [m1: "", m2: "", m3: start, m4: "on", m5: "on", m6: end, m7: "", m8: "", m9: "", m10: "", m11: "", m12: start, m13: end, m14: "", m15: "", m16: "", m17: ""]
-            - use: uml.lifeline
-              id: payment
-              name: "p : Payment"
-              created: true
-              tail: false
-              steps: [m1: none, m2: none, m3: none, m4: none, m5: none, m6: none, m7: none, m8: create, m9: start, m10: "on", m11: end, m12: "", m13: "", m14: "", m15: "", m16: destroy, m17: none]
-            - use: uml.lifeline
-              id: bank
-              name: ": Bank"
-              steps: [m1: "", m2: "", m3: "", m4: "", m5: "", m6: "", m7: "", m8: "", m9: "", m10: once, m11: "", m12: "", m13: "", m14: "", m15: "", m16: "", m17: ""]
+            - {use: uml.lifeline, id: buyer, name: Customer, actor: true}
+            - {use: uml.lifeline, id: web, name: ": Storefront"}
+            - {use: uml.lifeline, id: orders, name: ": Orders"}
+            - {use: uml.lifeline, id: payment, name: "p : Payment", created: true, destroyed: true}
+            - {use: uml.lifeline, id: bank, name: ": Bank"}
+            # activations next, so that the fragments and messages after them paint on top
+            - {use: uml.activation, "on": web, from: checkout, to: close}
+            - {use: uml.activation, "on": orders, from: add, to: line}
+            - {use: uml.activation, "on": orders, from: place, to: placed}
+            - {use: uml.activation, "on": payment, from: authorize, to: authorized}
+            - {use: uml.activation, "on": bank, from: charge, to: charge}
 
-    # fragments, over the steps they cover
-    - use: uml.fragment
-      id: each_line
-      layer: fragments
-      operator: loop
-      guard: for each line
-      at: {x: "=sd.buyer.right + 8", y: "=sd.web.step[m2].top + 6"}
-      width: "=sd.orders.right - sd.buyer.right + 76"
-      height: "=sd.web.step[m6].bottom - sd.web.step[m2].top - 4"
-    - use: uml.fragment
-      id: paid
-      layer: fragments
-      operator: alt
-      guard: card accepted
-      at: {x: "=sd.buyer.right - 4", y: "=sd.web.step[m7].top + 6"}
-      width: "=sd.bank.right - sd.buyer.right + 12"
-      height: "=sd.web.step[m16].bottom - sd.web.step[m7].top - 4"
-      children:
-        - use: uml.operand
-          guard: else
-          at: {x: 0, y: "=sd.web.step[m14].top - paid.top + 8"}
-          width: "=sd.bank.right - sd.buyer.right + 12"
-    - use: uml.interaction_use
-      id: notify
-      layer: refs
-      name: Send confirmation
-      at: {x: "=sd.buyer.left - 10", y: "=sd.web.step[m17].top + 8"}
-      width: "=sd.web.right - sd.buyer.left + 20"
-      height: 30
-
-    # messages
-    - {use: uml.message, layer: messages, from: "sd.buyer.step[m1]", to: "sd.web.step[m1]", label: "checkout()"}
-    - {use: uml.message, layer: messages, from: "sd.web.step[m3]", to: "sd.orders.step[m3]", label: "addLine(item)"}
-    - {use: uml.self_message, layer: messages, attach: {anchor: north_west, to: "sd.orders.step[m4].east"}, label: price(item)}
-    - {use: uml.message, layer: messages, from: "sd.orders.step[m6]", to: "sd.web.step[m6]", label: line, kind: reply}
-    - {use: uml.message, layer: messages, from: "sd.web.step[m8]", to: "sd.payment.step[m8]", label: "new(total)", kind: create}
-    - {use: uml.message, layer: messages, from: "sd.web.step[m9]", to: "sd.payment.step[m9]", label: "authorize()"}
-    - {use: uml.message, layer: messages, from: "sd.payment.step[m10]", to: "sd.bank.step[m10]", label: "charge(card)", kind: async}
-    - {use: uml.message, layer: messages, from: "sd.payment.step[m11]", to: "sd.web.step[m11]", label: authorized, kind: reply}
-    - {use: uml.message, layer: messages, from: "sd.web.step[m12]", to: "sd.orders.step[m12]", label: "place()"}
-    - {use: uml.message, layer: messages, from: "sd.orders.step[m13]", to: "sd.web.step[m13]", label: order, kind: reply}
-    - {use: uml.message, layer: messages, from: "sd.web.step[m15]", to: "sd.buyer.step[m15]", label: card refused, kind: async}
-    - {use: uml.message, layer: messages, from: "sd.web.step[m16]", to: "sd.payment.step[m16]", label: "close()", kind: async}
+            - {use: uml.message, id: checkout, from: buyer, to: web, label: "checkout()"}
+            - use: uml.fragment
+              operator: loop
+              guard: for each line
+              children:
+                - {use: uml.message, id: add, from: web, to: orders, label: "addLine(item)"}
+                - {use: uml.message, id: price, from: orders, to: orders, label: price(item)}
+                - {use: uml.message, id: line, from: orders, to: web, label: line, kind: reply}
+            - use: uml.fragment
+              operator: alt
+              guard: card accepted
+              children:
+                - {use: uml.message, id: create, from: web, to: payment, label: "new(total)", kind: create}
+                - {use: uml.message, id: authorize, from: web, to: payment, label: "authorize()"}
+                - {use: uml.message, id: charge, from: payment, to: bank, label: "charge(card)", kind: async}
+                - {use: uml.message, id: authorized, from: payment, to: web, label: authorized, kind: reply}
+                - {use: uml.message, id: place, from: web, to: orders, label: "place()"}
+                - {use: uml.message, id: placed, from: orders, to: web, label: order, kind: reply}
+                - use: uml.operand
+                  guard: else
+                  children:
+                    - {use: uml.message, id: refused, from: web, to: buyer, label: card refused, kind: async}
+            - {use: uml.message, id: close, from: web, to: payment, label: "close()", kind: async}
+            - {use: uml.interaction_use, name: Send confirmation, covers: [buyer, web]}

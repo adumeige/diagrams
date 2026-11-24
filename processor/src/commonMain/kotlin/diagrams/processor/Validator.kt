@@ -124,6 +124,15 @@ class Validator(private val sink: DiagnosticSink, private val env: Environment =
                 error("$path.points", "a $label takes $expected points, found ${pts.items.size}", dp.key("points"))
             }
         }
+        (v["sequence"] as? Value.Map)?.let { m ->
+            for ((k, x) in m.entries) {
+                when {
+                    k !in Layouts.SEQUENCE_KEYS -> error("$path.sequence.$k", "unknown key '$k' in sequence; expected one of ${Layouts.SEQUENCE_KEYS.joinToString()}", dp.key("sequence").key(k))
+                    k == "role" && x is Value.Str && x.value !in Layouts.ROLES -> error("$path.sequence.role", "'role' is one of ${Layouts.ROLES.joinToString()}", dp.key("sequence").key(k))
+                    k == "lifespan" && x is Value.Str && x.value !in Layouts.LIFESPANS -> error("$path.sequence.lifespan", "'lifespan' is one of ${Layouts.LIFESPANS.joinToString()}", dp.key("sequence").key(k))
+                }
+            }
+        }
         for (k in CoreSchema.DECORATIONS) (v[k] as? Value.List)?.let { l ->
             if (shape != null || mediaKind != null) error("$path.$k", "only a container has decorations", dp.key(k))
             l.items.forEachIndexed { i, c -> node(c, dp.key(k).index(i), childPathOf(path, c), isRoot = false, tokens = scope) }
@@ -668,7 +677,7 @@ class Validator(private val sink: DiagnosticSink, private val env: Environment =
         val parent = info(nodeDp)?.parent
         val layout = (parent?.node?.get("layout") as? Value.Str)?.value ?: "free"
         // in a graph container the nodes are what the edges connect: an attached child keeps following its target
-        if (layout != "free" && !Layouts.isGraph(layout)) sink.warning(Codes.ATTACH_IGNORED, path, "the parent lays out its children ($layout); the container wins and 'attach' is ignored", dp)
+        if (layout != "free" && !Layouts.isGraph(layout) && layout != "sequence") sink.warning(Codes.ATTACH_IGNORED, path, "the parent lays out its children ($layout); the container wins and 'attach' is ignored", dp)
         for (k in listOf("gap", "offset")) x[k]?.let { v -> refsIn(v).filter { it.substringBefore('.') !in setOf("theme", "viewport") }.forEach { geometryRef(it, nodeDp, dp.key(k), "$path.$k") } }
     }
 

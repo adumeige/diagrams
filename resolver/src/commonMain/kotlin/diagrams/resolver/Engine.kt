@@ -49,7 +49,10 @@ internal class RNode(val info: NodeInfo, val parent: RNode?, val node: Value.Map
 }
 
 /** Child placements of a flow container and its content size. [graph] is what a graph kind adds. */
-internal class Flow(val placements: Map<RNode, Matrix>, val width: Double, val height: Double, val graph: GraphFlow? = null)
+internal class Flow(val placements: Map<RNode, Matrix>, val width: Double, val height: Double, val graph: GraphFlow? = null, val sequence: SeqFlow? = null)
+
+/** What a sequence layout decided, in the container's frame: boxes of the nodes it places, message routes and labels. */
+internal class SeqFlow(val boxes: Map<RNode, Box>, val routes: Map<RNode, List<Point>>, val labels: Map<RNode, Point>)
 
 /** Routes and label positions supplied by a graph layout, by connector, in the container's frame. */
 internal class GraphFlow(val routes: Map<RNode, GRoute>, val labels: Map<RNode, Point>)
@@ -330,6 +333,7 @@ internal class Engine(
     /** The node's local box before any `stretch` alignment. */
     private fun naturalBox(n: RNode): Box = cached(n, "size", { n.natural }, { n.natural = it }, { Box.EMPTY }) {
         pin(n)?.let { return@cached it.local }
+        if (roleOf(n) == "fragment" || roleOf(n) == "operand") seqOwner[n]?.let { o -> flow(o).sequence?.boxes?.get(n)?.let { return@cached Box(0.0, 0.0, it.width, it.height) } }
         when (n.kind) {
             "container" -> containerBox(n)
             "rect", "ellipse" -> Box(0.0, 0.0, num(n, "width", 0.0), num(n, "height", 0.0))
@@ -346,6 +350,7 @@ internal class Engine(
     /** The local box, after the parent's `stretch` alignment. */
     fun finalBox(n: RNode): Box {
         pin(n)?.let { return it.local }
+        seqOwner[n]?.let { flow(it) }
         val p = n.parent
         if (p != null && p.isFlow && !n.isConnector && stretches(p)) flow(p)
         return stretchedBox(n)
@@ -558,7 +563,7 @@ internal class Engine(
      */
     private fun slotted(n: RNode): Boolean {
         val p = n.parent ?: return false
-        if (!p.isFlow || n.isConnector || decoration(n)) return false
+        if (!p.isFlow || n.isConnector || decoration(n) || p.layout == "sequence") return false
         if (!Layouts.isGraph(p.layout)) return true
         return n.node["attach"] !is Value.Map && n.node["\$along"] == null && !edgeOnly(n)
     }
@@ -642,6 +647,7 @@ internal class Engine(
                 val h = if (rows == 0) 0.0 else ys[rows - 1] + rowH[rows - 1]
                 Flow(out, pad.left + w + pad.right, pad.top + h + pad.bottom)
             }
+            "sequence" -> sequenceFlow(c, pad)
             "layered", "tree", "circular", "force" -> {
                 val g = graph(c, kids)
                 val routes = LinkedHashMap<RNode, GRoute>()
@@ -670,6 +676,192 @@ internal class Engine(
                 Flow(out, pad.left + iw + pad.right, pad.top + ih + pad.bottom)
             }
         }
+    }
+
+    // ---------------------------------------------------------------- sequence layout
+
+    /** A key of the node's `sequence` hint, evaluated. */
+    private fun seqHint(n: RNode, key: String): Value? {
+        val m = n.node["sequence"] as? Value.Map ?: return null
+        return eval(m[key], n, n.tokens, n.dp.key("sequence").key(key), "${n.path}.sequence.$key")
+    }
+
+    private fun roleOf(n: RNode): String? = (seqHint(n, "role") as? Value.Str)?.value
+
+    /**
+     * What every node of a sequence container is to it (sequence layout addendum, section 2), found
+     * by walking its children: participants, messages (their connectors), fragments and operands with
+     * what they hold, activations, references. Decorations and attached nodes are not placed.
+     */
+    private val seqMembers: Map<RNode, List<Pair<RNode, String>>> by lazy {
+        val out = LinkedHashMap<RNode, List<Pair<RNode, String>>>()
+        for (c in byInfo.values) {
+            if (c.kind != "container" || c.layout != "sequence") continue
+            val members = mutableListOf<Pair<RNode, String>>()
+            fun visit(n: RNode, top: Boolean) {
+                if (decoration(n) || n.node["attach"] is Value.Map) return
+                val role = roleOf(n) ?: when {
+                    n.isConnector || edgeOnly(n) -> "message"
+                    top -> "participant"
+                    else -> null
+                }
+                when (role) {
+                    null -> n.children.forEach { visit(it, false) }
+                    "fragment", "operand" -> {
+                        members += n to role
+                        n.children.forEach { visit(it, false) }
+                    }
+                    else -> members += n to role
+                }
+            }
+            c.children.forEach { visit(it, true) }
+            out[c] = members
+        }
+        out
+    }
+
+    /** The sequence container that places a node, or routes a message's connector. */
+    private val seqOwner: Map<RNode, RNode> by lazy {
+        val out = HashMap<RNode, RNode>()
+        for ((c, members) in seqMembers) for ((n, role) in members) {
+            if (role == "message") seqConnector(n)?.let { out[it] = c } else out[n] = c
+        }
+        out
+    }
+
+    /** A message's connector: the node itself, or the first connector it holds. */
+    private fun seqConnector(n: RNode): RNode? = if (n.isConnector) n else n.children.firstNotNullOfOrNull { seqConnector(it) }
+
+    private fun sequenceFlow(c: RNode, pad: Padding): Flow {
+        val members = seqMembers[c].orEmpty()
+        val participants = members.filter { it.second == "participant" }.map { it.first }
+        fun participantOf(x: RNode?): Int = if (x == null) -1 else participants.indexOfFirst { p -> p === x || generateSequence(x.parent) { it.parent }.any { it === p } }
+        fun ref(n: RNode, v: Value?, key: String): RNode? = quiet((v as? Value.Str)?.value, n)?.first
+        val ps = participants.map { p ->
+            val b = outer(p)
+            val life = (seqHint(p, "lifespan") as? Value.Str)?.value ?: "full"
+            SequenceLayout.Participant(b.width, b.height, life == "created" || life == "both", life == "destroyed" || life == "both")
+        }
+        val items = mutableListOf<SequenceLayout.Item>()
+        val nodes = mutableListOf<RNode>() // what node indices name
+        val messages = mutableListOf<RNode>() // connectors, in order
+        val messageNodes = mutableListOf<RNode>() // the message nodes (instances or connectors)
+        val activations = mutableListOf<Pair<RNode, SequenceLayout.Activation?>>()
+        fun covers(n: RNode) = ((n.node["sequence"] as? Value.Map)?.get("covers") as? Value.List)?.items.orEmpty().mapNotNull { v -> ref(n, v, "covers")?.let { participantOf(it) } }.filter { it >= 0 }
+        val openGroups = ArrayDeque<RNode>()
+        fun closeUntil(x: RNode) {
+            // groups end where a member outside them comes: a node is inside a group when the group is its ancestor
+            while (openGroups.isNotEmpty() && generateSequence(x.parent) { it.parent }.none { it === openGroups.last() }) {
+                items += SequenceLayout.Close(nodes.indexOf(openGroups.removeLast()))
+            }
+        }
+        for ((n, role) in members) {
+            closeUntil(n)
+            when (role) {
+                "message" -> {
+                    val k = seqConnector(n) ?: continue
+                    val labels = labelsByConnector[k].orEmpty().map { outer(it) }
+                    val a = end(k, "from")?.node
+                    val b = end(k, "to")?.node
+                    val from = participantOf(a)
+                    val to = participantOf(b)
+                    if (from < 0 || to < 0) sink.warning("message_unplaced", k.path, "an end of the message is not a participant of the sequence '${c.path}'; it is drawn straight", k.dp)
+                    items += SequenceLayout.Message(from, to, labels.maxOfOrNull { it.width } ?: 0.0, labels.maxOfOrNull { it.height } ?: 0.0, bool(k, "parallel") == true)
+                    messages += k
+                    messageNodes += n
+                }
+                "fragment", "operand" -> {
+                    nodes += n
+                    items += SequenceLayout.Open(nodes.size - 1, role == "operand", covers(n))
+                    openGroups.addLast(n)
+                }
+                "reference" -> {
+                    nodes += n
+                    val b = outer(n)
+                    items += SequenceLayout.Reference(nodes.size - 1, b.width, b.height, covers(n))
+                }
+                "activation" -> {
+                    nodes += n
+                    activations += n to null
+                }
+            }
+        }
+        while (openGroups.isNotEmpty()) items += SequenceLayout.Close(nodes.indexOf(openGroups.removeLast()))
+        fun messageIndex(n: RNode, v: Value?): Int {
+            val t = quiet((v as? Value.Str)?.value, n)?.first ?: return -1
+            return messageNodes.indexOfFirst { it === t || seqConnector(it) === t }
+        }
+        val acts = activations.mapNotNull { (n, _) ->
+            val hint = n.node["sequence"] as? Value.Map
+            val on = participantOf(ref(n, hint?.get("on"), "on"))
+            val from = messageIndex(n, hint?.get("from"))
+            val to = messageIndex(n, hint?.get("to"))
+            if (on < 0 || from < 0 || to < 0 || to < from) {
+                sink.error("activation_range", n.path, "an activation needs to be 'on' a participant, 'from' a message 'to' the same or a later one", n.dp)
+                null
+            } else {
+                SequenceLayout.Activation(nodes.indexOf(n), on, from, to)
+            }
+        }
+        val r = SequenceLayout.layout(ps, items, acts, SequenceLayout.Options(numOrNull(c, "gap") ?: 60.0, numOrNull(c, "row_gap") ?: 14.0, numOrNull(c, "fragment_padding") ?: 16.0))
+        for (w in r.warnings) w.node?.let { nodes[it] }?.let { sink.warning(w.code, it.path, w.message, it.dp) }
+        fun shift(b: Box) = Box(b.x + pad.left, b.y + pad.top, b.width, b.height)
+        val boxes = LinkedHashMap<RNode, Box>()
+        participants.forEachIndexed { i, p ->
+            val b = shift(r.participants[i])
+            boxes[p] = b
+            stretch(p, null, b.height)
+        }
+        for ((i, b) in r.nodes) {
+            val n = nodes[i]
+            val s = shift(b)
+            boxes[n] = s
+            if (roleOf(n) != "fragment" && roleOf(n) != "operand") stretch(n, s.width, s.height)
+        }
+        val routes = LinkedHashMap<RNode, List<Point>>()
+        val labels = LinkedHashMap<RNode, Point>()
+        messages.forEachIndexed { i, k ->
+            val route = r.routes[i]
+            if (route.isNotEmpty()) routes[k] = route.map { Point(it.x + pad.left, it.y + pad.top) }
+            r.labels[i]?.let { labels[k] = Point(it.x + pad.left, it.y + pad.top) }
+        }
+        val placements = LinkedHashMap<RNode, Matrix>()
+        return Flow(placements, pad.left + r.width + pad.right, pad.top + r.height + pad.bottom, sequence = SeqFlow(boxes, routes, labels))
+    }
+
+    /** A planned node, in its parent's frame: the plan is in the container's, and a parent may be planned too. */
+    private fun seqPlacement(n: RNode): Matrix {
+        val owner = seqOwner[n]!!
+        val plan = flow(owner).sequence ?: return Matrix.IDENTITY
+        val b = plan.boxes[n] ?: return Matrix.IDENTITY
+        // the parent's origin in the container's frame: the container, a planned node, or a node in between
+        var x = 0.0
+        var y = 0.0
+        var p = n.parent
+        while (p != null && p !== owner) {
+            val pb = plan.boxes[p]
+            if (pb != null) {
+                x += pb.x
+                y += pb.y
+                break
+            }
+            val m = placement(p)
+            x += m.apply(Point(0.0, 0.0)).x
+            y += m.apply(Point(0.0, 0.0)).y
+            p = p.parent
+        }
+        val local = stretchedBox(n)
+        return Matrix.translate(b.x - x - local.x, b.y - y - local.y) * pivot(n)
+    }
+
+    /** A message's route in the scene, when a sequence container supplies it. */
+    private fun seqRoute(n: RNode): List<Point>? {
+        if (!n.isConnector) return null
+        val o = seqOwner[n] ?: return null
+        val pts = flow(o).sequence?.routes?.get(n) ?: return null
+        n.supplied = true
+        val w = world(o)
+        return pts.map { w.apply(it) }
     }
 
     // ---------------------------------------------------------------- graph layouts
@@ -814,23 +1006,29 @@ internal class Engine(
         fun ignored(n: RNode, key: String, why: String) = sink.warning(Codes.HINT_IGNORED, "${n.path}.$key", "'$key' $why", n.dp.key(key))
         fun walk(n: RNode) {
             val p = n.parent
+            // a member of a sequence container, at any depth, takes the hints of the sequence layout
+            val seq = seqOwner[n] ?: p?.takeIf { it.layout == "sequence" }
             if (p != null) {
-                val kind = Layouts[p.layout]
+                val layout = seq?.layout ?: p.layout
+                val kind = Layouts[layout]
                 for (h in Layouts.NODE_HINTS) {
                     if (n.node[h] == null) continue
                     if (kind == null || h !in kind.nodeHints) {
-                        ignored(n, h, "is not a hint of the '${p.layout}' layout of '${p.path}'")
-                    } else if (!slotted(n)) {
+                        ignored(n, h, "is not a hint of the '$layout' layout of '${(seq ?: p).path}'")
+                    } else if (seq == null && !slotted(n)) {
                         ignored(n, h, "has no effect on a node the layout does not place")
                     }
                 }
             }
             if (n.isConnector) {
                 for (h in Layouts.EDGE_HINTS) {
-                    // `true` is what a connector does without the hint: a template may pass it through
-                    if (n.node[h] == null || bool(n, h) == true) continue
+                    // the value a connector has without the hint: a template may pass it through
+                    if (n.node[h] == null || bool(n, h) == (h == "constrain")) continue
                     val e = edgeByConnector[n]
-                    if (e == null) {
+                    val o = seqOwner[n]
+                    if (o != null) {
+                        if (h !in Layouts["sequence"]!!.edgeHints) ignored(n, h, "is not a hint of the 'sequence' layout of '${o.path}'")
+                    } else if (e == null) {
                         ignored(n, h, "has no effect: the connector is not an edge of a graph container")
                     } else if (h !in Layouts[e.owner.layout]!!.edgeHints) {
                         ignored(n, h, "is not a hint of the '${e.owner.layout}' layout of '${e.owner.path}'")
@@ -862,6 +1060,7 @@ internal class Engine(
 
     /** The reserved position of the label of a connector that follows a supplied route, in the scene. */
     private fun reservedLabel(t: RNode): Point? {
+        seqOwner[t]?.let { o -> return flow(o).sequence?.labels?.get(t)?.let { world(o).apply(it) } }
         if (pins.isNotEmpty()) {
             val l = routePins[t.info.loc]?.label ?: return null
             return (t.parent?.let { world(it) } ?: Matrix.IDENTITY).apply(l)
@@ -880,6 +1079,7 @@ internal class Engine(
         when {
             pin(n) != null -> pin(n)!!.transform
             p == null || n.isConnector -> Matrix.IDENTITY
+            seqOwner[n] != null -> seqPlacement(n)
             slotted(n) -> flow(p).placements[n] ?: Matrix.IDENTITY
             // a decoration is placed in its container's frame by its own `at`, whatever the layout
             decoration(n) -> atPlacement(n)
@@ -1131,6 +1331,7 @@ internal class Engine(
 
     /** The route in scene coordinates (spec section 7): a second pass over resolved geometry. */
     fun route(n: RNode): List<Point> = cached(n, "route", { n.route }, { n.route = it }, { emptyList() }) {
+        seqRoute(n)?.let { return@cached it }
         val a = end(n, "from")
         val b = end(n, "to")
         if (a == null || b == null) {

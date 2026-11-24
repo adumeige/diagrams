@@ -74,6 +74,9 @@ validator, the resolver, the JSON Schema and an editor read it.
 | `tree` | `direction`, `gap`, `level_gap`, `radial` | | | | yes | |
 | `circular` | `gap`, `radius`, `start_angle` | | | | | |
 | `force` | `seed`, `link_distance` | `pinned` | | `pinned` | | |
+| `sequence` | `gap`, `row_gap`, `fragment_padding` | `sequence` | `parallel` | | yes | yes |
+
+`sequence` is specified in its own addendum, [sequence-layout.md](sequence-layout.md).
 
 `padding`, `width` and `height` apply to every container.
 

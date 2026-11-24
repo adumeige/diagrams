@@ -1,8 +1,9 @@
 # Sequence layout
 
-Addendum to [spec.md](spec.md) and [graph-layouts.md](graph-layouts.md), draft 0.1. Status: design,
-not implemented. It adds the layout kind `sequence`, which places participants side by side and
-messages in rows, in the order they are declared.
+Addendum to [spec.md](spec.md) and [graph-layouts.md](graph-layouts.md), draft 0.1. It adds the
+layout kind `sequence`, which places participants side by side and messages in rows, in the order
+they are declared. Implemented: `SequenceLayout` in the resolver; fixtures `m11_sequence` and
+`neg_sequence`; [examples/uml_sequence.yaml](../examples/uml_sequence.yaml).
 
 ## 1. Purpose
 
@@ -22,6 +23,7 @@ messages into fragments by nesting them:
     - {use: uml.lifeline, id: buyer, name: Customer, actor: true}
     - {use: uml.lifeline, id: web, name: ": Storefront"}
     - {use: uml.lifeline, id: orders, name: ": Orders"}
+    - {use: uml.activation, "on": web, from: start, to: add}
     - {use: uml.message, id: start, from: buyer, to: web, label: "checkout()"}
     - use: uml.fragment
       operator: loop
@@ -29,16 +31,25 @@ messages into fragments by nesting them:
       children:
         - {use: uml.message, id: add, from: web, to: orders, label: "addLine(item)"}
         - {use: uml.message, from: orders, to: web, label: line, kind: reply}
-    - {use: uml.activation, on: web, from: start, to: add}
 ```
 
 Nothing in it is a coordinate, a step key or an expression.
 
 ## 2. Roles
 
-A child of a `sequence` container has a **role**, the node hint `role`. A library sets it on the
-body root of its templates, so authors never write it: an instance of `uml.lifeline` is a
-participant, one of `uml.fragment` a fragment.
+A child of a `sequence` container has a **role**. Roles and every other hint of the layout are
+keys of one node property, `sequence`, a map: `sequence: {role: activation, on: web, from: start,
+to: add}`. A library sets it on the body root of its templates, from their parameters, so authors
+never write it: an instance of `uml.lifeline` is a participant, one of `uml.fragment` a fragment.
+One map, rather than a property per hint, because a property of every node is a name no library
+can use for a parameter.
+
+| Key | Meaning |
+| --- | --- |
+| `role` | One of the roles below |
+| `lifespan` | Of a participant: `full`, `created`, `destroyed` or `both` |
+| `on`, `from`, `to` | Of an activation: its participant and the first and last messages it spans |
+| `covers` | Of a fragment or a reference: participants it spans besides those its messages touch |
 
 | Role | What it is | Placed by the layout |
 | --- | --- | --- |
@@ -46,11 +57,18 @@ participant, one of `uml.fragment` a fragment.
 | `message` | A child that holds nothing but a connector and what is attached to it (an instance of a relation template), or a connector itself | One row, in declaration order; the route is supplied |
 | `fragment` | A combined fragment: messages and operands nested in it | Around the rows of what it holds and the participants those messages touch |
 | `operand` | A part of a fragment: messages nested in it | Across its fragment, around its rows |
-| `activation` | A bar on a participant, from a message to a message | On the participant's line, from the row of `from` to the row of `to` |
+| `activation` | A bar on a participant, from a message to the same or a later one | On the participant's line, from the row of `from` to the row of `to` |
 | `reference` | An interaction use (`ref`): it takes a row of its own | Across the participants listed in `covers` |
 
 A child without a role is a participant, unless it holds only connectors and attached nodes, which
 makes it a message (as for graph layouts, section 2). Attached children (notes) follow their target.
+Nodes are painted in declaration order: declare activations after the participants and before the
+messages, so that fragments and messages paint over them.
+
+A fragment's first operand is the messages written directly in it, under the fragment's guard; each
+`operand` child that follows starts another, with its guard and a dashed line. A fragment or an
+operand without an ID is transparent for what it holds (spec section 9, "Slots"): an activation
+names a nested message by its ID alone.
 
 ## 3. Placement
 
@@ -77,21 +95,20 @@ that covers that row on each side. A route is exact: the floating ends of graph 
 apply. A message whose end is not a participant of the container is not placed (`message_unplaced`)
 and is drawn `straight`.
 
-**Creation and destruction.** Edge hints set by the message template from its kind:
+**Creation and destruction.** A participant whose `lifespan` is `created` starts at the first
+message it receives: its head is centered on that message, its line starts under it, and the
+message ends on the head. One whose `lifespan` is `destroyed` ends at the last message it receives;
+the participant template draws the end mark at the bottom of its box.
 
-- `creates: true`: the receiving participant starts at this row. Its head is centered on the
-  message and its line starts under it; the message ends on the head.
-- `destroys: true`: the receiving participant ends at this row; the participant template draws the
-  end mark at the bottom of its box.
-
-**Activations.** Explicit in this draft: an `activation` child names its participant (`on`) and two
-messages (`from`, `to`, inclusive). Nested activations on one participant step right by half a bar.
+**Activations.** Explicit: an `activation` child names its participant (`on`) and two messages
+(`from`, `to`, inclusive; the same message for a bar on one row). Nested activations on one participant step right by half a bar.
 Deriving activations from synchronous calls and their replies is left for later, behind an option
 `activations: auto`.
 
 **Fragments and operands.** A fragment spans the rows of everything nested in it, plus its header
-row, and horizontally the participants its messages touch, `fragment_padding` beyond their lines
-(nested fragments add the padding again). `covers: [a, b]` widens it to more participants. An
+row, and horizontally the participants its messages touch and the loops and labels of its self
+messages, `fragment_padding` beyond them (an enclosing fragment adds the padding again for each
+fragment nested in it). `covers` widens it to more participants. An
 operand spans its fragment's width and its own rows; the layout sets both sizes, so the fragment and
 operand templates draw their frame, tag and dashed separator as decorations from `host`.
 
@@ -99,7 +116,7 @@ operand templates draw their frame, tag and dashed separator as decorations from
 
 | Kind | Options | Node hints | Edge hints | Pins | Routes | Labels |
 | --- | --- | --- | --- | --- | --- | --- |
-| `sequence` | `gap`, `row_gap`, `fragment_padding` | `role`, `covers`, `on`, `from`, `to` | `parallel`, `creates`, `destroys` | | yes | yes |
+| `sequence` | `gap` (60), `row_gap` (14), `fragment_padding` (16) | `sequence` | `parallel` | | yes | yes |
 
 Gestures: reordering participants and moving a message to another row are reorders of the
 document's children; there are no pins.
@@ -114,14 +131,18 @@ moves the rows after it; a transition interpolates boxes and supplied routes as 
 ## 6. Diagnostics
 
 - `message_unplaced` (warning): a message whose end is not a participant of the container.
-- `activation_range` (error): an activation whose `to` comes before its `from`, or whose messages do
-  not touch its participant.
-- `hint_ignored`: a hint the `sequence` kind does not declare, or a `sequence` hint in another kind.
+- `activation_range` (error): an activation that is not on a participant, or whose `from` or `to` is
+  not a message of the container, or whose `to` comes before its `from`.
+- `fragment_empty` (warning): a fragment that holds no message between participants.
+- `hint_ignored`: a hint the `sequence` kind does not declare, such as `parallel` on a connector of
+  another kind. The `sequence` hint itself is a library's declaration and is never reported.
 
 ## 7. Library impact
 
-The UML library keeps its current lifelines for free containers and gains the `sequence` ones:
-`lifeline` (role participant, the line as a decoration), `message` (edge hints from its kind),
-`fragment` and `operand` (decorated, sized by the layout), `activation`, `interaction_use` (role
-reference). [examples/uml_sequence.yaml](../examples/uml_sequence.yaml) then loses its step lists and
-its geometry expressions; the friction log ([library-authoring.md](library-authoring.md)) records why.
+The UML library's templates serve both containers. In a sequence container, `lifeline` (role
+participant, its line a decoration down to the bottom the layout gives), `message` (`parallel`
+passed to its connector), `fragment` and `operand` (decorations drawn from the size the layout
+gives), `activation` and `interaction_use` (role reference) need no coordinate. In a free container
+they keep their step lists and explicit sizes (fixture `m11_sequence_steps`).
+[examples/uml_sequence.yaml](../examples/uml_sequence.yaml) lost its step lists and its geometry
+expressions; the friction log ([library-authoring.md](library-authoring.md)) records why.

@@ -1,0 +1,151 @@
+format: diagrams/0.1
+viewport: {width: 700, height: 640}
+imports: {uml: ../../../libs/uml.yaml, paper: ../../../themes/paper.yaml}
+base_theme: paper
+scene:
+  layout: free
+  rotation: 0
+  scale: 1
+  opacity: 1
+  present: true
+  children:
+    - id: talk
+      layout: sequence
+      layer: default
+      at: {x: 30, y: 20}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      gap: 50
+      row_gap: 12
+      fragment_padding: 14
+      children:
+        - id: client
+          use: uml.lifeline
+          name: ": Client"
+          actor: false
+          created: false
+          destroyed: false
+          steps: []
+          step_height: 36
+          tail: true
+        - id: api
+          use: uml.lifeline
+          name: ": Api"
+          actor: false
+          created: false
+          destroyed: false
+          steps: []
+          step_height: 36
+          tail: true
+        - id: job
+          use: uml.lifeline
+          name: ": Job"
+          actor: false
+          created: true
+          destroyed: true
+          steps: []
+          step_height: 36
+          tail: true
+        - id: store
+          use: uml.lifeline
+          name: ": Store"
+          actor: false
+          created: false
+          destroyed: false
+          steps: []
+          step_height: 36
+          tail: true
+        - {use: uml.activation, "on": api, from: ask, to: answer}
+        - {use: uml.activation, "on": api, from: think, to: think}
+        - id: ask
+          use: uml.message
+          from: client
+          to: api
+          label: ask()
+          kind: sync
+          parallel: false
+        - id: think
+          use: uml.message
+          from: api
+          to: api
+          label: plan()
+          kind: sync
+          parallel: false
+        - use: uml.fragment
+          operator: alt
+          guard: cached
+          width: 0
+          height: 0
+          covers: []
+          children:
+            - id: hit
+              use: uml.message
+              from: api
+              to: store
+              label: read()
+              kind: sync
+              parallel: false
+            - use: uml.operand
+              guard: else
+              width: 0
+              children:
+                - id: spawn
+                  use: uml.message
+                  from: api
+                  to: job
+                  label: new()
+                  kind: create
+                  parallel: false
+                - id: fetch
+                  use: uml.message
+                  from: job
+                  to: store
+                  label: load()
+                  kind: async
+                  parallel: false
+                - id: log
+                  use: uml.message
+                  from: job
+                  to: api
+                  label: progress
+                  kind: async
+                  parallel: true
+                - use: uml.fragment
+                  operator: opt
+                  guard: slow
+                  width: 0
+                  height: 0
+                  covers: []
+                  children:
+                    - id: warn
+                      use: uml.message
+                      from: job
+                      to: api
+                      label: late()
+                      kind: async
+                      parallel: false
+                - id: stop
+                  use: uml.message
+                  from: api
+                  to: job
+                  label: stop()
+                  kind: async
+                  parallel: false
+        - id: answer
+          use: uml.message
+          from: api
+          to: client
+          label: result
+          kind: reply
+          parallel: false
+        - use: uml.interaction_use
+          name: Audit
+          covers: [api, store]
+          width: 0
+          height: 40
+    - use: uml.note
+      attach: {anchor: west, to: talk.store, gap: 16}
+      text: Retries are the client's job.
+      width: 120

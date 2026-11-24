@@ -92,8 +92,11 @@ class NodeInfo(
                     // a named part of the body can hold the slot: look through it for the instance's children
                     if (instance != null && c.owner === instance && c.template == null) slotContent(c, ::add, ::visit)
                 } else if (c.template == null) {
-                    // an unnamed instance is still a scope: its inside cannot be named from out here
                     visit(c)
+                } else {
+                    // an unnamed instance keeps its parts to itself, but what fills its slots is the
+                    // author's own content: it is named from here (a fragment holding messages)
+                    c.slotContent(c, ::add, ::visit)
                 }
             }
         }
@@ -103,13 +106,14 @@ class NodeInfo(
 
     private fun scope() = scoped
 
-    /** The instance's children under [part], a named node of its body. */
+    /** The instance's children under [part], a node of its body (or the instance itself). */
     private fun slotContent(part: NodeInfo, add: (NodeInfo) -> Unit, visit: (NodeInfo) -> Unit) {
         for (c in part.children) {
             when {
                 c.owner === this -> if (c.template == null) slotContent(c, add, visit)
                 c.id != null -> add(c)
                 c.template == null -> visit(c)
+                else -> c.slotContent(c, add, visit)
             }
         }
     }
