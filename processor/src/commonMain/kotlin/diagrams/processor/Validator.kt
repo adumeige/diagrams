@@ -15,6 +15,10 @@ class Validator(private val sink: DiagnosticSink, private val env: Environment =
 
     fun document(doc: Value) {
         index = NodeIndex(Expander(env, sink).expand(doc))
+        scopedIds()
+        for (n in index.all()) for (c in n.slotClashes) {
+            error(c.path, "'${c.id}' is already the name of a part of ${n.template?.ref} in ${n.path}; rename it", c.dp.key("id"))
+        }
         val root = DataPath.ROOT
         if (doc !is Value.Map) {
             error("", "a document is a map, found ${doc.typeName()}", root)
@@ -720,7 +724,7 @@ class Validator(private val sink: DiagnosticSink, private val env: Environment =
             PType.NUMBER -> {
                 if (x !is Value.Num) return error(path, "'${prop.name}' is a number, found ${x.typeName()}", dp)
                 val bad = when (prop.name) {
-                    "width", "height", "radius", "stroke_width", "corner_radius" -> x.value < 0
+                    "width", "height", "min_width", "min_height", "radius", "stroke_width", "corner_radius" -> x.value < 0
                     "font_size" -> x.value <= 0
                     "opacity" -> x.value < 0 || x.value > 1
                     else -> false
@@ -791,9 +795,32 @@ class Validator(private val sink: DiagnosticSink, private val env: Environment =
         }
     }
 
+    /**
+     * Names a path may end with on any node: geometry, anchors and the properties every node has.
+     * The properties of one kind of node are only reserved under a node of that kind (see [scopedIds]).
+     */
     private fun isPropertyName(s: String): Boolean =
-        s in GeometryRefs.PROPERTIES || s in GeometryRefs.ANCHORS || s in GeometryRefs.CONNECTOR_ANCHORS ||
-        CoreSchema.container[s] != null || (CoreSchema.shapes.values + CoreSchema.media.values).any { it[s] != null } || s == "shape" || s == "use" || s == "media"
+        s in GeometryRefs.PROPERTIES || s in GeometryRefs.ANCHORS || s in CoreSchema.commonNames || s == "shape" || s == "use" || s == "media"
+
+    /**
+     * An id is read right after its scope (`group.ordering`): it cannot be one of the properties of
+     * that scope, a container's (`layout`, `gap`, `ordering`...) or an instance's (its parameters).
+     */
+    private fun scopedIds() {
+        for (n in index.all()) {
+            val id = n.id ?: continue
+            if (isPropertyName(id) || id in CoreSchema.RESERVED_ROOTS) continue // reported with the id itself
+            val scope = generateSequence(n.parent) { it.parent }.firstOrNull { it.id != null || it.template != null || it.isRoot } ?: continue
+            val clash = when {
+                // a part of a template body is the library's to name: the library reports it
+                scope.template != null && n.owner === scope -> false
+                scope.template != null -> id in scope.template.params || CoreSchema.instance[id] != null
+                scope.shape == null -> CoreSchema.container[id] != null
+                else -> false
+            }
+            if (clash) error(n.path, "'$id' is a property of ${if (scope.isRoot) "the scene" else scope.path}, so a path could not tell them apart; rename it", n.dp.key("id"))
+        }
+    }
 }
 
 /** Properties of the camera (spec section 14). */

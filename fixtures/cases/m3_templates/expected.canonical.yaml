@@ -48,13 +48,20 @@ scene:
       from_role: ""
       to_role: ""
       route: orthogonal
-      label_gap: 4
       label_anchor: south
+      label_gap: 4
     - use: uml.generalization
       layer: edges
       from: player
       to: person
+      label: ""
+      from_mult: ""
+      to_mult: ""
+      from_role: ""
+      to_role: ""
       route: orthogonal
+      label_anchor: south
+      label_gap: 4
     - id: squad_note
       use: uml.note
       attach: {anchor: north, to: lineup.line.mid, gap: -110}
@@ -68,7 +75,7 @@ scene:
       opacity: 1
       present: true
       from: squad_note
-      to: team.attributes
+      to: team.attribute_list
       route: layout
       marker_start: none
       marker_end: arrow

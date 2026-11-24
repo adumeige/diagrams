@@ -72,7 +72,7 @@ templates:
       static: {type: list, item: {type: string}, default: [], description: "Static members, underlined, shown first in the attributes: 'count: Int'"}
     exports:
       anchors: [north, south, east, west]
-      parts: [header, attributes, operations, attribute, operation]
+      parts: [header, attribute_list, operation_list, attribute, operation]
       tokens: [surface, stroke, ink, muted]
     body:
       layout: column
@@ -90,7 +90,7 @@ templates:
                 - {if: "params.stereotype != ''", shape: text, text: "='«' + params.stereotype + '»'", font_size: 12, fill: "=theme.muted"}
                 - {shape: text, text: "=params.name", font_size: 16, fill: "=theme.ink"}
                 - {if: params.abstract, shape: text, text: "{abstract}", font_size: 11, fill: "=theme.muted"}
-        - id: attributes
+        - id: attribute_list
           layout: stack
           align: stretch
           children:
@@ -113,7 +113,7 @@ templates:
                   as: attr
                   id: attribute
                   do: {shape: text, text: "=attr.key + ': ' + attr.value", font_size: 13, fill: "=theme.ink"}
-        - id: operations
+        - id: operation_list
           layout: stack
           align: stretch
           children:
@@ -135,7 +135,7 @@ templates:
       operations: {type: list, keyed: true, item: {type: string}, default: []}
     exports:
       anchors: [north, south, east, west]
-      parts: [header, attributes, operations, attribute, operation]
+      parts: [header, attribute_list, operation_list, attribute, operation]
       tokens: [surface, stroke, ink, muted]
     body: {use: class, name: "=params.name", stereotype: interface, attributes: "=params.attributes", operations: "=params.operations"}
 
@@ -148,12 +148,9 @@ templates:
       operations: {type: list, keyed: true, item: {type: string}, default: []}
     exports:
       anchors: [north, south, east, west]
-      parts: [header, attributes, operations, attribute, operation]
+      parts: [header, attribute_list, operation_list, attribute, operation]
       tokens: [surface, stroke, ink, muted]
-    body:
-      children:
-        - {if: "not params.primitive", use: class, name: "=params.name", stereotype: dataType, attributes: "=params.attributes", operations: "=params.operations"}
-        - {if: params.primitive, use: class, name: "=params.name", stereotype: primitive, attributes: "=params.attributes", operations: "=params.operations"}
+    body: {use: class, name: "=params.name", stereotype: "=choose(params.primitive, 'primitive', 'dataType')", attributes: "=params.attributes", operations: "=params.operations"}
 
   enumeration:
     description: An enumeration and its literals.
@@ -162,7 +159,7 @@ templates:
       literals: {type: list, item: {type: string}, default: []}
     exports:
       anchors: [north, south, east, west]
-      parts: [header, literals]
+      parts: [header, literal_list]
       tokens: [surface, stroke, ink, muted]
     body:
       layout: column
@@ -179,7 +176,7 @@ templates:
               children:
                 - {shape: text, text: "«enumeration»", style: keyword}
                 - {shape: text, text: "=params.name", font_size: 16, fill: "=theme.ink"}
-        - id: literals
+        - id: literal_list
           layout: stack
           align: stretch
           children:
@@ -202,7 +199,7 @@ templates:
       values: {type: list, keyed: true, item: {type: string}, default: [], description: "The values of its attributes ('slots' in UML)"}
     exports:
       anchors: [north, south, east, west]
-      parts: [header, values, value]
+      parts: [header, value_list, value]
       tokens: [surface, stroke, ink]
     body:
       layout: column
@@ -223,7 +220,7 @@ templates:
                     - {if: "params.classifier != ''", shape: text, text: "=params.name + ' : ' + params.classifier", font_size: 15, fill: "=theme.ink"}
                     - {if: "params.classifier == ''", shape: text, text: "=params.name", font_size: 15, fill: "=theme.ink"}
                     - {shape: rect, width: 0, height: 1, style: rule}
-        - id: values
+        - id: value_list
           layout: stack
           align: stretch
           children:
@@ -265,10 +262,10 @@ templates:
           children:
             - {shape: rect, width: 0, height: 0, style: container}
             - layout: column
-              padding: 16
+              padding: {left: 16, top: 28, right: 16, bottom: 16}
               gap: 12
+              min_width: "=tab.width + 56"
               children:
-                - {shape: rect, width: "=tab.width + 24", height: 0, fill: "#00000000", stroke_width: 0}
                 - {slot: default}
 
   note:
@@ -322,8 +319,7 @@ templates:
       tokens: [stroke, muted]
     body:
       children:
-        - {if: "not params.dashed", shape: connector, id: line, from: "=params.from", to: "=params.to", route: "=params.route", marker_end: "=params.head", marker_start: "=params.tail", style: wire}
-        - {if: params.dashed, shape: connector, id: line, from: "=params.from", to: "=params.to", route: "=params.route", marker_end: "=params.head", marker_start: "=params.tail", style: dashed_wire}
+        - {shape: connector, id: line, from: "=params.from", to: "=params.to", route: "=params.route", marker_end: "=params.head", marker_start: "=params.tail", style: "=choose(params.dashed, 'dashed_wire', 'wire')"}
         - {if: "params.label != ''", shape: text, text: "=params.label", font_size: 12, fill: "=theme.muted", attach: {anchor: "=params.label_anchor", to: line.label, gap: "=params.label_gap"}}
         - {if: "params.from_mult != ''", shape: text, text: "=params.from_mult", font_size: 12, fill: "=theme.muted", attach: {anchor: south_west, to: line.start, gap: -22}}
         - {if: "params.to_mult != ''", shape: text, text: "=params.to_mult", font_size: 12, fill: "=theme.muted", attach: {anchor: south_east, to: line.end, gap: -22}}
@@ -331,55 +327,50 @@ templates:
         - {if: "params.to_role != ''", shape: text, text: "=params.to_role", font_size: 12, fill: "=theme.muted", attach: {anchor: north_east, to: line.end, gap: -22}}
 
   association:
-    description: A navigable association, open arrow at 'to'. See link for one without direction.
-    params: {from: path, to: path, label: {type: string, default: ""}, from_mult: {type: string, default: ""}, to_mult: {type: string, default: ""}, from_role: {type: string, default: ""}, to_role: {type: string, default: ""}, route: {type: enum, values: [orthogonal, straight, layout], default: orthogonal}, label_gap: {type: number, default: 4}, label_anchor: {type: enum, values: [center, north, south, east, west, north_east, north_west, south_east, south_west], default: south}}
-    exports: {parts: [line], tokens: [stroke, muted]}
-    body: {use: relation, from: "=params.from", to: "=params.to", label: "=params.label", from_mult: "=params.from_mult", to_mult: "=params.to_mult", from_role: "=params.from_role", to_role: "=params.to_role", route: "=params.route", label_gap: "=params.label_gap", label_anchor: "=params.label_anchor", head: open_arrow}
+    extends: relation
+    description: "A navigable association, open arrow at 'to'. See link for one without direction."
+    set: {head: open_arrow, tail: none, dashed: false}
 
   link:
-    description: >-
-      A plain line: an association without direction, an actor's link to a use case, a
-      communication path between nodes, or the line from a component to an interface it provides
-      or requires.
-    params: {from: path, to: path, label: {type: string, default: ""}, from_mult: {type: string, default: ""}, to_mult: {type: string, default: ""}, from_role: {type: string, default: ""}, to_role: {type: string, default: ""}, route: {type: enum, values: [orthogonal, straight, layout], default: layout}, label_gap: {type: number, default: 4}, label_anchor: {type: enum, values: [center, north, south, east, west, north_east, north_west, south_east, south_west], default: south}}
-    exports: {parts: [line], tokens: [stroke, muted]}
-    body: {use: relation, from: "=params.from", to: "=params.to", label: "=params.label", from_mult: "=params.from_mult", to_mult: "=params.to_mult", from_role: "=params.from_role", to_role: "=params.to_role", route: "=params.route", label_gap: "=params.label_gap", label_anchor: "=params.label_anchor"}
+    extends: relation
+    description: "A plain line: an association without direction, an actor's link to a use case, a communication path between nodes, or the line from a component to an interface it provides or requires."
+    set: {head: none, tail: none, dashed: false}
+    params:
+      route: {type: enum, values: [orthogonal, straight, layout], default: layout}
 
   aggregation:
-    description: A shared aggregation, hollow diamond at 'from' (the whole).
-    params: {from: path, to: path, label: {type: string, default: ""}, from_mult: {type: string, default: ""}, to_mult: {type: string, default: ""}, from_role: {type: string, default: ""}, to_role: {type: string, default: ""}, route: {type: enum, values: [orthogonal, straight, layout], default: orthogonal}, label_gap: {type: number, default: 4}, label_anchor: {type: enum, values: [center, north, south, east, west, north_east, north_west, south_east, south_west], default: south}}
-    exports: {parts: [line], tokens: [stroke, muted]}
-    body: {use: relation, from: "=params.from", to: "=params.to", label: "=params.label", from_mult: "=params.from_mult", to_mult: "=params.to_mult", from_role: "=params.from_role", to_role: "=params.to_role", route: "=params.route", label_gap: "=params.label_gap", label_anchor: "=params.label_anchor", tail: open_diamond}
+    extends: relation
+    description: "A shared aggregation, hollow diamond at 'from' (the whole)."
+    set: {head: none, tail: open_diamond, dashed: false}
 
   composition:
-    description: A composition, filled diamond at 'from' (the whole).
-    params: {from: path, to: path, label: {type: string, default: ""}, from_mult: {type: string, default: ""}, to_mult: {type: string, default: ""}, from_role: {type: string, default: ""}, to_role: {type: string, default: ""}, route: {type: enum, values: [orthogonal, straight, layout], default: orthogonal}, label_gap: {type: number, default: 4}, label_anchor: {type: enum, values: [center, north, south, east, west, north_east, north_west, south_east, south_west], default: south}}
-    exports: {parts: [line], tokens: [stroke, muted]}
-    body: {use: relation, from: "=params.from", to: "=params.to", label: "=params.label", from_mult: "=params.from_mult", to_mult: "=params.to_mult", from_role: "=params.from_role", to_role: "=params.to_role", route: "=params.route", label_gap: "=params.label_gap", label_anchor: "=params.label_anchor", tail: diamond}
+    extends: relation
+    description: "A composition, filled diamond at 'from' (the whole)."
+    set: {head: none, tail: diamond, dashed: false}
 
   generalization:
-    description: From the specific element to the general one, hollow triangle at 'to'.
-    params: {from: path, to: path, route: {type: enum, values: [orthogonal, straight, layout], default: orthogonal}}
-    exports: {parts: [line], tokens: [stroke, muted]}
-    body: {use: relation, from: "=params.from", to: "=params.to", route: "=params.route", head: triangle}
+    extends: relation
+    description: "From the specific element to the general one, hollow triangle at 'to'."
+    set: {head: triangle, tail: none, dashed: false}
 
   realization:
-    description: From the implementation to the interface or specification it realizes, dashed with a hollow triangle.
-    params: {from: path, to: path, route: {type: enum, values: [orthogonal, straight, layout], default: orthogonal}}
-    exports: {parts: [line], tokens: [stroke, muted]}
-    body: {use: relation, from: "=params.from", to: "=params.to", route: "=params.route", head: triangle, dashed: true}
+    extends: relation
+    description: "From the implementation to the interface or specification it realizes, dashed with a hollow triangle."
+    set: {head: triangle, tail: none, dashed: true}
 
   dependency:
+    extends: relation
     description: "From the client to the supplier it depends on, dashed with an open arrow; label is usually a keyword: «use», «import», «create»."
-    params: {from: path, to: path, label: {type: string, default: ""}, route: {type: enum, values: [orthogonal, straight, layout], default: layout}, label_gap: {type: number, default: 4}, label_anchor: {type: enum, values: [center, north, south, east, west, north_east, north_west, south_east, south_west], default: south}}
-    exports: {parts: [line], tokens: [stroke, muted]}
-    body: {use: relation, from: "=params.from", to: "=params.to", label: "=params.label", route: "=params.route", label_gap: "=params.label_gap", label_anchor: "=params.label_anchor", head: open_arrow, dashed: true}
+    set: {head: open_arrow, tail: none, dashed: true}
+    params:
+      route: {type: enum, values: [orthogonal, straight, layout], default: layout}
 
   note_link:
+    extends: relation
     description: "A dashed line from a note to what it explains, or from an association class to its association ('to: orders.line.label')."
-    params: {from: path, to: path, route: {type: enum, values: [orthogonal, straight, layout], default: straight}}
-    exports: {parts: [line], tokens: [stroke, muted]}
-    body: {use: relation, from: "=params.from", to: "=params.to", route: "=params.route", dashed: true}
+    set: {head: none, tail: none, dashed: true}
+    params:
+      route: {type: enum, values: [orthogonal, straight, layout], default: straight}
 
   # ---- components and deployment ----------------------------------------------------------------
 
@@ -551,16 +542,14 @@ templates:
                 - {shape: polyline, points: [{x: 9, y: 0}, {x: 9, y: 4}, {x: 13, y: 4}], stroke: "=theme.stroke", stroke_width: 1}
 
   deploy:
+    extends: dependency
     description: An artifact deployed on a node, «deploy».
-    params: {from: path, to: path, route: {type: enum, values: [orthogonal, straight, layout], default: layout}, label_gap: {type: number, default: 4}, label_anchor: {type: enum, values: [center, north, south, east, west, north_east, north_west, south_east, south_west], default: south}}
-    exports: {parts: [line], tokens: [stroke, muted]}
-    body: {use: dependency, from: "=params.from", to: "=params.to", label: "«deploy»", route: "=params.route", label_gap: "=params.label_gap", label_anchor: "=params.label_anchor"}
+    set: {label: «deploy»}
 
   manifest:
+    extends: dependency
     description: An artifact that manifests a component, «manifest».
-    params: {from: path, to: path, route: {type: enum, values: [orthogonal, straight, layout], default: layout}, label_gap: {type: number, default: 4}, label_anchor: {type: enum, values: [center, north, south, east, west, north_east, north_west, south_east, south_west], default: south}}
-    exports: {parts: [line], tokens: [stroke, muted]}
-    body: {use: dependency, from: "=params.from", to: "=params.to", label: "«manifest»", route: "=params.route", label_gap: "=params.label_gap", label_anchor: "=params.label_anchor"}
+    set: {label: «manifest»}
 
   # ---- use cases --------------------------------------------------------------------------------
 
@@ -627,19 +616,16 @@ templates:
             - {slot: default}
 
   include:
+    extends: dependency
     description: From the including use case to the included one, «include».
-    params: {from: path, to: path, route: {type: enum, values: [orthogonal, straight, layout], default: layout}, label_gap: {type: number, default: 4}, label_anchor: {type: enum, values: [center, north, south, east, west, north_east, north_west, south_east, south_west], default: south}}
-    exports: {parts: [line], tokens: [stroke, muted]}
-    body: {use: dependency, from: "=params.from", to: "=params.to", label: "«include»", route: "=params.route", label_gap: "=params.label_gap", label_anchor: "=params.label_anchor"}
+    set: {label: «include»}
 
   extend:
+    extends: dependency
     description: From the extending use case to the extended one, «extend», with an optional condition.
-    params: {from: path, to: path, condition: {type: string, default: ""}, route: {type: enum, values: [orthogonal, straight, layout], default: layout}, label_gap: {type: number, default: 4}, label_anchor: {type: enum, values: [center, north, south, east, west, north_east, north_west, south_east, south_west], default: south}}
-    exports: {parts: [line], tokens: [stroke, muted]}
-    body:
-      children:
-        - {if: "params.condition == ''", use: dependency, id: rel, from: "=params.from", to: "=params.to", label: "«extend»", route: "=params.route", label_gap: "=params.label_gap", label_anchor: "=params.label_anchor"}
-        - {if: "params.condition != ''", use: dependency, id: rel, from: "=params.from", to: "=params.to", label: "='«extend» [' + params.condition + ']'", route: "=params.route", label_gap: "=params.label_gap", label_anchor: "=params.label_anchor"}
+    set: {label: "=choose(params.condition == '', '«extend»', '«extend» [' + params.condition + ']')"}
+    params:
+      condition: {type: string, default: ""}
 
   # ---- activities -------------------------------------------------------------------------------
 
@@ -716,13 +702,15 @@ templates:
 
   decision:
     description: A decision node (or a choice pseudostate), a diamond. Put the guards on the outgoing flows.
-    exports: {anchors: [north, south, east, west], tokens: [surface, stroke]}
-    body: {shape: polygon, points: [{x: 16, y: 0}, {x: 32, y: 16}, {x: 16, y: 32}, {x: 0, y: 16}], style: box}
+    outline: diamond
+    exports: {anchors: [north, south, east, west], parts: [diamond], tokens: [surface, stroke]}
+    body:
+      children:
+        - {shape: polygon, id: diamond, points: [{x: 16, y: 0}, {x: 32, y: 16}, {x: 16, y: 32}, {x: 0, y: 16}], style: box}
 
   merge:
+    extends: decision
     description: A merge node, a diamond where alternative flows meet.
-    exports: {anchors: [north, south, east, west], tokens: [surface, stroke]}
-    body: {shape: polygon, points: [{x: 16, y: 0}, {x: 32, y: 16}, {x: 16, y: 32}, {x: 0, y: 16}], style: box}
 
   fork:
     description: A fork node, a bar that splits a flow into concurrent ones.
@@ -730,18 +718,11 @@ templates:
       length: {type: number, default: 90}
       vertical: {type: boolean, default: false}
     exports: {anchors: [north, south, east, west], tokens: [stroke]}
-    body:
-      children:
-        - {if: "not params.vertical", shape: rect, width: "=params.length", height: 6, style: solid}
-        - {if: params.vertical, shape: rect, width: 6, height: "=params.length", style: solid}
+    body: {shape: rect, width: "=choose(params.vertical, 6, params.length)", height: "=choose(params.vertical, params.length, 6)", style: solid}
 
   join:
+    extends: fork
     description: A join node, a bar where concurrent flows wait for one another.
-    params:
-      length: {type: number, default: 90}
-      vertical: {type: boolean, default: false}
-    exports: {anchors: [north, south, east, west], tokens: [stroke]}
-    body: {use: fork, length: "=params.length", vertical: "=params.vertical"}
 
   send_signal:
     description: A send signal action, a box pointing toward the receiver.
@@ -828,10 +809,10 @@ templates:
                     - {shape: text, text: "=params.name", font_size: 14, fill: "=theme.ink"}
             - layout: column
               align: center
-              padding: 18
+              padding: {left: 18, top: 44, right: 18, bottom: 18}
               gap: 26
+              min_width: "=params.width"
               children:
-                - {shape: rect, width: "=params.width - 36", height: 0, fill: "#00000000", stroke_width: 0}
                 - {slot: default}
 
   region:
@@ -942,9 +923,8 @@ templates:
                     - {slot: default}
 
   choice:
+    extends: decision
     description: A choice pseudostate, a diamond; put the guards on the outgoing transitions.
-    exports: {anchors: [north, south, east, west], tokens: [surface, stroke]}
-    body: {shape: polygon, points: [{x: 13, y: 0}, {x: 26, y: 13}, {x: 13, y: 26}, {x: 0, y: 13}], style: box}
 
   junction:
     description: A junction pseudostate, a small filled circle.
@@ -963,8 +943,7 @@ templates:
       align: center
       children:
         - {shape: circle, radius: 13, style: box}
-        - {if: "not params.deep", shape: text, text: H, font_size: 13, fill: "=theme.ink"}
-        - {if: params.deep, shape: text, text: "H*", font_size: 13, fill: "=theme.ink"}
+        - {shape: text, text: "=choose(params.deep, 'H*', 'H')", font_size: 13, fill: "=theme.ink"}
 
   terminate:
     description: A terminate pseudostate, a cross.
@@ -1006,8 +985,7 @@ templates:
     exports: {tokens: [muted]}
     body:
       children:
-        - {if: "not params.vertical", shape: line, points: [{x: 0, y: 0}, {x: "=params.length", y: 0}], style: lifeline}
-        - {if: params.vertical, shape: line, points: [{x: 0, y: 0}, {x: 0, y: "=params.length"}], style: lifeline}
+        - {shape: line, points: [{x: 0, y: 0}, {x: "=choose(params.vertical, 0, params.length)", y: "=choose(params.vertical, params.length, 0)"}], style: lifeline}
 
   transition:
     description: A transition, labelled 'trigger [guard] / effect' (each part optional).
@@ -1078,7 +1056,7 @@ templates:
                 - {shape: text, text: "=params.name", font_size: 14, fill: "=theme.ink"}
             - {if: params.actor, use: actor, name: "=params.name"}
         - {if: "not params.created", shape: line, points: [{x: 0, y: 0}, {x: 0, y: 14}], style: lifeline}
-        - {if: params.created, shape: rect, width: 0, height: 14, fill: "#00000000", stroke_width: 0}
+        - {if: params.created, min_height: 14, children: []}
         - for_each: params.steps
           as: s
           id: step
@@ -1088,7 +1066,6 @@ templates:
             height: "=params.step_height"
             children:
               - {if: "s.value == ''", shape: line, points: [{x: 0, y: 0}, {x: 0, y: "=params.step_height"}], style: lifeline}
-              - {if: "s.value == 'none'", shape: rect, width: 0, height: "=params.step_height", fill: "#00000000", stroke_width: 0}
               - if: "s.value == 'start' or s.value == 'on' or s.value == 'end' or s.value == 'once'"
                 children:
                   - {shape: rect, width: 12, height: "=params.step_height", fill: "=theme.surface", stroke_width: 0}
@@ -1112,7 +1089,7 @@ templates:
                   - {shape: line, points: [{x: -8, y: "=params.step_height / 2 - 8"}, {x: 8, y: "=params.step_height / 2 + 8"}], style: wire}
                   - {shape: line, points: [{x: 8, y: "=params.step_height / 2 - 8"}, {x: -8, y: "=params.step_height / 2 + 8"}], style: wire}
         - {if: params.tail, shape: line, points: [{x: 0, y: 0}, {x: 0, y: 18}], style: lifeline}
-        - {if: "not params.tail", shape: rect, width: 0, height: 18, fill: "#00000000", stroke_width: 0}
+        - {if: "not params.tail", min_height: 18, children: []}
 
   message:
     description: >-
@@ -1128,9 +1105,7 @@ templates:
       tokens: [stroke, ink]
     body:
       children:
-        - {if: "params.kind == 'sync'", shape: connector, id: line, from: "=params.from", to: "=params.to", route: straight, marker_end: arrow, style: wire}
-        - {if: "params.kind == 'async'", shape: connector, id: line, from: "=params.from", to: "=params.to", route: straight, marker_end: open_arrow, style: wire}
-        - {if: "params.kind == 'reply' or params.kind == 'create'", shape: connector, id: line, from: "=params.from", to: "=params.to", route: straight, marker_end: open_arrow, style: dashed_wire}
+        - {shape: connector, id: line, from: "=params.from", to: "=params.to", route: straight, marker_end: "=choose(params.kind == 'sync', 'arrow', 'open_arrow')", style: "=choose(params.kind == 'reply' or params.kind == 'create', 'dashed_wire', 'wire')"}
         - {if: "params.label != ''", shape: text, text: "=params.label", font_size: 12, fill: "=theme.ink", attach: {anchor: south, to: line.label, gap: 0, offset: {x: 0, y: -3}}}
 
   self_message:
@@ -1147,8 +1122,7 @@ templates:
       tokens: [stroke, ink]
     body:
       children:
-        - {if: "not params.reply", shape: polyline, id: loop, points: [{x: 0, y: 0}, {x: 34, y: 0}, {x: 34, y: "=params.height"}, {x: 9, y: "=params.height"}], style: wire}
-        - {if: params.reply, shape: polyline, id: loop, points: [{x: 0, y: 0}, {x: 34, y: 0}, {x: 34, y: "=params.height"}, {x: 9, y: "=params.height"}], style: dashed_wire}
+        - {shape: polyline, id: loop, points: [{x: 0, y: 0}, {x: 34, y: 0}, {x: 34, y: "=params.height"}, {x: 9, y: "=params.height"}], style: "=choose(params.reply, 'dashed_wire', 'wire')"}
         - {shape: polygon, points: [{x: 0, y: "=params.height"}, {x: 10, y: "=params.height - 4"}, {x: 10, y: "=params.height + 4"}], style: solid}
         - {if: "params.label != ''", shape: text, at: {x: 40, y: "=params.height / 2 - 8"}, text: "=params.label", font_size: 12, fill: "=theme.ink"}
 
@@ -1227,10 +1201,10 @@ templates:
           children:
             - {shape: rect, width: 0, height: 0, fill: "#00000000", stroke: "=theme.stroke", stroke_width: 1.5}
             - layout: column
-              padding: {left: 20, top: 44, right: 20, bottom: 20}
+              padding: {left: 20, top: 64, right: 20, bottom: 20}
               gap: 20
+              min_width: "=tag.width + 78"
               children:
-                - {shape: rect, width: "=tag.width + 38", height: 0, fill: "#00000000", stroke_width: 0}
                 - {slot: default}
         - shape: polygon
           points: [{x: 0, y: 0}, {x: "=tag.right + 8", y: 0}, {x: "=tag.right + 8", y: "=tag.bottom - 4"}, {x: "=tag.right + 2", y: "=tag.bottom + 3"}, {x: 0, y: "=tag.bottom + 3"}]

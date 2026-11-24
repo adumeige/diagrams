@@ -1,0 +1,336 @@
+{
+  "format": "diagrams/0.1",
+  "viewport": {"width": 560, "height": 360},
+  "time": 0,
+  "root": {
+    "path": "scene",
+    "loc": "scene",
+    "kind": "container",
+    "layer": "default",
+    "box": [0, 0, 460, 280],
+    "local": [0, 0, 460, 280],
+    "transform": [1, 0, 0, 1, 0, 0],
+    "opacity": 1,
+    "children": [
+      {
+        "path": "store",
+        "loc": "scene/0",
+        "kind": "container",
+        "template": "lib.shelf",
+        "layer": "default",
+        "box": [30, 30, 240, 100],
+        "local": [0, 0, 240, 100],
+        "transform": [1, 0, 0, 1, 30, 30],
+        "opacity": 1,
+        "children": [
+          {
+            "path": null,
+            "loc": "scene/0/0",
+            "kind": "container",
+            "layer": "default",
+            "box": [30, 30, 240, 30],
+            "local": [0, 0, 240, 30],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "children": [
+              {
+                "path": "store.cell[a]",
+                "loc": "scene/0/0/0",
+                "kind": "container",
+                "layer": "default",
+                "box": [30, 30, 80, 30],
+                "local": [0, 0, 80, 30],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "children": [
+                  {
+                    "path": null,
+                    "loc": "scene/0/0/0/0",
+                    "kind": "rect",
+                    "layer": "default",
+                    "box": [30, 30, 80, 30],
+                    "local": [0, 0, 80, 30],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "fill": "#dfe6e9",
+                    "stroke": "#2d3436",
+                    "stroke_width": 1
+                  },
+                  {
+                    "path": null,
+                    "loc": "scene/0/0/0/1",
+                    "kind": "text",
+                    "layer": "default",
+                    "box": [30, 30, 80, 14.4],
+                    "local": [0, 0, 80, 14.4],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "fill": "#000000",
+                    "font_size": 12,
+                    "lines": [{"text": "One", "x": 28.66, "baseline": 10.266, "width": 22.68}]
+                  }
+                ]
+              },
+              {
+                "path": "store.cell[b]",
+                "loc": "scene/0/0/1",
+                "kind": "container",
+                "layer": "default",
+                "box": [110, 30, 80, 30],
+                "local": [0, 0, 80, 30],
+                "transform": [1, 0, 0, 1, 80, 0],
+                "opacity": 1,
+                "children": [
+                  {
+                    "path": null,
+                    "loc": "scene/0/0/1/0",
+                    "kind": "rect",
+                    "layer": "default",
+                    "box": [110, 30, 80, 30],
+                    "local": [0, 0, 80, 30],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "fill": "#dfe6e9",
+                    "stroke": "#2d3436",
+                    "stroke_width": 1
+                  },
+                  {
+                    "path": null,
+                    "loc": "scene/0/0/1/1",
+                    "kind": "text",
+                    "layer": "default",
+                    "box": [110, 30, 80, 14.4],
+                    "local": [0, 0, 80, 14.4],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "fill": "#000000",
+                    "font_size": 12,
+                    "lines": [{"text": "Two", "x": 28.666, "baseline": 10.266, "width": 22.668}]
+                  }
+                ]
+              },
+              {
+                "path": "store.cell[c]",
+                "loc": "scene/0/0/2",
+                "kind": "container",
+                "layer": "default",
+                "box": [190, 30, 80, 30],
+                "local": [0, 0, 80, 30],
+                "transform": [1, 0, 0, 1, 160, 0],
+                "opacity": 1,
+                "children": [
+                  {
+                    "path": null,
+                    "loc": "scene/0/0/2/0",
+                    "kind": "rect",
+                    "layer": "default",
+                    "box": [190, 30, 80, 30],
+                    "local": [0, 0, 80, 30],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "fill": "#dfe6e9",
+                    "stroke": "#2d3436",
+                    "stroke_width": 1
+                  },
+                  {
+                    "path": null,
+                    "loc": "scene/0/0/2/1",
+                    "kind": "text",
+                    "layer": "default",
+                    "box": [190, 30, 80, 14.4],
+                    "local": [0, 0, 80, 14.4],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "fill": "#000000",
+                    "font_size": 12,
+                    "lines": [{"text": "Three", "x": 24.328, "baseline": 10.266, "width": 31.344}]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "store.body",
+            "loc": "scene/0/1",
+            "kind": "container",
+            "layer": "default",
+            "box": [30, 60, 44, 70],
+            "local": [0, 0, 44, 70],
+            "transform": [1, 0, 0, 1, 0, 30],
+            "opacity": 1,
+            "children": [
+              {
+                "path": null,
+                "loc": "scene/0/1/0",
+                "kind": "rect",
+                "layer": "default",
+                "box": [30, 60, 44, 70],
+                "local": [0, 0, 44, 70],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "fill": "#00000000",
+                "stroke": "#2d3436",
+                "stroke_width": 1
+              },
+              {
+                "path": null,
+                "loc": "scene/0/1/1",
+                "kind": "container",
+                "layer": "default",
+                "box": [30, 60, 44, 70],
+                "local": [0, 0, 44, 70],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "children": [
+                  {
+                    "path": "store.dot",
+                    "loc": "scene/0/1/1/0",
+                    "kind": "circle",
+                    "layer": "default",
+                    "box": [40, 70, 24, 24],
+                    "local": [0, 0, 24, 24],
+                    "transform": [1, 0, 0, 1, 10, 10],
+                    "opacity": 1,
+                    "fill": "#74b9ff",
+                    "stroke": "#000000",
+                    "stroke_width": 1
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "path": "gate",
+        "loc": "scene/1",
+        "kind": "container",
+        "template": "lib.diamond",
+        "layer": "default",
+        "box": [400, 200, 60, 60],
+        "local": [0, 0, 60, 60],
+        "transform": [1, 0, 0, 1, 400, 200],
+        "opacity": 1,
+        "children": [
+          {
+            "path": "gate.shape",
+            "loc": "scene/1/0",
+            "kind": "polygon",
+            "layer": "default",
+            "box": [400, 200, 60, 60],
+            "local": [0, 0, 60, 60],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "fill": "#ffeaa7",
+            "stroke": "#2d3436",
+            "stroke_width": 1,
+            "points": [[30, 0], [60, 30], [30, 60], [0, 30]]
+          }
+        ]
+      },
+      {
+        "path": "pad",
+        "loc": "scene/2",
+        "kind": "container",
+        "layer": "default",
+        "box": [30, 220, 120, 60],
+        "local": [0, 0, 120, 60],
+        "transform": [1, 0, 0, 1, 30, 220],
+        "opacity": 1,
+        "children": [
+          {
+            "path": null,
+            "loc": "scene/2/0",
+            "kind": "text",
+            "layer": "default",
+            "box": [30, 220, 24.896, 19.2],
+            "local": [0, 0, 24.896, 19.2],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "fill": "#000000",
+            "font_size": 16,
+            "lines": [{"text": "tiny", "x": 0, "baseline": 13.688, "width": 24.896}]
+          }
+        ]
+      },
+      {
+        "path": null,
+        "loc": "scene/3",
+        "kind": "rect",
+        "layer": "default",
+        "box": [30, 220, 120, 60],
+        "local": [0, 0, 120, 60],
+        "transform": [1, 0, 0, 1, 30, 220],
+        "opacity": 1,
+        "fill": "#00000000",
+        "stroke": "#b2bec3",
+        "stroke_width": 1
+      },
+      {
+        "path": null,
+        "loc": "scene/4",
+        "kind": "container",
+        "template": "lib.edge",
+        "layer": "default",
+        "box": [0, 0, 0, 0],
+        "local": [0, 0, 0, 0],
+        "transform": [1, 0, 0, 1, 0, 0],
+        "opacity": 1,
+        "children": [
+          {
+            "path": "line",
+            "loc": "scene/4/0",
+            "kind": "connector",
+            "layer": "default",
+            "box": [63.174041, 86.375021, 345.267024, 135.278509],
+            "local": [63.174041, 86.375021, 345.267024, 135.278509],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "stroke": "#2d3436",
+            "stroke_width": 2,
+            "points": [[63.174041, 86.375021], [397.267024, 217.183914]],
+            "markers": [
+              {
+                "kind": "arrow",
+                "points": [[408.441065, 221.558935], [395.517015, 221.65353], [399.017032, 212.714298]]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "path": null,
+        "loc": "scene/5",
+        "kind": "container",
+        "template": "lib.hint",
+        "layer": "default",
+        "box": [0, 0, 0, 0],
+        "local": [0, 0, 0, 0],
+        "transform": [1, 0, 0, 1, 0, 0],
+        "opacity": 1,
+        "children": [
+          {
+            "path": "line",
+            "loc": "scene/5/0",
+            "kind": "connector",
+            "layer": "default",
+            "box": [246.216216, 60, 168.199368, 155.584416],
+            "local": [246.216216, 60, 168.199368, 155.584416],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "stroke": "#2d3436",
+            "stroke_width": 2,
+            "stroke_dash": [6, 4],
+            "points": [[246.216216, 60], [414.415584, 215.584416]],
+            "markers": [
+              {
+                "kind": "open_arrow",
+                "points": [[401.939564, 211.400049], [414.415584, 215.584416], [409.273218, 203.471775]]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

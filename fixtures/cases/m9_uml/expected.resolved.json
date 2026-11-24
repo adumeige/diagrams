@@ -655,7 +655,7 @@
                 ]
               },
               {
-                "path": "shelf.api.attributes",
+                "path": "shelf.api.attribute_list",
                 "loc": "scene/0/3/1",
                 "kind": "container",
                 "layer": "default",
@@ -691,7 +691,7 @@
                 ]
               },
               {
-                "path": "shelf.api.operations",
+                "path": "shelf.api.operation_list",
                 "loc": "scene/0/3/2",
                 "kind": "container",
                 "layer": "default",
@@ -1027,7 +1027,7 @@
             ]
           },
           {
-            "path": "wall.attributes",
+            "path": "wall.attribute_list",
             "loc": "scene/3/1",
             "kind": "container",
             "layer": "default",
@@ -1063,7 +1063,7 @@
             ]
           },
           {
-            "path": "wall.operations",
+            "path": "wall.operation_list",
             "loc": "scene/3/2",
             "kind": "container",
             "layer": "default",
@@ -1163,7 +1163,7 @@
             ]
           },
           {
-            "path": "far.attributes",
+            "path": "far.attribute_list",
             "loc": "scene/4/1",
             "kind": "container",
             "layer": "default",
@@ -1199,7 +1199,7 @@
             ]
           },
           {
-            "path": "far.operations",
+            "path": "far.operation_list",
             "loc": "scene/4/2",
             "kind": "container",
             "layer": "default",

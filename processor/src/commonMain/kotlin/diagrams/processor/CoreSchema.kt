@@ -59,6 +59,9 @@ object CoreSchema {
     private fun str(s: String) = Value.Str(s)
     private val ORIGIN = Value.map("x" to num(0), "y" to num(0))
 
+    /** Properties every node has. */
+    val commonNames: Set<String> get() = common.map { it.name }.toSet()
+
     private val common = listOf(
         Prop("id", PType.ID),
         Prop("layer", PType.STRING, str("default")),
@@ -97,6 +100,9 @@ object CoreSchema {
             Prop("layout", PType.ENUM, str("free"), values = LAYOUTS),
             Prop("width", PType.NUMBER),
             Prop("height", PType.NUMBER),
+            // the least size the container takes, however small its content (spec section 6)
+            Prop("min_width", PType.NUMBER),
+            Prop("min_height", PType.NUMBER),
             Prop("layers", PType.LAYERS),
             Prop("gap", PType.NUMBER),
             Prop("padding", PType.ANY),

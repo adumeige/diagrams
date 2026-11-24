@@ -33,4 +33,4 @@ scene:
       id: squad_note
       text: "Matchday squad: 15 starters and 8 replacements"
       attach: {anchor: north, to: lineup.line.mid, gap: -110}
-    - {shape: connector, from: squad_note, to: team.attributes, stroke: "#636e72", marker_end: arrow}
+    - {shape: connector, from: squad_note, to: team.attribute_list, stroke: "#636e72", marker_end: arrow}

@@ -35,7 +35,7 @@ scene:
                 - {use: uml.state, id: cancelled, name: Cancelled, on_entry: release stock}
             - layout: column
               children:
-                - {shape: rect, width: 10, height: 60, fill: "#00000000", stroke_width: 0}
+                - {min_height: 60, children: []}
                 - use: uml.state
                   id: active
                   name: Being prepared
@@ -71,7 +71,7 @@ scene:
               gap: 50
               align: center
               children:
-                - {shape: rect, width: 10, height: 140, fill: "#00000000", stroke_width: 0}
+                - {min_height: 140, children: []}
                 - use: uml.state
                   id: shipped
                   name: Shipped

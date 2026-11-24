@@ -484,12 +484,15 @@ internal class Engine(
     private fun containerBox(n: RNode): Box {
         val w = numOrNull(n, "width")
         val h = numOrNull(n, "height")
+        val minW = numOrNull(n, "min_width") ?: 0.0
+        val minH = numOrNull(n, "min_height") ?: 0.0
         if (n.isFlow) {
             val f = flow(n)
-            return Box(0.0, 0.0, w ?: f.width, h ?: f.height)
+            return Box(0.0, 0.0, w ?: maxOf(f.width, minW), h ?: maxOf(f.height, minH))
         }
         val union = n.children.filter { !dependent(it) }.map { placement(it).apply(finalBox(it)) }.reduceOrNull { a, b -> a.union(b) } ?: Box.EMPTY
-        return if (w != null || h != null) Box(0.0, 0.0, w ?: union.right, h ?: union.bottom) else union
+        if (w == null && h == null && union.right >= minW && union.bottom >= minH) return union
+        return Box(0.0, 0.0, w ?: maxOf(union.right, minW), h ?: maxOf(union.bottom, minH))
     }
 
     /**
@@ -561,6 +564,9 @@ internal class Engine(
         val align = str(c, "align") ?: "start"
         val explicitW = (numOrNull(c, "width") ?: c.stretchW)?.let { it - pad.left - pad.right }
         val explicitH = (numOrNull(c, "height") ?: c.stretchH)?.let { it - pad.top - pad.bottom }
+        // `min_width` and `min_height`: the inner room a container keeps however small its content
+        val minW = (numOrNull(c, "min_width") ?: 0.0) - pad.left - pad.right
+        val minH = (numOrNull(c, "min_height") ?: 0.0) - pad.top - pad.bottom
         fun place(k: RNode, x: Double, y: Double): Matrix {
             val ob = outer(k)
             return Matrix.translate(x - ob.x, y - ob.y) * pivot(k)
@@ -575,7 +581,7 @@ internal class Engine(
             "row", "column" -> {
                 val row = c.layout == "row"
                 val natural = kids.map { outer(it) }
-                val cross = (if (row) explicitH else explicitW) ?: (natural.maxOfOrNull { if (row) it.height else it.width } ?: 0.0)
+                val cross = (if (row) explicitH else explicitW) ?: maxOf(natural.maxOfOrNull { if (row) it.height else it.width } ?: 0.0, if (row) minH else minW)
                 if (align == "stretch") {
                     for (k in kids) if (canStretch(k, !row)) {
                         if (row) stretch(k, null, cross) else stretch(k, cross, null)
@@ -637,8 +643,8 @@ internal class Engine(
             }
             else -> { // stack
                 val natural = kids.map { outer(it) }
-                val iw = explicitW ?: (natural.maxOfOrNull { it.width } ?: 0.0)
-                val ih = explicitH ?: (natural.maxOfOrNull { it.height } ?: 0.0)
+                val iw = explicitW ?: maxOf(natural.maxOfOrNull { it.width } ?: 0.0, minW)
+                val ih = explicitH ?: maxOf(natural.maxOfOrNull { it.height } ?: 0.0, minH)
                 if (align == "stretch") {
                     for (k in kids) {
                         stretch(k, iw.takeIf { canStretch(k, true) }, ih.takeIf { canStretch(k, false) })
@@ -1113,6 +1119,9 @@ internal class Engine(
     /** The floating anchor: the point of [t]'s outline toward [toward] (spec section 6). */
     private fun floating(t: RNode, toward: Point): Point {
         if (t.isConnector) return anchor(t, "mid").first
+        // an instance whose outline is one of its parts: the point of that part's shape
+        val part = t.info.outline.takeIf { it != "box" && it != "ellipse" }?.let { t.info.namespace[it] }?.let { byInfo[it] }
+        if (part != null && part !== t) return if (part.kind == "polygon") onPolygon(part, toward) else floating(part, toward)
         val w = world(t)
         val b = finalBox(t)
         val q = w.inverse().apply(toward)
@@ -1129,6 +1138,28 @@ internal class Engine(
             minOf(if (dx == 0.0) Double.MAX_VALUE else hw / abs(dx), if (dy == 0.0) Double.MAX_VALUE else hh / abs(dy))
         }
         return w.apply(Point(cx + dx * s, cy + dy * s))
+    }
+
+    /** Where the ray from the center of polygon [t]'s box toward [toward] leaves the polygon. */
+    private fun onPolygon(t: RNode, toward: Point): Point {
+        val w = world(t)
+        val pts = points(t).map { w.apply(it) }
+        val c = center(t)
+        val dx = toward.x - c.x
+        val dy = toward.y - c.y
+        var best = Double.MAX_VALUE
+        for (i in pts.indices) {
+            val a = pts[i]
+            val b = pts[(i + 1) % pts.size]
+            val ex = b.x - a.x
+            val ey = b.y - a.y
+            val den = dx * ey - dy * ex
+            if (abs(den) < 1e-12) continue
+            val s = ((a.x - c.x) * ey - (a.y - c.y) * ex) / den
+            val u = ((a.x - c.x) * dy - (a.y - c.y) * dx) / den
+            if (s > 1e-9 && u >= -1e-9 && u <= 1 + 1e-9) best = minOf(best, s)
+        }
+        return if (best == Double.MAX_VALUE) floating(t, toward) else Point(c.x + dx * best, c.y + dy * best)
     }
 
     /**

@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="360" viewBox="0 0 560 360">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <g data-path="scene">
+    <g data-path="store" transform="translate(30 30)">
+      <g>
+        <g data-path="store.cell[a]">
+          <rect width="80" height="30" fill="#dfe6e9" stroke="#2d3436" stroke-width="1"/>
+          <g font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#000000">
+            <text x="28.66" y="10.266" xml:space="preserve">One</text>
+          </g>
+        </g>
+        <g data-path="store.cell[b]" transform="translate(80 0)">
+          <rect width="80" height="30" fill="#dfe6e9" stroke="#2d3436" stroke-width="1"/>
+          <g font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#000000">
+            <text x="28.666" y="10.266" xml:space="preserve">Two</text>
+          </g>
+        </g>
+        <g data-path="store.cell[c]" transform="translate(160 0)">
+          <rect width="80" height="30" fill="#dfe6e9" stroke="#2d3436" stroke-width="1"/>
+          <g font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#000000">
+            <text x="24.328" y="10.266" xml:space="preserve">Three</text>
+          </g>
+        </g>
+      </g>
+      <g data-path="store.body" transform="translate(0 30)">
+        <rect width="44" height="70" fill="#000000" fill-opacity="0" stroke="#2d3436" stroke-width="1"/>
+        <g>
+          <ellipse data-path="store.dot" transform="translate(10 10)" cx="12" cy="12" rx="12" ry="12" fill="#74b9ff" stroke="#000000" stroke-width="1"/>
+        </g>
+      </g>
+    </g>
+    <g data-path="gate" transform="translate(400 200)">
+      <polygon data-path="gate.shape" points="30,0 60,30 30,60 0,30" fill="#ffeaa7" stroke="#2d3436" stroke-width="1"/>
+    </g>
+    <g data-path="pad" transform="translate(30 220)">
+      <g font-family="Helvetica, Arial, sans-serif" font-size="16" fill="#000000">
+        <text x="0" y="13.688" xml:space="preserve">tiny</text>
+      </g>
+    </g>
+    <rect transform="translate(30 220)" width="120" height="60" fill="#000000" fill-opacity="0" stroke="#b2bec3" stroke-width="1"/>
+    <g>
+      <g data-path="line">
+        <polyline points="63.174041,86.375021 397.267024,217.183914" fill="none" stroke="#2d3436" stroke-width="2"/>
+        <polygon points="408.441065,221.558935 395.517015,221.65353 399.017032,212.714298" fill="#2d3436" stroke="#2d3436" stroke-width="2" stroke-linejoin="miter"/>
+      </g>
+    </g>
+    <g>
+      <g data-path="line">
+        <polyline points="246.216216,60 414.415584,215.584416" fill="none" stroke="#2d3436" stroke-width="2" stroke-dasharray="6 4"/>
+        <polyline points="401.939564,211.400049 414.415584,215.584416 409.273218,203.471775" fill="none" stroke="#2d3436" stroke-width="2" stroke-linejoin="miter"/>
+      </g>
+    </g>
+  </g>
+</svg>

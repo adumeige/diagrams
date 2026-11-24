@@ -148,7 +148,8 @@ class Expander(private val env: Environment, private val sink: DiagnosticSink) {
             if (k == "children" || k == "slots") continue
             props[k] = when (k) {
                 "use" -> qualify((x as? Value.Str)?.value ?: "", ctx.template) { env.modules[ctx.template.module]?.templates?.containsKey(it) == true }
-                "style" -> qualifyStyles(x, ctx.template)
+                // a style may be chosen from the parameters: `style: "=choose(params.dashed, 'dashed', 'solid')"`
+                "style" -> qualifyStyles(subst(x, ctx, dp.key(k)), ctx.template)
                 else -> subst(x, ctx, dp.key(k))
             }
         }
@@ -282,6 +283,8 @@ class Expander(private val env: Environment, private val sink: DiagnosticSink) {
             null
         } ?: Expr.Lit(Value.Str(""))
         is Value.Num, is Value.Bool -> Expr.Lit(v)
+        // a list parameter, for count()
+        is Value.List -> Expr.Lit(v)
         else -> Expr.Lit(Value.Str(""))
     }
 

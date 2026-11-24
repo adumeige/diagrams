@@ -98,10 +98,10 @@
             </g>
           </g>
         </g>
-        <g data-path="shelf.api.attributes" transform="translate(0 50.72)">
+        <g data-path="shelf.api.attribute_list" transform="translate(0 50.72)">
           <rect width="88.324" height="6" fill="#ffffff" stroke="#2d3436" stroke-width="1.5"/>
         </g>
-        <g data-path="shelf.api.operations" transform="translate(0 56.72)">
+        <g data-path="shelf.api.operation_list" transform="translate(0 56.72)">
           <rect width="88.324" height="6" fill="#ffffff" stroke="#2d3436" stroke-width="1.5"/>
         </g>
       </g>
@@ -149,10 +149,10 @@
           </g>
         </g>
       </g>
-      <g data-path="wall.attributes" transform="translate(0 35.84)">
+      <g data-path="wall.attribute_list" transform="translate(0 35.84)">
         <rect width="57.504" height="6" fill="#ffffff" stroke="#2d3436" stroke-width="1.5"/>
       </g>
-      <g data-path="wall.operations" transform="translate(0 41.84)">
+      <g data-path="wall.operation_list" transform="translate(0 41.84)">
         <rect width="57.504" height="6" fill="#ffffff" stroke="#2d3436" stroke-width="1.5"/>
       </g>
     </g>
@@ -165,10 +165,10 @@
           </g>
         </g>
       </g>
-      <g data-path="far.attributes" transform="translate(0 35.84)">
+      <g data-path="far.attribute_list" transform="translate(0 35.84)">
         <rect width="50.624" height="6" fill="#ffffff" stroke="#2d3436" stroke-width="1.5"/>
       </g>
-      <g data-path="far.operations" transform="translate(0 41.84)">
+      <g data-path="far.operation_list" transform="translate(0 41.84)">
         <rect width="50.624" height="6" fill="#ffffff" stroke="#2d3436" stroke-width="1.5"/>
       </g>
     </g>

@@ -29,7 +29,7 @@ scene:
               children:
                 - {use: uml.initial, id: begin}
                 - {use: uml.action, id: place, name: Place order}
-                - {shape: rect, width: 10, height: 388, fill: "#00000000", stroke_width: 0}
+                - {min_height: 388, children: []}
                 - {use: uml.accept_event, id: receive, name: Parcel received}
                 - {use: uml.final, id: done}
             - use: uml.partition
@@ -37,7 +37,7 @@ scene:
               name: Shop
               width: 320
               children:
-                - {shape: rect, width: 10, height: 40, fill: "#00000000", stroke_width: 0}
+                - {min_height: 40, children: []}
                 - {use: uml.action, id: check, name: Check stock}
                 - {use: uml.decision, id: in_stock}
                 - {use: uml.merge, id: merged}
@@ -56,7 +56,7 @@ scene:
               name: Supplier
               width: 240
               children:
-                - {shape: rect, width: 10, height: 150, fill: "#00000000", stroke_width: 0}
+                - {min_height: 150, children: []}
                 - use: uml.region
                   id: restock
                   name: timeout

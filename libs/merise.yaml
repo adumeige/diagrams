@@ -25,8 +25,8 @@
 # the other side; label_anchor chooses which anchor of the label meets that point, which is how
 # a long label is kept clear of a slanted line.
 #
-# An operation has up to four emission rules, rule1 to rule4, each an exported part: a result is
-# linked from '<operation>.rule1'. They are fixed parameters, so that their names are known.
+# An operation's emission rules are a keyed list: each is an exported part, and a result is
+# linked from '"<operation>.rule[ok]"' (quoted for the brackets).
 #
 # Graph layouts (docs/graph-layouts.md): legs and arrows take route: layout by default, which follows
 # the route a layered or tree container supplies and is a straight line anywhere else, and their
@@ -329,29 +329,26 @@ templates:
   operation:
     description: >-
       An operation (MCT) or a phase (MOT): the synchronization on top, the name and its actions, then
-      one cell per emission rule (up to four, sharing the width). Link an event to the operation, and
-      a result from a rule cell: 'from: <operation>.rule1'. Without rules, a result comes from the
-      operation itself.
+      one cell per emission rule, sharing the width. rules is a keyed list ('ok: Commande valide'):
+      link an event to the operation, and a result from a rule cell, 'from: "<operation>.rule[ok]"'.
+      Without rules, a result comes from the operation itself.
     params:
       name: {type: string}
       sync: {type: string, default: "", description: "Synchronization expression, such as 'a ET (b OU c)'"}
       nature: {type: string, default: "", description: "For a phase: 'Manuel', 'Automatique', 'Interactif'..."}
       actions: {type: list, item: {type: string}, default: [], description: Actions carried out}
-      rule1: {type: string, default: "", description: "First emission rule, such as 'Commande valide'"}
-      rule2: {type: string, default: "", description: Second emission rule}
-      rule3: {type: string, default: "", description: Third emission rule}
-      rule4: {type: string, default: "", description: Fourth emission rule}
+      rules: {type: list, keyed: true, item: {type: string}, default: [], description: "Emission rules, such as 'ok: Commande valide'"}
       width: {type: number, default: 230}
     exports:
       anchors: [north, south, east, west]
-      parts: [sync, core, rule1, rule2, rule3, rule4]
+      parts: [synchro, core, rule]
       tokens: [surface, stroke, ink, muted]
     body:
       layout: column
       align: stretch
       children:
         - if: "params.sync != ''"
-          id: sync
+          id: synchro
           layout: stack
           align: stretch
           children:
@@ -376,32 +373,14 @@ templates:
                   as: action
                   id: action
                   do: {shape: text, text: "='– ' + action", font_size: 12, fill: "=theme.ink", width: "=params.width - 24", wrap: true}
-        - if: "params.rule1 != '' and params.rule2 == ''"
+        - if: "count(params.rules) > 0"
           layout: row
           align: stretch
           children:
-            - {use: rule_cell, id: rule1, text: "=params.rule1", width: "=params.width"}
-        - if: "params.rule2 != '' and params.rule3 == ''"
-          layout: row
-          align: stretch
-          children:
-            - {use: rule_cell, id: rule1, text: "=params.rule1", width: "=params.width / 2"}
-            - {use: rule_cell, id: rule2, text: "=params.rule2", width: "=params.width / 2"}
-        - if: "params.rule3 != '' and params.rule4 == ''"
-          layout: row
-          align: stretch
-          children:
-            - {use: rule_cell, id: rule1, text: "=params.rule1", width: "=params.width / 3"}
-            - {use: rule_cell, id: rule2, text: "=params.rule2", width: "=params.width / 3"}
-            - {use: rule_cell, id: rule3, text: "=params.rule3", width: "=params.width / 3"}
-        - if: "params.rule4 != ''"
-          layout: row
-          align: stretch
-          children:
-            - {use: rule_cell, id: rule1, text: "=params.rule1", width: "=params.width / 4"}
-            - {use: rule_cell, id: rule2, text: "=params.rule2", width: "=params.width / 4"}
-            - {use: rule_cell, id: rule3, text: "=params.rule3", width: "=params.width / 4"}
-            - {use: rule_cell, id: rule4, text: "=params.rule4", width: "=params.width / 4"}
+            - for_each: params.rules
+              as: r
+              id: rule
+              do: {use: rule_cell, text: "=r.value", width: "=params.width / count(params.rules)"}
 
   rule_cell:
     description: One emission rule of an operation. Used by operation; not meant to be used alone.
@@ -422,22 +401,8 @@ templates:
             - {shape: text, text: "=params.text", font_size: 12, fill: "=theme.ink", width: "=params.width - 16", text_align: center, wrap: true}
 
   phase:
+    extends: operation
     description: A phase (procédure fonctionnelle) of the organizational model. Same as operation.
-    params:
-      name: {type: string}
-      sync: {type: string, default: ""}
-      nature: {type: string, default: "", description: "'Manuel', 'Automatique', 'Interactif'..."}
-      actions: {type: list, item: {type: string}, default: []}
-      rule1: {type: string, default: ""}
-      rule2: {type: string, default: ""}
-      rule3: {type: string, default: ""}
-      rule4: {type: string, default: ""}
-      width: {type: number, default: 230}
-    exports:
-      anchors: [north, south, east, west]
-      parts: [sync, core, rule1, rule2, rule3, rule4]
-      tokens: [surface, stroke, ink, muted]
-    body: {use: operation, name: "=params.name", sync: "=params.sync", nature: "=params.nature", actions: "=params.actions", rule1: "=params.rule1", rule2: "=params.rule2", rule3: "=params.rule3", rule4: "=params.rule4", width: "=params.width"}
 
   arrow:
     description: An arrow with an optional label at its middle. The base of trigger, emission, flow and reference.

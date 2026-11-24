@@ -56,7 +56,7 @@ class Template(
     val name: String,
     val params: Map<String, Param>,
     val exports: Exports,
-    /** `box` or `ellipse`: the outline that floating anchors and routing use. */
+    /** `box`, `ellipse` or the id of a part: the outline that floating anchors and routing use. */
     val outline: String,
     val body: Value.Map,
     val description: String?,
@@ -84,7 +84,7 @@ class Template(
     }
 }
 
-internal val TEMPLATE_KEYS = listOf("description", "params", "exports", "outline", "body")
+internal val TEMPLATE_KEYS = listOf("description", "extends", "set", "params", "exports", "outline", "body")
 internal val PARAM_KEYS = listOf("type", "default", "values", "item", "keyed", "fields", "description")
 
 /** Keys of a body node that are template constructs, not properties. */
@@ -99,8 +99,97 @@ internal class TemplateReader(private val alias: String, private val s: Diagnost
             return emptyMap()
         }
         val out = LinkedHashMap<String, Template>()
-        for ((name, t) in v.entries) template(name, t, dp.key(name))?.let { out[name] = it }
-        return out
+        val derived = v.entries.filter { (_, t) -> t is Value.Map && t["extends"] != null }
+        for ((name, t) in v.entries) if (t !is Value.Map || t["extends"] == null) template(name, t, dp.key(name))?.let { out[name] = it }
+        // a template that extends another comes once its base is read, in as many rounds as the chain is long
+        var pending = derived.map { it.key }
+        while (pending.isNotEmpty()) {
+            val ready = pending.filter { n -> (v[n] as Value.Map)["extends"].let { (it as? Value.Str)?.value in out || it !is Value.Str } }
+            if (ready.isEmpty()) {
+                for (n in pending) {
+                    val base = ((v[n] as Value.Map)["extends"] as? Value.Str)?.value
+                    s.error(Codes.SCHEMA, "$alias.templates.$n.extends", "'$base' is not a template of this library, or it extends $n in turn", dp.key(n).key("extends"))
+                }
+                break
+            }
+            for (n in ready) derive(n, v[n] as Value.Map, out, dp.key(n))?.let { out[n] = it }
+            pending = pending - ready.toSet()
+        }
+        return LinkedHashMap(v.keys.mapNotNull { n -> out[n]?.let { n to it } }.toMap())
+    }
+
+    /**
+     * A template that extends another (`extends: relation`): the base's parameters less those [set]
+     * fixes, plus its own; its body is the base with every parameter passed through. Exports and
+     * outline are the base's unless it declares its own.
+     */
+    private fun derive(name: String, t: Value.Map, known: Map<String, Template>, dp: DataPath): Template? {
+        val p = "$alias.templates.$name"
+        val baseName = (t["extends"] as? Value.Str)?.value
+        val base = baseName?.let { known[it] } ?: run {
+            s.error(Codes.SCHEMA, "$p.extends", "'extends' names a template of this library", dp.key("extends"))
+            return null
+        }
+        if (t["body"] != null) s.error(Codes.SCHEMA, "$p.body", "a template that extends another has no body of its own", dp.key("body"))
+        val set = when (val x = t["set"]) {
+            null -> emptyMap()
+            is Value.Map -> x.entries
+            else -> {
+                s.error(Codes.SCHEMA, "$p.set", "'set' is a map of the base's parameters to the values this template fixes", dp.key("set"))
+                emptyMap()
+            }
+        }
+        for (k in set.keys) if (k !in base.params) s.error(Codes.SCHEMA, "$p.set.$k", "'$k' is not a parameter of $baseName; parameters: ${base.params.keys.joinToString()}", dp.key("set").key(k))
+        val params = LinkedHashMap(base.params.filterKeys { it !in set })
+        own(t["params"], dp, p).forEach { (k, v) -> params[k] = v }
+        val body = LinkedHashMap<String, Value>()
+        body["use"] = Value.Str(baseName)
+        for (k in base.params.keys) body[k] = set[k] ?: if (k in params) Value.Str("=params.$k") else continue
+        val exports = if (t["exports"] != null) exports(t["exports"], dp.key("exports"), "$p.exports") else base.exports
+        val outline = if (t["outline"] != null) outline(t["outline"], dp, p) else base.outline
+        val description = (t["description"] as? Value.Str)?.value ?: base.description
+        val b = Value.Map(body)
+        checkRefs(b, params.keys, setOf("params"), dp.key("set"), "$p.set")
+        return Template(alias, name, params, exports, outline, b, description)
+    }
+
+    private fun own(ps: Value?, dp: DataPath, p: String): Map<String, Param> {
+        val params = LinkedHashMap<String, Param>()
+        when (ps) {
+            null -> {}
+            !is Value.Map -> s.error(Codes.SCHEMA, "$p.params", "'params' is a map of parameter names to schemas", dp.key("params"))
+            else -> for ((pn, pv) in ps.entries) {
+                when {
+                    !CoreSchema.ID_PATTERN.matches(pn) -> s.error(Codes.SCHEMA, "$p.params.$pn", "a parameter name matches [a-z][a-z0-9_]*", dp.key("params").key(pn))
+                    pn in INSTANCE_RESERVED -> s.error(Codes.SCHEMA, "$p.params.$pn", "'$pn' is a property of every instance and cannot be a parameter", dp.key("params").key(pn))
+                    else -> param(pn, pv, dp.key("params").key(pn), "$p.params.$pn")?.let { params[pn] = it }
+                }
+            }
+        }
+        return params
+    }
+
+    /** `box`, `ellipse`, or the id of a part whose shape is the outline (a polygon, an ellipse, a rect). */
+    private fun outline(o: Value?, dp: DataPath, p: String, body: Value? = null): String = when {
+        o == null -> "box"
+        o is Value.Str && o.value in setOf("box", "ellipse") -> o.value
+        o is Value.Str && CoreSchema.ID_PATTERN.matches(o.value) && (body == null || hasId(body, o.value)) -> o.value
+        else -> {
+            s.error(Codes.SCHEMA, "$p.outline", "'outline' is box, ellipse, or the id of a part of the body", dp.key("outline"))
+            "box"
+        }
+    }
+
+    private fun ids(v: Value): Set<String> = when (v) {
+        is Value.Map -> setOfNotNull((v["id"] as? Value.Str)?.value) + v.entries.filterKeys { it != "params" }.values.flatMap { ids(it) }
+        is Value.List -> v.items.flatMap { ids(it) }.toSet()
+        else -> emptySet()
+    }
+
+    private fun hasId(v: Value, id: String): Boolean = when (v) {
+        is Value.Map -> (v["id"] as? Value.Str)?.value == id || v.entries.values.any { hasId(it, id) }
+        is Value.List -> v.items.any { hasId(it, id) }
+        else -> false
     }
 
     private fun template(name: String, t: Value, dp: DataPath): Template? {
@@ -114,30 +203,10 @@ internal class TemplateReader(private val alias: String, private val s: Diagnost
             return null
         }
         for (k in t.keys) if (k !in TEMPLATE_KEYS) s.error(Codes.SCHEMA, "$p.$k", "unknown key '$k' in a template; expected one of ${TEMPLATE_KEYS.joinToString()}", dp.key(k))
-        val params = LinkedHashMap<String, Param>()
-        when (val ps = t["params"]) {
-            null -> {}
-            !is Value.Map -> s.error(Codes.SCHEMA, "$p.params", "'params' is a map of parameter names to schemas", dp.key("params"))
-            else -> for ((pn, pv) in ps.entries) {
-                when {
-                    !CoreSchema.ID_PATTERN.matches(pn) -> s.error(Codes.SCHEMA, "$p.params.$pn", "a parameter name matches [a-z][a-z0-9_]*", dp.key("params").key(pn))
-                    pn in INSTANCE_RESERVED -> s.error(Codes.SCHEMA, "$p.params.$pn", "'$pn' is a property of every instance and cannot be a parameter", dp.key("params").key(pn))
-                    else -> param(pn, pv, dp.key("params").key(pn), "$p.params.$pn")?.let { params[pn] = it }
-                }
-            }
-        }
+        if (t["set"] != null) s.error(Codes.SCHEMA, "$p.set", "'set' goes with 'extends'", dp.key("set"))
+        val params = own(t["params"], dp, p)
         val exports = exports(t["exports"], dp.key("exports"), "$p.exports")
-        val outline = when (val o = t["outline"]) {
-            null -> "box"
-            is Value.Str -> if (o.value in setOf("box", "ellipse")) o.value else {
-                s.error(Codes.SCHEMA, "$p.outline", "'outline' is box or ellipse", dp.key("outline"))
-                "box"
-            }
-            else -> {
-                s.error(Codes.SCHEMA, "$p.outline", "'outline' is box or ellipse", dp.key("outline"))
-                "box"
-            }
-        }
+        val outline = outline(t["outline"], dp, p, t["body"])
         val body = t["body"]
         if (body !is Value.Map) {
             s.error(Codes.SCHEMA, "$p.body", "a template needs a 'body': one node", dp.key("body"))
@@ -150,6 +219,8 @@ internal class TemplateReader(private val alias: String, private val s: Diagnost
         for (c in listOf("for_each", "slot")) if (body[c] != null) s.error(Codes.SCHEMA, "$p.body", "the body root is one node; '$c' cannot stand at the root", dp.key("body"))
         if (body["id"] != null) s.error(Codes.SCHEMA, "$p.body.id", "the body root takes the instance's id; it cannot have its own", dp.key("body").key("id"))
         checkRefs(body, params.keys, setOf("params"), dp.key("body"), "$p.body")
+        // a state or a patch sets a parameter by path (`order.attributes`): a part cannot take its name
+        for (id in ids(body)) if (id in params) s.error(Codes.SCHEMA, "$p.body", "the part '$id' has the name of a parameter, so a path could not tell them apart; rename the part", dp.key("body"))
         val description = (t["description"] as? Value.Str)?.value
         return Template(alias, name, params, exports, outline, body, description)
     }

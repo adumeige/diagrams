@@ -1,0 +1,56 @@
+# A small library for the fixture: extension with fixed parameters, choose() and count(), a slot
+# under a named part, a polygon outline, and containers with a minimum size.
+format: diagrams/0.1
+styles:
+  solid: {stroke: "#2d3436", stroke_width: 2}
+  dashed: {stroke: "#2d3436", stroke_width: 2, stroke_dash: [6, 4]}
+templates:
+  edge:
+    params:
+      from: {type: path}
+      to: {type: path}
+      dashed: {type: boolean, default: false}
+      open: {type: boolean, default: false}
+    exports: {parts: [line]}
+    body:
+      children:
+        - {shape: connector, id: line, from: "=params.from", to: "=params.to", marker_end: "=choose(params.open, 'open_arrow', 'arrow')", style: "=choose(params.dashed, 'dashed', 'solid')"}
+  hint:
+    extends: edge
+    set: {dashed: true, open: true}
+  diamond:
+    outline: shape
+    exports: {parts: [shape]}
+    body:
+      children:
+        - {shape: polygon, id: shape, points: [{x: 30, y: 0}, {x: 60, y: 30}, {x: 30, y: 60}, {x: 0, y: 30}], fill: "#ffeaa7", stroke: "#2d3436"}
+  shelf:
+    params:
+      cells: {type: list, keyed: true, item: {type: string}, default: []}
+      width: {type: number, default: 240}
+    exports: {parts: [cell, body]}
+    body:
+      layout: column
+      children:
+        - layout: row
+          children:
+            - for_each: params.cells
+              as: c
+              id: cell
+              do:
+                layout: stack
+                align: stretch
+                children:
+                  - {shape: rect, width: "=params.width / count(params.cells)", height: 30, fill: "#dfe6e9", stroke: "#2d3436"}
+                  - {shape: text, text: "=c.value", text_align: center, font_size: 12}
+        - id: body
+          layout: stack
+          align: stretch
+          min_height: 70
+          children:
+            - {shape: rect, width: 0, height: 0, fill: "#00000000", stroke: "#2d3436"}
+            - layout: row
+              padding: 10
+              gap: 10
+              children:
+                - {slot: default}

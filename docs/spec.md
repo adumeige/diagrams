@@ -120,7 +120,7 @@ The scene is a tree of nodes, and every reference in the language is a path thro
 - Only nodes with an ID are addressable. A node without one renders and cannot be referenced.
 - A node without an ID is transparent in paths: `agent.engine.llm` skips an unnamed row between `agent` and `engine`. IDs must be unique among the nodes reachable from a named node without crossing another named node.
 - Items of a repeated list are addressed by key, never by index: `order.attributes[total]`. The key is the item's identity for state diffs and tweening.
-- A property is addressed by appending its name: `order.state`, `camera.zoom`, `agent.pulse.scale`. Property names are reserved and cannot be used as IDs.
+- A property is addressed by appending its name: `order.state`, `camera.zoom`, `agent.pulse.scale`. An ID cannot be a geometry property, an anchor or a property every node has (`opacity`, `state`...), nor a property of its scope, the named node its path starts from (`layout` or `ordering` under a container, a parameter under an instance): a path could not tell them apart.
 - Reserved roots: `scene`, `camera`, `viewport`, `theme`.
 
 **Scope.** A reference written on a node (`attach.to`, a connector's `from` and `to`, a geometry reference in an expression) resolves from the declaring node's enclosing named scope outward, nearest first. Paths inside a state container (`set`, `timeline`, `transitions`) resolve from the node that owns the container.
@@ -136,7 +136,7 @@ A node is placed by its container, by an attachment, or by its own coordinates, 
 **Containers**
 - `layout` is one of `row`, `column`, `grid`, `stack` or `free`. A node with children and no `layout` is `free`.
 - `row` flows left to right and `column` flows top to bottom. `grid` takes `columns`. `stack` superposes its children.
-- Shared options: `gap`, `padding`, `align` (`start`, `center`, `end`, `stretch`).
+- Shared options: `gap`, `padding`, `align` (`start`, `center`, `end`, `stretch`), and `min_width`, `min_height`: the least size the container takes however small its content, which replaces invisible spacer shapes. An empty container with a minimum size is the spacer: `{min_height: 40, children: []}`.
 - A container sizes to its content unless `width` or `height` is set. Text is measured by the core (section 16).
 - In a `free` container, a child is placed by `at: {x, y}` in the parent's frame. This is the mode for drawing a complex shape.
 - Free relational placement ("right of A") is not part of 0.1.
@@ -146,7 +146,7 @@ A node is placed by its container, by an attachment, or by its own coordinates, 
 - A fixed anchor is a named point in a node's local frame. Every node has `center`, `north`, `south`, `east`, `west`, `north_east`, `north_west`, `south_east`, `south_west`. Shapes and templates can declare more, such as `port_2`.
 - A computed anchor is a function of the node's outline and an external point: the point on the perimeter toward the other end. A reference to a node where an anchor is expected means this floating anchor.
 - A computed anchor may read only the box or center of the other end, never its resolved anchors. This keeps the dependency graph acyclic.
-- A shape's outline is declared explicitly or defaults to its bounding box. It is separate from the drawn primitives and serves floating anchors, routing and lint.
+- A shape's outline is declared explicitly or defaults to its bounding box. It is separate from the drawn primitives and serves floating anchors, routing and lint. A template declares `outline: box`, `outline: ellipse`, or the id of one of its parts (`outline: diamond`): a connector then stops on that part's shape, a polygon included.
 
 **Attachments**
 ```yaml
@@ -262,11 +262,28 @@ templates:
         - slot: default
 ```
 
+**Extending a template.** A template can be another one with some parameters fixed: `extends` names a template of the same library and `set` fixes some of its parameters, possibly from parameters of its own. The rest of the base's parameters pass through; exports and outline are the base's unless redeclared, and so is the description.
+```yaml
+templates:
+  dependency:
+    extends: relation
+    set: {head: open_arrow, dashed: true}
+    params:
+      route: {type: enum, values: [orthogonal, straight, layout], default: layout}
+  extend:
+    extends: dependency
+    set: {label: "=choose(params.condition == '', '«extend»', '«extend» [' + params.condition + ']')"}
+    params:
+      condition: {type: string, default: ""}
+```
+
+A part of a body cannot take the name of a parameter: a state or a patch sets a parameter by path (`order.attributes`), and the path would not tell them apart.
+
 **Closed constructs.** These are the only computation a file can hold.
 - Parameter substitution.
 - `for_each` over a list parameter. Each item carries its key.
 - `if` on an expression over parameters.
-- Slots: a `slot` placeholder in the body is filled by the instance's `children`. Named slots are filled through `slots`.
+- Slots: a `slot` placeholder in the body is filled by the instance's `children`. Named slots are filled through `slots`. What fills a slot belongs to the instance's scope wherever the body puts the slot, under a named part or not: `frame.customer`, never `frame.content.customer`. A child that takes the id of a part of the body is an error.
 - The closed expression set below.
 
 There are no user-defined functions, no recursion and no general loops. A template may use other templates, and the instantiation graph must be acyclic. Everything terminates and can be checked without running it.
@@ -291,11 +308,11 @@ sum     = term { ( "+" | "-" ) term } ;
 term    = unary { ( "*" | "/" ) unary } ;
 unary   = [ "-" | "not" ] primary ;
 primary = number | string | "true" | "false" | ref | call | "(" expr ")" ;
-call    = ( "min" | "max" | "abs" ) "(" expr { "," expr } ")" ;
+call    = ( "min" | "max" | "abs" | "count" | "choose" ) "(" expr { "," expr } ")" ;
 ref     = ident { "." ident | "[" ident "]" } ;
 ```
 
-Canonical operator names: `add`, `sub`, `mul`, `div`, `neg`, `min`, `max`, `abs`, `eq`, `ne`, `lt`, `le`, `gt`, `ge`, `and`, `or`, `not`, `ref`. `add` on two strings concatenates.
+Canonical operator names: `add`, `sub`, `mul`, `div`, `neg`, `min`, `max`, `abs`, `count`, `choose`, `eq`, `ne`, `lt`, `le`, `gt`, `ge`, `and`, `or`, `not`, `ref`. `add` on two strings concatenates. `count` gives the length of a list parameter (`=params.width / count(params.rules)`). `choose(cond, a, b)` is `a` when the condition holds and `b` otherwise, and only the chosen value is evaluated: a template picks a value from its parameters with it (`marker_end: "=choose(params.open, 'open_arrow', 'arrow')"`) rather than duplicating a node under two `if`s.
 
 **Reference roots**
 | Root | Gives | Evaluated |
@@ -741,3 +758,9 @@ The 31 decisions taken on 17 November 2026, in the order they were made.
 | 30 | Imports | Local file references behind aliases | Enough for now; a registry can follow without changing documents |
 | 31 | Units, axes, camera | Logical pixels, top-left origin, y down; camera with `fit`, attachment, screen-space layers | Matches SVG, Canvas and what models have learned |
 | 32 | Dashed strokes | `stroke_dash`, a list of dash and gap lengths, on every stroked primitive (24 November 2026) | UML and most notations tell relations apart by dashed lines; a double outline or a muted colour is no substitute |
+| 33 | Slot scope | What fills a slot belongs to the instance's scope, under a named part of the body or not; a clash with a part is an error | Container templates need named parts around their slots; users address what they put in |
+| 34 | Minimum sizes | `min_width`, `min_height` on containers | Invisible spacer shapes were the only way to reserve room, and lint saw them |
+| 35 | Expressions | `choose(cond, a, b)` and `count(list)` | Variants of a template were duplicated nodes under two `if`s; shares of a width needed a fixed number of parameters |
+| 36 | Template extension | `extends` and `set`, within a library | Relation families repeated the base's whole parameter list in every member |
+| 37 | Outlines | A template's outline may be one of its parts, a polygon included | Arrows stopped on the bounding box of diamonds |
+| 38 | Reserved IDs | An ID avoids geometry, anchors, common properties and the properties of its scope only | Reserving every property of every kind refused `start`, `fill` or `ordering` where no path was ambiguous |

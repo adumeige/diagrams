@@ -19,8 +19,11 @@ class ExprEvalException(message: String) : Exception(message)
 object Exprs {
     val BINARY = setOf("sub", "div", "eq", "ne", "lt", "le", "gt", "ge")
     val VARIADIC = setOf("add", "mul", "and", "or", "min", "max")
-    val UNARY = setOf("neg", "not", "abs")
-    val OPERATORS = BINARY + VARIADIC + UNARY + "ref"
+    val UNARY = setOf("neg", "not", "abs", "count")
+
+    /** `choose(cond, a, b)`: [a] when the condition holds, else [b]; only the chosen branch is evaluated. */
+    const val CHOOSE = "choose"
+    val OPERATORS = BINARY + VARIADIC + UNARY + CHOOSE + "ref"
 
     /** True for an authored expression string (`=...` but not the `==` escape). */
     fun isAuthored(s: String) = s.startsWith("=") && !s.startsWith("==")
@@ -67,6 +70,7 @@ object Exprs {
             in UNARY -> n == 1
             in BINARY -> n == 2
             "min", "max" -> n >= 1
+            CHOOSE -> n == 3
             else -> n >= 2
         }
         if (!ok) throw ExprSyntaxException("'$op' does not take $n operand(s)", 0)
@@ -110,7 +114,7 @@ object Exprs {
         }
         is Expr.Ref -> e.path
         is Expr.Op -> when (e.op) {
-            "min", "max", "abs" -> e.op + e.args.joinToString(", ", "(", ")") { printBare(it) }
+            "min", "max", "abs", "count", CHOOSE -> e.op + e.args.joinToString(", ", "(", ")") { printBare(it) }
             "neg" -> "-" + wrap(e.args[0], 6, strict = true)
             "not" -> "not " + wrap(e.args[0], 6, strict = true)
             else -> {
@@ -142,6 +146,13 @@ object Exprs {
     /** Evaluates every operation whose operands are all literals. A failing operation is left as is. */
     fun fold(e: Expr): Expr {
         if (e !is Expr.Op) return e
+        if (e.op == CHOOSE) {
+            // a known condition picks its branch, even when the other one cannot be evaluated yet
+            val c = fold(e.args[0])
+            val v = (c as? Expr.Lit)?.value as? Value.Bool
+            if (v != null) return fold(if (v.value) e.args[1] else e.args[2])
+            return Expr.Op(e.op, listOf(c, fold(e.args[1]), fold(e.args[2])))
+        }
         val args = e.args.map { fold(it) }
         if (args.all { it is Expr.Lit }) {
             try {
@@ -194,7 +205,11 @@ object Exprs {
     fun eval(e: Expr, resolve: (String) -> Value): Value = when (e) {
         is Expr.Lit -> e.value
         is Expr.Ref -> resolve(e.path)
-        is Expr.Op -> evalOp(e.op, e.args.map { eval(it, resolve) })
+        is Expr.Op -> if (e.op == CHOOSE) {
+            eval(if (bool(eval(e.args[0], resolve), e.op)) e.args[1] else e.args[2], resolve)
+        } else {
+            evalOp(e.op, e.args.map { eval(it, resolve) })
+        }
     }
 
     private fun num(v: Value, op: String): Double =
@@ -221,6 +236,7 @@ object Exprs {
         }
         "neg" -> Value.Num(-num(a[0], op))
         "abs" -> Value.Num(kotlin.math.abs(num(a[0], op)))
+        "count" -> Value.Num(((a[0] as? Value.List) ?: throw ExprEvalException("'count' expects a list, got ${a[0].typeName()}")).items.size.toDouble())
         "min" -> Value.Num(a.minOf { num(it, op) })
         "max" -> Value.Num(a.maxOf { num(it, op) })
         "eq" -> Value.Bool(a[0] == a[1])
@@ -239,6 +255,7 @@ object Exprs {
         "and" -> Value.Bool(a.all { bool(it, op) })
         "or" -> Value.Bool(a.any { bool(it, op) })
         "not" -> Value.Bool(!bool(a[0], op))
+        CHOOSE -> if (bool(a[0], op)) a[1] else a[2]
         else -> throw ExprEvalException("unknown operator '$op'")
     }
 
@@ -438,7 +455,7 @@ private class ExprParser(private val src: String) {
                 i++
                 Expr.Lit(Value.Bool(t.v == "true"))
             }
-            t is TId && t.v in setOf("min", "max", "abs") && (toks[i + 1] as? TSym)?.v == "(" -> {
+            t is TId && t.v in setOf("min", "max", "abs", "count", Exprs.CHOOSE) && (toks[i + 1] as? TSym)?.v == "(" -> {
                 i += 2
                 val args = mutableListOf(or())
                 while (isSym(",")) {
@@ -446,7 +463,8 @@ private class ExprParser(private val src: String) {
                     args += or()
                 }
                 expectSym(")")
-                if (t.v == "abs" && args.size != 1) throw ExprSyntaxException("abs takes one argument", t.at)
+                if ((t.v == "abs" || t.v == "count") && args.size != 1) throw ExprSyntaxException("${t.v} takes one argument", t.at)
+                if (t.v == Exprs.CHOOSE && args.size != 3) throw ExprSyntaxException("choose takes a condition and two values", t.at)
                 Expr.Op(t.v, args)
             }
             t is TId && t.v !in setOf("and", "or", "not") -> ref()

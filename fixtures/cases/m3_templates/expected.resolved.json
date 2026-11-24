@@ -179,7 +179,7 @@
             ]
           },
           {
-            "path": "team.attributes",
+            "path": "team.attribute_list",
             "loc": "scene/0/1",
             "kind": "container",
             "layer": "default",
@@ -212,7 +212,7 @@
                 "opacity": 1,
                 "children": [
                   {
-                    "path": "team.attributes.attribute[name]",
+                    "path": "team.attribute_list.attribute[name]",
                     "loc": "scene/0/1/1/0",
                     "kind": "text",
                     "layer": "default",
@@ -226,7 +226,7 @@
                     "lines": [{"text": "name: String", "x": 0, "baseline": 12.35, "width": 72.553}]
                   },
                   {
-                    "path": "team.attributes.attribute[country]",
+                    "path": "team.attribute_list.attribute[country]",
                     "loc": "scene/0/1/1/1",
                     "kind": "text",
                     "layer": "default",
@@ -244,7 +244,7 @@
             ]
           },
           {
-            "path": "team.operations",
+            "path": "team.operation_list",
             "loc": "scene/0/2",
             "kind": "container",
             "layer": "default",
@@ -277,7 +277,7 @@
                 "opacity": 1,
                 "children": [
                   {
-                    "path": "team.operations.operation[squad]",
+                    "path": "team.operation_list.operation[squad]",
                     "loc": "scene/0/2/1/0",
                     "kind": "text",
                     "layer": "default",
@@ -373,7 +373,7 @@
             ]
           },
           {
-            "path": "player.attributes",
+            "path": "player.attribute_list",
             "loc": "scene/1/1",
             "kind": "container",
             "layer": "default",
@@ -406,7 +406,7 @@
                 "opacity": 1,
                 "children": [
                   {
-                    "path": "player.attributes.attribute[name]",
+                    "path": "player.attribute_list.attribute[name]",
                     "loc": "scene/1/1/1/0",
                     "kind": "text",
                     "layer": "default",
@@ -420,7 +420,7 @@
                     "lines": [{"text": "name: String", "x": 0, "baseline": 12.35, "width": 72.553}]
                   },
                   {
-                    "path": "player.attributes.attribute[position]",
+                    "path": "player.attribute_list.attribute[position]",
                     "loc": "scene/1/1/1/1",
                     "kind": "text",
                     "layer": "default",
@@ -434,7 +434,7 @@
                     "lines": [{"text": "position: Position", "x": 0, "baseline": 12.35, "width": 99.502}]
                   },
                   {
-                    "path": "player.attributes.attribute[caps]",
+                    "path": "player.attribute_list.attribute[caps]",
                     "loc": "scene/1/1/1/2",
                     "kind": "text",
                     "layer": "default",
@@ -452,7 +452,7 @@
             ]
           },
           {
-            "path": "player.operations",
+            "path": "player.operation_list",
             "loc": "scene/1/2",
             "kind": "container",
             "layer": "default",
@@ -566,7 +566,7 @@
             ]
           },
           {
-            "path": "person.attributes",
+            "path": "person.attribute_list",
             "loc": "scene/2/1",
             "kind": "container",
             "layer": "default",
@@ -602,7 +602,7 @@
             ]
           },
           {
-            "path": "person.operations",
+            "path": "person.operation_list",
             "loc": "scene/2/2",
             "kind": "container",
             "layer": "default",

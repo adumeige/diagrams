@@ -268,8 +268,28 @@ scene:
           attributes: []
           operations: []
           static: []
-        - {use: uml.generalization, from: disc, to: figure, route: layout}
-        - {use: uml.generalization, from: polygon_class, to: figure, route: layout}
+        - use: uml.generalization
+          from: disc
+          to: figure
+          label: ""
+          from_mult: ""
+          to_mult: ""
+          from_role: ""
+          to_role: ""
+          route: layout
+          label_anchor: south
+          label_gap: 4
+        - use: uml.generalization
+          from: polygon_class
+          to: figure
+          label: ""
+          from_mult: ""
+          to_mult: ""
+          from_role: ""
+          to_role: ""
+          route: layout
+          label_anchor: south
+          label_gap: 4
         - use: uml.composition
           from: polygon_class
           to: vertex
@@ -279,8 +299,8 @@ scene:
           from_role: ""
           to_role: ""
           route: layout
-          label_gap: 4
           label_anchor: south
+          label_gap: 4
         - use: uml.association
           from: canvas
           to: figure
@@ -290,5 +310,5 @@ scene:
           from_role: ""
           to_role: ""
           route: layout
-          label_gap: 4
           label_anchor: south
+          label_gap: 4

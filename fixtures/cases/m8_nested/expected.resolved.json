@@ -388,7 +388,7 @@
                 ]
               },
               {
-                "path": "model.figure.attributes",
+                "path": "model.figure.attribute_list",
                 "loc": "scene/1/0/1",
                 "kind": "container",
                 "layer": "default",
@@ -424,7 +424,7 @@
                 ]
               },
               {
-                "path": "model.figure.operations",
+                "path": "model.figure.operation_list",
                 "loc": "scene/1/0/2",
                 "kind": "container",
                 "layer": "default",
@@ -457,7 +457,7 @@
                     "opacity": 1,
                     "children": [
                       {
-                        "path": "model.figure.operations.operation[area]",
+                        "path": "model.figure.operation_list.operation[area]",
                         "loc": "scene/1/0/2/1/0",
                         "kind": "text",
                         "layer": "default",
@@ -539,7 +539,7 @@
                 ]
               },
               {
-                "path": "model.disc.attributes",
+                "path": "model.disc.attribute_list",
                 "loc": "scene/1/1/1",
                 "kind": "container",
                 "layer": "default",
@@ -572,7 +572,7 @@
                     "opacity": 1,
                     "children": [
                       {
-                        "path": "model.disc.attributes.attribute[radius]",
+                        "path": "model.disc.attribute_list.attribute[radius]",
                         "loc": "scene/1/1/1/1/0",
                         "kind": "text",
                         "layer": "default",
@@ -590,7 +590,7 @@
                 ]
               },
               {
-                "path": "model.disc.operations",
+                "path": "model.disc.operation_list",
                 "loc": "scene/1/1/2",
                 "kind": "container",
                 "layer": "default",
@@ -690,7 +690,7 @@
                 ]
               },
               {
-                "path": "model.polygon_class.attributes",
+                "path": "model.polygon_class.attribute_list",
                 "loc": "scene/1/2/1",
                 "kind": "container",
                 "layer": "default",
@@ -726,7 +726,7 @@
                 ]
               },
               {
-                "path": "model.polygon_class.operations",
+                "path": "model.polygon_class.operation_list",
                 "loc": "scene/1/2/2",
                 "kind": "container",
                 "layer": "default",
@@ -826,7 +826,7 @@
                 ]
               },
               {
-                "path": "model.vertex.attributes",
+                "path": "model.vertex.attribute_list",
                 "loc": "scene/1/3/1",
                 "kind": "container",
                 "layer": "default",
@@ -859,7 +859,7 @@
                     "opacity": 1,
                     "children": [
                       {
-                        "path": "model.vertex.attributes.attribute[x]",
+                        "path": "model.vertex.attribute_list.attribute[x]",
                         "loc": "scene/1/3/1/1/0",
                         "kind": "text",
                         "layer": "default",
@@ -873,7 +873,7 @@
                         "lines": [{"text": "x: Number", "x": 0, "baseline": 12.35, "width": 57.941}]
                       },
                       {
-                        "path": "model.vertex.attributes.attribute[y]",
+                        "path": "model.vertex.attribute_list.attribute[y]",
                         "loc": "scene/1/3/1/1/1",
                         "kind": "text",
                         "layer": "default",
@@ -891,7 +891,7 @@
                 ]
               },
               {
-                "path": "model.vertex.operations",
+                "path": "model.vertex.operation_list",
                 "loc": "scene/1/3/2",
                 "kind": "container",
                 "layer": "default",
@@ -991,7 +991,7 @@
                 ]
               },
               {
-                "path": "model.canvas.attributes",
+                "path": "model.canvas.attribute_list",
                 "loc": "scene/1/4/1",
                 "kind": "container",
                 "layer": "default",
@@ -1027,7 +1027,7 @@
                 ]
               },
               {
-                "path": "model.canvas.operations",
+                "path": "model.canvas.operation_list",
                 "loc": "scene/1/4/2",
                 "kind": "container",
                 "layer": "default",

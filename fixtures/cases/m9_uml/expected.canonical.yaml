@@ -84,12 +84,26 @@ scene:
       layer: relations
       from: shelf.host.jar
       to: shelf.api
+      label: ""
+      from_mult: ""
+      to_mult: ""
+      from_role: ""
+      to_role: ""
       route: straight
+      label_anchor: south
+      label_gap: 4
     - use: uml.note_link
       layer: relations
       from: shelf.memo
       to: shelf.host
+      label: ""
+      from_mult: ""
+      to_mult: ""
+      from_role: ""
+      to_role: ""
       route: straight
+      label_anchor: south
+      label_gap: 4
     - use: uml.transition
       layer: relations
       from: init
@@ -105,9 +119,13 @@ scene:
       from: shelf.ship
       to: shelf.api
       label: ""
+      from_mult: ""
+      to_mult: ""
+      from_role: ""
+      to_role: ""
       route: straight
-      label_gap: 4
       label_anchor: south
+      label_gap: 4
     - id: through
       use: uml.association
       layer: relations
@@ -119,5 +137,5 @@ scene:
       from_role: ""
       to_role: ""
       route: straight
-      label_gap: 4
       label_anchor: south
+      label_gap: 4

@@ -59,16 +59,38 @@ class NodeInfo(
     val shape: String? = (node["shape"] as? Value.Str)?.value
     val isRoot get() = parent == null
 
-    /** The outline of floating anchors: `ellipse` for ellipses, circles and instances that declare it. */
+    /** The outline of floating anchors: `ellipse` for ellipses, circles and instances that declare it, or the id of a part of an instance. */
     val outline: String get() = template?.outline ?: if (shape == "ellipse" || shape == "circle") "ellipse" else "box"
 
-    /** The IDs reachable from this node's children without crossing another named node (spec section 5). */
-    val namespace: Map<String, NodeInfo> by lazy {
+    /**
+     * The IDs reachable from this node's children without crossing another named node (spec section
+     * 5). An instance's scope also holds what fills its slots, wherever the body puts the slot: the
+     * instance's children are its own, even under a named part of the body.
+     */
+    val namespace: Map<String, NodeInfo> by lazy { scope().first }
+
+    /** Children of this instance that take an id one of its parts already has (spec section 9, "Slots"). */
+    val slotClashes: List<NodeInfo> get() = scope().second
+
+    private val scoped by lazy {
         val out = LinkedHashMap<String, NodeInfo>()
+        val clashes = mutableListOf<NodeInfo>()
+        val instance = this.takeIf { it.template != null }
+        fun add(c: NodeInfo) {
+            val id = c.id ?: return
+            val seen = out[id]
+            if (seen == null) {
+                out[id] = c
+            } else if (instance != null && (seen.owner === instance) != (c.owner === instance)) {
+                clashes += if (c.owner === instance) seen else c
+            }
+        }
         fun visit(n: NodeInfo) {
             for (c in n.children) {
                 if (c.id != null) {
-                    if (c.id !in out) out[c.id] = c
+                    add(c)
+                    // a named part of the body can hold the slot: look through it for the instance's children
+                    if (instance != null && c.owner === instance && c.template == null) slotContent(c, ::add, ::visit)
                 } else if (c.template == null) {
                     // an unnamed instance is still a scope: its inside cannot be named from out here
                     visit(c)
@@ -76,7 +98,20 @@ class NodeInfo(
             }
         }
         visit(this)
-        out
+        out to clashes
+    }
+
+    private fun scope() = scoped
+
+    /** The instance's children under [part], a named node of its body. */
+    private fun slotContent(part: NodeInfo, add: (NodeInfo) -> Unit, visit: (NodeInfo) -> Unit) {
+        for (c in part.children) {
+            when {
+                c.owner === this -> if (c.template == null) slotContent(c, add, visit)
+                c.id != null -> add(c)
+                c.template == null -> visit(c)
+            }
+        }
     }
 
     fun isAncestorOf(o: NodeInfo): Boolean = generateSequence(o.parent) { it.parent }.any { it === this }
@@ -138,7 +173,12 @@ class NodeIndex(tree: ENode?) {
         val n = NodeInfo(e.dp, e.node, parent, path, loc, e.instance?.template, e.owner?.let { tags[it] })
         e.instance?.let { tags[it] = n }
         if (e.dp !in byDp) byDp[e.dp] = n
-        e.children.forEachIndexed { i, c -> n.children += build(c, n, childPathOf(path, c.node), "$loc/$i") }
+        e.children.forEachIndexed { i, c ->
+            // what fills a slot is addressed through the instance, wherever its body put the slot
+            val inst = n.owner
+            val slotted = n.template == null && inst != null && c.owner?.let { tags[it] } !== inst
+            n.children += build(c, n, childPathOf(if (slotted) inst!!.path else path, c.node), "$loc/$i")
+        }
         return n
     }
 

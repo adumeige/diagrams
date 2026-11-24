@@ -127,6 +127,23 @@ class ExprTest {
     }
 
     @Test
+    fun choosesOneBranch() {
+        val env = mapOf("dashed" to Value.Bool(true), "w" to Value.num(10))
+        fun ev(s: String) = Exprs.eval(Exprs.parse(s)) { env[it] ?: throw ExprEvalException("no $it") }
+        assertEquals(Value.str("open_arrow"), ev("=choose(dashed, 'open_arrow', 'arrow')"))
+        assertEquals(Value.num(20), ev("=choose(w > 20, missing, w * 2)"), "the branch not taken is not evaluated")
+        val e = Exprs.parse("=choose(dashed, x.width, 4)")
+        assertEquals("=choose(dashed, x.width, 4)", Exprs.print(e))
+        assertEquals(e, Exprs.fromCanonical(Exprs.toCanonical(e)))
+        // a known condition folds away the other branch, even one that refers to geometry
+        val folded = Exprs.fold(Exprs.substitute(e) { if (it == "dashed") Expr.Lit(Value.Bool(false)) else null })
+        assertEquals(Expr.Lit(Value.num(4)), folded)
+        assertFailsWith<ExprSyntaxException> { Exprs.parse("=choose(a, b)") }
+        val rules = Exprs.substitute(Exprs.parse("=240 / count(params.rules)")) { if (it == "params.rules") Expr.Lit(Value.list(Value.str("a"), Value.str("b"), Value.str("c"))) else null }
+        assertEquals(Expr.Lit(Value.num(80)), Exprs.fold(rules))
+    }
+
+    @Test
     fun rejects() {
         for (s in listOf("=", "=a +", "=1 < 2 < 3", "=f(1)", "=a..b", "='x")) {
             assertFailsWith<ExprSyntaxException>(s) { Exprs.parse(s) }
