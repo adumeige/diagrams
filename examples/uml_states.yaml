@@ -88,18 +88,18 @@ scene:
     - {use: uml.entry_point, id: resume, name: resume, attach: {anchor: center, to: stm.active.north_west, offset: {x: 46, y: 0}}}
     - {use: uml.exit_point, id: aborted, name: aborted, attach: {anchor: center, to: stm.active.west, offset: {x: 0, y: 160}}}
     - {use: uml.transition, layer: relations, from: stm.init, to: stm.placed}
-    - {use: uml.transition, layer: relations, from: stm.placed, to: stm.paid_how, trigger: pay, label_anchor: west, label_gap: 10}
-    - {use: uml.transition, layer: relations, from: stm.paid_how, to: stm.active, guard: accepted, effect: start, label_anchor: south, label_gap: 4}
-    - {use: uml.transition, layer: relations, from: stm.paid_how, to: stm.stop, guard: refused, label_anchor: west, label_gap: 10}
-    - {use: uml.transition, layer: relations, from: aborted, to: stm.stop, trigger: cancel, label_anchor: south_west, label_gap: -6}
+    - {use: uml.transition, layer: relations, from: stm.placed, to: stm.paid_how, trigger: pay}
+    - {use: uml.transition, layer: relations, from: stm.paid_how, to: stm.active, guard: accepted, effect: start}
+    - {use: uml.transition, layer: relations, from: stm.paid_how, to: stm.stop, guard: refused}
+    - {use: uml.transition, layer: relations, from: aborted, to: stm.stop, trigger: cancel}
     - {use: uml.transition, layer: relations, from: stm.stop, to: stm.cancelled}
     - {use: uml.transition, layer: relations, from: stm.active.init, to: stm.active.picking}
     - {use: uml.transition, layer: relations, from: resume, to: stm.active.back}
-    - {use: uml.transition, layer: relations, from: stm.active.picking, to: stm.active.packed, trigger: all scanned, label_anchor: west, label_gap: 10}
+    - {use: uml.transition, layer: relations, from: stm.active.picking, to: stm.active.packed, trigger: all scanned}
     - {use: uml.transition, layer: relations, from: stm.active.packed, to: stm.active.end1}
     - {use: uml.transition, layer: relations, from: stm.active.init2, to: stm.active.invoicing}
-    - {use: uml.transition, layer: relations, from: stm.active.invoicing, to: stm.active.invoiced, trigger: sent, label_anchor: west, label_gap: 10}
+    - {use: uml.transition, layer: relations, from: stm.active.invoicing, to: stm.active.invoiced, trigger: sent}
     - {use: uml.transition, layer: relations, from: stm.active.invoiced, to: stm.active.end2}
-    - {use: uml.transition, layer: relations, from: stm.active, to: stm.shipped, trigger: hand over, label_anchor: south, label_gap: 4}
-    - {use: uml.transition, layer: relations, from: stm.shipped, to: stm.done, trigger: delivered, label_anchor: east, label_gap: -10}
-    - {use: uml.transition, layer: relations, from: stm.shipped, to: stm.lost, trigger: lost, label_anchor: west, label_gap: 8}
+    - {use: uml.transition, layer: relations, from: stm.active, to: stm.shipped, trigger: hand over}
+    - {use: uml.transition, layer: relations, from: stm.shipped, to: stm.done, trigger: delivered}
+    - {use: uml.transition, layer: relations, from: stm.shipped, to: stm.lost, trigger: lost}

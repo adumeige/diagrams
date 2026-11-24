@@ -19,7 +19,7 @@ scene:
       children:
         - {use: uml.note, id: memo, text: A note in a row, width: 120}
         - use: uml.node
-          id: host
+          id: server
           name: app-01
           stereotype: device
           children:
@@ -37,8 +37,8 @@ scene:
     - {use: uml.initial, id: init, at: {x: 78, y: 180}}
     - {use: uml.class, id: wall, at: {x: 520, y: 300}, name: Wall}
     - {use: uml.class, id: far, at: {x: 760, y: 300}, name: Far}
-    - {use: uml.realization, layer: relations, from: shelf.host.jar, to: shelf.api, route: straight}
-    - {use: uml.note_link, layer: relations, from: shelf.memo, to: shelf.host}
+    - {use: uml.realization, layer: relations, from: shelf.server.jar, to: shelf.api, route: straight}
+    - {use: uml.note_link, layer: relations, from: shelf.memo, to: shelf.server}
     - {use: uml.transition, layer: relations, from: init, to: busy.inner, trigger: go}
     - {use: uml.dependency, layer: relations, from: shelf.ship, to: shelf.api, route: straight}
     - {use: uml.association, id: through, layer: relations, from: busy, to: far, route: straight}

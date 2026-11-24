@@ -49,7 +49,7 @@ scene:
             - {use: merise.leg, from: artiste, to: membre, cardinality: "1,n"}
             - {use: merise.leg, from: groupe, to: membre, cardinality: "1,n"}
             - {use: merise.leg, from: groupe, to: ouvrir, cardinality: "0,n", role: ouvre}
-            - {use: merise.leg, from: groupe, to: ouvrir, cardinality: "0,n", role: est ouvert, label_gap: -30}
+            - {use: merise.leg, from: groupe, to: ouvrir, cardinality: "0,n", role: est ouvert, label_side: right}
             - {use: merise.leg, from: groupe, to: programmer, cardinality: "0,n"}
             - {use: merise.leg, from: stage, to: programmer, cardinality: "0,n"}
             - {use: merise.leg, from: creneau, to: programmer, cardinality: "0,n"}

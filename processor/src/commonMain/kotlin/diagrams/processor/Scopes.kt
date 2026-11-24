@@ -30,11 +30,11 @@ class ENode(
         }
 
         private fun plain(v: Value.Map, dp: DataPath): ENode {
-            val kids = (v["children"] as? Value.List)?.items.orEmpty()
+            fun list(k: String) = (v[k] as? Value.List)?.items.orEmpty().mapIndexedNotNull { i, c -> (c as? Value.Map)?.let { plain(it, dp.key(k).index(i)) } }
             return ENode(
-                Value.Map(v.entries.filterKeys { it != "children" }),
+                Value.Map(v.entries.filterKeys { it != "children" && it !in CoreSchema.DECORATIONS }),
                 dp,
-                kids.mapIndexedNotNull { i, c -> (c as? Value.Map)?.let { plain(it, dp.key("children").index(i)) } },
+                list("underlay") + list("children") + list("overlay"),
             )
         }
     }

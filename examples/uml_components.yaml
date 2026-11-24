@@ -92,5 +92,5 @@ scene:
     - {use: uml.link, layer: relations, from: frames.parts.billing, to: frames.parts.gives_pay.ball, route: straight}
     # communication paths and a manifestation
     - {use: uml.link, layer: relations, from: frames.deployment.browser, to: frames.deployment.server, label: HTTPS, route: straight}
-    - {use: uml.link, layer: relations, from: frames.deployment.server, to: frames.deployment.db, label: JDBC, route: straight, label_anchor: west, label_gap: -6}
-    - {use: uml.manifest, layer: relations, from: frames.deployment.server.jvm.jar, to: frames.deployment.ordering_c, route: straight, label_anchor: north_east, label_gap: -4}
+    - {use: uml.link, layer: relations, from: frames.deployment.server, to: frames.deployment.db, label: JDBC, route: straight}
+    - {use: uml.manifest, layer: relations, from: frames.deployment.server.jvm.jar, to: frames.deployment.ordering_c, route: straight}

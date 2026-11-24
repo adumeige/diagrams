@@ -176,6 +176,21 @@ class TemplateTest {
     }
 
     @Test
+    fun hostIsKnownInDecorationsOnly() {
+        val ok = process(
+            """
+              children:
+                - layout: column
+                  underlay: [{shape: rect, width: "=host.width", height: "=host.height"}]
+                  children: [{shape: text, text: x}]
+            """.trimIndent().prependIndent("  "),
+        )
+        assertTrue(!ok.hasErrors, ok.diagnostics.joinToString("\n"))
+        val bad = process("  children: [{shape: rect, width: \"=host.width\", height: 10}]")
+        assertTrue(bad.diagnostics.any { "not in an underlay or overlay" in it.message }, bad.diagnostics.joinToString("\n"))
+    }
+
+    @Test
     fun schemaHasOneDefinitionPerTemplate() {
         val r = process("  children: []")
         val defs = (JsonSchema.document(r.environment) as Value.Map)["\$defs"] as Value.Map

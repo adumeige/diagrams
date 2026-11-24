@@ -86,7 +86,7 @@ scene:
     - {use: uml.association, layer: relations, from: diagram.customer, to: diagram.order, label: places, from_mult: "1", to_mult: "0..*"}
     - {use: uml.composition, layer: relations, from: diagram.order, to: diagram.line_item, from_mult: "1", to_mult: "1..*"}
     - {use: uml.dependency, layer: relations, from: diagram.line_item, to: diagram.catalog, label: «import», route: straight}
-    - {use: uml.dependency, layer: relations, from: diagram.order, to: diagram.status, label: «use», route: straight, label_anchor: west, label_gap: -8}
+    - {use: uml.dependency, layer: relations, from: diagram.order, to: diagram.status, label: «use», route: straight}
     - {use: uml.aggregation, layer: relations, from: diagram.order, to: diagram.payment, label: payments, from_mult: "1", to_mult: "0..*", route: straight}
     - {use: uml.generalization, layer: relations, from: diagram.transfer, to: diagram.payment}
     - {use: uml.generalization, layer: relations, from: diagram.card, to: diagram.payment}

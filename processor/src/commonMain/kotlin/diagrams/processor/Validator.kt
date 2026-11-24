@@ -124,6 +124,10 @@ class Validator(private val sink: DiagnosticSink, private val env: Environment =
                 error("$path.points", "a $label takes $expected points, found ${pts.items.size}", dp.key("points"))
             }
         }
+        for (k in CoreSchema.DECORATIONS) (v[k] as? Value.List)?.let { l ->
+            if (shape != null || mediaKind != null) error("$path.$k", "only a container has decorations", dp.key(k))
+            l.items.forEachIndexed { i, c -> node(c, dp.key(k).index(i), childPathOf(path, c), isRoot = false, tokens = scope) }
+        }
         val children = v["children"] as? Value.List ?: return
         if (isRoot || v["id"] != null) uniqueIds(children, dp.key("children"), path)
         children.items.forEachIndexed { i, c -> node(c, dp.key("children").index(i), childPathOf(path, c), isRoot = false, tokens = scope) }
@@ -468,7 +472,7 @@ class Validator(private val sink: DiagnosticSink, private val env: Environment =
             return
         }
         val pr = kind?.get(name)
-        if (pr == null || name in setOf("id", "children", "states", "use", "slots", "timeline", "enter", "exit")) {
+        if (pr == null || name in setOf("id", "children", "underlay", "overlay", "states", "use", "slots", "timeline", "enter", "exit")) {
             return error(p, "'$name' is not a property a state can set on ${t.node.path}${template?.let { " (an instance of ${it.ref})" } ?: ""}", at)
         }
         val member = prop.getOrNull(1)
@@ -578,6 +582,15 @@ class Validator(private val sink: DiagnosticSink, private val env: Environment =
     /** A geometry reference in an expression: a node path, then a property or `anchor.x`/`anchor.y`. */
     private fun geometryRef(ref: String, nodeDp: DataPath, dp: DataPath, path: String) {
         val from = info(nodeDp) ?: return
+        if (ref == "host" || ref.startsWith("host.")) {
+            // the container a decoration decorates (spec section 6, "Decorations")
+            if (generateSequence(from) { it.parent }.none { it.node["\$decoration"] != null }) {
+                sink.error(Codes.PATH_UNRESOLVED, path, "'host' is the container a decoration decorates; this node is not in an underlay or overlay", dp)
+            } else if (ref.split('.').drop(1).let { it.size != 1 || it[0] !in GeometryRefs.PROPERTIES }) {
+                sink.error(Codes.PATH_UNRESOLVED, path, "'$ref': host gives ${GeometryRefs.PROPERTIES.joinToString()}", dp)
+            }
+            return
+        }
         val m = index.resolve(ref, from)
         if (m == null) {
             sink.error(Codes.PATH_UNRESOLVED, path, "'$ref' matches no node in scope", dp)
@@ -640,6 +653,8 @@ class Validator(private val sink: DiagnosticSink, private val env: Environment =
             if (a !is Value.Str || a.value !in GeometryRefs.ANCHORS) error("$path.anchor", "'anchor' is one of ${GeometryRefs.ANCHORS.joinToString()}", dp.key("anchor"))
         }
         x["gap"]?.let { checkProp(ATTACH_PROPS.getValue("gap"), it, dp.key("gap"), "$path.gap") }
+        x["side"]?.let { checkProp(ATTACH_PROPS.getValue("side"), it, dp.key("side"), "$path.side") }
+        x["along"]?.let { checkProp(ATTACH_PROPS.getValue("along"), it, dp.key("along"), "$path.along") }
         x["offset"]?.let { checkProp(ATTACH_PROPS.getValue("offset"), it, dp.key("offset"), "$path.offset") }
         when (val p = x["policy"]) {
             null -> {}

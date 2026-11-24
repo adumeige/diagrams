@@ -12,10 +12,10 @@
       <g transform="translate(279.679 76.72)" font-family="diagrams-body" font-size="12" style="font-kerning: none; font-variant-ligatures: none" fill="#636e72">
         <text x="0 2.868 6.204 12.756 19.224 25.656" y="11.4" xml:space="preserve">lineup</text>
       </g>
-      <g transform="translate(173.806 80.72)" font-family="diagrams-body" font-size="12" style="font-kerning: none; font-variant-ligatures: none" fill="#636e72">
+      <g transform="translate(167.394 77.72)" font-family="diagrams-body" font-size="12" style="font-kerning: none; font-variant-ligatures: none" fill="#636e72">
         <text x="0" y="11.4" xml:space="preserve">1</text>
       </g>
-      <g transform="translate(404.524 80.72)" font-family="diagrams-body" font-size="12" style="font-kerning: none; font-variant-ligatures: none" fill="#636e72">
+      <g transform="translate(415.262 77.72)" font-family="diagrams-body" font-size="12" style="font-kerning: none; font-variant-ligatures: none" fill="#636e72">
         <text x="0 6.588" y="11.4" xml:space="preserve">23</text>
       </g>
     </g>
@@ -106,11 +106,9 @@
     <g data-path="squad_note" transform="translate(205.903 205.6)">
       <polygon points="0,0 168,0 180,12 180,49.76 0,49.76" fill="#ffffff" stroke="#636e72" stroke-width="1"/>
       <polyline points="168,0 168,12 180,12" fill="none" stroke="#636e72" stroke-width="1"/>
-      <g data-path="squad_note.paper">
-        <g transform="translate(10 10)" font-family="diagrams-body" font-size="12" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
-          <text x="0 9.84 16.152 20.04 26.04 32.592 39.36 45.672 50.82 54.18 59.832 66.744 73.176 79.488 86.256 88.716 92.076 96.9 103.896 107.256 112.908 116.796 123.108 127.188 131.076 137.544 141.624" y="11.4" xml:space="preserve">Matchday squad: 15 starters</text>
-          <text x="0 6.312 12.864 19.632 22.992 30.372 33.732 37.812 44.28 51.072 53.94 60.252 66.252 72.72 82.812 89.28 95.832 99.72" y="26.28" xml:space="preserve">and 8 replacements</text>
-        </g>
+      <g transform="translate(10 10)" font-family="diagrams-body" font-size="12" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+        <text x="0 9.84 16.152 20.04 26.04 32.592 39.36 45.672 50.82 54.18 59.832 66.744 73.176 79.488 86.256 88.716 92.076 96.9 103.896 107.256 112.908 116.796 123.108 127.188 131.076 137.544 141.624" y="11.4" xml:space="preserve">Matchday squad: 15 starters</text>
+        <text x="0 6.312 12.864 19.632 22.992 30.372 33.732 37.812 44.28 51.072 53.94 60.252 66.252 72.72 82.812 89.28 95.832 99.72" y="26.28" xml:space="preserve">and 8 replacements</text>
       </g>
     </g>
     <g>

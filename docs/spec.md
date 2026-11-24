@@ -160,7 +160,18 @@ A node is placed by its container, by an attachment, or by its own coordinates, 
 - Attachments form a DAG and are resolved in one topological pass. A cycle is the error `attach_cycle`.
 - `gap` is the distance between the two anchors, measured outward from the target anchor. `offset: {x, y}` is available for any other displacement.
 - An attached node must sit in a `free` container or a graph container. Inside `row`, `column`, `grid` and `stack` the container wins, with the warning `attach_ignored`.
+- **Beside a connector.** On a point of a connector (`start`, `end`, `mid`, `label`), `side` places the attacher beside the line: `left` or `right` of its direction of travel, `above` or `below` on the screen (for a vertical line, `above` is its left). The engine chooses the attacher's anchor, the one facing the line, so that a label clears a slanted or reversed line; `gap` is the distance from the line. `along` moves the point along the route first: from `start` or `end` toward the other end, or from `mid` toward `end` (negative toward `start`). Multiplicities are `{to: line.end, along: 18, side: above, gap: 2}`.
 - Attachment does not depend on tree position. A node at the root can follow a node deep in another subtree.
+
+**Decorations.** A container can carry `underlay` and `overlay` lists of nodes: they are painted behind and in front of its children, are never laid out and never count toward its size, and are placed in its frame by their own `at` and `points`. Inside them, the reference root `host` is the container's box: `host.width`, `host.height`, `host.right`, `host.bottom`. A shape drawn from the size of what it surrounds (a box in perspective, a folded corner, the tag of a frame) is a decoration.
+```yaml
+- layout: stack
+  padding: {left: 14, top: 24, right: 26, bottom: 12}
+  underlay:
+    - shape: polygon
+      points: [{x: 0, y: 12}, {x: 12, y: 0}, {x: "=host.width", y: 0}, {x: "=host.width", y: "=host.height - 12"}, {x: "=host.width - 12", y: "=host.height"}, {x: 0, y: "=host.height"}]
+  children: [...]
+```
 
 **Attachment policy,** set on the attacher:
 | Policy | Behaviour | Valid with |
@@ -321,6 +332,7 @@ Canonical operator names: `add`, `sub`, `mul`, `div`, `neg`, `min`, `max`, `abs`
 | `params`, loop variables | Template parameters and the current item | At template expansion |
 | `theme` | Token values in scope (section 10) | At template expansion, and again when a token changes |
 | `viewport` | `width`, `height` and the viewport's anchors | At resolution |
+| `host` | Inside a decoration: the box of the container it decorates (`width`, `height`, `left`, `right`, `top`, `bottom`, `center_x`, `center_y`), in its frame | At resolution |
 | A node path | `x`, `y`, `width`, `height`, `left`, `right`, `top`, `bottom`, `center_x`, `center_y`, and anchors | At resolution | A geometry reference is a dependency. It joins the attachment DAG, and a cycle is an error.
 
 ## 10. Styling
@@ -764,3 +776,6 @@ The 31 decisions taken on 17 November 2026, in the order they were made.
 | 36 | Template extension | `extends` and `set`, within a library | Relation families repeated the base's whole parameter list in every member |
 | 37 | Outlines | A template's outline may be one of its parts, a polygon included | Arrows stopped on the bounding box of diamonds |
 | 38 | Reserved IDs | An ID avoids geometry, anchors, common properties and the properties of its scope only | Reserving every property of every kind refused `start`, `fill` or `ordering` where no path was ambiguous |
+| 39 | Labels on connectors | `side` on an attachment to a connector point; the engine picks the anchor facing the line | Two libraries tuned label anchors and gaps by hand for each direction of line |
+| 40 | Points along connectors | `along` on an attachment to a connector point | Multiplicities and roles were placed with negative gaps |
+| 41 | Decorations | `underlay` and `overlay` on containers, with the `host` reference root | Shapes drawn from the size of what they surround needed a hidden stretched shape, a separate container and a layer to avoid a cycle |

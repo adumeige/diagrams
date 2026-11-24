@@ -12,7 +12,7 @@
   severity: error
   path: b.attach.extra
   source: {file: input.authored.yaml, line: 11, column: 116}
-  message: "unknown key 'extra' in attach; expected one of to, anchor, gap, offset, policy"
+  message: "unknown key 'extra' in attach; expected one of to, anchor, gap, offset, policy, side, along"
 - code: path_unresolved
   severity: error
   path: b.attach.to

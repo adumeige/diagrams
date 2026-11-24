@@ -22,7 +22,7 @@ scene:
       align: center
       children:
         - {id: memo, use: uml.note, text: A note in a row, width: 120}
-        - id: host
+        - id: server
           use: uml.node
           name: app-01
           stereotype: device
@@ -82,7 +82,7 @@ scene:
       static: []
     - use: uml.realization
       layer: relations
-      from: shelf.host.jar
+      from: shelf.server.jar
       to: shelf.api
       label: ""
       from_mult: ""
@@ -90,19 +90,19 @@ scene:
       from_role: ""
       to_role: ""
       route: straight
-      label_anchor: south
+      label_side: above
       label_gap: 4
     - use: uml.note_link
       layer: relations
       from: shelf.memo
-      to: shelf.host
+      to: shelf.server
       label: ""
       from_mult: ""
       to_mult: ""
       from_role: ""
       to_role: ""
       route: straight
-      label_anchor: south
+      label_side: above
       label_gap: 4
     - use: uml.transition
       layer: relations
@@ -112,8 +112,8 @@ scene:
       guard: ""
       effect: ""
       route: layout
-      label_anchor: center
-      label_gap: 14
+      label_side: above
+      label_gap: 4
     - use: uml.dependency
       layer: relations
       from: shelf.ship
@@ -124,7 +124,7 @@ scene:
       from_role: ""
       to_role: ""
       route: straight
-      label_anchor: south
+      label_side: above
       label_gap: 4
     - id: through
       use: uml.association
@@ -137,5 +137,5 @@ scene:
       from_role: ""
       to_role: ""
       route: straight
-      label_anchor: south
+      label_side: above
       label_gap: 4

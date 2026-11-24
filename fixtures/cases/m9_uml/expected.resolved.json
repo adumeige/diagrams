@@ -108,9 +108,9 @@
             "loc": "scene/7/1",
             "kind": "container",
             "layer": "default",
-            "box": [94.442271, 246.965538, 13.344, 14.88],
+            "box": [91.114286, 246.983006, 13.344, 14.88],
             "local": [0, 0, 13.344, 14.88],
-            "transform": [1, 0, 0, 1, 94.442271, 246.965538],
+            "transform": [1, 0, 0, 1, 91.114286, 246.983006],
             "opacity": 1,
             "children": [
               {
@@ -118,7 +118,7 @@
                 "loc": "scene/7/1/0",
                 "kind": "text",
                 "layer": "default",
-                "box": [94.442271, 246.965538, 13.344, 14.88],
+                "box": [91.114286, 246.983006, 13.344, 14.88],
                 "local": [0, 0, 13.344, 14.88],
                 "transform": [1, 0, 0, 1, 0, 0],
                 "opacity": 1,
@@ -245,35 +245,23 @@
                 "points": [[108, 0], [108, 12], [120, 12]]
               },
               {
-                "path": "shelf.memo.paper",
+                "path": null,
                 "loc": "scene/0/0/2",
-                "kind": "container",
+                "kind": "text",
                 "layer": "default",
-                "box": [30, 76.42, 120, 34.88],
-                "local": [0, 0, 120, 34.88],
-                "transform": [1, 0, 0, 1, 0, 0],
+                "box": [40, 86.42, 94, 14.88],
+                "local": [0, 0, 94, 14.88],
+                "transform": [1, 0, 0, 1, 10, 10],
                 "opacity": 1,
-                "children": [
-                  {
-                    "path": null,
-                    "loc": "scene/0/0/2/0",
-                    "kind": "text",
-                    "layer": "default",
-                    "box": [40, 86.42, 94, 14.88],
-                    "local": [0, 0, 94, 14.88],
-                    "transform": [1, 0, 0, 1, 10, 10],
-                    "opacity": 1,
-                    "fill": "#2d3436",
-                    "font": "body",
-                    "font_size": 12,
-                    "lines": [{"text": "A note in a row", "x": 0, "baseline": 11.4, "width": 79.236}]
-                  }
-                ]
+                "fill": "#2d3436",
+                "font": "body",
+                "font_size": 12,
+                "lines": [{"text": "A note in a row", "x": 0, "baseline": 11.4, "width": 79.236}]
               }
             ]
           },
           {
-            "path": "shelf.host",
+            "path": "shelf.server",
             "loc": "scene/0/1",
             "kind": "container",
             "template": "uml.node",
@@ -285,275 +273,205 @@
             "children": [
               {
                 "path": null,
-                "loc": "scene/0/1/1",
-                "kind": "container",
-                "layer": "faces",
-                "box": [200, 30, 142.036, 127.72],
-                "local": [0, 0, 142.036, 127.72],
-                "transform": [1, 0, 0, 1, 0, 0],
-                "opacity": 1,
-                "children": [
-                  {
-                    "path": null,
-                    "loc": "scene/0/1/1/0",
-                    "kind": "polygon",
-                    "layer": "default",
-                    "box": [200, 30, 142.036, 127.72],
-                    "local": [0, 0, 142.036, 127.72],
-                    "transform": [1, 0, 0, 1, 0, 0],
-                    "opacity": 1,
-                    "fill": "#00000000",
-                    "stroke": "#2d3436",
-                    "stroke_width": 1.5,
-                    "points": [
-                      [0, 12],
-                      [12, 0],
-                      [142.036, 0],
-                      [142.036, 115.72],
-                      [130.036, 127.72],
-                      [0, 127.72]
-                    ]
-                  },
-                  {
-                    "path": null,
-                    "loc": "scene/0/1/1/1",
-                    "kind": "polygon",
-                    "layer": "default",
-                    "box": [200, 42, 130.036, 115.72],
-                    "local": [0, 12, 130.036, 115.72],
-                    "transform": [1, 0, 0, 1, 0, 0],
-                    "opacity": 1,
-                    "fill": "#00000000",
-                    "stroke": "#2d3436",
-                    "stroke_width": 1.5,
-                    "points": [[0, 12], [130.036, 12], [130.036, 127.72], [0, 127.72]]
-                  },
-                  {
-                    "path": null,
-                    "loc": "scene/0/1/1/2",
-                    "kind": "line",
-                    "layer": "default",
-                    "box": [330.036, 30, 12, 12],
-                    "local": [130.036, 0, 12, 12],
-                    "transform": [1, 0, 0, 1, 0, 0],
-                    "opacity": 1,
-                    "stroke": "#2d3436",
-                    "stroke_width": 1.5,
-                    "points": [[130.036, 12], [142.036, 0]]
-                  }
-                ]
-              },
-              {
-                "path": null,
                 "loc": "scene/0/1/0",
-                "kind": "container",
+                "kind": "polygon",
                 "layer": "default",
                 "box": [200, 30, 142.036, 127.72],
                 "local": [0, 0, 142.036, 127.72],
                 "transform": [1, 0, 0, 1, 0, 0],
                 "opacity": 1,
+                "fill": "#00000000",
+                "stroke": "#2d3436",
+                "stroke_width": 1.5,
+                "points": [[0, 12], [12, 0], [142.036, 0], [142.036, 115.72], [130.036, 127.72], [0, 127.72]]
+              },
+              {
+                "path": null,
+                "loc": "scene/0/1/1",
+                "kind": "polygon",
+                "layer": "default",
+                "box": [200, 42, 130.036, 115.72],
+                "local": [0, 12, 130.036, 115.72],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "fill": "#00000000",
+                "stroke": "#2d3436",
+                "stroke_width": 1.5,
+                "points": [[0, 12], [130.036, 12], [130.036, 127.72], [0, 127.72]]
+              },
+              {
+                "path": null,
+                "loc": "scene/0/1/2",
+                "kind": "line",
+                "layer": "default",
+                "box": [330.036, 30, 12, 12],
+                "local": [130.036, 0, 12, 12],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "stroke": "#2d3436",
+                "stroke_width": 1.5,
+                "points": [[130.036, 12], [142.036, 0]]
+              },
+              {
+                "path": null,
+                "loc": "scene/0/1/3",
+                "kind": "container",
+                "layer": "default",
+                "box": [214, 54, 47.82, 33.48],
+                "local": [0, 0, 47.82, 33.48],
+                "transform": [1, 0, 0, 1, 14, 24],
+                "opacity": 1,
                 "children": [
                   {
-                    "path": "shelf.host.extent",
-                    "loc": "scene/0/1/0/0",
-                    "kind": "rect",
+                    "path": null,
+                    "loc": "scene/0/1/3/0",
+                    "kind": "text",
                     "layer": "default",
-                    "box": [200, 30, 142.036, 127.72],
-                    "local": [0, 0, 142.036, 127.72],
+                    "box": [214, 54, 47.82, 14.88],
+                    "local": [0, 0, 47.82, 14.88],
                     "transform": [1, 0, 0, 1, 0, 0],
                     "opacity": 1,
-                    "fill": "#00000000",
-                    "stroke": "#000000",
-                    "stroke_width": 0
+                    "fill": "#636e72",
+                    "font": "body",
+                    "font_size": 12,
+                    "lines": [{"text": "«device»", "x": 0, "baseline": 11.4, "width": 47.82}]
                   },
                   {
                     "path": null,
-                    "loc": "scene/0/1/0/1",
-                    "kind": "container",
+                    "loc": "scene/0/1/3/1",
+                    "kind": "text",
                     "layer": "default",
-                    "box": [200, 30, 142.036, 127.72],
-                    "local": [0, 0, 142.036, 127.72],
+                    "box": [214, 68.88, 46.14, 18.6],
+                    "local": [0, 0, 46.14, 18.6],
+                    "transform": [1, 0, 0, 1, 0, 14.88],
+                    "opacity": 1,
+                    "fill": "#2d3436",
+                    "font": "body",
+                    "font_size": 15,
+                    "lines": [{"text": "app-01", "x": 0, "baseline": 14.25, "width": 46.14}]
+                  }
+                ]
+              },
+              {
+                "path": null,
+                "loc": "scene/0/1/4",
+                "kind": "container",
+                "layer": "default",
+                "box": [214, 97.48, 102.036, 48.24],
+                "local": [0, 0, 102.036, 48.24],
+                "transform": [1, 0, 0, 1, 14, 67.48],
+                "opacity": 1,
+                "children": [
+                  {
+                    "path": "shelf.server.jar",
+                    "loc": "scene/0/1/4/0",
+                    "kind": "container",
+                    "template": "uml.artifact",
+                    "layer": "default",
+                    "box": [214, 97.48, 102.036, 48.24],
+                    "local": [0, 0, 102.036, 48.24],
                     "transform": [1, 0, 0, 1, 0, 0],
                     "opacity": 1,
                     "children": [
                       {
                         "path": null,
-                        "loc": "scene/0/1/0/1/0",
-                        "kind": "container",
+                        "loc": "scene/0/1/4/0/0",
+                        "kind": "rect",
                         "layer": "default",
-                        "box": [214, 54, 47.82, 33.48],
-                        "local": [0, 0, 47.82, 33.48],
-                        "transform": [1, 0, 0, 1, 14, 24],
+                        "box": [214, 97.48, 102.036, 48.24],
+                        "local": [0, 0, 102.036, 48.24],
+                        "transform": [1, 0, 0, 1, 0, 0],
                         "opacity": 1,
-                        "children": [
-                          {
-                            "path": null,
-                            "loc": "scene/0/1/0/1/0/0",
-                            "kind": "text",
-                            "layer": "default",
-                            "box": [214, 54, 47.82, 14.88],
-                            "local": [0, 0, 47.82, 14.88],
-                            "transform": [1, 0, 0, 1, 0, 0],
-                            "opacity": 1,
-                            "fill": "#636e72",
-                            "font": "body",
-                            "font_size": 12,
-                            "lines": [{"text": "«device»", "x": 0, "baseline": 11.4, "width": 47.82}]
-                          },
-                          {
-                            "path": null,
-                            "loc": "scene/0/1/0/1/0/1",
-                            "kind": "text",
-                            "layer": "default",
-                            "box": [214, 68.88, 46.14, 18.6],
-                            "local": [0, 0, 46.14, 18.6],
-                            "transform": [1, 0, 0, 1, 0, 14.88],
-                            "opacity": 1,
-                            "fill": "#2d3436",
-                            "font": "body",
-                            "font_size": 15,
-                            "lines": [{"text": "app-01", "x": 0, "baseline": 14.25, "width": 46.14}]
-                          }
-                        ]
+                        "fill": "#ffffff",
+                        "stroke": "#2d3436",
+                        "stroke_width": 1.5
                       },
                       {
                         "path": null,
-                        "loc": "scene/0/1/0/1/1",
+                        "loc": "scene/0/1/4/0/1",
                         "kind": "container",
                         "layer": "default",
                         "box": [214, 97.48, 102.036, 48.24],
                         "local": [0, 0, 102.036, 48.24],
-                        "transform": [1, 0, 0, 1, 14, 67.48],
+                        "transform": [1, 0, 0, 1, 0, 0],
                         "opacity": 1,
                         "children": [
                           {
-                            "path": "shelf.host.jar",
-                            "loc": "scene/0/1/0/1/1/0",
+                            "path": null,
+                            "loc": "scene/0/1/4/0/1/0",
                             "kind": "container",
-                            "template": "uml.artifact",
                             "layer": "default",
-                            "box": [214, 97.48, 102.036, 48.24],
-                            "local": [0, 0, 102.036, 48.24],
-                            "transform": [1, 0, 0, 1, 0, 0],
+                            "box": [226, 105.48, 51.036, 32.24],
+                            "local": [0, 0, 51.036, 32.24],
+                            "transform": [1, 0, 0, 1, 12, 8],
                             "opacity": 1,
                             "children": [
                               {
                                 "path": null,
-                                "loc": "scene/0/1/0/1/1/0/0",
-                                "kind": "rect",
+                                "loc": "scene/0/1/4/0/1/0/0",
+                                "kind": "text",
                                 "layer": "default",
-                                "box": [214, 97.48, 102.036, 48.24],
-                                "local": [0, 0, 102.036, 48.24],
+                                "box": [226, 105.48, 51.036, 14.88],
+                                "local": [0, 0, 51.036, 14.88],
+                                "transform": [1, 0, 0, 1, 0, 0],
+                                "opacity": 1,
+                                "fill": "#636e72",
+                                "font": "body",
+                                "font_size": 12,
+                                "lines": [{"text": "«artifact»", "x": 0, "baseline": 11.4, "width": 51.036}]
+                              },
+                              {
+                                "path": null,
+                                "loc": "scene/0/1/4/0/1/0/1",
+                                "kind": "text",
+                                "layer": "default",
+                                "box": [227.298, 120.36, 48.44, 17.36],
+                                "local": [0, 0, 48.44, 17.36],
+                                "transform": [1, 0, 0, 1, 1.298, 14.88],
+                                "opacity": 1,
+                                "fill": "#2d3436",
+                                "font": "body",
+                                "font_size": 14,
+                                "lines": [{"text": "shop.jar", "x": 0, "baseline": 13.3, "width": 48.44}]
+                              }
+                            ]
+                          },
+                          {
+                            "path": null,
+                            "loc": "scene/0/1/4/0/1/1",
+                            "kind": "container",
+                            "layer": "default",
+                            "box": [291.036, 105.48, 13, 17],
+                            "local": [0, 0, 13, 17],
+                            "transform": [1, 0, 0, 1, 77.036, 8],
+                            "opacity": 1,
+                            "children": [
+                              {
+                                "path": null,
+                                "loc": "scene/0/1/4/0/1/1/0",
+                                "kind": "polygon",
+                                "layer": "default",
+                                "box": [291.036, 105.48, 13, 17],
+                                "local": [0, 0, 13, 17],
                                 "transform": [1, 0, 0, 1, 0, 0],
                                 "opacity": 1,
                                 "fill": "#ffffff",
                                 "stroke": "#2d3436",
-                                "stroke_width": 1.5
+                                "stroke_width": 1.5,
+                                "points": [[0, 0], [9, 0], [13, 4], [13, 17], [0, 17]]
                               },
                               {
                                 "path": null,
-                                "loc": "scene/0/1/0/1/1/0/1",
-                                "kind": "container",
+                                "loc": "scene/0/1/4/0/1/1/1",
+                                "kind": "polyline",
                                 "layer": "default",
-                                "box": [214, 97.48, 102.036, 48.24],
-                                "local": [0, 0, 102.036, 48.24],
+                                "box": [300.036, 105.48, 4, 4],
+                                "local": [9, 0, 4, 4],
                                 "transform": [1, 0, 0, 1, 0, 0],
                                 "opacity": 1,
-                                "children": [
-                                  {
-                                    "path": null,
-                                    "loc": "scene/0/1/0/1/1/0/1/0",
-                                    "kind": "container",
-                                    "layer": "default",
-                                    "box": [226, 105.48, 51.036, 32.24],
-                                    "local": [0, 0, 51.036, 32.24],
-                                    "transform": [1, 0, 0, 1, 12, 8],
-                                    "opacity": 1,
-                                    "children": [
-                                      {
-                                        "path": null,
-                                        "loc": "scene/0/1/0/1/1/0/1/0/0",
-                                        "kind": "text",
-                                        "layer": "default",
-                                        "box": [226, 105.48, 51.036, 14.88],
-                                        "local": [0, 0, 51.036, 14.88],
-                                        "transform": [1, 0, 0, 1, 0, 0],
-                                        "opacity": 1,
-                                        "fill": "#636e72",
-                                        "font": "body",
-                                        "font_size": 12,
-                                        "lines": [
-                                          {
-                                            "text": "«artifact»",
-                                            "x": 0,
-                                            "baseline": 11.4,
-                                            "width": 51.036
-                                          }
-                                        ]
-                                      },
-                                      {
-                                        "path": null,
-                                        "loc": "scene/0/1/0/1/1/0/1/0/1",
-                                        "kind": "text",
-                                        "layer": "default",
-                                        "box": [227.298, 120.36, 48.44, 17.36],
-                                        "local": [0, 0, 48.44, 17.36],
-                                        "transform": [1, 0, 0, 1, 1.298, 14.88],
-                                        "opacity": 1,
-                                        "fill": "#2d3436",
-                                        "font": "body",
-                                        "font_size": 14,
-                                        "lines": [
-                                          {
-                                            "text": "shop.jar",
-                                            "x": 0,
-                                            "baseline": 13.3,
-                                            "width": 48.44
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "path": null,
-                                    "loc": "scene/0/1/0/1/1/0/1/1",
-                                    "kind": "container",
-                                    "layer": "default",
-                                    "box": [291.036, 105.48, 13, 17],
-                                    "local": [0, 0, 13, 17],
-                                    "transform": [1, 0, 0, 1, 77.036, 8],
-                                    "opacity": 1,
-                                    "children": [
-                                      {
-                                        "path": null,
-                                        "loc": "scene/0/1/0/1/1/0/1/1/0",
-                                        "kind": "polygon",
-                                        "layer": "default",
-                                        "box": [291.036, 105.48, 13, 17],
-                                        "local": [0, 0, 13, 17],
-                                        "transform": [1, 0, 0, 1, 0, 0],
-                                        "opacity": 1,
-                                        "fill": "#ffffff",
-                                        "stroke": "#2d3436",
-                                        "stroke_width": 1.5,
-                                        "points": [[0, 0], [9, 0], [13, 4], [13, 17], [0, 17]]
-                                      },
-                                      {
-                                        "path": null,
-                                        "loc": "scene/0/1/0/1/1/0/1/1/1",
-                                        "kind": "polyline",
-                                        "layer": "default",
-                                        "box": [300.036, 105.48, 4, 4],
-                                        "local": [9, 0, 4, 4],
-                                        "transform": [1, 0, 0, 1, 0, 0],
-                                        "opacity": 1,
-                                        "stroke": "#2d3436",
-                                        "stroke_width": 1,
-                                        "points": [[9, 0], [9, 4], [13, 4]]
-                                      }
-                                    ]
-                                  }
-                                ]
+                                "stroke": "#2d3436",
+                                "stroke_width": 1,
+                                "points": [[9, 0], [9, 4], [13, 4]]
                               }
                             ]
                           }
@@ -754,30 +672,18 @@
                 "points": [[0, 0], [55.804, 0], [71.804, 18.68], [55.804, 37.36], [0, 37.36]]
               },
               {
-                "path": "shelf.ship.label",
+                "path": null,
                 "loc": "scene/0/4/1",
-                "kind": "container",
+                "kind": "text",
                 "layer": "default",
-                "box": [620.36, 75.18, 55.804, 37.36],
-                "local": [0, 0, 55.804, 37.36],
-                "transform": [1, 0, 0, 1, 0, 0],
+                "box": [634.36, 85.18, 27.804, 17.36],
+                "local": [0, 0, 27.804, 17.36],
+                "transform": [1, 0, 0, 1, 14, 10],
                 "opacity": 1,
-                "children": [
-                  {
-                    "path": null,
-                    "loc": "scene/0/4/1/0",
-                    "kind": "text",
-                    "layer": "default",
-                    "box": [634.36, 85.18, 27.804, 17.36],
-                    "local": [0, 0, 27.804, 17.36],
-                    "transform": [1, 0, 0, 1, 14, 10],
-                    "opacity": 1,
-                    "fill": "#2d3436",
-                    "font": "body",
-                    "font_size": 14,
-                    "lines": [{"text": "Ship", "x": 0, "baseline": 13.3, "width": 27.804}]
-                  }
-                ]
+                "fill": "#2d3436",
+                "font": "body",
+                "font_size": 14,
+                "lines": [{"text": "Ship", "x": 0, "baseline": 13.3, "width": 27.804}]
               }
             ]
           }

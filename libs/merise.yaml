@@ -20,10 +20,9 @@
 #   - Names and properties are free text ("Date de commande"), so they are plain lists and not
 #     keyed ones.
 #
-# Labels of legs and arrows sit at the middle of the line, label_gap away along its left normal
-# (above a left-to-right line, right of a downward one). A negative label_gap puts the label on
-# the other side; label_anchor chooses which anchor of the label meets that point, which is how
-# a long label is kept clear of a slanted line.
+# Labels of legs and arrows sit at the middle of the line, beside it: label_side is left (the
+# default) or right of the line's direction, or above or below it on the screen, and label_gap is
+# the distance from the line. The engine turns the label so that it stays clear of a slanted line.
 #
 # An operation's emission rules are a keyed list: each is an exported part, and a result is
 # linked from '"<operation>.rule[ok]"' (quoted for the brackets).
@@ -32,7 +31,7 @@
 # the route a layered or tree container supplies and is a straight line anywhere else, and their
 # labels sit on the connector's 'label' anchor, in the room a layered container reserves for them.
 # An MCD has no direction, so a force container suits it: the legs are its edges. The two legs of a
-# reflexive association bow apart on their own; give one of them a negative label_gap so that the
+# reflexive association bow apart on their own; give one of them label_side: right so that the
 # two cardinalities sit on either side. ('scene' is a reserved ID: name a SCÈNE entity 'stage'.)
 #
 # Legs, arrows, attached notes: declare them in a free container, next to the grid or the rows
@@ -135,8 +134,8 @@ templates:
       role: {type: string, default: "", description: "Role of the entity, for a reflexive association"}
       identifying: {type: boolean, default: false, description: Relative identifier}
       route: {type: enum, values: [layout, straight, orthogonal], default: layout}
-      label_anchor: {type: enum, values: [center, north, south, east, west, north_east, north_west, south_east, south_west], default: center, description: "The label's own anchor that meets the leg"}
-      label_gap: {type: number, default: 20, description: "Distance from the middle of the leg; negative for the other side"}
+      label_side: {type: enum, values: [left, right, above, below], default: left, description: "Where the label sits: left or right of the line's direction, above or below it on the screen"}
+      label_gap: {type: number, default: 6, description: Distance from the line}
     exports:
       parts: [line]
       tokens: [stroke, ink, muted]
@@ -145,7 +144,7 @@ templates:
         - {shape: connector, id: line, from: "=params.from", to: "=params.to", route: "=params.route", style: wire}
         - layout: column
           align: center
-          attach: {anchor: "=params.label_anchor", to: line.label, gap: "=params.label_gap"}
+          attach: {to: line.label, side: "=params.label_side", gap: "=params.label_gap"}
           children:
             - {if: "not params.identifying", shape: text, text: "=params.cardinality", font_size: 13, fill: "=theme.ink"}
             - {if: params.identifying, shape: text, text: "='(' + params.cardinality + ')'", font_size: 13, fill: "=theme.ink"}
@@ -292,16 +291,10 @@ templates:
                   do: {shape: text, text: "='#' + col", font_size: 13, fill: "=theme.ink"}
 
   reference:
+    extends: arrow
     description: A referential link, from the table that holds the foreign key to the table it references.
     params:
-      from: {type: path, description: The table that holds the foreign key}
-      to: {type: path, description: The referenced table}
-      label: {type: string, default: ""}
       route: {type: enum, values: [layout, straight, orthogonal], default: orthogonal}
-      label_anchor: {type: enum, values: [center, north, south, east, west, north_east, north_west, south_east, south_west], default: center}
-      label_gap: {type: number, default: 14}
-    exports: {parts: [line], tokens: [stroke, muted]}
-    body: {use: arrow, from: "=params.from", to: "=params.to", label: "=params.label", route: "=params.route", label_anchor: "=params.label_anchor", label_gap: "=params.label_gap"}
 
   # ---- processing models (MCT, MOT) --------------------------------------------------------------
 
@@ -411,27 +404,23 @@ templates:
       to: {type: path}
       label: {type: string, default: ""}
       route: {type: enum, values: [layout, straight, orthogonal], default: layout}
-      label_anchor: {type: enum, values: [center, north, south, east, west, north_east, north_west, south_east, south_west], default: center, description: "The label's own anchor that meets the arrow"}
-      label_gap: {type: number, default: 14, description: "Distance from the middle of the arrow; negative for the other side"}
+      label_side: {type: enum, values: [left, right, above, below], default: left, description: "Where the label sits: left or right of the line's direction, above or below it on the screen"}
+      label_gap: {type: number, default: 4, description: Distance from the line}
     exports:
       parts: [line]
       tokens: [stroke, muted]
     body:
       children:
         - {shape: connector, id: line, from: "=params.from", to: "=params.to", route: "=params.route", marker_end: arrow, style: wire}
-        - {if: "params.label != ''", shape: text, text: "=params.label", font_size: 12, fill: "=theme.muted", attach: {anchor: "=params.label_anchor", to: line.label, gap: "=params.label_gap"}}
+        - {if: "params.label != ''", shape: text, text: "=params.label", font_size: 12, fill: "=theme.muted", attach: {to: line.label, side: "=params.label_side", gap: "=params.label_gap"}}
 
   trigger:
+    extends: arrow
     description: From an event to the operation it takes part in triggering.
-    params: {from: path, to: path, label: {type: string, default: ""}, route: {type: enum, values: [layout, straight, orthogonal], default: layout}, label_anchor: {type: enum, values: [center, north, south, east, west, north_east, north_west, south_east, south_west], default: center}, label_gap: {type: number, default: 14}}
-    exports: {parts: [line], tokens: [stroke, muted]}
-    body: {use: arrow, from: "=params.from", to: "=params.to", label: "=params.label", route: "=params.route", label_anchor: "=params.label_anchor", label_gap: "=params.label_gap"}
 
   emission:
+    extends: arrow
     description: From an operation, or one of its emission rules, to a result.
-    params: {from: path, to: path, label: {type: string, default: ""}, route: {type: enum, values: [layout, straight, orthogonal], default: layout}, label_anchor: {type: enum, values: [center, north, south, east, west, north_east, north_west, south_east, south_west], default: center}, label_gap: {type: number, default: 14}}
-    exports: {parts: [line], tokens: [stroke, muted]}
-    body: {use: arrow, from: "=params.from", to: "=params.to", label: "=params.label", route: "=params.route", label_anchor: "=params.label_anchor", label_gap: "=params.label_gap"}
 
   post:
     description: "A column heading of the MOT grid: a work post (poste de travail) or actor."
@@ -543,16 +532,8 @@ templates:
             - {slot: default}
 
   flow:
+    extends: arrow
     description: "A flow (flux) of information between two actors. Number the flows in their labels: '1. Commande'."
-    params:
-      from: {type: path}
-      to: {type: path}
-      label: {type: string, default: ""}
-      route: {type: enum, values: [layout, straight, orthogonal], default: layout}
-      label_anchor: {type: enum, values: [center, north, south, east, west, north_east, north_west, south_east, south_west], default: center}
-      label_gap: {type: number, default: 14}
-    exports: {parts: [line], tokens: [stroke, muted]}
-    body: {use: arrow, from: "=params.from", to: "=params.to", label: "=params.label", route: "=params.route", label_anchor: "=params.label_anchor", label_gap: "=params.label_gap"}
 
   # ---- any model -----------------------------------------------------------------------------------
 

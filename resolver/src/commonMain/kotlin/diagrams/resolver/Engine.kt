@@ -211,6 +211,13 @@ internal class Engine(
 
     /** The node a path written on [from] names, when present. Reports and returns null otherwise. */
     private fun target(ref: String, from: RNode, dp: DataPath, path: String): Pair<RNode, List<String>>? {
+        if (ref == "host" || ref.startsWith("host.")) {
+            val h = host(from) ?: run {
+                sink.error(Codes.PATH_UNRESOLVED, path, "'host' is the container a decoration decorates; '${from.path}' is not inside an underlay or overlay", dp)
+                return null
+            }
+            return h to ref.split('.').drop(1)
+        }
         val m = index.resolve(ref, from.info)
         if (m == null) {
             sink.error(Codes.PATH_UNRESOLVED, path, "'$ref' matches no node in scope", dp)
@@ -263,6 +270,12 @@ internal class Engine(
         sink.error(Codes.PATH_UNRESOLVED, path, "'$ref' does not name a geometry value", dp)
         return null
     }
+
+    /** An underlay or overlay node of a container (spec section 6, "Decorations"). */
+    private fun decoration(n: RNode): Boolean = n.node["\$decoration"] != null
+
+    /** The container a node decorates: the parent of its decoration (it or an ancestor). */
+    private fun host(n: RNode): RNode? = generateSequence(n) { it.parent }.firstOrNull { decoration(it) }?.parent
 
     /** [t]'s placement in the frame of [from], through their nearest common ancestor; null when there is none. */
     private fun between(from: RNode?, t: RNode): Matrix? {
@@ -501,7 +514,7 @@ internal class Engine(
      * size independent of anything attached inside it.
      */
     private fun dependent(n: RNode): Boolean {
-        if (n.isConnector) return true
+        if (n.isConnector || decoration(n)) return true
         val p = n.parent ?: return false
         if (slotted(n)) return false
         if (p.isFlow) return n.node["attach"] is Value.Map || n.node["\$along"] != null
@@ -545,7 +558,7 @@ internal class Engine(
      */
     private fun slotted(n: RNode): Boolean {
         val p = n.parent ?: return false
-        if (!p.isFlow || n.isConnector) return false
+        if (!p.isFlow || n.isConnector || decoration(n)) return false
         if (!Layouts.isGraph(p.layout)) return true
         return n.node["attach"] !is Value.Map && n.node["\$along"] == null && !edgeOnly(n)
     }
@@ -868,6 +881,8 @@ internal class Engine(
             pin(n) != null -> pin(n)!!.transform
             p == null || n.isConnector -> Matrix.IDENTITY
             slotted(n) -> flow(p).placements[n] ?: Matrix.IDENTITY
+            // a decoration is placed in its container's frame by its own `at`, whatever the layout
+            decoration(n) -> atPlacement(n)
             n.node["\$along"] is Value.Map -> along(n) ?: atPlacement(n)
             n.node["attach"] is Value.Map -> attached(n) ?: atPlacement(n)
             // in a layout container `at` means nothing: a child without a slot stays in the container's frame
@@ -1020,6 +1035,7 @@ internal class Engine(
                     return Matrix.translate(goal.x + off.x - local.x, goal.y + off.y - local.y) * m0
                 }
             }
+            if (t.isConnector && (a["side"] != null || a["along"] != null)) return beside(n, a, t, targetAnchor, inv)
             anchor(t, targetAnchor)
         }
         val p = inv.apply(pw)
@@ -1033,6 +1049,74 @@ internal class Engine(
         val m0 = pivot(n)
         val local = m0.apply(compass(stretchedBox(n), own).first)
         return Matrix.translate(goal.x - local.x, goal.y - local.y) * m0
+    }
+
+    /**
+     * An attachment beside a connector (spec section 6): the point `along` the route from the target
+     * anchor, then `gap` away on `side`, where the attacher's anchor is the one facing the line.
+     */
+    private fun beside(n: RNode, a: Value.Map, t: RNode, anchorName: String, inv: Matrix): Matrix? {
+        val dp = n.dp.key("attach")
+        val pts = route(t)
+        if (pts.size < 2) return null
+        fun num(k: String) = (eval(a[k], n, n.tokens, dp.key(k), "${n.path}.attach.$k") as? Value.Num)?.value ?: 0.0
+        val lens = pts.zipWithNext { p, q -> sqrt((q.x - p.x) * (q.x - p.x) + (q.y - p.y) * (q.y - p.y)) }
+        val total = lens.sum()
+        val along = num("along")
+        val reserved = if (anchorName == GeometryRefs.LABEL_ANCHOR) reservedLabel(t) else null
+        val s = when (anchorName) {
+            "start" -> along
+            "end" -> total - along
+            else -> total / 2 + along
+        }.coerceIn(0.0, total)
+        // the point at distance s, and the direction of travel there
+        var rest = s
+        var at = pts.last()
+        var dir = dir(pts[pts.size - 2], pts.last()) ?: Point(1.0, 0.0)
+        for ((i, l) in lens.withIndex()) {
+            if (rest <= l || i == lens.size - 1) {
+                val u = if (l == 0.0) 0.0 else (rest / l).coerceIn(0.0, 1.0)
+                at = Point(pts[i].x + (pts[i + 1].x - pts[i].x) * u, pts[i].y + (pts[i + 1].y - pts[i].y) * u)
+                dir = dir(pts[i], pts[i + 1]) ?: dir
+                break
+            }
+            rest -= l
+        }
+        if (reserved != null && a["along"] == null) at = reserved
+        val local = inv.apply(at)
+        val d = normalize(inv.applyVector(dir)) ?: Point(1.0, 0.0)
+        val left = Point(d.y, -d.x)
+        val normal = when ((eval(a["side"], n, n.tokens, dp.key("side"), "${n.path}.attach.side") as? Value.Str)?.value ?: "above") {
+            "left" -> left
+            "right" -> Point(-left.x, -left.y)
+            "below" -> up(left).let { Point(-it.x, -it.y) }
+            else -> up(left)
+        }
+        val gap = num("gap")
+        val off = a["offset"]?.let { point(n, it, dp.key("offset"), "${n.path}.attach.offset") } ?: Point(0.0, 0.0)
+        val goal = Point(local.x + normal.x * gap + off.x, local.y + normal.y * gap + off.y)
+        // the attacher's anchor that faces the line: opposite the normal, to the nearest compass point
+        val own = facing(Point(-normal.x, -normal.y))
+        val m0 = pivot(n)
+        val box = stretchedBox(n)
+        val p = m0.apply(compass(box, own).first)
+        return Matrix.translate(goal.x - p.x, goal.y - p.y) * m0
+    }
+
+    /** Of a normal and its opposite, the one that points up the screen (left, for a vertical line). */
+    private fun up(v: Point): Point = when {
+        v.y < -1e-6 -> v
+        v.y > 1e-6 -> Point(-v.x, -v.y)
+        v.x <= 0 -> v
+        else -> Point(-v.x, -v.y)
+    }
+
+    /** The compass anchor in direction [v] from a box's center: east for (1, 0), south_west for (-1, 1). */
+    private fun facing(v: Point): String {
+        val angle = kotlin.math.atan2(v.y, v.x) * 180 / kotlin.math.PI
+        val names = listOf("east", "south_east", "south", "south_west", "west", "north_west", "north", "north_east")
+        val i = ((angle + 360.0 + 22.5).mod(360.0) / 45.0).toInt().mod(8)
+        return names[i]
     }
 
     // ---------------------------------------------------------------- connectors

@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="420" viewBox="0 0 640 420">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <g data-path="scene">
+    <g data-path="shelf" transform="translate(30 30)">
+      <g data-path="shelf.card">
+        <polygon points="0,12 12,0 166.056,0 166.056,40.8 154.056,52.8 0,52.8" fill="#dfe6e9" stroke="#2d3436" stroke-width="1"/>
+        <g transform="translate(14 24)" font-family="Helvetica, Arial, sans-serif" font-size="14" fill="#000000">
+          <text x="0" y="11.977" xml:space="preserve">A box in perspective</text>
+        </g>
+        <ellipse data-path="shelf.card.badge" transform="translate(136.056 16)" cx="6" cy="6" rx="6" ry="6" fill="#d63031" stroke="#000000" stroke-width="1"/>
+      </g>
+      <rect data-path="shelf.plain" transform="translate(196.056 0)" width="80" height="60" fill="#ffffff" stroke="#2d3436" stroke-width="1"/>
+    </g>
+    <rect data-path="hub" transform="translate(300 230)" width="40" height="40" fill="#ffeaa7" stroke="#2d3436" stroke-width="1"/>
+    <rect data-path="right_box" transform="translate(560 230)" width="40" height="40" fill="#ffffff" stroke="#2d3436" stroke-width="1"/>
+    <rect data-path="left_box" transform="translate(40 230)" width="40" height="40" fill="#ffffff" stroke="#2d3436" stroke-width="1"/>
+    <rect data-path="low_box" transform="translate(300 370)" width="40" height="40" fill="#ffffff" stroke="#2d3436" stroke-width="1"/>
+    <g data-path="right_way">
+      <polyline points="340,250 551,250" fill="none" stroke="#2d3436" stroke-width="1"/>
+      <polygon points="560,250 551,253.6 551,246.4" fill="#2d3436" stroke="#2d3436" stroke-width="1" stroke-linejoin="miter"/>
+    </g>
+    <g data-path="back_way">
+      <polyline points="300,250 89,250" fill="none" stroke="#2d3436" stroke-width="1"/>
+      <polygon points="80,250 89,246.4 89,253.6" fill="#2d3436" stroke="#2d3436" stroke-width="1" stroke-linejoin="miter"/>
+    </g>
+    <g data-path="down">
+      <polyline points="320,270 320,361" fill="none" stroke="#2d3436" stroke-width="1"/>
+      <polygon points="320,370 316.4,361 323.6,361" fill="#2d3436" stroke="#2d3436" stroke-width="1" stroke-linejoin="miter"/>
+    </g>
+    <g data-path="slant">
+      <polyline points="175.647356,56.806471 299.669127,222.790294" fill="none" stroke="#0984e3" stroke-width="1"/>
+      <polygon points="305.056162,230 296.785245,224.945108 302.55301,220.63548" fill="#0984e3" stroke="#0984e3" stroke-width="1" stroke-linejoin="miter"/>
+    </g>
+    <g transform="translate(435.018 233.8)" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#000000">
+      <text x="0" y="9.4105" xml:space="preserve">above</text>
+    </g>
+    <g transform="translate(435.634 253)" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#000000">
+      <text x="0" y="9.4105" xml:space="preserve">below</text>
+    </g>
+    <g transform="translate(175.018 233.8)" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#000000">
+      <text x="0" y="9.4105" xml:space="preserve">above</text>
+    </g>
+    <g transform="translate(182.663 253)" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#000000">
+      <text x="0" y="9.4105" xml:space="preserve">left</text>
+    </g>
+    <g transform="translate(323 313.4)" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#000000">
+      <text x="0" y="9.4105" xml:space="preserve">left</text>
+    </g>
+    <g transform="translate(295.605 313.4)" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#000000">
+      <text x="0" y="9.4105" xml:space="preserve">right</text>
+    </g>
+    <g transform="translate(242.754994 128.407557)" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#000000">
+      <text x="0" y="9.4105" xml:space="preserve">slanted</text>
+    </g>
+    <g transform="translate(350.942 234.8)" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#000000">
+      <text x="0" y="9.4105" xml:space="preserve">1</text>
+    </g>
+    <g transform="translate(533.7445 234.8)" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#000000">
+      <text x="0" y="9.4105" xml:space="preserve">0..*</text>
+    </g>
+  </g>
+</svg>

@@ -44,13 +44,19 @@ object CoreSchema {
     val LAYOUTS: Set<String> = Layouts.kinds.keys
     val ROUTES = setOf("straight", "orthogonal", "layout")
     val ALIGNS = setOf("start", "center", "end", "stretch")
-    val ATTACH_KEYS = setOf("to", "anchor", "gap", "offset", "policy")
+    val ATTACH_KEYS = setOf("to", "anchor", "gap", "offset", "policy", "side", "along")
+
+    /** Where an attacher sits beside a connector (spec section 6, "Beside a connector"). */
+    val SIDES = setOf("left", "right", "above", "below")
     val POLICIES = setOf("follow", "stretch", "block")
     val MARKERS = setOf("none", "arrow", "open_arrow", "triangle", "diamond", "open_diamond", "circle", "open_circle")
     val MEDIA = setOf("image", "audio", "video")
 
     /** Property names are reserved and cannot be used as IDs (spec section 5). */
-    val RESERVED_ROOTS = setOf("scene", "camera", "viewport", "theme")
+    val RESERVED_ROOTS = setOf("scene", "camera", "viewport", "theme", "host")
+
+    /** Lists of nodes a container holds: its children, and its decorations (spec section 6, "Decorations"). */
+    val DECORATIONS = listOf("underlay", "overlay")
 
     val ID_PATTERN = Regex("[a-z][a-z0-9_]*")
     val COLOR_PATTERN = Regex("#([0-9a-fA-F]{8}|[0-9a-fA-F]{6})") // longest first: JS `matches` does not backtrack across alternatives
@@ -119,6 +125,8 @@ object CoreSchema {
             Prop("seed", PType.NUMBER),
             Prop("link_distance", PType.NUMBER),
             Prop("children", PType.NODES, Value.List(emptyList())),
+            Prop("underlay", PType.NODES),
+            Prop("overlay", PType.NODES),
         ),
     )
 

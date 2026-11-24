@@ -35,11 +35,11 @@ class Expander(private val env: Environment, private val sink: DiagnosticSink) {
             val slots = docSlots(v, dp, path)
             return instance(v, dp, path, null, slots, emptyList())
         }
-        val kids = (v["children"] as? Value.List)?.items.orEmpty()
+        fun list(k: String) = (v[k] as? Value.List)?.items.orEmpty().mapIndexedNotNull { i, c -> (c as? Value.Map)?.let { docNode(it, dp.key(k).index(i), childPathOf(path, it)) } }
         return ENode(
-            without(v, "children"),
+            without(without(without(v, "children"), "underlay"), "overlay"),
             dp,
-            kids.mapIndexedNotNull { i, c -> (c as? Value.Map)?.let { docNode(it, dp.key("children").index(i), childPathOf(path, it)) } },
+            decorated(list("underlay"), list("children"), list("overlay")),
         )
     }
 
@@ -145,7 +145,7 @@ class Expander(private val env: Environment, private val sink: DiagnosticSink) {
         }
         val props = LinkedHashMap<String, Value>()
         for ((k, x) in v.entries) {
-            if (k == "children" || k == "slots") continue
+            if (k == "children" || k == "slots" || k in CoreSchema.DECORATIONS) continue
             props[k] = when (k) {
                 "use" -> qualify((x as? Value.Str)?.value ?: "", ctx.template) { env.modules[ctx.template.module]?.templates?.containsKey(it) == true }
                 // a style may be chosen from the parameters: `style: "=choose(params.dashed, 'dashed', 'solid')"`
@@ -163,8 +163,18 @@ class Expander(private val env: Environment, private val sink: DiagnosticSink) {
             }
             return listOfNotNull(instance(Value.Map(props), dp, nodePath, ctx.tag, slots, ctx.stack))
         }
-        val kids = (v["children"] as? Value.List)?.items.orEmpty().flatMapIndexed { i, c -> body(c, ctx, dp.key("children").index(i)) }
+        fun list(k: String) = (v[k] as? Value.List)?.items.orEmpty().flatMapIndexed { i, c -> body(c, ctx, dp.key(k).index(i)) }
+        val kids = decorated(list("underlay"), list("children"), list("overlay"))
         return listOf(ENode(canonical(Value.Map(props), dp, nodePath), dp, kids, owner = ctx.tag))
+    }
+
+    /**
+     * Decorations join the children (spec section 6): underlay first and overlay last, so that they
+     * paint behind and in front, marked so that layout and sizes leave them out.
+     */
+    private fun decorated(under: List<ENode>, kids: List<ENode>, over: List<ENode>): List<ENode> {
+        fun mark(e: ENode, side: String) = ENode(Value.Map(e.node.entries + ("\$decoration" to Value.Str(side))), e.dp, e.children, e.instance, e.owner)
+        return under.map { mark(it, "under") } + kids + over.map { mark(it, "over") }
     }
 
     private fun forEach(raw: Value.Map, ctx: Ctx, dp: DataPath): List<ENode> {

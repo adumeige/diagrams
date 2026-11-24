@@ -52,6 +52,6 @@ scene:
     - {use: uml.link, layer: relations, from: board.member.figure, to: board.shop.track}
     - {use: uml.generalization, layer: relations, from: board.member.figure, to: board.customer, route: straight}
     - {use: uml.include, layer: relations, from: board.shop.checkout, to: board.shop.pay}
-    - {use: uml.extend, layer: relations, from: board.shop.coupon, to: board.shop.checkout, condition: code entered, label_anchor: north}
+    - {use: uml.extend, layer: relations, from: board.shop.coupon, to: board.shop.checkout, condition: code entered}
     - {use: uml.include, layer: relations, from: board.shop.track, to: board.shop.sign_in}
     - {use: uml.link, layer: relations, from: board.bank.figure, to: board.shop.pay}

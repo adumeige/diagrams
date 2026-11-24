@@ -67,8 +67,8 @@ scene:
     - {use: uml.flow, layer: relations, from: act.customer.begin, to: act.customer.place}
     - {use: uml.flow, layer: relations, from: act.customer.place, to: act.shop.check, route: orthogonal}
     - {use: uml.flow, layer: relations, from: act.shop.check, to: act.shop.in_stock}
-    - {use: uml.flow, layer: relations, from: act.shop.in_stock, to: act.shop.merged, guard: in stock, label_anchor: west, label_gap: 10}
-    - {use: uml.flow, layer: relations, from: act.shop.in_stock, to: act.supplier.restock.order_more.north, guard: out of stock, route: orthogonal, label_anchor: south, label_gap: 4}
+    - {use: uml.flow, layer: relations, from: act.shop.in_stock, to: act.shop.merged, guard: in stock}
+    - {use: uml.flow, layer: relations, from: act.shop.in_stock, to: act.supplier.restock.order_more.north, guard: out of stock, route: orthogonal}
     - {use: uml.flow, layer: relations, from: act.supplier.restock.order_more, to: act.shop.merged.east, route: orthogonal}
     - {use: uml.flow, layer: relations, from: act.supplier.restock.order_more, to: act.supplier.restock.wait}
     - {use: uml.flow, layer: relations, from: act.supplier.restock.wait, to: act.supplier.give_up}

@@ -62,9 +62,9 @@
             "loc": "scene/3/2",
             "kind": "text",
             "layer": "default",
-            "box": [173.806, 80.72, 4.824, 14.88],
+            "box": [167.394, 77.72, 4.824, 14.88],
             "local": [0, 0, 4.824, 14.88],
-            "transform": [1, 0, 0, 1, 173.806, 80.72],
+            "transform": [1, 0, 0, 1, 167.394, 77.72],
             "opacity": 1,
             "fill": "#636e72",
             "font": "body",
@@ -76,9 +76,9 @@
             "loc": "scene/3/3",
             "kind": "text",
             "layer": "default",
-            "box": [404.524, 80.72, 13.476, 14.88],
+            "box": [415.262, 77.72, 13.476, 14.88],
             "local": [0, 0, 13.476, 14.88],
-            "transform": [1, 0, 0, 1, 404.524, 80.72],
+            "transform": [1, 0, 0, 1, 415.262, 77.72],
             "opacity": 1,
             "fill": "#636e72",
             "font": "body",
@@ -678,37 +678,20 @@
             "points": [[168, 0], [168, 12], [180, 12]]
           },
           {
-            "path": "squad_note.paper",
+            "path": null,
             "loc": "scene/5/2",
-            "kind": "container",
+            "kind": "text",
             "layer": "default",
-            "box": [205.903, 205.6, 180, 49.76],
-            "local": [0, 0, 180, 49.76],
-            "transform": [1, 0, 0, 1, 0, 0],
+            "box": [215.903, 215.6, 154, 29.76],
+            "local": [0, 0, 154, 29.76],
+            "transform": [1, 0, 0, 1, 10, 10],
             "opacity": 1,
-            "children": [
-              {
-                "path": null,
-                "loc": "scene/5/2/0",
-                "kind": "text",
-                "layer": "default",
-                "box": [215.903, 215.6, 154, 29.76],
-                "local": [0, 0, 154, 29.76],
-                "transform": [1, 0, 0, 1, 10, 10],
-                "opacity": 1,
-                "fill": "#2d3436",
-                "font": "body",
-                "font_size": 12,
-                "lines": [
-                  {
-                    "text": "Matchday squad: 15 starters",
-                    "x": 0,
-                    "baseline": 11.4,
-                    "width": 147.276
-                  },
-                  {"text": "and 8 replacements", "x": 0, "baseline": 26.28, "width": 105.372}
-                ]
-              }
+            "fill": "#2d3436",
+            "font": "body",
+            "font_size": 12,
+            "lines": [
+              {"text": "Matchday squad: 15 starters", "x": 0, "baseline": 11.4, "width": 147.276},
+              {"text": "and 8 replacements", "x": 0, "baseline": 26.28, "width": 105.372}
             ]
           }
         ]

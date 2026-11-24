@@ -149,7 +149,14 @@ internal fun canonicalValue(prop: Prop, av: Value, dp: DataPath, path: String, s
 }
 
 /** Typed members of `attach` and `padding`, so their expressions are canonicalized and printed. */
-internal val ATTACH_PROPS = mapOf("gap" to Prop("gap", PType.NUMBER), "offset" to Prop("offset", PType.POINT), "to" to Prop("to", PType.STRING), "anchor" to Prop("anchor", PType.STRING))
+internal val ATTACH_PROPS = mapOf(
+    "gap" to Prop("gap", PType.NUMBER),
+    "offset" to Prop("offset", PType.POINT),
+    "to" to Prop("to", PType.STRING),
+    "anchor" to Prop("anchor", PType.STRING),
+    "side" to Prop("side", PType.ENUM, values = CoreSchema.SIDES),
+    "along" to Prop("along", PType.NUMBER),
+)
 internal val PADDING_SIDE = Prop("padding", PType.NUMBER)
 
 /** Token overrides take literals or expressions (evaluated in the parent's token scope). */
@@ -269,7 +276,7 @@ internal class Canonicalizer(private val sink: DiagnosticSink, private val env: 
         }
         val styled = styleNames(v["style"]).flatMap { env.style(it)?.keys.orEmpty() }.toSet()
         for (prop in kind.props) {
-            if (prop.name == "id" || prop.name == "layout" || prop.name == "children") continue
+            if (prop.name == "id" || prop.name == "layout" || prop.name == "children" || prop.name in CoreSchema.DECORATIONS) continue
             val av = v[prop.name]
             when {
                 av != null -> out[prop.name] = propValue(prop, av, dp, path)
@@ -277,8 +284,11 @@ internal class Canonicalizer(private val sink: DiagnosticSink, private val env: 
                 prop.default != null && prop.supported && !(isRoot && prop.name in ROOT_EXEMPT) -> out[prop.name] = prop.default
             }
         }
-        for ((k, x) in v.entries) if (k !in out && k != "children") out[k] = x
+        for ((k, x) in v.entries) if (k !in out && k != "children" && k !in CoreSchema.DECORATIONS) out[k] = x
         if (kind === CoreSchema.container) {
+            for (k in CoreSchema.DECORATIONS) (v[k] as? Value.List)?.let { l ->
+                out[k] = Value.List(l.items.mapIndexed { i, c -> node(c, dp.key(k).index(i), childPathOf(path, c), isRoot = false) })
+            }
             val children = v["children"]
             out["children"] = when (children) {
                 null -> Value.List(emptyList())
@@ -335,7 +345,7 @@ object Printer {
             v.entries.mapValuesTo(LinkedHashMap()) { (k, x) ->
                 val prop = kind[k]
                 when {
-                    k == "children" && x is Value.List -> Value.List(x.items.map { node(it) })
+                    (k == "children" || k in CoreSchema.DECORATIONS) && x is Value.List -> Value.List(x.items.map { node(it) })
                     prop == null -> x
                     else -> nodeProp(k, prop, x)
                 }
