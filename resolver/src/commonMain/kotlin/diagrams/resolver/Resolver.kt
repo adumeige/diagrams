@@ -47,6 +47,14 @@ class ResolvedNode(
     val template: String? = null,
     /** The fraction of the stroke drawn, from its start (1: all of it). */
     val draw: Double = 1.0,
+    /**
+     * For a connector that follows the route a graph layout supplied (graph layouts addendum,
+     * section 3): that route before its ends are cut back for markers, in the parent's frame. A
+     * transition interpolates it instead of laying the graph out again.
+     */
+    val route: List<Point>? = null,
+    /** The room the layout reserved for the connector's label, in the parent's frame. */
+    val routeLabel: Point? = null,
 ) {
     val label: String get() = ref ?: loc
 
@@ -65,7 +73,7 @@ class ResolvedNode(
         geometry: Geometry = this.geometry,
         children: List<ResolvedNode> = this.children,
         draw: Double = this.draw,
-    ) = ResolvedNode(ref, loc, kind, layer, local, transform, world, box, opacity, paint, geometry, children, template, draw)
+    ) = ResolvedNode(ref, loc, kind, layer, local, transform, world, box, opacity, paint, geometry, children, template, draw, route, routeLabel)
 }
 
 data class Paint(val fill: String?, val stroke: String?, val strokeWidth: Double)
@@ -173,7 +181,14 @@ object Resolver {
      * evaluated and patched onto the tree, then layout, attachments and routing. [pins] impose
      * placements for a transition frame; [applied] reuses a state application already computed.
      */
-    internal fun raw(doc: Value.Map, sourceMap: SourceMap?, options: ResolveOptions, pins: Map<String, Pin> = emptyMap(), applied: StateApplication? = null): Raw {
+    internal fun raw(
+        doc: Value.Map,
+        sourceMap: SourceMap?,
+        options: ResolveOptions,
+        pins: Map<String, Pin> = emptyMap(),
+        applied: StateApplication? = null,
+        routePins: Map<String, RoutePin> = emptyMap(),
+    ): Raw {
         val sink = DiagnosticSink(sourceMap)
         val vp = doc["viewport"] as Value.Map
         val w = (vp["width"] as Value.Num).value
@@ -182,9 +197,11 @@ object Resolver {
         val app = applied ?: StateResolver.apply(doc, options.environment, options.states, sink)
         val (tree, camera) = TimePlayer.play(app, options)
         val index = NodeIndex(tree)
-        val engine = Engine(sink, w, h, options, index, pins)
+        val engine = Engine(sink, w, h, options, index, pins, routePins)
         val rootInfo = index.root
         val rootNode = rootInfo?.let { engine.build(it, null) }
+        // a transition frame is derived from two resolutions that have reported already
+        if (pins.isEmpty()) rootNode?.let { engine.checkHints(it) }
         val root = rootNode?.let { Finisher(engine, sink).finish(it, isRoot = true) } ?: emptyRoot()
         val view = Cameras.resolve(camera, root, w, h, sink)
         val scene = ResolvedScene(CoreSchema.FORMAT, w, h, options.time, root, engine.background(), app.current, view, layerOptions(rootInfo?.node), engine.clips.toList())
@@ -258,6 +275,8 @@ private class Finisher(private val e: Engine, private val sink: DiagnosticSink) 
         val local: Box
         val geometry: Geometry
         var p = paint
+        var route: List<Point>? = null
+        var routeLabel: Point? = null
         when (n.kind) {
             "container" -> {
                 local = e.finalBox(n)
@@ -289,6 +308,10 @@ private class Finisher(private val e: Engine, private val sink: DiagnosticSink) 
                 local = Box.of(mk.points + mk.markers.flatMap { it.points })
                 geometry = Geometry.Poly(mk.points, false, mk.markers)
                 p = p.copy(fill = null)
+                if (e.supplied(n)) {
+                    route = e.routeInParent(n)
+                    routeLabel = e.labelInParent(n)
+                }
             }
             "image", "video" -> {
                 local = e.finalBox(n)
@@ -337,6 +360,8 @@ private class Finisher(private val e: Engine, private val sink: DiagnosticSink) 
             children = children,
             template = n.info.template?.ref,
             draw = e.num(n, "draw", 1.0).coerceIn(0.0, 1.0),
+            route = route,
+            routeLabel = routeLabel,
         )
     }
 
@@ -421,6 +446,8 @@ fun ResolvedNode.toValue(): Value {
             if (g.markers.isNotEmpty()) {
                 out["markers"] = Value.List(g.markers.map { m -> Value.map("kind" to Value.Str(m.kind), "points" to Value.List(m.points.map { it.toValue() })) })
             }
+            if (route != null) out["route"] = Value.Str("layout")
+            routeLabel?.let { out["label"] = it.toValue() }
         }
         is Geometry.PathGeom -> out["segments"] = Value.List(
             g.segments.map { s ->

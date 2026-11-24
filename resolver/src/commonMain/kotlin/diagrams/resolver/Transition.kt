@@ -15,6 +15,8 @@ import diagrams.processor.TrackSource
  * - The automatic diff interpolates boxes, transforms, opacity, colors and compatible geometry.
  *   Layout is not solved again per frame, but connectors, attached nodes and nodes placed by
  *   geometry references are derived again on every frame from the interpolated boxes (decision 29).
+ *   A route supplied by a graph layout is part of that layout: it is interpolated, and what is
+ *   attached to the connector follows the interpolated route (graph layouts addendum, section 9).
  * - An explicit transition's body is a time item where `{auto: all}` places the automatic diff; its
  *   other items (clips, tracks) play on top.
  * - A node that exits pops at the start, unless it has an `exit` clip, which plays from the start.
@@ -133,8 +135,13 @@ class Transition internal constructor(private val a: Raw, private val b: Raw) {
     /** Derives connectors and attached nodes again from the interpolated boxes: everything else is pinned. */
     private fun rederive(frame: ResolvedScene): ResolvedScene {
         val pins = HashMap<String, Pin>()
-        frame.root.walk { pins[it.loc] = Pin(it.transform, it.local) }
-        val r = Resolver.raw(b.doc, b.sourceMap, b.options, pins, b.applied).scene
+        // a route supplied by a graph layout is interpolated like a box: the graph is not laid out again
+        val routes = HashMap<String, RoutePin>()
+        frame.root.walk { n ->
+            pins[n.loc] = Pin(n.transform, n.local)
+            n.route?.let { routes[n.loc] = RoutePin(it, n.routeLabel) }
+        }
+        val r = Resolver.raw(b.doc, b.sourceMap, b.options, pins, b.applied, routes).scene
         val byLoc = HashMap<String, ResolvedNode>()
         r.root.walk { byLoc[it.loc] = it }
         fun merge(n: ResolvedNode): ResolvedNode {

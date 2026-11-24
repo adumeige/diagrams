@@ -1,0 +1,92 @@
+{
+  "format": "diagrams/0.1",
+  "viewport": {"width": 520, "height": 420},
+  "time": 0.3,
+  "states": {"scene": "long"},
+  "root": {
+    "path": "scene",
+    "loc": "scene",
+    "kind": "container",
+    "layer": "default",
+    "box": [30, 30, 266.842, 124.4],
+    "local": [30, 30, 266.842, 124.4],
+    "transform": [1, 0, 0, 1, 0, 0],
+    "opacity": 1,
+    "children": [
+      {
+        "path": "flow",
+        "loc": "scene/0",
+        "kind": "container",
+        "layer": "default",
+        "box": [30, 30, 266.842, 124.4],
+        "local": [0, 0, 266.842, 124.4],
+        "transform": [1, 0, 0, 1, 30, 30],
+        "opacity": 1,
+        "children": [
+          {
+            "path": "flow.draft",
+            "loc": "scene/0/0",
+            "kind": "rect",
+            "layer": "default",
+            "box": [30, 35.625, 100, 40],
+            "local": [0, 0, 100, 40],
+            "transform": [1, 0, 0, 1, 0, 5.625],
+            "opacity": 1,
+            "fill": "#dfe6e9",
+            "stroke": "#2d3436",
+            "stroke_width": 1.5,
+            "corner_radius": 6
+          },
+          {
+            "path": "flow.publish",
+            "loc": "scene/0/2",
+            "kind": "rect",
+            "layer": "default",
+            "box": [190, 92.825, 100, 40],
+            "local": [0, 0, 100, 40],
+            "transform": [1, 0, 0, 1, 160, 62.825],
+            "opacity": 1,
+            "fill": "#dfe6e9",
+            "stroke": "#2d3436",
+            "stroke_width": 1.5,
+            "corner_radius": 6
+          },
+          {
+            "path": "flow.direct",
+            "loc": "scene/0/5",
+            "kind": "connector",
+            "layer": "default",
+            "box": [109.548097, 75.625, 80.451903, 37.56777],
+            "local": [79.548097, 45.625, 80.451903, 37.56777],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "stroke": "#2d3436",
+            "stroke_width": 1.5,
+            "points": [[79.548097, 45.625], [105, 62.852439], [155, 79.347561], [155, 79.347561]],
+            "markers": [
+              {
+                "kind": "arrow",
+                "points": [[160, 79.663691], [149.255904, 83.19277], [149.785945, 74.809509]]
+              }
+            ],
+            "route": "layout",
+            "label": [147.171, 79.7]
+          },
+          {
+            "path": "flow.note",
+            "loc": "scene/0/6",
+            "kind": "text",
+            "layer": "default",
+            "box": [152.829, 102.5, 48.684, 14.4],
+            "local": [0, 0, 48.684, 14.4],
+            "transform": [1, 0, 0, 1, 122.829, 72.5],
+            "opacity": 1,
+            "fill": "#636e72",
+            "font_size": 12,
+            "lines": [{"text": "fast track", "x": 0, "baseline": 10.266, "width": 48.684}]
+          }
+        ]
+      }
+    ]
+  }
+}

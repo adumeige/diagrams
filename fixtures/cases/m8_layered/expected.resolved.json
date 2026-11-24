@@ -1,0 +1,541 @@
+{
+  "format": "diagrams/0.1",
+  "viewport": {"width": 900, "height": 620},
+  "time": 0,
+  "root": {
+    "path": "scene",
+    "loc": "scene",
+    "kind": "container",
+    "layer": "default",
+    "box": [20, 20, 800, 576],
+    "local": [20, 20, 800, 576],
+    "transform": [1, 0, 0, 1, 0, 0],
+    "opacity": 1,
+    "children": [
+      {
+        "path": "flow",
+        "loc": "scene/0",
+        "kind": "container",
+        "layer": "default",
+        "box": [20, 20, 433.285714, 454.4],
+        "local": [0, 0, 433.285714, 454.4],
+        "transform": [1, 0, 0, 1, 20, 20],
+        "opacity": 1,
+        "children": [
+          {
+            "path": "flow.read",
+            "loc": "scene/0/0",
+            "kind": "rect",
+            "layer": "default",
+            "box": [169.260014, 20, 110, 40],
+            "local": [0, 0, 110, 40],
+            "transform": [1, 0, 0, 1, 149.260014, 0],
+            "opacity": 1,
+            "fill": "#dfe6e9",
+            "stroke": "#2d3436",
+            "stroke_width": 1.5,
+            "corner_radius": 6
+          },
+          {
+            "path": "flow.parse",
+            "loc": "scene/0/1",
+            "kind": "rect",
+            "layer": "default",
+            "box": [150.911375, 120, 110, 40],
+            "local": [0, 0, 110, 40],
+            "transform": [1, 0, 0, 1, 130.911375, 100],
+            "opacity": 1,
+            "fill": "#dfe6e9",
+            "stroke": "#2d3436",
+            "stroke_width": 1.5,
+            "corner_radius": 6
+          },
+          {
+            "path": "flow.check",
+            "loc": "scene/0/2",
+            "kind": "rect",
+            "layer": "default",
+            "box": [89.170622, 220, 110, 40],
+            "local": [0, 0, 110, 40],
+            "transform": [1, 0, 0, 1, 69.170622, 200],
+            "opacity": 1,
+            "fill": "#dfe6e9",
+            "stroke": "#2d3436",
+            "stroke_width": 1.5,
+            "corner_radius": 6
+          },
+          {
+            "path": "flow.repair",
+            "loc": "scene/0/3",
+            "kind": "rect",
+            "layer": "default",
+            "box": [20, 334.4, 110, 40],
+            "local": [0, 0, 110, 40],
+            "transform": [1, 0, 0, 1, 0, 314.4],
+            "opacity": 1,
+            "fill": "#dfe6e9",
+            "stroke": "#2d3436",
+            "stroke_width": 1.5,
+            "corner_radius": 6
+          },
+          {
+            "path": "flow.emit",
+            "loc": "scene/0/4",
+            "kind": "rect",
+            "layer": "default",
+            "box": [170, 334.4, 110, 40],
+            "local": [0, 0, 110, 40],
+            "transform": [1, 0, 0, 1, 150, 314.4],
+            "opacity": 1,
+            "fill": "#dfe6e9",
+            "stroke": "#2d3436",
+            "stroke_width": 1.5,
+            "corner_radius": 6
+          },
+          {
+            "path": "flow.report",
+            "loc": "scene/0/5",
+            "kind": "rect",
+            "layer": "default",
+            "box": [342, 334.4, 110, 40],
+            "local": [0, 0, 110, 40],
+            "transform": [1, 0, 0, 1, 322, 314.4],
+            "opacity": 1,
+            "fill": "#dfe6e9",
+            "stroke": "#2d3436",
+            "stroke_width": 1.5,
+            "corner_radius": 6
+          },
+          {
+            "path": "flow.finish",
+            "loc": "scene/0/6",
+            "kind": "rect",
+            "layer": "default",
+            "box": [193.285714, 434.4, 110, 40],
+            "local": [0, 0, 110, 40],
+            "transform": [1, 0, 0, 1, 173.285714, 414.4],
+            "opacity": 1,
+            "fill": "#dfe6e9",
+            "stroke": "#2d3436",
+            "stroke_width": 1.5,
+            "corner_radius": 6
+          },
+          {
+            "path": "flow.audit",
+            "loc": "scene/0/7",
+            "kind": "rect",
+            "layer": "default",
+            "box": [343.285714, 434.4, 110, 40],
+            "local": [0, 0, 110, 40],
+            "transform": [1, 0, 0, 1, 323.285714, 414.4],
+            "opacity": 1,
+            "fill": "#dfe6e9",
+            "stroke": "#2d3436",
+            "stroke_width": 1.5,
+            "corner_radius": 6
+          },
+          {
+            "path": "flow.e1",
+            "loc": "scene/0/8",
+            "kind": "connector",
+            "layer": "default",
+            "box": [207.345039, 60, 13.245247, 60],
+            "local": [187.345039, 40, 13.245247, 60],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "stroke": "#2d3436",
+            "stroke_width": 1.5,
+            "points": [[200.590286, 40], [191.476074, 89.672412]],
+            "markers": [
+              {
+                "kind": "arrow",
+                "points": [[189.581102, 100], [187.345039, 88.914423], [195.60711, 90.4304]]
+              }
+            ],
+            "route": "layout"
+          },
+          {
+            "path": "flow.e2",
+            "loc": "scene/0/9",
+            "kind": "connector",
+            "layer": "default",
+            "box": [156.518772, 160, 37.044452, 60],
+            "local": [136.518772, 140, 37.044452, 60],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "stroke": "#2d3436",
+            "stroke_width": 1.5,
+            "points": [[173.563224, 140], [142.034899, 191.065664]],
+            "markers": [
+              {
+                "kind": "arrow",
+                "points": [[136.518772, 200], [138.461164, 188.859214], [145.608633, 193.272115]]
+              }
+            ],
+            "route": "layout"
+          },
+          {
+            "path": "flow.e3",
+            "loc": "scene/0/10",
+            "kind": "connector",
+            "layer": "default",
+            "box": [70.42, 260, 45.832972, 74.4],
+            "local": [50.42, 240, 45.832972, 74.4],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "stroke": "#2d3436",
+            "stroke_width": 1.5,
+            "points": [[96.252972, 240], [54.376497, 270], [54.376497, 284.4], [54.619673, 303.900816]],
+            "markers": [
+              {
+                "kind": "arrow",
+                "points": [[54.750599, 314.4], [50.42, 303.953187], [58.819347, 303.848446]]
+              }
+            ],
+            "route": "layout",
+            "label": [81.380497, 277.2]
+          },
+          {
+            "path": "flow.e4",
+            "loc": "scene/0/11",
+            "kind": "connector",
+            "layer": "default",
+            "box": [102.353799, 260, 45.536788, 74.4],
+            "local": [82.353799, 240, 45.536788, 74.4],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "stroke": "#2d3436",
+            "stroke_width": 1.5,
+            "points": [[82.353799, 314.4], [123.384497, 284.4], [123.384497, 270], [123.691106, 250.498702]],
+            "markers": [
+              {
+                "kind": "arrow",
+                "points": [[123.856172, 240], [127.890587, 250.564729], [119.491625, 250.432676]]
+              }
+            ],
+            "route": "layout"
+          },
+          {
+            "path": "flow.e5",
+            "loc": "scene/0/12",
+            "kind": "connector",
+            "layer": "default",
+            "box": [160.336498, 260, 48.497627, 74.4],
+            "local": [140.336498, 240, 48.497627, 74.4],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "stroke": "#2d3436",
+            "stroke_width": 1.5,
+            "points": [[140.336498, 240], [164.585311, 270], [164.585311, 284.4], [182.233613, 306.234019]],
+            "markers": [
+              {
+                "kind": "arrow",
+                "points": [[188.834124, 314.4], [178.96722, 308.874224], [185.500005, 303.593814]]
+              }
+            ],
+            "route": "layout"
+          },
+          {
+            "path": "flow.e6",
+            "loc": "scene/0/13",
+            "kind": "connector",
+            "layer": "default",
+            "box": [245.66676, 60, 76.33324, 374.4],
+            "local": [225.66676, 40, 76.33324, 374.4],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "stroke": "#2d3436",
+            "stroke_width": 1.5,
+            "points": [
+              [225.66676, 40],
+              [289.886998, 100],
+              [289.886998, 140],
+              [295.238685, 200],
+              [295.238685, 240],
+              [297.914528, 270],
+              [297.914528, 284.4],
+              [302, 314.4],
+              [302, 354.4],
+              [253.829352, 406.678223]
+            ],
+            "markers": [
+              {
+                "kind": "arrow",
+                "points": [[246.714286, 414.4], [250.740641, 403.832197], [256.918062, 409.524249]]
+              }
+            ],
+            "route": "layout",
+            "label": [315.906685, 220]
+          },
+          {
+            "path": "flow.e7",
+            "loc": "scene/0/14",
+            "kind": "connector",
+            "layer": "default",
+            "box": [229.657143, 374.4, 15.6807, 60],
+            "local": [209.657143, 354.4, 15.6807, 60],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "stroke": "#2d3436",
+            "stroke_width": 1.5,
+            "points": [[209.657143, 354.4], [221.247279, 404.173591]],
+            "markers": [
+              {
+                "kind": "arrow",
+                "points": [[223.628571, 414.4], [217.156715, 405.126108], [225.337843, 403.221074]]
+              }
+            ],
+            "route": "layout"
+          },
+          {
+            "path": "flow.e8",
+            "loc": "scene/0/15",
+            "kind": "connector",
+            "layer": "default",
+            "box": [249.286576, 160, 141.156153, 174.4],
+            "local": [229.286576, 140, 141.156153, 174.4],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "stroke": "#2d3436",
+            "stroke_width": 1.5,
+            "points": [[229.286576, 140], [359.41218, 200], [359.41218, 284.4], [366.480698, 304.494924]],
+            "markers": [
+              {
+                "kind": "arrow",
+                "points": [[369.964872, 314.4], [362.518668, 305.888594], [370.442728, 303.101254]]
+              }
+            ],
+            "route": "layout"
+          },
+          {
+            "path": "flow.again",
+            "loc": "scene/0/16",
+            "kind": "connector",
+            "layer": "default",
+            "box": [280, 346.4, 16, 20.2],
+            "local": [260, 326.4, 16, 20.2],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "stroke": "#2d3436",
+            "stroke_width": 1.5,
+            "points": [[260, 326.4], [276, 326.4], [276, 342.4], [270.5, 342.4]],
+            "markers": [
+              {"kind": "arrow", "points": [[260, 342.4], [270.5, 338.2], [270.5, 346.6]]}
+            ],
+            "route": "layout"
+          },
+          {
+            "path": "flow.e9",
+            "loc": "scene/0/17",
+            "kind": "connector",
+            "layer": "default",
+            "box": [393.69393, 374.4, 8.399306, 60],
+            "local": [373.69393, 354.4, 8.399306, 60],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "stroke": "#0984e3",
+            "stroke_width": 1.5,
+            "points": [[377.257143, 354.4], [377.893583, 403.900868]],
+            "markers": [
+              {
+                "kind": "arrow",
+                "points": [[378.028571, 414.4], [373.69393, 403.954863], [382.093235, 403.846872]]
+              }
+            ],
+            "route": "layout"
+          },
+          {
+            "path": null,
+            "loc": "scene/0/18",
+            "kind": "text",
+            "layer": "default",
+            "box": [84.376497, 290, 34.008, 14.4],
+            "local": [0, 0, 34.008, 14.4],
+            "transform": [1, 0, 0, 1, 64.376497, 270],
+            "opacity": 1,
+            "fill": "#636e72",
+            "font_size": 12,
+            "lines": [{"text": "invalid", "x": 0, "baseline": 10.266, "width": 34.008}]
+          },
+          {
+            "path": null,
+            "loc": "scene/0/19",
+            "kind": "text",
+            "layer": "default",
+            "box": [325.238685, 232.8, 21.336, 14.4],
+            "local": [0, 0, 21.336, 14.4],
+            "transform": [1, 0, 0, 1, 305.238685, 212.8],
+            "opacity": 1,
+            "fill": "#636e72",
+            "font_size": 12,
+            "lines": [{"text": "skip", "x": 0, "baseline": 10.266, "width": 21.336}]
+          }
+        ]
+      },
+      {
+        "path": "pipeline",
+        "loc": "scene/1",
+        "kind": "container",
+        "layer": "default",
+        "box": [480, 500, 340, 96],
+        "local": [0, 0, 340, 96],
+        "transform": [1, 0, 0, 1, 480, 500],
+        "opacity": 1,
+        "children": [
+          {
+            "path": "pipeline.source",
+            "loc": "scene/1/0",
+            "kind": "rect",
+            "layer": "default",
+            "box": [480, 530, 80, 36],
+            "local": [0, 0, 80, 36],
+            "transform": [1, 0, 0, 1, 0, 30],
+            "opacity": 1,
+            "fill": "#dfe6e9",
+            "stroke": "#2d3436",
+            "stroke_width": 1.5,
+            "corner_radius": 6
+          },
+          {
+            "path": "pipeline.build",
+            "loc": "scene/1/1",
+            "kind": "rect",
+            "layer": "default",
+            "box": [610, 500, 80, 36],
+            "local": [0, 0, 80, 36],
+            "transform": [1, 0, 0, 1, 130, 0],
+            "opacity": 1,
+            "fill": "#dfe6e9",
+            "stroke": "#2d3436",
+            "stroke_width": 1.5,
+            "corner_radius": 6
+          },
+          {
+            "path": "pipeline.test",
+            "loc": "scene/1/2",
+            "kind": "rect",
+            "layer": "default",
+            "box": [610, 560, 80, 36],
+            "local": [0, 0, 80, 36],
+            "transform": [1, 0, 0, 1, 130, 60],
+            "opacity": 1,
+            "fill": "#dfe6e9",
+            "stroke": "#2d3436",
+            "stroke_width": 1.5,
+            "corner_radius": 6
+          },
+          {
+            "path": "pipeline.ship",
+            "loc": "scene/1/3",
+            "kind": "rect",
+            "layer": "default",
+            "box": [740, 520, 80, 36],
+            "local": [0, 0, 80, 36],
+            "transform": [1, 0, 0, 1, 260, 20],
+            "opacity": 1,
+            "fill": "#dfe6e9",
+            "stroke": "#2d3436",
+            "stroke_width": 1.5,
+            "corner_radius": 6
+          },
+          {
+            "path": null,
+            "loc": "scene/1/4",
+            "kind": "connector",
+            "layer": "default",
+            "box": [560, 525.499351, 50, 13.26988],
+            "local": [80, 25.499351, 50, 13.26988],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "stroke": "#2d3436",
+            "stroke_width": 1.5,
+            "points": [[80, 38.769231], [119.768892, 29.591794]],
+            "markers": [
+              {
+                "kind": "arrow",
+                "points": [[130, 27.230769], [120.713302, 33.684237], [118.824483, 25.499351]]
+              }
+            ],
+            "route": "layout"
+          },
+          {
+            "path": null,
+            "loc": "scene/1/5",
+            "kind": "connector",
+            "layer": "default",
+            "box": [520, 566, 90, 14.775438],
+            "local": [40, 66, 90, 14.775438],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "stroke": "#2d3436",
+            "stroke_width": 1.5,
+            "points": [[40, 66], [119.592107, 76.612281]],
+            "markers": [
+              {
+                "kind": "arrow",
+                "points": [[130, 78], [119.037019, 80.775438], [120.147195, 72.449124]]
+              }
+            ],
+            "route": "layout"
+          },
+          {
+            "path": null,
+            "loc": "scene/1/6",
+            "kind": "connector",
+            "layer": "default",
+            "box": [690, 518.615385, 50, 8.777659],
+            "local": [210, 18.615385, 50, 8.777659],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "stroke": "#2d3436",
+            "stroke_width": 1.5,
+            "points": [[210, 18.615385], [235, 19], [249.921738, 23.361739]],
+            "markers": [
+              {
+                "kind": "arrow",
+                "points": [[260, 26.307692], [248.743357, 27.393044], [251.10012, 19.330434]]
+              }
+            ],
+            "route": "layout"
+          },
+          {
+            "path": null,
+            "loc": "scene/1/7",
+            "kind": "connector",
+            "layer": "default",
+            "box": [690, 529.692308, 50, 11.730291],
+            "local": [210, 29.692308, 50, 11.730291],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "stroke": "#0984e3",
+            "stroke_width": 1.5,
+            "points": [[210, 29.692308], [235, 37], [249.501242, 37.223096]],
+            "markers": [
+              {
+                "kind": "arrow",
+                "points": [[260, 37.384615], [249.436635, 41.422599], [249.56585, 33.023593]]
+              }
+            ],
+            "route": "layout"
+          },
+          {
+            "path": null,
+            "loc": "scene/1/8",
+            "kind": "connector",
+            "layer": "default",
+            "box": [690, 533.8, 50, 44.2],
+            "local": [210, 33.8, 50, 44.2],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "stroke": "#2d3436",
+            "stroke_width": 1.5,
+            "points": [[210, 78], [235, 78], [235, 38], [249.5, 38]],
+            "markers": [
+              {"kind": "arrow", "points": [[260, 38], [249.5, 42.2], [249.5, 33.8]]}
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

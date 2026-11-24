@@ -109,7 +109,7 @@ scene:
       present: true
       from: west_box
       to: east_box
-      route: straight
+      route: layout
       marker_start: none
       marker_end: none
       stroke: "#000000"

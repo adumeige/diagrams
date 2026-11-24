@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="600" viewBox="0 0 760 600">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <g data-path="scene">
+    <g data-path="strip" transform="translate(20 20)">
+      <rect data-path="strip.a" width="60" height="30" rx="6" fill="#dfe6e9" stroke="#2d3436" stroke-width="1.5"/>
+      <rect data-path="strip.b" transform="translate(80 0)" width="60" height="30" rx="6" fill="#dfe6e9" stroke="#2d3436" stroke-width="1.5"/>
+    </g>
+    <g data-path="loose">
+      <polyline points="80,35 130,35 130,30.5" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+      <polygon points="130,20 134.2,30.5 125.8,30.5" fill="#2d3436" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+    </g>
+    <g data-path="ranks" transform="translate(20 100)">
+      <rect data-path="ranks.one" width="60" height="30" rx="6" fill="#dfe6e9" stroke="#2d3436" stroke-width="1.5"/>
+      <rect data-path="ranks.two" transform="translate(0 90)" width="60" height="30" rx="6" fill="#dfe6e9" stroke="#2d3436" stroke-width="1.5"/>
+      <rect data-path="ranks.three" transform="translate(0 180)" width="60" height="30" rx="6" fill="#dfe6e9" stroke="#2d3436" stroke-width="1.5"/>
+      <rect data-path="ranks.four" transform="translate(0 284.4)" width="60" height="30" rx="6" fill="#dfe6e9" stroke="#2d3436" stroke-width="1.5"/>
+      <rect data-path="ranks.five" transform="translate(0 374.4)" width="60" height="30" rx="6" fill="#dfe6e9" stroke="#2d3436" stroke-width="1.5"/>
+      <g data-path="ranks.e1">
+        <polyline points="30,30 30,79.5" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+        <polygon points="30,90 25.8,79.5 34.2,79.5" fill="#2d3436" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+      </g>
+      <g data-path="ranks.e2">
+        <polyline points="30,120 30,169.5" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+        <polygon points="30,180 25.8,169.5 34.2,169.5" fill="#2d3436" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+      </g>
+      <g data-path="ranks.e3">
+        <polyline points="30,180 30,273.9" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+        <polygon points="30,284.4 25.8,273.9 34.2,273.9" fill="#2d3436" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+      </g>
+      <g data-path="ranks.e4">
+        <polyline points="30,314.4 30,363.9" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+        <polygon points="30,374.4 25.8,363.9 34.2,363.9" fill="#2d3436" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+      </g>
+      <g data-path="ranks.caption" transform="translate(40 240)" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#636e72">
+        <text x="0" y="10.266" xml:space="preserve">back</text>
+      </g>
+    </g>
+    <g data-path="family" transform="translate(420 100)">
+      <rect data-path="family.elder" transform="translate(45 0)" width="60" height="30" rx="6" fill="#dfe6e9" stroke="#2d3436" stroke-width="1.5"/>
+      <rect data-path="family.left_child" transform="translate(0 90)" width="60" height="30" rx="6" fill="#dfe6e9" stroke="#2d3436" stroke-width="1.5"/>
+      <rect data-path="family.right_child" transform="translate(90 90)" width="60" height="30" rx="6" fill="#dfe6e9" stroke="#2d3436" stroke-width="1.5"/>
+      <g data-path="family.t1">
+        <polyline points="75,30 75,60 30,60 30,79.5" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+        <polygon points="30,90 25.8,79.5 34.2,79.5" fill="#2d3436" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+      </g>
+      <g data-path="family.t2">
+        <polyline points="75,30 75,60 120,60 120,79.5" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+        <polygon points="120,90 115.8,79.5 124.2,79.5" fill="#2d3436" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+      </g>
+      <g data-path="family.t3">
+        <polyline points="60,105 79.5,105" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+        <polygon points="90,105 79.5,109.2 79.5,100.8" fill="#2d3436" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+      </g>
+      <g data-path="family.t4">
+        <polyline points="112.5,90 87.195743,39.391486" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+        <polygon points="82.5,30 90.952337,37.513188 83.439149,41.269783" fill="#2d3436" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+      </g>
+    </g>
+  </g>
+</svg>

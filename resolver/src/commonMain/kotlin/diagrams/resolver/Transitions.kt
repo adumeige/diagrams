@@ -98,6 +98,8 @@ object Transitions {
                 children = bn.children.mapNotNull { build(it, world) },
                 template = bn.template,
                 draw = lerp(an.draw, bn.draw, p),
+                route = route(an.route, bn.route, p),
+                routeLabel = if (an.routeLabel != null && bn.routeLabel != null) point(an.routeLabel, bn.routeLabel, p) else null,
             )
         }
         val root = build(b.root, Matrix.IDENTITY) ?: b.root
@@ -105,6 +107,49 @@ object Transitions {
     }
 
     private fun lerp(x: Double, y: Double, t: Double) = x + (y - x) * t
+
+    /**
+     * Two supplied routes interpolate along their length (graph layouts addendum, section 9). With
+     * the same number of points they interpolate point by point. Otherwise each gets the other's
+     * points, placed at the same fraction of its own length, so that the frame at 0 is exactly the
+     * first route and the frame at 1 exactly the second. A route on one side only is not interpolated:
+     * the connector is routed again on every frame.
+     */
+    internal fun route(x: List<Point>?, y: List<Point>?, t: Double): List<Point>? {
+        if (x == null || y == null || x.isEmpty() || y.isEmpty()) return null
+        if (x.size == y.size) return x.zip(y) { p, q -> point(p, q, t) }
+        val fx = fractions(x)
+        val fy = fractions(y)
+        // both lists are sorted: merge them, keeping one of two equal fractions
+        val all = ArrayList<Double>()
+        var i = 0
+        var j = 0
+        while (i < fx.size || j < fy.size) {
+            val f = if (j >= fy.size || (i < fx.size && fx[i] <= fy[j])) fx[i++] else fy[j++]
+            if (all.isEmpty() || f - all.last() > 1e-9) all += f
+        }
+        return all.map { f -> point(at(x, fx, f), at(y, fy, f), t) }
+    }
+
+    /** The fraction of the polyline's length at each of its points. */
+    private fun fractions(pts: List<Point>): DoubleArray {
+        val out = DoubleArray(pts.size)
+        for (i in 1 until pts.size) out[i] = out[i - 1] + sqrt((pts[i].x - pts[i - 1].x) * (pts[i].x - pts[i - 1].x) + (pts[i].y - pts[i - 1].y) * (pts[i].y - pts[i - 1].y))
+        val total = out[pts.size - 1]
+        for (i in out.indices) out[i] = if (total == 0.0) i.toDouble() / maxOf(pts.size - 1, 1) else out[i] / total
+        return out
+    }
+
+    private fun at(pts: List<Point>, fractions: DoubleArray, f: Double): Point {
+        for (i in 1 until pts.size) {
+            if (f <= fractions[i] || i == pts.size - 1) {
+                val span = fractions[i] - fractions[i - 1]
+                val u = if (span <= 0.0) 0.0 else ((f - fractions[i - 1]) / span).coerceIn(0.0, 1.0)
+                return point(pts[i - 1], pts[i], u)
+            }
+        }
+        return pts.first()
+    }
     private fun point(x: Point, y: Point, t: Double) = Point(lerp(x.x, y.x, t), lerp(x.y, y.y, t))
     private fun box(x: Box, y: Box, t: Double) = Box(lerp(x.x, y.x, t), lerp(x.y, y.y, t), lerp(x.width, y.width, t), lerp(x.height, y.height, t))
 

@@ -1,0 +1,80 @@
+- code: schema
+  severity: error
+  path: g.direction
+  source: {file: input.authored.yaml, line: 9, column: 18}
+  message: "'direction' is one of down, right, up, left"
+- code: schema
+  severity: error
+  path: g.rank_gap
+  source: {file: input.authored.yaml, line: 11, column: 17}
+  message: "'rank_gap' is a number, found string"
+- code: schema
+  severity: error
+  path: g.ordering
+  source: {file: input.authored.yaml, line: 10, column: 17}
+  message: "'ordering' is one of auto, declared"
+- code: schema
+  severity: error
+  path: g.a.rank
+  source: {file: input.authored.yaml, line: 13, column: 61}
+  message: "'rank' is first, last or {same_as: <node>}"
+- code: path_unresolved
+  severity: error
+  path: g.b.rank.same_as
+  source: {file: input.authored.yaml, line: 14, column: 71}
+  message: "'nowhere' matches no node in scope"
+- code: schema
+  severity: error
+  path: g.c.rank
+  source: {file: input.authored.yaml, line: 15, column: 61}
+  message: "'rank' is first, last or {same_as: <node>}"
+- code: schema
+  severity: error
+  path: g.n4.rank
+  source: {file: input.authored.yaml, line: 16, column: 62}
+  message: "'rank' is first, last or {same_as: <node>}"
+- code: schema
+  severity: error
+  path: g.k.route
+  source: {file: input.authored.yaml, line: 17, column: 60}
+  message: "'route' is one of straight, orthogonal, layout"
+- code: schema
+  severity: error
+  path: g.k.constrain
+  source: {file: input.authored.yaml, line: 17, column: 79}
+  message: "'constrain' is true or false, found string"
+- code: path_unresolved
+  severity: error
+  path: g.t.attach.to
+  source: {file: input.authored.yaml, line: 18, column: 54}
+  message: "'label' is not an anchor of g.a; anchors: center, north, south, east, west, north_east, north_west, south_east, south_west"
+- code: schema
+  severity: error
+  path: h.layout
+  source: {file: input.authored.yaml, line: 19, column: 23}
+  message: "'layout' is one of free, row, column, grid, stack, layered, tree, circular, force"
+- code: schema
+  severity: error
+  path: f.seed
+  source: {file: input.authored.yaml, line: 20, column: 36}
+  message: "'seed' is a whole number, 0 or more"
+- code: schema
+  severity: error
+  path: f.link_distance
+  source: {file: input.authored.yaml, line: 20, column: 55}
+  message: "'link_distance' is a number, found string"
+- code: schema
+  severity: error
+  path: f2.seed
+  source: {file: input.authored.yaml, line: 21, column: 37}
+  message: "'seed' is a whole number, 0 or more"
+- code: schema
+  severity: error
+  path: f2.p.pinned
+  source: {file: input.authored.yaml, line: 21, column: 105}
+  message: "a point is a map {x, y}"
+- code: schema
+  severity: error
+  path: r.radial
+  source: {file: input.authored.yaml, line: 22, column: 37}
+  message: "'radial' is true or false, found string"

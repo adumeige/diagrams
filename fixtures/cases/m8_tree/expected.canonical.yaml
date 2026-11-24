@@ -1,0 +1,560 @@
+format: diagrams/0.1
+viewport: {width: 1000, height: 520}
+styles:
+  box: {fill: "#dfe6e9", stroke: "#2d3436", stroke_width: 1.5, corner_radius: 6}
+  dot: {fill: "#ffeaa7", stroke: "#2d3436", stroke_width: 1.5}
+  edge: {stroke: "#2d3436", stroke_width: 1.5}
+scene:
+  layout: free
+  rotation: 0
+  scale: 1
+  opacity: 1
+  present: true
+  children:
+    - id: org
+      layout: tree
+      layer: default
+      at: {x: 20, y: 20}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      children:
+        - id: ceo
+          shape: rect
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: box
+          width: 80
+          height: 34
+        - id: tech
+          shape: rect
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: box
+          width: 60
+          height: 34
+        - id: sales
+          shape: rect
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: box
+          width: 60
+          height: 34
+        - id: ops
+          shape: rect
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: box
+          width: 60
+          height: 34
+        - id: web
+          shape: rect
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: box
+          width: 50
+          height: 34
+        - id: data
+          shape: rect
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: box
+          width: 50
+          height: 34
+        - id: lille
+          shape: rect
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: box
+          width: 50
+          height: 34
+        - id: nice
+          shape: rect
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: box
+          width: 50
+          height: 34
+        - id: metz
+          shape: rect
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: box
+          width: 50
+          height: 34
+        - id: board
+          shape: rect
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: box
+          width: 70
+          height: 34
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: ceo
+          to: tech
+          route: layout
+          marker_start: none
+          marker_end: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: ceo
+          to: sales
+          route: layout
+          marker_start: none
+          marker_end: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: ceo
+          to: ops
+          route: layout
+          marker_start: none
+          marker_end: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: tech
+          to: web
+          route: layout
+          marker_start: none
+          marker_end: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: tech
+          to: data
+          route: layout
+          marker_start: none
+          marker_end: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: ops
+          to: lille
+          route: layout
+          marker_start: none
+          marker_end: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: ops
+          to: nice
+          route: layout
+          marker_start: none
+          marker_end: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: ops
+          to: metz
+          route: layout
+          marker_start: none
+          marker_end: none
+    - id: files
+      layout: tree
+      layer: default
+      at: {x: 20, y: 300}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      gap: 16
+      direction: right
+      level_gap: 50
+      children:
+        - id: home
+          shape: rect
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: box
+          width: 80
+          height: 30
+        - id: src
+          shape: rect
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: box
+          width: 70
+          height: 30
+        - id: docs
+          shape: rect
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: box
+          width: 70
+          height: 30
+        - id: main
+          shape: rect
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: box
+          width: 60
+          height: 30
+        - id: tests
+          shape: rect
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: box
+          width: 60
+          height: 30
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: home
+          to: src
+          route: layout
+          marker_start: none
+          marker_end: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: home
+          to: docs
+          route: layout
+          marker_start: none
+          marker_end: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: src
+          to: main
+          route: layout
+          marker_start: none
+          marker_end: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: src
+          to: tests
+          route: layout
+          marker_start: none
+          marker_end: none
+    - id: star
+      layout: tree
+      layer: default
+      at: {x: 640, y: 80}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      radial: true
+      level_gap: 30
+      children:
+        - id: sun
+          shape: circle
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: dot
+          radius: 22
+        - id: a
+          shape: circle
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: dot
+          radius: 16
+        - id: b
+          shape: circle
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: dot
+          radius: 16
+        - id: c
+          shape: circle
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: dot
+          radius: 16
+        - id: a1
+          shape: circle
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: dot
+          radius: 12
+        - id: a2
+          shape: circle
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: dot
+          radius: 12
+        - id: b1
+          shape: circle
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: dot
+          radius: 12
+        - id: c1
+          shape: circle
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: dot
+          radius: 12
+        - id: c2
+          shape: circle
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: dot
+          radius: 12
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: sun
+          to: a
+          route: layout
+          marker_start: none
+          marker_end: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: sun
+          to: b
+          route: layout
+          marker_start: none
+          marker_end: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: sun
+          to: c
+          route: layout
+          marker_start: none
+          marker_end: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: a
+          to: a1
+          route: layout
+          marker_start: none
+          marker_end: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: a
+          to: a2
+          route: layout
+          marker_start: none
+          marker_end: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: b
+          to: b1
+          route: layout
+          marker_start: none
+          marker_end: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: c
+          to: c1
+          route: layout
+          marker_start: none
+          marker_end: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: c
+          to: c2
+          route: layout
+          marker_start: none
+          marker_end: none

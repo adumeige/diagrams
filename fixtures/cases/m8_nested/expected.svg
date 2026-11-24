@@ -1,0 +1,186 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="600" viewBox="0 0 860 600">
+  <defs><style>
+    @font-face { font-family: "diagrams-body"; src: url("../../../fonts/AtkinsonHyperlegible-Regular.ttf"); }
+  </style></defs>
+  <rect width="100%" height="100%" fill="#faf8f3"/>
+  <g data-path="scene">
+    <g data-path="system" transform="translate(20 20)">
+      <rect data-path="system.client" transform="translate(0 74)" width="90" height="40" rx="6" fill="#dfe6e9" stroke="#2d3436" stroke-width="1.5"/>
+      <g data-path="system.service" transform="translate(160 0)">
+        <rect width="212" height="188" rx="8" fill="#ffffff" stroke="#b2bec3" stroke-width="1"/>
+        <g data-path="system.service.steps">
+          <rect data-path="system.service.steps.accept" transform="translate(66 16)" width="80" height="32" rx="6" fill="#dfe6e9" stroke="#2d3436" stroke-width="1.5"/>
+          <rect data-path="system.service.steps.plan" transform="translate(16 78)" width="80" height="32" rx="6" fill="#dfe6e9" stroke="#2d3436" stroke-width="1.5"/>
+          <rect data-path="system.service.steps.run" transform="translate(116 78)" width="80" height="32" rx="6" fill="#dfe6e9" stroke="#2d3436" stroke-width="1.5"/>
+          <rect data-path="system.service.steps.reply" transform="translate(66 140)" width="80" height="32" rx="6" fill="#dfe6e9" stroke="#2d3436" stroke-width="1.5"/>
+          <g>
+            <polyline points="93.096774,48 75.494627,69.826663" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+            <polygon points="68.903226,78 72.225292,67.190103 78.763961,72.463223" fill="#2d3436" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+          </g>
+          <g>
+            <polyline points="118.903226,48 136.505373,69.826663" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+            <polygon points="143.096774,78 133.236039,72.463223 139.774708,67.190103" fill="#2d3436" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+          </g>
+          <g>
+            <polyline points="68.903226,110 86.505373,131.826663" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+            <polygon points="93.096774,140 83.236039,134.463223 89.774708,129.190103" fill="#2d3436" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+          </g>
+          <g>
+            <polyline points="143.096774,110 125.494627,131.826663" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+            <polygon points="118.903226,140 122.225292,129.190103 128.763961,134.463223" fill="#2d3436" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+          </g>
+        </g>
+      </g>
+      <rect data-path="system.store" transform="translate(442 34)" width="90" height="40" rx="6" fill="#dfe6e9" stroke="#2d3436" stroke-width="1.5"/>
+      <rect data-path="system.queue" transform="translate(442 114)" width="90" height="40" rx="6" fill="#dfe6e9" stroke="#2d3436" stroke-width="1.5"/>
+      <g>
+        <polyline points="90,81.375566 215.890304,46.057924" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+        <polygon points="226,43.221719 217.024786,50.101802 214.755823,42.014045" fill="#2d3436" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+      </g>
+      <g>
+        <polyline points="356,84.643275 431.775992,66.917897" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+        <polygon points="442,64.526316 432.732624,71.0075 430.81936,62.828293" fill="#2d3436" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+      </g>
+      <g>
+        <polyline points="306,152.0181 431.551642,139.519746" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+        <polygon points="442,138.479638 431.967686,143.699089 431.135599,135.340403" fill="#2d3436" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+      </g>
+    </g>
+    <g data-path="model" transform="translate(20 290)">
+      <g data-path="model.figure" transform="translate(128.132333 2.74)">
+        <g data-path="model.figure.header">
+          <rect width="104.851" height="49.48" fill="#ffffff" stroke="#2d3436" stroke-width="1.5"/>
+          <g>
+            <g transform="translate(30.2415 8)" font-family="diagrams-body" font-size="16" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+              <text x="0 9.536 18.272 26.688 35.744" y="15.2" xml:space="preserve">Shape</text>
+            </g>
+            <g transform="translate(29.243 27.84)" font-family="diagrams-body" font-size="11" style="font-kerning: none; font-variant-ligatures: none" fill="#636e72">
+              <text x="0 3.509 9.295 15.521 20.702 24.266 28.006 33.792 39.292 42.856" y="10.45" xml:space="preserve">{abstract}</text>
+            </g>
+          </g>
+        </g>
+        <g data-path="model.figure.attributes" transform="translate(0 49.48)">
+          <rect width="104.851" height="6" fill="#ffffff" stroke="#2d3436" stroke-width="1.5"/>
+        </g>
+        <g data-path="model.figure.operations" transform="translate(0 55.48)">
+          <rect width="104.851" height="28.12" fill="#ffffff" stroke="#2d3436" stroke-width="1.5"/>
+          <g>
+            <g data-path="model.figure.operations.operation[area]" transform="translate(10 6)" font-family="diagrams-body" font-size="13" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+              <text x="0 6.838 11.258 18.265 25.103 29.003 32.903 35.568 39.208 48.165 55.133 66.066 73.424 80.431" y="12.35" xml:space="preserve">area(): Number</text>
+            </g>
+          </g>
+        </g>
+      </g>
+      <g data-path="model.disc" transform="translate(0 173.96)">
+        <g data-path="model.disc.header">
+          <rect width="107.243" height="35.84" fill="#ffffff" stroke="#2d3436" stroke-width="1.5"/>
+          <g>
+            <g transform="translate(33.2055 8)" font-family="diagrams-body" font-size="16" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+              <text x="0 10.496 14.944 20.384 28.384 32.208" y="15.2" xml:space="preserve">Circle</text>
+            </g>
+          </g>
+        </g>
+        <g data-path="model.disc.attributes" transform="translate(0 35.84)">
+          <rect width="107.243" height="28.12" fill="#ffffff" stroke="#2d3436" stroke-width="1.5"/>
+          <g>
+            <g data-path="model.disc.attributes.attribute[radius]" transform="translate(10 6)" font-family="diagrams-body" font-size="13" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+              <text x="0 4.42 11.258 18.59 22.204 29.172 35.295 37.96 41.6 50.557 57.525 68.458 75.816 82.823" y="12.35" xml:space="preserve">radius: Number</text>
+            </g>
+          </g>
+        </g>
+        <g data-path="model.disc.operations" transform="translate(0 63.96)">
+          <rect width="107.243" height="6" fill="#ffffff" stroke="#2d3436" stroke-width="1.5"/>
+        </g>
+      </g>
+      <g data-path="model.polygon_class" transform="translate(265.899 185.02)">
+        <g data-path="model.polygon_class.header">
+          <rect width="83.664" height="35.84" fill="#ffffff" stroke="#2d3436" stroke-width="1.5"/>
+          <g>
+            <g transform="translate(14 8)" font-family="diagrams-body" font-size="16" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+              <text x="0 9.616 18.448 22.272 29.136 38.096 46.928" y="15.2" xml:space="preserve">Polygon</text>
+            </g>
+          </g>
+        </g>
+        <g data-path="model.polygon_class.attributes" transform="translate(0 35.84)">
+          <rect width="83.664" height="6" fill="#ffffff" stroke="#2d3436" stroke-width="1.5"/>
+        </g>
+        <g data-path="model.polygon_class.operations" transform="translate(0 41.84)">
+          <rect width="83.664" height="6" fill="#ffffff" stroke="#2d3436" stroke-width="1.5"/>
+        </g>
+      </g>
+      <g data-path="model.vertex" transform="translate(275.0105 0)">
+        <g data-path="model.vertex.header">
+          <rect width="77.941" height="35.84" fill="#ffffff" stroke="#2d3436" stroke-width="1.5"/>
+          <g>
+            <g transform="translate(20.5625 8)" font-family="diagrams-body" font-size="16" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+              <text x="0 9.616 18.448 22.896 31.632" y="15.2" xml:space="preserve">Point</text>
+            </g>
+          </g>
+        </g>
+        <g data-path="model.vertex.attributes" transform="translate(0 35.84)">
+          <rect width="77.941" height="47.24" fill="#ffffff" stroke="#2d3436" stroke-width="1.5"/>
+          <g>
+            <g data-path="model.vertex.attributes.attribute[x]" transform="translate(10 6)" font-family="diagrams-body" font-size="13" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+              <text x="0 5.993 8.658 12.298 21.255 28.223 39.156 46.514 53.521" y="12.35" xml:space="preserve">x: Number</text>
+            </g>
+            <g data-path="model.vertex.attributes.attribute[y]" transform="translate(10 25.12)" font-family="diagrams-body" font-size="13" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+              <text x="0 5.577 8.242 11.882 20.839 27.807 38.74 46.098 53.105" y="12.35" xml:space="preserve">y: Number</text>
+            </g>
+          </g>
+        </g>
+        <g data-path="model.vertex.operations" transform="translate(0 83.08)">
+          <rect width="77.941" height="6" fill="#ffffff" stroke="#2d3436" stroke-width="1.5"/>
+        </g>
+      </g>
+      <g data-path="model.canvas" transform="translate(147.243 185.02)">
+        <g data-path="model.canvas.header">
+          <rect width="78.656" height="35.84" fill="#ffffff" stroke="#2d3436" stroke-width="1.5"/>
+          <g>
+            <g transform="translate(14 8)" font-family="diagrams-body" font-size="16" style="font-kerning: none; font-variant-ligatures: none" fill="#2d3436">
+              <text x="0 10.496 18.912 27.648 34.704 43.12" y="15.2" xml:space="preserve">Canvas</text>
+            </g>
+          </g>
+        </g>
+        <g data-path="model.canvas.attributes" transform="translate(0 35.84)">
+          <rect width="78.656" height="6" fill="#ffffff" stroke="#2d3436" stroke-width="1.5"/>
+        </g>
+        <g data-path="model.canvas.operations" transform="translate(0 41.84)">
+          <rect width="78.656" height="6" fill="#ffffff" stroke="#2d3436" stroke-width="1.5"/>
+        </g>
+      </g>
+      <g>
+        <g data-path="model.line">
+          <polyline points="83.501677,173.96 113.398939,138.96 113.398939,124.08 137.135676,95.967267" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+          <polygon points="145.264374,86.34 141.548173,99.69292 132.723178,92.241614" fill="none" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+        </g>
+      </g>
+      <g>
+        <g data-path="model.line">
+          <polyline points="287.665186,185.02 249.02675,138.96 249.02675,124.08 224.759885,95.889303" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+          <polygon points="216.539738,86.34 229.136649,92.121736 220.383121,99.65687" fill="none" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+        </g>
+      </g>
+      <g>
+        <g data-path="model.line">
+          <polyline points="309.443012,168.234839 310.674279,138.96 310.674279,124.08 312.129336,89.08" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+          <polygon points="308.737048,185.02 304.89374,176.450929 309.443012,168.234839 313.28632,176.803911" fill="#2d3436" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+        </g>
+        <g transform="translate(320.674279 124.08)" font-family="diagrams-body" font-size="12" style="font-kerning: none; font-variant-ligatures: none" fill="#636e72">
+          <text x="0 6.624 13.056 16.944 19.812 23.148 29.7" y="11.4" xml:space="preserve">outline</text>
+        </g>
+        <g transform="translate(311.381666 92.184465)" font-family="diagrams-body" font-size="12" style="font-kerning: none; font-variant-ligatures: none" fill="#636e72">
+          <text x="0 6.888 9.348 11.808" y="11.4" xml:space="preserve">3..*</text>
+        </g>
+      </g>
+      <g>
+        <g data-path="model.line">
+          <polyline points="183.162366,185.02 176.59875,138.96 176.59875,124.08 178.477249,86.34" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+          <polyline points="182.674418,97.061912 178.477249,86.34 173.236103,96.592122" fill="none" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+        </g>
+        <g transform="translate(186.59875 124.08)" font-family="diagrams-body" font-size="12" style="font-kerning: none; font-variant-ligatures: none" fill="#636e72">
+          <text x="0 5.652 12.204 18.516 25.308 31.776" y="11.4" xml:space="preserve">shapes</text>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

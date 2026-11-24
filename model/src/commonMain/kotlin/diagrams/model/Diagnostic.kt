@@ -80,6 +80,18 @@ object Codes {
 
     /** Timing references (`after`, `with`) or clips that use one another form a loop. */
     const val TIMING_CYCLE = "timing_cycle"
+
+    /** Graph layouts: a hint, a pin or an option the container's layout kind does not declare. It is ignored. */
+    const val HINT_IGNORED = "hint_ignored"
+
+    /** Graph layouts: a declared hint that cannot be honoured. The layout resolves without it. */
+    const val HINT_CONFLICT = "hint_conflict"
+
+    /** Graph layouts: an edge that gives a node of a `tree` a second parent. It is drawn and ignored for placement. */
+    const val TREE_EXTRA_EDGE = "tree_extra_edge"
+
+    /** Graph layouts: a supplied route doubles back to reach a fixed anchor. */
+    const val ROUTE_BACKTRACK = "route_backtrack"
 }
 
 class DiagnosticSink(private val sourceMap: SourceMap? = null) {

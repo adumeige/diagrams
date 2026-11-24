@@ -99,7 +99,13 @@ object GeometryRefs {
     val ANCHORS = listOf("center", "north", "south", "east", "west", "north_east", "north_west", "south_east", "south_west")
     val CONNECTOR_ANCHORS = listOf("start", "end", "mid")
 
-    fun isAnchor(name: String, target: NodeInfo) = name in ANCHORS || (target.shape == "connector" && name in CONNECTOR_ANCHORS)
+    /**
+     * Where a connector's label goes: the room a graph layout reserved for it, or `mid` when none
+     * did. It is not a reserved ID: a connector has no children a path could confuse it with.
+     */
+    const val LABEL_ANCHOR = "label"
+
+    fun isAnchor(name: String, target: NodeInfo) = name in ANCHORS || (target.shape == "connector" && (name in CONNECTOR_ANCHORS || name == LABEL_ANCHOR))
 
     /** The opposite compass anchor: an attachment `{anchor: west, to: a}` meets `a.east`. */
     fun opposite(anchor: String): String = when (anchor) {

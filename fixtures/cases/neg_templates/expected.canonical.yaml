@@ -39,7 +39,7 @@ scene:
       present: true
       from: b.inner
       to: b.mine
-      route: straight
+      route: layout
       marker_start: none
       marker_end: none
       stroke: "#000000"

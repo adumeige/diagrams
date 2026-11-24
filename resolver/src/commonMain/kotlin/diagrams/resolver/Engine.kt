@@ -10,6 +10,7 @@ import diagrams.model.Exprs
 import diagrams.model.Value
 import diagrams.processor.CoreSchema
 import diagrams.processor.GeometryRefs
+import diagrams.processor.Layouts
 import diagrams.processor.NodeIndex
 import diagrams.processor.NodeInfo
 import diagrams.processor.refsIn
@@ -41,10 +42,23 @@ internal class RNode(val info: NodeInfo, val parent: RNode?, val node: Value.Map
     var world: Matrix? = null
     var route: List<Point>? = null
     var text: TextMeasure? = null
+
+    /** Whether the route came from the layout of a graph container (graph layouts addendum, section 3). */
+    var supplied: Boolean = false
+    var edgeOnly: Boolean? = null
 }
 
-/** Child placements of a flow container and its content size. */
-internal class Flow(val placements: Map<RNode, Matrix>, val width: Double, val height: Double)
+/** Child placements of a flow container and its content size. [graph] is what a graph kind adds. */
+internal class Flow(val placements: Map<RNode, Matrix>, val width: Double, val height: Double, val graph: GraphFlow? = null)
+
+/** Routes and label positions supplied by a graph layout, by connector, in the container's frame. */
+internal class GraphFlow(val routes: Map<RNode, GRoute>, val labels: Map<RNode, Point>)
+
+/**
+ * A connector that is an edge of the graph container [owner]: [from] and [to] are the children of
+ * the container that hold its ends (the ends themselves when they are children).
+ */
+internal class Edge(val connector: RNode, val owner: RNode, val from: RNode, val to: RNode)
 
 internal class TextMeasure(val font: String?, val m: TextMeasurer, val fontSize: Double, val lines: List<String>, val widths: List<Double>, val align: String, val width: Double)
 
@@ -59,8 +73,12 @@ internal class Engine(
     private val index: NodeIndex,
     /** Placements imposed by a transition frame, by locator: layout is not solved again per frame (spec section 13). */
     private val pins: Map<String, Pin> = emptyMap(),
+    /** Supplied routes imposed by a transition frame, by locator: a graph layout is not solved again per frame either. */
+    private val routePins: Map<String, RoutePin> = emptyMap(),
 ) {
     private val byLoc = HashMap<String, RNode>()
+    private val connectors = mutableListOf<RNode>()
+    private val attachers = mutableListOf<RNode>()
 
     /** The scene clock this resolution is for. */
     val time: Double get() = options.time
@@ -91,6 +109,8 @@ internal class Engine(
         val n = RNode(info, parent, node, tokens)
         byInfo[info] = n
         byLoc[info.loc] = n
+        if (n.isConnector) connectors += n
+        if (node["attach"] is Value.Map) attachers += n
         for (c in info.children) build(c, n)?.let { n.children += it }
         return n
     }
@@ -452,7 +472,8 @@ internal class Engine(
     private fun dependent(n: RNode): Boolean {
         if (n.isConnector) return true
         val p = n.parent ?: return false
-        if (p.isFlow) return false
+        if (slotted(n)) return false
+        if (p.isFlow) return n.node["attach"] is Value.Map || n.node["\$along"] != null
         if (n.node["\$along"] != null) return true
         if (n.node["attach"] is Value.Map) return true
         val at = n.node["at"] ?: return false
@@ -484,15 +505,34 @@ internal class Engine(
         return Matrix.translate(b.centerX, b.centerY) * Matrix.rotate(rot) * Matrix.scale(sc) * Matrix.translate(-b.centerX, -b.centerY)
     }
 
-    /** row, column, grid and stack (spec section 6): sizes bottom-up, then positions. */
+    /**
+     * Whether the node takes a slot in its container's layout. Every child of a row, column, grid or
+     * stack does, except connectors. In a graph container (graph layouts addendum, section 2) the
+     * nodes are the children the edges connect: attached children follow their target as they do in a
+     * free container, and a child that only holds connectors and what is attached to them (an instance
+     * of a relation template) is not a node either.
+     */
+    private fun slotted(n: RNode): Boolean {
+        val p = n.parent ?: return false
+        if (!p.isFlow || n.isConnector) return false
+        if (!Layouts.isGraph(p.layout)) return true
+        return n.node["attach"] !is Value.Map && n.node["\$along"] == null && !edgeOnly(n)
+    }
+
+    private fun edgeOnly(n: RNode): Boolean = n.edgeOnly ?: (
+        n.kind == "container" && !n.isFlow && n.children.isNotEmpty() && n.children.all { dependent(it) || edgeOnly(it) }
+        ).also { n.edgeOnly = it }
+
+    private fun outer(k: RNode) = pivot(k).apply(stretchedBox(k))
+
+    /** row, column, grid and stack (spec section 6), and the graph kinds: sizes bottom-up, then positions. */
     private fun flow(c: RNode): Flow = cached(c, "layout", { c.flow }, { c.flow = it }, { Flow(emptyMap(), 0.0, 0.0) }) {
-        val kids = c.children.filter { !it.isConnector }
+        val kids = c.children.filter { slotted(it) }
         val pad = padding(c)
         val gap = num(c, "gap", 0.0)
         val align = str(c, "align") ?: "start"
         val explicitW = (numOrNull(c, "width") ?: c.stretchW)?.let { it - pad.left - pad.right }
         val explicitH = (numOrNull(c, "height") ?: c.stretchH)?.let { it - pad.top - pad.bottom }
-        fun outer(k: RNode) = pivot(k).apply(stretchedBox(k))
         fun place(k: RNode, x: Double, y: Double): Matrix {
             val ob = outer(k)
             return Matrix.translate(x - ob.x, y - ob.y) * pivot(k)
@@ -555,6 +595,18 @@ internal class Engine(
                 val h = if (rows == 0) 0.0 else ys[rows - 1] + rowH[rows - 1]
                 Flow(out, pad.left + w + pad.right, pad.top + h + pad.bottom)
             }
+            "layered", "tree", "circular", "force" -> {
+                val g = graph(c, kids)
+                val routes = LinkedHashMap<RNode, GRoute>()
+                val labels = LinkedHashMap<RNode, Point>()
+                fun shift(p: Point) = Point(p.x + pad.left, p.y + pad.top)
+                kids.forEachIndexed { i, k -> out[k] = place(k, pad.left + g.result.positions[i].x, pad.top + g.result.positions[i].y) }
+                g.edges.forEachIndexed { i, e ->
+                    g.result.routes[i]?.let { r -> routes[e.connector] = GRoute(r.points.map(::shift), r.exact) }
+                    g.result.labels[i]?.let { labels[e.connector] = shift(it) }
+                }
+                Flow(out, pad.left + g.result.width + pad.right, pad.top + g.result.height + pad.bottom, GraphFlow(routes, labels))
+            }
             else -> { // stack
                 val natural = kids.map { outer(it) }
                 val iw = explicitW ?: (natural.maxOfOrNull { it.width } ?: 0.0)
@@ -573,6 +625,206 @@ internal class Engine(
         }
     }
 
+    // ---------------------------------------------------------------- graph layouts
+
+    private class Graph(val edges: List<Edge>, val result: GResult)
+
+    /** A path written on [from], resolved without reporting: the validator and the router report. */
+    private fun quiet(ref: String?, from: RNode): Pair<RNode, List<String>>? {
+        val m = index.resolve(ref ?: return null, from.info) ?: return null
+        val t = byInfo[m.node] ?: return null
+        return t to m.rest
+    }
+
+    /**
+     * The graph container a connector is an edge of, if any (graph layouts addendum, section 2): the
+     * closest container that holds both ends in different children, when it is a graph container. An
+     * end deeper than a child is lifted to that child. A connector with both ends on one child is a
+     * self-loop of that child.
+     */
+    private fun edgeOf(k: RNode): Edge? {
+        val a = quiet((k.node["from"] as? Value.Str)?.value, k)?.first ?: return null
+        val b = quiet((k.node["to"] as? Value.Str)?.value, k)?.first ?: return null
+        if (a.isConnector || b.isConnector) return null
+        val c: RNode
+        val ka: RNode
+        val kb: RNode
+        if (a === b) {
+            c = a.parent ?: return null
+            ka = a
+            kb = a
+        } else {
+            val chain = generateSequence(a) { it.parent }.toList()
+            var x: RNode? = b
+            var below: RNode? = null
+            while (x != null && chain.none { it === x }) {
+                below = x
+                x = x.parent
+            }
+            c = x ?: return null
+            kb = below ?: return null
+            val i = chain.indexOfFirst { it === c }
+            if (i == 0) return null
+            ka = chain[i - 1]
+        }
+        if (c.kind != "container" || !Layouts.isGraph(c.layout)) return null
+        if (!slotted(ka) || !slotted(kb)) return null
+        return Edge(k, c, ka, kb)
+    }
+
+    /** Every edge, by connector. Connectors are in declaration order, and so are the edges of a container. */
+    private val edgeByConnector: Map<RNode, Edge> by lazy {
+        val out = LinkedHashMap<RNode, Edge>()
+        for (k in connectors) edgeOf(k)?.let { out[k] = it }
+        out
+    }
+
+    private val edgesByOwner: Map<RNode, List<Edge>> by lazy {
+        val out = LinkedHashMap<RNode, MutableList<Edge>>()
+        for (e in edgeByConnector.values) out.getOrPut(e.owner) { mutableListOf() } += e
+        out
+    }
+
+    /** The nodes attached to the `label` anchor of each connector. */
+    private val labelsByConnector: Map<RNode, List<RNode>> by lazy {
+        val out = LinkedHashMap<RNode, MutableList<RNode>>()
+        for (n in attachers) {
+            val (t, rest) = quiet(((n.node["attach"] as Value.Map)["to"] as? Value.Str)?.value, n) ?: continue
+            if (t.isConnector && rest.size == 1 && rest[0] == GeometryRefs.LABEL_ANCHOR) out.getOrPut(t) { mutableListOf() } += n
+        }
+        out
+    }
+
+    private fun routeMode(k: RNode): String = str(k, "route") ?: "layout"
+
+    private fun bool(n: RNode, key: String): Boolean? = (prop(n, key) as? Value.Bool)?.value
+
+    /** Runs the layout of a graph container over its nodes and edges (graph layouts addendum, sections 4 to 7). */
+    private fun graph(c: RNode, kids: List<RNode>): Graph {
+        val edges = edgesByOwner[c].orEmpty()
+        val layered = c.layout == "layered"
+        val boxes = kids.map { outer(it) }
+        fun indexOf(k: RNode) = kids.indexOfFirst { it === k }
+        val nodes = kids.mapIndexed { i, k ->
+            GNode(boxes[i].width, boxes[i].height, if (layered) rankHint(k, kids) else null, if (c.layout == "force") pinned(k) else null)
+        }
+        val gedges = edges.map { e ->
+            // room is reserved for a label only when the connector follows the route that passes by it
+            val label = if (layered && routeMode(e.connector) == "layout") labelsByConnector[e.connector]?.map { outer(it) } else null
+            GEdge(
+                indexOf(e.from),
+                indexOf(e.to),
+                constrain = !layered || bool(e.connector, "constrain") != false,
+                labelW = label?.maxOfOrNull { it.width } ?: 0.0,
+                labelH = label?.maxOfOrNull { it.height } ?: 0.0,
+                follows = routeMode(e.connector) == "layout",
+            )
+        }
+        val gap = numOrNull(c, "gap")
+        val result = when (c.layout) {
+            "layered" -> LayeredLayout.layout(nodes, gedges, LayeredLayout.Options(str(c, "direction") ?: "down", gap ?: 40.0, numOrNull(c, "rank_gap") ?: 60.0, str(c, "ordering") == "declared"))
+            "tree" -> TreeLayout.layout(nodes, gedges, TreeLayout.Options(str(c, "direction") ?: "down", gap ?: 30.0, numOrNull(c, "level_gap") ?: 60.0, bool(c, "radial") == true))
+            "circular" -> CircularLayout.layout(nodes, gedges, CircularLayout.Options(gap ?: 30.0, numOrNull(c, "radius"), numOrNull(c, "start_angle") ?: -90.0))
+            else -> ForceLayout.layout(nodes, gedges, ForceLayout.Options((numOrNull(c, "seed") ?: 1.0).toLong(), numOrNull(c, "link_distance") ?: 60.0))
+        }
+        for (w in result.warnings) {
+            val edge = w.edge
+            val node = w.node
+            when {
+                edge != null -> edges[edge].connector.let { sink.warning(w.code, it.path, w.message, it.dp) }
+                node != null -> kids[node].let { sink.warning(w.code, "${it.path}.rank", w.message, it.dp.key("rank")) }
+            }
+        }
+        return Graph(edges, result)
+    }
+
+    /** The `rank` hint of a child of a layered container (graph layouts addendum, section 4). */
+    private fun rankHint(k: RNode, kids: List<RNode>): RankHint? = when (val v = k.node["rank"]) {
+        is Value.Str -> when (v.value) {
+            "first" -> RankHint.First
+            "last" -> RankHint.Last
+            else -> null
+        }
+        is Value.Map -> {
+            val t = quiet((v["same_as"] as? Value.Str)?.value, k)
+            val i = if (t == null || t.second.isNotEmpty()) -1 else kids.indexOfFirst { it === t.first }
+            if (i < 0 && t != null) {
+                sink.warning(Codes.HINT_CONFLICT, "${k.path}.rank", "'rank: same_as' names a node the layout of '${k.parent?.path}' does not place; the hint is ignored", k.dp.key("rank"))
+            }
+            if (i < 0) null else RankHint.SameAs(i)
+        }
+        else -> null
+    }
+
+    /** The `pinned` hint of a child of a force container: its top-left corner, inside the container's padding. */
+    private fun pinned(k: RNode): Point? = k.node["pinned"]?.let { point(k, it, k.dp.key("pinned"), "${k.path}.pinned") }
+
+    /**
+     * Hints and options that the layout in charge does not declare are reported, never silently
+     * dropped (graph layouts addendum, section 3).
+     */
+    fun checkHints(root: RNode) {
+        fun ignored(n: RNode, key: String, why: String) = sink.warning(Codes.HINT_IGNORED, "${n.path}.$key", "'$key' $why", n.dp.key(key))
+        fun walk(n: RNode) {
+            val p = n.parent
+            if (p != null) {
+                val kind = Layouts[p.layout]
+                for (h in Layouts.NODE_HINTS) {
+                    if (n.node[h] == null) continue
+                    if (kind == null || h !in kind.nodeHints) {
+                        ignored(n, h, "is not a hint of the '${p.layout}' layout of '${p.path}'")
+                    } else if (!slotted(n)) {
+                        ignored(n, h, "has no effect on a node the layout does not place")
+                    }
+                }
+            }
+            if (n.isConnector) {
+                for (h in Layouts.EDGE_HINTS) {
+                    // `true` is what a connector does without the hint: a template may pass it through
+                    if (n.node[h] == null || bool(n, h) == true) continue
+                    val e = edgeByConnector[n]
+                    if (e == null) {
+                        ignored(n, h, "has no effect: the connector is not an edge of a graph container")
+                    } else if (h !in Layouts[e.owner.layout]!!.edgeHints) {
+                        ignored(n, h, "is not a hint of the '${e.owner.layout}' layout of '${e.owner.path}'")
+                    }
+                }
+            }
+            if (n.kind == "container") {
+                val kind = Layouts[n.layout]
+                for (o in Layouts.GRAPH_OPTIONS) {
+                    if (n.node[o] != null && (kind == null || o !in kind.options)) ignored(n, o, "is not an option of the '${n.layout}' layout")
+                }
+            }
+            n.children.forEach(::walk)
+        }
+        walk(root)
+    }
+
+    /** Whether the connector's route is the one a graph layout supplied. */
+    fun supplied(n: RNode): Boolean {
+        route(n)
+        return n.supplied
+    }
+
+    /** The room a layered layout reserved for the connector's label, in the connector's parent's frame. */
+    fun labelInParent(n: RNode): Point? {
+        val p = reservedLabel(n) ?: return null
+        return (n.parent?.let { world(it).inverse() } ?: Matrix.IDENTITY).apply(p)
+    }
+
+    /** The reserved position of the label of a connector that follows a supplied route, in the scene. */
+    private fun reservedLabel(t: RNode): Point? {
+        if (pins.isNotEmpty()) {
+            val l = routePins[t.info.loc]?.label ?: return null
+            return (t.parent?.let { world(it) } ?: Matrix.IDENTITY).apply(l)
+        }
+        if (routeMode(t) != "layout") return null
+        val e = edgeByConnector[t] ?: return null
+        val l = flow(e.owner).graph?.labels?.get(t) ?: return null
+        return world(e.owner).apply(l)
+    }
+
     // ---------------------------------------------------------------- placement
 
     /** Transform from the node's frame to its parent's: by the container, an attachment, or `at`. */
@@ -581,9 +833,11 @@ internal class Engine(
         when {
             pin(n) != null -> pin(n)!!.transform
             p == null || n.isConnector -> Matrix.IDENTITY
-            p.isFlow -> flow(p).placements[n] ?: Matrix.IDENTITY
+            slotted(n) -> flow(p).placements[n] ?: Matrix.IDENTITY
             n.node["\$along"] is Value.Map -> along(n) ?: atPlacement(n)
             n.node["attach"] is Value.Map -> attached(n) ?: atPlacement(n)
+            // in a layout container `at` means nothing: a child without a slot stays in the container's frame
+            p.isFlow -> Matrix.IDENTITY
             else -> atPlacement(n)
         }
     }
@@ -602,7 +856,8 @@ internal class Engine(
     private fun derived(n: RNode): Boolean {
         if (n.isConnector) return true
         val p = n.parent ?: return false
-        if (p.isFlow) return false
+        if (slotted(n)) return false
+        if (p.isFlow) return n.node["attach"] is Value.Map || n.node["\$along"] != null
         if (n.node["attach"] is Value.Map || n.node["\$along"] != null) return true
         val at = n.node["at"] ?: return false
         return refsIn(at).any { it.substringBefore('.') !in setOf("theme", "viewport") }
@@ -653,6 +908,8 @@ internal class Engine(
                 "start" -> pts.first() to dir(pts.getOrNull(1) ?: pts.first(), pts.first())
                 "end" -> pts.last() to dir(pts.getOrNull(pts.size - 2) ?: pts.last(), pts.last())
                 "mid" -> midpoint(pts)
+                // the room a layered layout reserved, or the middle of the route when there is none
+                GeometryRefs.LABEL_ANCHOR -> reservedLabel(t)?.let { it to null } ?: midpoint(pts)
                 else -> worldBox(t).let { compass(it, name) }.let { (p, d) -> p to d }
             }
         }
@@ -711,6 +968,7 @@ internal class Engine(
         val to = (a["to"] as? Value.Str)?.value ?: return null
         val own = (a["anchor"] as? Value.Str)?.value ?: "center"
         val targetAnchor: String
+        val inv = n.parent?.let { world(it).inverse() } ?: Matrix.IDENTITY
         val (pw, dw) = if (to.startsWith("viewport.")) {
             // the viewport's anchors, in scene coordinates (spec section 9, reference roots)
             targetAnchor = to.removePrefix("viewport.")
@@ -718,9 +976,18 @@ internal class Engine(
         } else {
             val (t, rest) = target(to, n, dp.key("to"), "${n.path}.attach.to") ?: return null
             targetAnchor = rest.firstOrNull() ?: if (t.isConnector) "mid" else GeometryRefs.opposite(own)
+            if (t.isConnector && targetAnchor == GeometryRefs.LABEL_ANCHOR) {
+                // the layout reserved room for the label: it sits in the middle of it, whatever its own anchor and gap
+                reservedLabel(t)?.let { room ->
+                    val goal = inv.apply(room)
+                    val off = a["offset"]?.let { point(n, it, dp.key("offset"), "${n.path}.attach.offset") } ?: Point(0.0, 0.0)
+                    val m0 = pivot(n)
+                    val local = m0.apply(compass(stretchedBox(n), "center").first)
+                    return Matrix.translate(goal.x + off.x - local.x, goal.y + off.y - local.y) * m0
+                }
+            }
             anchor(t, targetAnchor)
         }
-        val inv = n.parent?.let { world(it).inverse() } ?: Matrix.IDENTITY
         val p = inv.apply(pw)
         val d = dw?.let { normalize(inv.applyVector(it)) }
         val gap = (eval(a["gap"], n, n.tokens, dp.key("gap"), "${n.path}.attach.gap") as? Value.Num)?.value ?: 0.0
@@ -750,13 +1017,61 @@ internal class Engine(
         val b = end(n, "to")
         if (a == null || b == null) {
             emptyList()
-        } else if (str(n, "route") == "orthogonal") {
-            orthogonal(a, b)
         } else {
-            val ca = a.anchor?.let { anchor(a.node, it).first } ?: center(a.node)
-            val cb = b.anchor?.let { anchor(b.node, it).first } ?: center(b.node)
-            listOf(a.anchor?.let { ca } ?: floating(a.node, cb), b.anchor?.let { cb } ?: floating(b.node, ca))
+            // the router decides (graph layouts addendum, section 3): `layout` follows the route the
+            // container's layout supplies, and is `straight` where there is none
+            when (routeMode(n)) {
+                "orthogonal" -> orthogonal(a, b)
+                "straight" -> straight(a, b)
+                else -> layoutRoute(n, a, b)?.also { n.supplied = true } ?: straight(a, b)
+            }
         }
+    }
+
+    private fun straight(a: End, b: End): List<Point> {
+        val ca = a.anchor?.let { anchor(a.node, it).first } ?: center(a.node)
+        val cb = b.anchor?.let { anchor(b.node, it).first } ?: center(b.node)
+        return listOf(a.anchor?.let { ca } ?: floating(a.node, cb), b.anchor?.let { cb } ?: floating(b.node, ca))
+    }
+
+    /**
+     * The route supplied by the layout of the graph container the connector is an edge of, in the
+     * scene. The layout gives the points between the two nodes; each end is then the outline of its
+     * node toward the next point, or its fixed anchor. A fixed anchor does not change the layout, so
+     * it may face away from the route: that is reported.
+     */
+    private fun layoutRoute(n: RNode, a: End, b: End): List<Point>? {
+        fun rest(o: End) = o.anchor?.let { anchor(o.node, it).first } ?: center(o.node)
+        if (pins.isNotEmpty()) {
+            // a transition frame: the route was interpolated with the boxes, and its ends are taken
+            // again on the interpolated outlines
+            val pin = routePins[n.info.loc] ?: return null
+            val w = n.parent?.let { world(it) } ?: Matrix.IDENTITY
+            val pts = pin.points.map { w.apply(it) }
+            if (pts.size < 2 || a.node === b.node) return pts
+            fun inside(o: End, p: Point) = worldBox(o.node).let { p.x >= it.x && p.x <= it.right && p.y >= it.y && p.y <= it.bottom }
+            val inner = pts.subList(1, pts.size - 1).dropWhile { inside(a, it) }.dropLastWhile { inside(b, it) }
+            val first = a.anchor?.let { anchor(a.node, it).first } ?: floating(a.node, inner.firstOrNull() ?: rest(b))
+            val last = b.anchor?.let { anchor(b.node, it).first } ?: floating(b.node, inner.lastOrNull() ?: rest(a))
+            return simplify(listOf(first) + inner + last)
+        }
+        val e = edgeByConnector[n] ?: return null
+        val r = flow(e.owner).graph?.routes?.get(n) ?: return null
+        val w = world(e.owner)
+        val pts = r.points.map { w.apply(it) }
+        if (r.exact) return pts
+        val inner = pts.subList(1, pts.size - 1)
+        fun end(o: End, toward: Point, key: String): Point {
+            val name = o.anchor ?: return floating(o.node, toward)
+            val (p, d) = anchor(o.node, name)
+            if (d != null && d.x * (toward.x - p.x) + d.y * (toward.y - p.y) < -1e-9) {
+                sink.warning(Codes.ROUTE_BACKTRACK, "${n.path}.$key", "the anchor '$name' faces away from the route the layout of '${e.owner.path}' supplies, so the route turns back", n.dp.key(key))
+            }
+            return p
+        }
+        val first = end(a, inner.firstOrNull() ?: rest(b), "from")
+        val last = end(b, inner.lastOrNull() ?: rest(a), "to")
+        return simplify(listOf(first) + inner + last)
     }
 
     /** Connector geometry in its parent's frame: connectors paint where they are declared. */
@@ -887,3 +1202,6 @@ internal class Engine(
 
 /** A placement imposed on a node for one frame: its transform in the parent's frame and its local box. */
 internal class Pin(val transform: Matrix, val local: Box)
+
+/** A supplied route imposed on a connector for one frame, with its label position, in the parent's frame. */
+internal class RoutePin(val points: List<Point>, val label: Point?)

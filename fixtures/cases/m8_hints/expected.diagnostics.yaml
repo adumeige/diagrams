@@ -1,0 +1,80 @@
+- code: hint_ignored
+  severity: warning
+  path: strip.direction
+  source: {file: input.authored.yaml, line: 17, column: 18}
+  message: "'direction' is not an option of the 'row' layout"
+- code: hint_ignored
+  severity: warning
+  path: strip.a.rank
+  source: {file: input.authored.yaml, line: 20, column: 74}
+  message: "'rank' is not a hint of the 'row' layout of 'strip'"
+- code: hint_ignored
+  severity: warning
+  path: strip.b.pinned
+  source: {file: input.authored.yaml, line: 21, column: 76}
+  message: "'pinned' is not a hint of the 'row' layout of 'strip'"
+- code: hint_ignored
+  severity: warning
+  path: loose.constrain
+  source: {file: input.authored.yaml, line: 23, column: 95}
+  message: "'constrain' has no effect: the connector is not an edge of a graph container"
+- code: hint_ignored
+  severity: warning
+  path: ranks.seed
+  source: {file: input.authored.yaml, line: 28, column: 13}
+  message: "'seed' is not an option of the 'layered' layout"
+- code: hint_ignored
+  severity: warning
+  path: ranks.five.pinned
+  source: {file: input.authored.yaml, line: 38, column: 79}
+  message: "'pinned' is not a hint of the 'layered' layout of 'ranks'"
+- code: hint_ignored
+  severity: warning
+  path: ranks.caption.rank
+  source: {file: input.authored.yaml, line: 45, column: 88}
+  message: "'rank' has no effect on a node the layout does not place"
+- code: hint_ignored
+  severity: warning
+  path: family.t3.constrain
+  source: {file: input.authored.yaml, line: 56, column: 97}
+  message: "'constrain' is not a hint of the 'tree' layout of 'family'"
+- code: hint_conflict
+  severity: warning
+  path: ranks.four.rank
+  source: {file: input.authored.yaml, line: 36, column: 77}
+  message: "'rank: same_as' names a node the layout of 'ranks' does not place; the hint is ignored"
+- code: hint_conflict
+  severity: warning
+  path: ranks.three.rank
+  source: {file: input.authored.yaml, line: 34, column: 78}
+  message: "'rank: same_as' contradicts the edges: one of the two nodes is below the other; the hint is ignored"
+- code: hint_conflict
+  severity: warning
+  path: ranks.one.rank
+  source: {file: input.authored.yaml, line: 31, column: 76}
+  message: "'rank: last' on a node that edges leave from; the hint is ignored"
+- code: hint_conflict
+  severity: warning
+  path: ranks.two.rank
+  source: {file: input.authored.yaml, line: 32, column: 76}
+  message: "'rank: first' on a node that edges lead to; the hint is ignored"
+- code: route_backtrack
+  severity: warning
+  path: ranks.e3.from
+  source: {file: input.authored.yaml, line: 42, column: 44}
+  message: "the anchor 'north' faces away from the route the layout of 'ranks' supplies, so the route turns back"
+- code: tree_extra_edge
+  severity: warning
+  path: family.t3
+  source: {file: input.authored.yaml, line: 56, column: 11}
+  message: "this edge gives its target a second parent, or closes a loop; it does not place anything"
+- code: tree_extra_edge
+  severity: warning
+  path: family.t4
+  source: {file: input.authored.yaml, line: 58, column: 11}
+  message: "this edge gives its target a second parent, or closes a loop; it does not place anything"
+- code: connector_crosses_connector
+  severity: warning
+  path: family.t4
+  message: "connector crosses family.t2 at (517.5, 160)"
+  data: {connector: family.t2, x: 517.5, y: 160}

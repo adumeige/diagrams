@@ -29,6 +29,7 @@ data class LintConfig(
             Lint.LOW_CONTRAST to Severity.WARNING,
             Lint.TEXT_OVERFLOW to Severity.WARNING,
             Lint.CONNECTOR_CROSSES_SHAPE to Severity.WARNING,
+            Lint.CONNECTOR_CROSSES_CONNECTOR to Severity.WARNING,
         )
     }
 }
@@ -40,6 +41,7 @@ object Lint {
     const val LOW_CONTRAST = "low_contrast"
     const val TEXT_OVERFLOW = "text_overflow"
     const val CONNECTOR_CROSSES_SHAPE = "connector_crosses_shape"
+    const val CONNECTOR_CROSSES_CONNECTOR = "connector_crosses_connector"
 
     fun run(full: ResolvedScene, config: LintConfig = LintConfig()): List<Diagnostic> {
         // what cannot be seen is not linted: subtrees at opacity 0 (a hidden slide, a step not shown yet)
@@ -85,6 +87,7 @@ object Lint {
         if (config.severities[LOW_CONTRAST] != null) contrast(scene, config) { n, msg, data -> report(LOW_CONTRAST, n, msg, data) }
         if (config.severities[TEXT_OVERFLOW] != null) overflow(scene) { n, msg, data -> report(TEXT_OVERFLOW, n, msg, data) }
         if (config.severities[CONNECTOR_CROSSES_SHAPE] != null) crossings(scene) { n, msg, data -> report(CONNECTOR_CROSSES_SHAPE, n, msg, data) }
+        if (config.severities[CONNECTOR_CROSSES_CONNECTOR] != null) connectorCrossings(scene) { n, msg, data -> report(CONNECTOR_CROSSES_CONNECTOR, n, msg, data) }
         return out
     }
 }
@@ -239,5 +242,55 @@ private fun crossings(scene: ResolvedScene, report: (ResolvedNode, String, Value
                 report(c, "connector runs through ${s.label}", Value.map("shape" to Value.Str(s.label)))
             }
         }
+    }
+}
+
+/**
+ * Where segments a-b and c-d cross, strictly inside both, or null. Touching, collinear and parallel
+ * segments do not cross.
+ */
+private fun intersection(a: diagrams.resolver.Point, b: diagrams.resolver.Point, c: diagrams.resolver.Point, d: diagrams.resolver.Point): diagrams.resolver.Point? {
+    val rx = b.x - a.x
+    val ry = b.y - a.y
+    val sx = d.x - c.x
+    val sy = d.y - c.y
+    val den = rx * sy - ry * sx
+    if (kotlin.math.abs(den) < 1e-12) return null
+    val t = ((c.x - a.x) * sy - (c.y - a.y) * sx) / den
+    val u = ((c.x - a.x) * ry - (c.y - a.y) * rx) / den
+    val eps = 1e-9
+    if (t <= eps || t >= 1 - eps || u <= eps || u >= 1 - eps) return null
+    return diagrams.resolver.Point(a.x + t * rx, a.y + t * ry)
+}
+
+/**
+ * `connector_crosses_connector`: two connectors whose paths cross. Connectors that meet at an end
+ * (the legs of one association, two arrows into one box) touch rather than cross: a crossing
+ * within [END_REACH] units of an end of either path is not reported. Each pair is reported once,
+ * on the connector painted later.
+ */
+private const val END_REACH = 2.0
+
+private fun connectorCrossings(scene: ResolvedScene, report: (ResolvedNode, String, Value.Map) -> Unit) {
+    val paths = mutableListOf<Pair<ResolvedNode, List<diagrams.resolver.Point>>>()
+    scene.root.walk { n ->
+        if (n.kind == "connector") {
+            val pts = (n.geometry as? Geometry.Poly)?.points?.map { n.world.apply(it) }
+            if (pts != null && pts.size >= 2) paths += n to pts
+        }
+    }
+    fun near(p: diagrams.resolver.Point, q: diagrams.resolver.Point) = kotlin.math.abs(p.x - q.x) <= END_REACH && kotlin.math.abs(p.y - q.y) <= END_REACH
+    for (j in paths.indices) for (i in 0 until j) {
+        val (first, p) = paths[i]
+        val (second, q) = paths[j]
+        val ends = listOf(p.first(), p.last(), q.first(), q.last())
+        val at = p.zipWithNext().firstNotNullOfOrNull { (a, b) ->
+            q.zipWithNext().firstNotNullOfOrNull { (c, d) -> intersection(a, b, c, d)?.takeIf { x -> ends.none { near(it, x) } } }
+        } ?: continue
+        report(
+            second,
+            "connector crosses ${first.label} at (${formatNumber(r2(at.x))}, ${formatNumber(r2(at.y))})",
+            Value.map("connector" to Value.Str(first.label), "x" to Value.Num(r2(at.x)), "y" to Value.Num(r2(at.y))),
+        )
     }
 }

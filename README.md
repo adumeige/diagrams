@@ -2,7 +2,7 @@
 
 A declarative language, written as YAML, for drawings, diagrams, slide decks and animations, and
 the toolset that validates, resolves and renders it. The design is in [docs/spec.md](docs/spec.md)
-(draft 0.1, snapshot of the shared spec).
+(draft 0.1, snapshot of the shared spec) and its addendum [docs/graph-layouts.md](docs/graph-layouts.md).
 
 ## Status
 
@@ -11,7 +11,9 @@ theme tokens, named styles, an asset manifest, layout containers, anchors, attac
 with `straight` and `orthogonal` routing, geometric lint, templates and libraries with JSON Schema
 generation, state containers with transitions, slide decks, timelines with keyframes, time containers
 and clips, the camera, video export, the harness API compiled for the browser with a live viewer,
-and media (images, audio, video) with audio cue points as timing references.
+and media (images, audio, video) with audio cue points as timing references. Milestone 8 adds the
+graph layouts of the addendum: `layered`, `tree`, `circular` and `force` containers, the `layout`
+router and the `label` anchor of connectors.
 
 | Stage | Module | State |
 | --- | --- | --- |
@@ -19,7 +21,7 @@ and media (images, audio, video) with audio cue points as timing references.
 | Expressions: authored `=` strings, canonical structured form, printer, evaluator, partial evaluation | `model` | done |
 | Processor: authored to canonical, imports, templates, clips and timelines, states, camera, media; validator; printer; JSON Schema | `processor` | done |
 | Asset manifest, pure-Kotlin OpenType reader, text metrics, media probes (PNG, JPEG, GIF, SVG, WAV with cues, MP4/MOV) | `assets` | done |
-| Resolver: states, timelines and blending, layouts, attachments, connectors, markers, tokens, styles, fonts, camera, media, transitions; `probe` | `resolver` | done |
+| Resolver: states, timelines and blending, layouts, graph layouts, attachments, connectors, markers, tokens, styles, fonts, camera, media, transitions; `probe` | `resolver` | done |
 | Geometric lint: every rule of spec section 18 (`overlap_siblings` off by default) | `lint` | done |
 | SVG renderer (common code), PNG renderer (Java2D) | `render-svg`, `render-raster` | done |
 | Harness API (read, observe, patch, drive), exported to JavaScript as ES modules | `harness` | done |
@@ -87,12 +89,70 @@ Text is measured with the font named by its `font` property, else the `font_body
 `resolve`, `lint` and `render` take `--manifest`, or probe on the fly without it. Both renderers draw
 each character at the advance the resolver measured, with the same font file (embedded in SVG output).
 
+## Graph layouts
+
+A container with `layout: layered`, `tree`, `circular` or `force` places its children from the
+connectors between them ([docs/graph-layouts.md](docs/graph-layouts.md)):
+
+```yaml
+- id: flow
+  layout: layered            # direction: down | right | up | left, gap, rank_gap, ordering
+  children:
+    - {shape: rect, id: draft, width: 100, height: 40}
+    - {shape: rect, id: review, width: 100, height: 40}
+    - {shape: rect, id: publish, width: 100, height: 40, rank: last}
+    - {shape: connector, from: draft, to: review, marker_end: arrow}
+    - {shape: connector, from: review, to: publish, marker_end: arrow}
+    - {shape: connector, id: direct, from: draft, to: publish, marker_end: arrow}
+    - {shape: text, text: fast track, attach: {to: direct.label}}
+```
+
+```bash
+diagrams render examples/layouts.yaml --out layouts.png --scale 2
+```
+
+- The nodes are the children, each as one box; attached children and instances of relation
+  templates are not nodes. The edges are the connectors between two different children, wherever
+  they are declared; an end deeper than a child is lifted to it.
+- A connector's `route` defaults to `layout`: the route the container supplies (`layered`, `tree`),
+  `straight` where there is none. `straight` and `orthogonal` override it for one connector.
+- `<connector>.label` is where a label goes: the room a `layered` container reserved for it, the
+  middle of the connector anywhere else.
+- Hints are per kind: `rank` (`first`, `last`, `{same_as: node}`) on a node and `constrain: false`
+  on a connector for `layered`, `pinned: {x, y}` on a node for `force`. One set where it means
+  nothing is reported (`hint_ignored`), as is one that contradicts the edges (`hint_conflict`).
+- `force` gives the same picture for the same document on every target: fixed seed and step count,
+  and arithmetic limited to the operations IEEE 754 rounds correctly.
+- `libs/flow.yaml` has the two templates a graph needs: `step` (a box with a line of text) and `link`
+  (a connector with an optional label that follows the supplied route).
+
+Choices made where the addendum is silent:
+
+- Layered: cycles are broken by a depth-first walk in declaration order; ranks are longest-path,
+  with sources pulled next to what they lead to; crossings are reduced by 24 barycenter sweeps, each followed by
+  exchanges of neighbours, keeping the best order; coordinates come from a weighted isotonic regression per rank, and long
+  edges are then straightened where nothing is in the way. Routes are polylines.
+- A relation template has to pass `route: layout` through to its connector to follow supplied
+  routes; `libs/uml.yaml` accepts it and keeps `orthogonal` as its default.
+- In a `force` container, `link_distance` is measured between outlines, nodes that an edge joins
+  do not repel each other, repulsion stops at three link distances, and a weak pull toward the
+  middle keeps separate groups together. 300 steps. The simulation does not minimise crossings: to
+  pick a `seed`, lint a few and keep one without `connector_crosses_connector` warnings.
+- Edges between the same two nodes bow apart in every graph kind (addendum, section 2), so a
+  reflexive association needs no fixed anchors.
+- A child of a graph container without a slot (an instance of a relation template) stays in the
+  container's frame: its `at` is not read.
+- In a transition frame the ends of an interpolated route are taken again on the interpolated
+  outlines; points of the route that fall inside an end's box are dropped.
+
 ## Templates and libraries
 
 A library is an imported file with `templates` (and optionally `styles`). A template declares a
 parameter schema, an interface and a body; an instance passes parameters as sibling keys of `use`.
-[libs/uml.yaml](libs/uml.yaml) (classes, notes, relations) and [libs/deck.yaml](libs/deck.yaml)
-(headings, bullets, cards, badges, progress dots) are complete examples.
+[libs/uml.yaml](libs/uml.yaml) (classes, notes, relations), [libs/merise.yaml](libs/merise.yaml)
+(the Merise data, processing and flow models; [examples/merise_festival.yaml](examples/merise_festival.yaml)
+is an MCD placed by a `force` container) and [libs/deck.yaml](libs/deck.yaml) (headings, bullets,
+cards, badges, progress dots) are complete examples.
 
 ```yaml
 templates:
@@ -304,8 +364,9 @@ DIAGRAMS_UPDATE=1 ./gradlew :fixtures:test
   attacher (`{anchor: west, to: a}` sits right of `a`), or a connector's `mid`. `gap` follows the
   target anchor's outward direction (none for `center`: use `offset`); `gap` and `offset` are in the
   parent's frame. `policy: stretch` is reserved for connectors; `block` has no effect.
-- Connector anchors: `start`, `end` (outward along the path) and `mid` (halfway along the path, with
-  the left normal as outward direction: above a left-to-right segment).
+- Connector anchors: `start`, `end` (outward along the path), `mid` (halfway along the path, with
+  the left normal as outward direction: above a left-to-right segment) and `label` (`mid`, or the
+  room a layered container reserved).
 - Outlines: ellipses and circles use their ellipse, every other node its box. A floating end on a
   connector is its `mid`.
 - `orthogonal` exits from side midpoints (east or west when the ends are further apart horizontally),
@@ -314,7 +375,9 @@ DIAGRAMS_UPDATE=1 ./gradlew :fixtures:test
 - Geometry property and anchor names (`top`, `left`, `center`, `north`, `mid`...) are reserved and
   cannot be IDs, since `a.top` would be ambiguous.
 - `text_overflow` flags lines wider than an explicit text `width`, and text leaving the topmost
-  filled shape under its center. `connector_crosses_shape` checks boxes and skips shapes that hold
+  filled shape under its center. `connector_crosses_connector` reports each crossing
+  pair once, on the later connector, and ignores crossings within 2 units of an end, where
+  connectors that share a node meet. `connector_crosses_shape` checks boxes and skips shapes that hold
   either end of the connector.
 - Templates: parameter types `string`, `number`, `boolean`, `color`, `enum` (`values`), `path` (a
   node or anchor path, checked from the instance), `list` (`item`, `keyed`), `object` (`fields`) and

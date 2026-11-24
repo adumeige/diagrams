@@ -40,7 +40,8 @@ object CoreSchema {
     const val FORMAT = "diagrams/0.1"
 
     val SHAPES = listOf("rect", "ellipse", "circle", "line", "polyline", "polygon", "path", "text", "connector")
-    val LAYOUTS = setOf("row", "column", "grid", "stack", "free")
+    val LAYOUTS: Set<String> = Layouts.kinds.keys
+    val ROUTES = setOf("straight", "orthogonal", "layout")
     val ALIGNS = setOf("start", "center", "end", "stretch")
     val ATTACH_KEYS = setOf("to", "anchor", "gap", "offset", "policy")
     val POLICIES = setOf("follow", "stretch", "block")
@@ -68,6 +69,9 @@ object CoreSchema {
         Prop("style", PType.ANY),
         Prop("theme", PType.ANY),
         Prop("attach", PType.ANY),
+        // hints for the graph layout of the parent: `rank` in a layered container, `pinned` in a force one
+        Prop("rank", PType.ANY),
+        Prop("pinned", PType.POINT),
         Prop("state", PType.STRING),
         Prop("states", PType.ANY),
         Prop("enter", PType.ANY),
@@ -95,6 +99,16 @@ object CoreSchema {
             Prop("padding", PType.ANY),
             Prop("align", PType.ENUM, values = ALIGNS),
             Prop("columns", PType.NUMBER),
+            // options of the graph kinds: no default here, each kind has its own (Layouts)
+            Prop("direction", PType.ENUM, values = Layouts.DIRECTIONS),
+            Prop("rank_gap", PType.NUMBER),
+            Prop("ordering", PType.ENUM, values = Layouts.ORDERINGS),
+            Prop("radial", PType.BOOL),
+            Prop("level_gap", PType.NUMBER),
+            Prop("radius", PType.NUMBER),
+            Prop("start_angle", PType.NUMBER),
+            Prop("seed", PType.NUMBER),
+            Prop("link_distance", PType.NUMBER),
             Prop("children", PType.NODES, Value.List(emptyList())),
         ),
     )
@@ -124,7 +138,10 @@ object CoreSchema {
             common + listOf(
                 Prop("from", PType.STRING, required = true),
                 Prop("to", PType.STRING, required = true),
-                Prop("route", PType.ENUM, str("straight"), values = setOf("straight", "orthogonal")),
+                // `layout` takes the path a graph container supplies, and is straight where none is supplied
+                Prop("route", PType.ENUM, str("layout"), values = ROUTES),
+                // false: drawn, without influencing the ranks of a layered container
+                Prop("constrain", PType.BOOL),
                 Prop("marker_start", PType.ENUM, str("none"), values = MARKERS),
                 Prop("marker_end", PType.ENUM, str("none"), values = MARKERS),
             ) + paint(null),

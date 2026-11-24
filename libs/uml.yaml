@@ -78,7 +78,7 @@ templates:
             - {shape: text, text: "=params.text", width: "=params.width - 20", font_size: 12, fill: "=theme.ink", wrap: true}
 
   relation:
-    description: A connector between two elements, with an optional label and multiplicities.
+    description: "A connector between two elements, with an optional label and multiplicities. In a graph container (layered, tree), 'route: layout' follows the route the container supplies."
     params:
       from: {type: path}
       to: {type: path}
@@ -87,33 +87,33 @@ templates:
       to_mult: {type: string, default: ""}
       head: {type: enum, values: [none, arrow, open_arrow, triangle, diamond, open_diamond], default: none}
       tail: {type: enum, values: [none, arrow, open_arrow, triangle, diamond, open_diamond], default: none}
-      route: {type: enum, values: [straight, orthogonal], default: orthogonal}
+      route: {type: enum, values: [straight, orthogonal, layout], default: orthogonal}
     exports:
       parts: [line]
       tokens: [stroke, muted]
     body:
       children:
         - {shape: connector, id: line, from: "=params.from", to: "=params.to", route: "=params.route", stroke: "=theme.stroke", stroke_width: 1.5, marker_end: "=params.head", marker_start: "=params.tail"}
-        - {if: "params.label != ''", shape: text, text: "=params.label", font_size: 12, fill: "=theme.muted", attach: {anchor: south, to: line.mid, gap: 4}}
+        - {if: "params.label != ''", shape: text, text: "=params.label", font_size: 12, fill: "=theme.muted", attach: {anchor: south, to: line.label, gap: 4}}
         - {if: "params.from_mult != ''", shape: text, text: "=params.from_mult", font_size: 12, fill: "=theme.muted", attach: {anchor: south_west, to: line.start, gap: -18}}
         - {if: "params.to_mult != ''", shape: text, text: "=params.to_mult", font_size: 12, fill: "=theme.muted", attach: {anchor: south_west, to: line.end, gap: -18}}
 
   association:
-    params: {from: path, to: path, label: {type: string, default: ""}, from_mult: {type: string, default: ""}, to_mult: {type: string, default: ""}, route: {type: enum, values: [straight, orthogonal], default: orthogonal}}
+    params: {from: path, to: path, label: {type: string, default: ""}, from_mult: {type: string, default: ""}, to_mult: {type: string, default: ""}, route: {type: enum, values: [straight, orthogonal, layout], default: orthogonal}}
     exports: {parts: [line], tokens: [stroke, muted]}
     body: {use: relation, from: "=params.from", to: "=params.to", label: "=params.label", from_mult: "=params.from_mult", to_mult: "=params.to_mult", route: "=params.route", head: open_arrow}
 
   aggregation:
-    params: {from: path, to: path, label: {type: string, default: ""}, from_mult: {type: string, default: ""}, to_mult: {type: string, default: ""}, route: {type: enum, values: [straight, orthogonal], default: orthogonal}}
+    params: {from: path, to: path, label: {type: string, default: ""}, from_mult: {type: string, default: ""}, to_mult: {type: string, default: ""}, route: {type: enum, values: [straight, orthogonal, layout], default: orthogonal}}
     exports: {parts: [line], tokens: [stroke, muted]}
     body: {use: relation, from: "=params.from", to: "=params.to", label: "=params.label", from_mult: "=params.from_mult", to_mult: "=params.to_mult", route: "=params.route", tail: open_diamond}
 
   composition:
-    params: {from: path, to: path, label: {type: string, default: ""}, from_mult: {type: string, default: ""}, to_mult: {type: string, default: ""}, route: {type: enum, values: [straight, orthogonal], default: orthogonal}}
+    params: {from: path, to: path, label: {type: string, default: ""}, from_mult: {type: string, default: ""}, to_mult: {type: string, default: ""}, route: {type: enum, values: [straight, orthogonal, layout], default: orthogonal}}
     exports: {parts: [line], tokens: [stroke, muted]}
     body: {use: relation, from: "=params.from", to: "=params.to", label: "=params.label", from_mult: "=params.from_mult", to_mult: "=params.to_mult", route: "=params.route", tail: diamond}
 
   generalization:
-    params: {from: path, to: path, route: {type: enum, values: [straight, orthogonal], default: orthogonal}}
+    params: {from: path, to: path, route: {type: enum, values: [straight, orthogonal, layout], default: orthogonal}}
     exports: {parts: [line], tokens: [stroke, muted]}
     body: {use: relation, from: "=params.from", to: "=params.to", route: "=params.route", head: triangle}

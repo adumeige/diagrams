@@ -174,6 +174,10 @@ object JsonSchema {
         "timeline" -> ref("timeline")
         "enter", "exit" -> ref("item")
         "padding" -> ref("padding")
+        "rank" -> anyOf(
+            obj("enum" to arr(Layouts.RANKS.sorted().map { s(it) })),
+            obj("type" to s("object"), "properties" to obj("same_as" to obj("type" to s("string"))), "required" to arr(listOf(s("same_as"))), "additionalProperties" to Value.Bool(false)),
+        )
         "slots" -> obj("type" to s("object"), "additionalProperties" to obj("type" to s("array"), "items" to ref("node")))
         else -> when (p.type) {
             PType.NUMBER -> ref("number")

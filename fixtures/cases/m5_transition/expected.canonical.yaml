@@ -72,7 +72,7 @@ scene:
       present: true
       from: hub
       to: box
-      route: straight
+      route: layout
       marker_start: none
       marker_end: arrow
       stroke: "#2d3436"

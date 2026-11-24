@@ -1,0 +1,281 @@
+format: diagrams/0.1
+viewport: {width: 860, height: 600}
+imports: {uml: ../../../libs/uml.yaml, paper: ../../../themes/paper.yaml}
+base_theme: paper
+styles:
+  step: {fill: "#dfe6e9", stroke: "#2d3436", stroke_width: 1.5, corner_radius: 6}
+  frame: {fill: "#ffffff", stroke: "#b2bec3", stroke_width: 1, corner_radius: 8}
+  edge: {stroke: "#2d3436", stroke_width: 1.5, marker_end: arrow}
+scene:
+  layout: free
+  rotation: 0
+  scale: 1
+  opacity: 1
+  present: true
+  children:
+    - id: system
+      layout: layered
+      layer: default
+      at: {x: 20, y: 20}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      direction: right
+      rank_gap: 70
+      children:
+        - id: client
+          shape: rect
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: step
+          width: 90
+          height: 40
+        - id: service
+          layout: stack
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          align: stretch
+          children:
+            - shape: rect
+              layer: default
+              at: {x: 0, y: 0}
+              rotation: 0
+              scale: 1
+              opacity: 1
+              present: true
+              style: frame
+              width: 0
+              height: 0
+            - id: steps
+              layout: layered
+              layer: default
+              at: {x: 0, y: 0}
+              rotation: 0
+              scale: 1
+              opacity: 1
+              present: true
+              gap: 20
+              padding: 16
+              rank_gap: 30
+              children:
+                - id: accept
+                  shape: rect
+                  layer: default
+                  at: {x: 0, y: 0}
+                  rotation: 0
+                  scale: 1
+                  opacity: 1
+                  present: true
+                  style: step
+                  width: 80
+                  height: 32
+                - id: plan
+                  shape: rect
+                  layer: default
+                  at: {x: 0, y: 0}
+                  rotation: 0
+                  scale: 1
+                  opacity: 1
+                  present: true
+                  style: step
+                  width: 80
+                  height: 32
+                - id: run
+                  shape: rect
+                  layer: default
+                  at: {x: 0, y: 0}
+                  rotation: 0
+                  scale: 1
+                  opacity: 1
+                  present: true
+                  style: step
+                  width: 80
+                  height: 32
+                - id: reply
+                  shape: rect
+                  layer: default
+                  at: {x: 0, y: 0}
+                  rotation: 0
+                  scale: 1
+                  opacity: 1
+                  present: true
+                  style: step
+                  width: 80
+                  height: 32
+                - shape: connector
+                  layer: default
+                  at: {x: 0, y: 0}
+                  rotation: 0
+                  scale: 1
+                  opacity: 1
+                  present: true
+                  style: edge
+                  from: accept
+                  to: plan
+                  route: layout
+                  marker_start: none
+                - shape: connector
+                  layer: default
+                  at: {x: 0, y: 0}
+                  rotation: 0
+                  scale: 1
+                  opacity: 1
+                  present: true
+                  style: edge
+                  from: accept
+                  to: run
+                  route: layout
+                  marker_start: none
+                - shape: connector
+                  layer: default
+                  at: {x: 0, y: 0}
+                  rotation: 0
+                  scale: 1
+                  opacity: 1
+                  present: true
+                  style: edge
+                  from: plan
+                  to: reply
+                  route: layout
+                  marker_start: none
+                - shape: connector
+                  layer: default
+                  at: {x: 0, y: 0}
+                  rotation: 0
+                  scale: 1
+                  opacity: 1
+                  present: true
+                  style: edge
+                  from: run
+                  to: reply
+                  route: layout
+                  marker_start: none
+        - id: store
+          shape: rect
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: step
+          width: 90
+          height: 40
+        - id: queue
+          shape: rect
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: step
+          width: 90
+          height: 40
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: client
+          to: service.steps.accept
+          route: layout
+          marker_start: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: service.steps.run
+          to: store
+          route: layout
+          marker_start: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: service.steps.reply
+          to: queue
+          route: layout
+          marker_start: none
+    - id: model
+      layout: layered
+      layer: default
+      at: {x: 20, y: 290}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      direction: up
+      rank_gap: 70
+      children:
+        - id: figure
+          use: uml.class
+          name: Shape
+          stereotype: ""
+          abstract: true
+          attributes: []
+          operations: [{area: "(): Number"}]
+        - id: disc
+          use: uml.class
+          name: Circle
+          stereotype: ""
+          abstract: false
+          attributes: [{radius: Number}]
+          operations: []
+        - id: polygon_class
+          use: uml.class
+          name: Polygon
+          stereotype: ""
+          abstract: false
+          attributes: []
+          operations: []
+        - id: vertex
+          use: uml.class
+          name: Point
+          stereotype: ""
+          abstract: false
+          attributes: [{x: Number}, {y: Number}]
+          operations: []
+        - id: canvas
+          use: uml.class
+          name: Canvas
+          stereotype: ""
+          abstract: false
+          attributes: []
+          operations: []
+        - {use: uml.generalization, from: disc, to: figure, route: layout}
+        - {use: uml.generalization, from: polygon_class, to: figure, route: layout}
+        - use: uml.composition
+          from: polygon_class
+          to: vertex
+          label: outline
+          from_mult: ""
+          to_mult: 3..*
+          route: layout
+        - use: uml.association
+          from: canvas
+          to: figure
+          label: shapes
+          from_mult: ""
+          to_mult: ""
+          route: layout

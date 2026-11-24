@@ -1,0 +1,10 @@
+- code: connector_crosses_connector
+  severity: warning
+  path: scene/0/15
+  message: "connector crosses scene/0/14 at (133.16, 94.73)"
+  data: {connector: scene/0/14, x: 133.16, y: 94.73}
+- code: connector_crosses_connector
+  severity: warning
+  path: scene/1/5
+  message: "connector crosses scene/1/4 at (145, 395)"
+  data: {connector: scene/1/4, x: 145, y: 395}

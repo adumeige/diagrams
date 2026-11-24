@@ -1,0 +1,66 @@
+# Nesting and templates (graph layouts addendum, section 2). A graph container places its children
+# as boxes, whatever is inside them: a child may be a stack, a template instance or another graph
+# container with its own layout. A connector between nodes of two different children is an edge of
+# the container that holds both: its ends are lifted to those children for placement, and drawn
+# from the nodes themselves. Relations from a library are edges too, wherever they are declared.
+format: diagrams/0.1
+viewport: {width: 860, height: 600}
+imports:
+  uml: ../../../libs/uml.yaml
+  paper: ../../../themes/paper.yaml
+base_theme: paper
+styles:
+  step: {fill: "#dfe6e9", stroke: "#2d3436", stroke_width: 1.5, corner_radius: 6}
+  frame: {fill: "#ffffff", stroke: "#b2bec3", stroke_width: 1, corner_radius: 8}
+  edge: {stroke: "#2d3436", stroke_width: 1.5, marker_end: arrow}
+scene:
+  children:
+    - id: system
+      at: {x: 20, y: 20}
+      layout: layered
+      direction: right
+      rank_gap: 70
+      children:
+        - {shape: rect, id: client, width: 90, height: 40, style: step}
+        # a graph container inside a graph container: one box for the outer layout
+        - id: service
+          layout: stack
+          align: stretch
+          children:
+            - {shape: rect, width: 0, height: 0, style: frame}
+            - id: steps
+              layout: layered
+              padding: 16
+              gap: 20
+              rank_gap: 30
+              children:
+                - {shape: rect, id: accept, width: 80, height: 32, style: step}
+                - {shape: rect, id: plan, width: 80, height: 32, style: step}
+                - {shape: rect, id: run, width: 80, height: 32, style: step}
+                - {shape: rect, id: reply, width: 80, height: 32, style: step}
+                - {shape: connector, from: accept, to: plan, style: edge}
+                - {shape: connector, from: accept, to: run, style: edge}
+                - {shape: connector, from: plan, to: reply, style: edge}
+                - {shape: connector, from: run, to: reply, style: edge}
+        - {shape: rect, id: store, width: 90, height: 40, style: step}
+        - {shape: rect, id: queue, width: 90, height: 40, style: step}
+        # edges of `system`: one end is three levels down, and is lifted to `service`
+        - {shape: connector, from: client, to: service.steps.accept, style: edge}
+        - {shape: connector, from: service.steps.run, to: store, style: edge}
+        - {shape: connector, from: service.steps.reply, to: queue, style: edge}
+    - id: model
+      at: {x: 20, y: 290}
+      layout: layered
+      direction: up
+      rank_gap: 70
+      children:
+        - {use: uml.class, id: figure, name: Shape, abstract: true, operations: [area: "(): Number"]}
+        - {use: uml.class, id: disc, name: Circle, attributes: [radius: Number]}
+        - {use: uml.class, id: polygon_class, name: Polygon}
+        - {use: uml.class, id: vertex, name: Point, attributes: [x: Number, y: Number]}
+        - {use: uml.class, id: canvas, name: Canvas}
+        # instances of a relation template hold a connector and its labels: they are edges, not nodes
+        - {use: uml.generalization, from: disc, to: figure, route: layout}
+        - {use: uml.generalization, from: polygon_class, to: figure, route: layout}
+        - {use: uml.composition, from: polygon_class, to: vertex, label: outline, to_mult: "3..*", route: layout}
+        - {use: uml.association, from: canvas, to: figure, label: shapes, route: layout}

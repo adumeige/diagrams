@@ -1,0 +1,115 @@
+# The four graph layouts (docs/graph-layouts.md): the nodes and the links are declared, the
+# containers find the positions.
+#   diagrams render examples/layouts.yaml --out layouts.png --scale 2
+format: diagrams/0.1
+title: Graph layouts
+viewport: {width: 1280, height: 760}
+imports:
+  flow: ../libs/flow.yaml
+  paper: ../themes/paper.yaml
+base_theme: paper
+camera:
+  fit: sheet
+  padding: 30
+scene:
+  children:
+    - id: sheet
+      layout: row
+      gap: 70
+      children:
+        - layout: column
+          gap: 16
+          children:
+            - {shape: text, text: "layered", font_size: 18, fill: "=theme.ink"}
+            # ranks follow the links; `retry` closes a cycle, and `shortcut` crosses three ranks
+            - id: review
+              layout: layered
+              children:
+                - {use: flow.step, id: draft, text: Draft, kind: terminal}
+                - {use: flow.step, id: lint, text: Lint}
+                - {use: flow.step, id: test, text: Test}
+                - {use: flow.step, id: fix, text: Fix}
+                - {use: flow.step, id: approve, text: Review}
+                - {use: flow.step, id: merge, text: Merge, kind: accent}
+                - {use: flow.step, id: notify, text: Notify, rank: {same_as: merge}}
+                - {use: flow.link, from: draft, to: lint}
+                - {use: flow.link, from: lint, to: test}
+                - {use: flow.link, from: test, to: fix, label: fails}
+                - {use: flow.link, id: retry, from: fix, to: lint}
+                - {use: flow.link, from: test, to: approve}
+                - {use: flow.link, from: approve, to: merge}
+                - {use: flow.link, id: shortcut, from: draft, to: merge, label: hotfix}
+                - {use: flow.link, from: approve, to: notify, constrain: false}
+
+        - layout: column
+          gap: 50
+          children:
+            - layout: column
+              gap: 16
+              children:
+                - {shape: text, text: "tree", font_size: 18, fill: "=theme.ink"}
+                - id: org
+                  layout: tree
+                  direction: right
+                  gap: 14
+                  level_gap: 44
+                  children:
+                    - {use: flow.step, id: cto, text: CTO, kind: accent}
+                    - {use: flow.step, id: platform, text: Platform}
+                    - {use: flow.step, id: product, text: Product}
+                    - {use: flow.step, id: infra, text: Infra}
+                    - {use: flow.step, id: tools, text: Tools}
+                    - {use: flow.step, id: web, text: Web}
+                    - {use: flow.step, id: mobile, text: Mobile}
+                    - {use: flow.step, id: design, text: Design}
+                    - {use: flow.link, from: cto, to: platform, head: none}
+                    - {use: flow.link, from: cto, to: product, head: none}
+                    - {use: flow.link, from: platform, to: infra, head: none}
+                    - {use: flow.link, from: platform, to: tools, head: none}
+                    - {use: flow.link, from: product, to: web, head: none}
+                    - {use: flow.link, from: product, to: mobile, head: none}
+                    - {use: flow.link, from: product, to: design, head: none}
+            - layout: column
+              gap: 16
+              children:
+                - {shape: text, text: "circular", font_size: 18, fill: "=theme.ink"}
+                - id: week
+                  layout: circular
+                  gap: 26
+                  children:
+                    - {use: flow.step, id: plan, text: Plan, kind: accent}
+                    - {use: flow.step, id: build, text: Build}
+                    - {use: flow.step, id: measure, text: Measure}
+                    - {use: flow.step, id: learn, text: Learn}
+                    - {use: flow.step, id: decide, text: Decide}
+                    - {use: flow.link, from: plan, to: build}
+                    - {use: flow.link, from: build, to: measure}
+                    - {use: flow.link, from: measure, to: learn}
+                    - {use: flow.link, from: learn, to: decide}
+                    - {use: flow.link, from: decide, to: plan}
+
+        - layout: column
+          gap: 16
+          children:
+            - {shape: text, text: "force", font_size: 18, fill: "=theme.ink"}
+            # no direction and no hierarchy: links pull, the rest pushes
+            - id: services
+              layout: force
+              link_distance: 50
+              children:
+                - {use: flow.step, id: gateway, text: Gateway, kind: accent}
+                - {use: flow.step, id: auth, text: Auth}
+                - {use: flow.step, id: orders, text: Orders}
+                - {use: flow.step, id: billing, text: Billing}
+                - {use: flow.step, id: stock, text: Stock}
+                - {use: flow.step, id: mail, text: Mail}
+                - {use: flow.step, id: ledger, text: Ledger}
+                - {use: flow.step, id: search, text: Search}
+                - {use: flow.link, from: gateway, to: auth, head: none}
+                - {use: flow.link, from: gateway, to: orders, head: none}
+                - {use: flow.link, from: gateway, to: search, head: none}
+                - {use: flow.link, from: orders, to: billing, head: none}
+                - {use: flow.link, from: orders, to: stock, head: none}
+                - {use: flow.link, from: billing, to: ledger, head: none}
+                - {use: flow.link, from: billing, to: mail, head: none}
+                - {use: flow.link, from: orders, to: mail, head: none}

@@ -1,0 +1,73 @@
+# The tree layout (graph layouts addendum, section 5): parents centered over their children, which
+# keep declaration order; the `direction` option; two roots side by side; and `radial`, with the
+# root in the middle and one ring per level.
+format: diagrams/0.1
+viewport: {width: 1000, height: 520}
+styles:
+  box: {fill: "#dfe6e9", stroke: "#2d3436", stroke_width: 1.5, corner_radius: 6}
+  dot: {fill: "#ffeaa7", stroke: "#2d3436", stroke_width: 1.5}
+  edge: {stroke: "#2d3436", stroke_width: 1.5}
+scene:
+  children:
+    - id: org
+      at: {x: 20, y: 20}
+      layout: tree
+      children:
+        - {shape: rect, id: ceo, width: 80, height: 34, style: box}
+        - {shape: rect, id: tech, width: 60, height: 34, style: box}
+        - {shape: rect, id: sales, width: 60, height: 34, style: box}
+        - {shape: rect, id: ops, width: 60, height: 34, style: box}
+        - {shape: rect, id: web, width: 50, height: 34, style: box}
+        - {shape: rect, id: data, width: 50, height: 34, style: box}
+        - {shape: rect, id: lille, width: 50, height: 34, style: box}
+        - {shape: rect, id: nice, width: 50, height: 34, style: box}
+        - {shape: rect, id: metz, width: 50, height: 34, style: box}
+        # a second root stands beside the first tree
+        - {shape: rect, id: board, width: 70, height: 34, style: box}
+        - {shape: connector, from: ceo, to: tech, style: edge}
+        - {shape: connector, from: ceo, to: sales, style: edge}
+        - {shape: connector, from: ceo, to: ops, style: edge}
+        - {shape: connector, from: tech, to: web, style: edge}
+        - {shape: connector, from: tech, to: data, style: edge}
+        - {shape: connector, from: ops, to: lille, style: edge}
+        - {shape: connector, from: ops, to: nice, style: edge}
+        - {shape: connector, from: ops, to: metz, style: edge}
+    - id: files
+      at: {x: 20, y: 300}
+      layout: tree
+      direction: right
+      gap: 16
+      level_gap: 50
+      children:
+        - {shape: rect, id: home, width: 80, height: 30, style: box}
+        - {shape: rect, id: src, width: 70, height: 30, style: box}
+        - {shape: rect, id: docs, width: 70, height: 30, style: box}
+        - {shape: rect, id: main, width: 60, height: 30, style: box}
+        - {shape: rect, id: tests, width: 60, height: 30, style: box}
+        - {shape: connector, from: home, to: src, style: edge}
+        - {shape: connector, from: home, to: docs, style: edge}
+        - {shape: connector, from: src, to: main, style: edge}
+        - {shape: connector, from: src, to: tests, style: edge}
+    - id: star
+      at: {x: 640, y: 80}
+      layout: tree
+      radial: true
+      level_gap: 30
+      children:
+        - {shape: circle, id: sun, radius: 22, style: dot}
+        - {shape: circle, id: a, radius: 16, style: dot}
+        - {shape: circle, id: b, radius: 16, style: dot}
+        - {shape: circle, id: c, radius: 16, style: dot}
+        - {shape: circle, id: a1, radius: 12, style: dot}
+        - {shape: circle, id: a2, radius: 12, style: dot}
+        - {shape: circle, id: b1, radius: 12, style: dot}
+        - {shape: circle, id: c1, radius: 12, style: dot}
+        - {shape: circle, id: c2, radius: 12, style: dot}
+        - {shape: connector, from: sun, to: a, style: edge}
+        - {shape: connector, from: sun, to: b, style: edge}
+        - {shape: connector, from: sun, to: c, style: edge}
+        - {shape: connector, from: a, to: a1, style: edge}
+        - {shape: connector, from: a, to: a2, style: edge}
+        - {shape: connector, from: b, to: b1, style: edge}
+        - {shape: connector, from: c, to: c1, style: edge}
+        - {shape: connector, from: c, to: c2, style: edge}

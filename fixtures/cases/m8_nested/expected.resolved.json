@@ -1,0 +1,1272 @@
+{
+  "format": "diagrams/0.1",
+  "viewport": {"width": 860, "height": 600},
+  "time": 0,
+  "background": "#faf8f3",
+  "root": {
+    "path": "scene",
+    "loc": "scene",
+    "kind": "container",
+    "layer": "default",
+    "box": [20, 20, 532, 513.92],
+    "local": [20, 20, 532, 513.92],
+    "transform": [1, 0, 0, 1, 0, 0],
+    "opacity": 1,
+    "children": [
+      {
+        "path": "system",
+        "loc": "scene/0",
+        "kind": "container",
+        "layer": "default",
+        "box": [20, 20, 532, 188],
+        "local": [0, 0, 532, 188],
+        "transform": [1, 0, 0, 1, 20, 20],
+        "opacity": 1,
+        "children": [
+          {
+            "path": "system.client",
+            "loc": "scene/0/0",
+            "kind": "rect",
+            "layer": "default",
+            "box": [20, 94, 90, 40],
+            "local": [0, 0, 90, 40],
+            "transform": [1, 0, 0, 1, 0, 74],
+            "opacity": 1,
+            "fill": "#dfe6e9",
+            "stroke": "#2d3436",
+            "stroke_width": 1.5,
+            "corner_radius": 6
+          },
+          {
+            "path": "system.service",
+            "loc": "scene/0/1",
+            "kind": "container",
+            "layer": "default",
+            "box": [180, 20, 212, 188],
+            "local": [0, 0, 212, 188],
+            "transform": [1, 0, 0, 1, 160, 0],
+            "opacity": 1,
+            "children": [
+              {
+                "path": null,
+                "loc": "scene/0/1/0",
+                "kind": "rect",
+                "layer": "default",
+                "box": [180, 20, 212, 188],
+                "local": [0, 0, 212, 188],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "fill": "#ffffff",
+                "stroke": "#b2bec3",
+                "stroke_width": 1,
+                "corner_radius": 8
+              },
+              {
+                "path": "system.service.steps",
+                "loc": "scene/0/1/1",
+                "kind": "container",
+                "layer": "default",
+                "box": [180, 20, 212, 188],
+                "local": [0, 0, 212, 188],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "children": [
+                  {
+                    "path": "system.service.steps.accept",
+                    "loc": "scene/0/1/1/0",
+                    "kind": "rect",
+                    "layer": "default",
+                    "box": [246, 36, 80, 32],
+                    "local": [0, 0, 80, 32],
+                    "transform": [1, 0, 0, 1, 66, 16],
+                    "opacity": 1,
+                    "fill": "#dfe6e9",
+                    "stroke": "#2d3436",
+                    "stroke_width": 1.5,
+                    "corner_radius": 6
+                  },
+                  {
+                    "path": "system.service.steps.plan",
+                    "loc": "scene/0/1/1/1",
+                    "kind": "rect",
+                    "layer": "default",
+                    "box": [196, 98, 80, 32],
+                    "local": [0, 0, 80, 32],
+                    "transform": [1, 0, 0, 1, 16, 78],
+                    "opacity": 1,
+                    "fill": "#dfe6e9",
+                    "stroke": "#2d3436",
+                    "stroke_width": 1.5,
+                    "corner_radius": 6
+                  },
+                  {
+                    "path": "system.service.steps.run",
+                    "loc": "scene/0/1/1/2",
+                    "kind": "rect",
+                    "layer": "default",
+                    "box": [296, 98, 80, 32],
+                    "local": [0, 0, 80, 32],
+                    "transform": [1, 0, 0, 1, 116, 78],
+                    "opacity": 1,
+                    "fill": "#dfe6e9",
+                    "stroke": "#2d3436",
+                    "stroke_width": 1.5,
+                    "corner_radius": 6
+                  },
+                  {
+                    "path": "system.service.steps.reply",
+                    "loc": "scene/0/1/1/3",
+                    "kind": "rect",
+                    "layer": "default",
+                    "box": [246, 160, 80, 32],
+                    "local": [0, 0, 80, 32],
+                    "transform": [1, 0, 0, 1, 66, 140],
+                    "opacity": 1,
+                    "fill": "#dfe6e9",
+                    "stroke": "#2d3436",
+                    "stroke_width": 1.5,
+                    "corner_radius": 6
+                  },
+                  {
+                    "path": null,
+                    "loc": "scene/0/1/1/4",
+                    "kind": "connector",
+                    "layer": "default",
+                    "box": [248.903226, 68, 24.193548, 30],
+                    "local": [68.903226, 48, 24.193548, 30],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "stroke": "#2d3436",
+                    "stroke_width": 1.5,
+                    "points": [[93.096774, 48], [75.494627, 69.826663]],
+                    "markers": [
+                      {
+                        "kind": "arrow",
+                        "points": [[68.903226, 78], [72.225292, 67.190103], [78.763961, 72.463223]]
+                      }
+                    ],
+                    "route": "layout"
+                  },
+                  {
+                    "path": null,
+                    "loc": "scene/0/1/1/5",
+                    "kind": "connector",
+                    "layer": "default",
+                    "box": [298.903226, 68, 24.193548, 30],
+                    "local": [118.903226, 48, 24.193548, 30],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "stroke": "#2d3436",
+                    "stroke_width": 1.5,
+                    "points": [[118.903226, 48], [136.505373, 69.826663]],
+                    "markers": [
+                      {
+                        "kind": "arrow",
+                        "points": [[143.096774, 78], [133.236039, 72.463223], [139.774708, 67.190103]]
+                      }
+                    ],
+                    "route": "layout"
+                  },
+                  {
+                    "path": null,
+                    "loc": "scene/0/1/1/6",
+                    "kind": "connector",
+                    "layer": "default",
+                    "box": [248.903226, 130, 24.193548, 30],
+                    "local": [68.903226, 110, 24.193548, 30],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "stroke": "#2d3436",
+                    "stroke_width": 1.5,
+                    "points": [[68.903226, 110], [86.505373, 131.826663]],
+                    "markers": [
+                      {
+                        "kind": "arrow",
+                        "points": [[93.096774, 140], [83.236039, 134.463223], [89.774708, 129.190103]]
+                      }
+                    ],
+                    "route": "layout"
+                  },
+                  {
+                    "path": null,
+                    "loc": "scene/0/1/1/7",
+                    "kind": "connector",
+                    "layer": "default",
+                    "box": [298.903226, 130, 24.193548, 30],
+                    "local": [118.903226, 110, 24.193548, 30],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "stroke": "#2d3436",
+                    "stroke_width": 1.5,
+                    "points": [[143.096774, 110], [125.494627, 131.826663]],
+                    "markers": [
+                      {
+                        "kind": "arrow",
+                        "points": [[118.903226, 140], [122.225292, 129.190103], [128.763961, 134.463223]]
+                      }
+                    ],
+                    "route": "layout"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "system.store",
+            "loc": "scene/0/2",
+            "kind": "rect",
+            "layer": "default",
+            "box": [462, 54, 90, 40],
+            "local": [0, 0, 90, 40],
+            "transform": [1, 0, 0, 1, 442, 34],
+            "opacity": 1,
+            "fill": "#dfe6e9",
+            "stroke": "#2d3436",
+            "stroke_width": 1.5,
+            "corner_radius": 6
+          },
+          {
+            "path": "system.queue",
+            "loc": "scene/0/3",
+            "kind": "rect",
+            "layer": "default",
+            "box": [462, 134, 90, 40],
+            "local": [0, 0, 90, 40],
+            "transform": [1, 0, 0, 1, 442, 114],
+            "opacity": 1,
+            "fill": "#dfe6e9",
+            "stroke": "#2d3436",
+            "stroke_width": 1.5,
+            "corner_radius": 6
+          },
+          {
+            "path": null,
+            "loc": "scene/0/4",
+            "kind": "connector",
+            "layer": "default",
+            "box": [110, 62.014045, 136, 39.36152],
+            "local": [90, 42.014045, 136, 39.36152],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "stroke": "#2d3436",
+            "stroke_width": 1.5,
+            "points": [[90, 81.375566], [215.890304, 46.057924]],
+            "markers": [
+              {
+                "kind": "arrow",
+                "points": [[226, 43.221719], [217.024786, 50.101802], [214.755823, 42.014045]]
+              }
+            ],
+            "route": "layout"
+          },
+          {
+            "path": null,
+            "loc": "scene/0/5",
+            "kind": "connector",
+            "layer": "default",
+            "box": [376, 82.828293, 86, 21.814981],
+            "local": [356, 62.828293, 86, 21.814981],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "stroke": "#2d3436",
+            "stroke_width": 1.5,
+            "points": [[356, 84.643275], [431.775992, 66.917897]],
+            "markers": [
+              {
+                "kind": "arrow",
+                "points": [[442, 64.526316], [432.732624, 71.0075], [430.81936, 62.828293]]
+              }
+            ],
+            "route": "layout"
+          },
+          {
+            "path": null,
+            "loc": "scene/0/6",
+            "kind": "connector",
+            "layer": "default",
+            "box": [326, 155.340403, 136, 16.677697],
+            "local": [306, 135.340403, 136, 16.677697],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "stroke": "#2d3436",
+            "stroke_width": 1.5,
+            "points": [[306, 152.0181], [431.551642, 139.519746]],
+            "markers": [
+              {
+                "kind": "arrow",
+                "points": [[442, 138.479638], [431.967686, 143.699089], [431.135599, 135.340403]]
+              }
+            ],
+            "route": "layout"
+          }
+        ]
+      },
+      {
+        "path": "model",
+        "loc": "scene/1",
+        "kind": "container",
+        "layer": "default",
+        "box": [20, 290, 361.842279, 243.92],
+        "local": [0, 0, 361.842279, 243.92],
+        "transform": [1, 0, 0, 1, 20, 290],
+        "opacity": 1,
+        "children": [
+          {
+            "path": "model.figure",
+            "loc": "scene/1/0",
+            "kind": "container",
+            "template": "uml.class",
+            "layer": "default",
+            "box": [148.132333, 292.74, 104.851, 83.6],
+            "local": [0, 0, 104.851, 83.6],
+            "transform": [1, 0, 0, 1, 128.132333, 2.74],
+            "opacity": 1,
+            "children": [
+              {
+                "path": "model.figure.header",
+                "loc": "scene/1/0/0",
+                "kind": "container",
+                "layer": "default",
+                "box": [148.132333, 292.74, 104.851, 49.48],
+                "local": [0, 0, 104.851, 49.48],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "children": [
+                  {
+                    "path": null,
+                    "loc": "scene/1/0/0/0",
+                    "kind": "rect",
+                    "layer": "default",
+                    "box": [148.132333, 292.74, 104.851, 49.48],
+                    "local": [0, 0, 104.851, 49.48],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "fill": "#ffffff",
+                    "stroke": "#2d3436",
+                    "stroke_width": 1.5
+                  },
+                  {
+                    "path": null,
+                    "loc": "scene/1/0/0/1",
+                    "kind": "container",
+                    "layer": "default",
+                    "box": [148.132333, 292.74, 104.851, 49.48],
+                    "local": [0, 0, 104.851, 49.48],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "children": [
+                      {
+                        "path": null,
+                        "loc": "scene/1/0/0/1/0",
+                        "kind": "text",
+                        "layer": "default",
+                        "box": [178.373833, 300.74, 44.368, 19.84],
+                        "local": [0, 0, 44.368, 19.84],
+                        "transform": [1, 0, 0, 1, 30.2415, 8],
+                        "opacity": 1,
+                        "fill": "#2d3436",
+                        "font": "body",
+                        "font_size": 16,
+                        "lines": [{"text": "Shape", "x": 0, "baseline": 15.2, "width": 44.368}]
+                      },
+                      {
+                        "path": null,
+                        "loc": "scene/1/0/0/1/1",
+                        "kind": "text",
+                        "layer": "default",
+                        "box": [177.375333, 320.58, 46.365, 13.64],
+                        "local": [0, 0, 46.365, 13.64],
+                        "transform": [1, 0, 0, 1, 29.243, 27.84],
+                        "opacity": 1,
+                        "fill": "#636e72",
+                        "font": "body",
+                        "font_size": 11,
+                        "lines": [{"text": "{abstract}", "x": 0, "baseline": 10.45, "width": 46.365}]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "path": "model.figure.attributes",
+                "loc": "scene/1/0/1",
+                "kind": "container",
+                "layer": "default",
+                "box": [148.132333, 342.22, 104.851, 6],
+                "local": [0, 0, 104.851, 6],
+                "transform": [1, 0, 0, 1, 0, 49.48],
+                "opacity": 1,
+                "children": [
+                  {
+                    "path": null,
+                    "loc": "scene/1/0/1/0",
+                    "kind": "rect",
+                    "layer": "default",
+                    "box": [148.132333, 342.22, 104.851, 6],
+                    "local": [0, 0, 104.851, 6],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "fill": "#ffffff",
+                    "stroke": "#2d3436",
+                    "stroke_width": 1.5
+                  },
+                  {
+                    "path": null,
+                    "loc": "scene/1/0/1/1",
+                    "kind": "container",
+                    "layer": "default",
+                    "box": [148.132333, 342.22, 104.851, 6],
+                    "local": [0, 0, 104.851, 6],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "path": "model.figure.operations",
+                "loc": "scene/1/0/2",
+                "kind": "container",
+                "layer": "default",
+                "box": [148.132333, 348.22, 104.851, 28.12],
+                "local": [0, 0, 104.851, 28.12],
+                "transform": [1, 0, 0, 1, 0, 55.48],
+                "opacity": 1,
+                "children": [
+                  {
+                    "path": null,
+                    "loc": "scene/1/0/2/0",
+                    "kind": "rect",
+                    "layer": "default",
+                    "box": [148.132333, 348.22, 104.851, 28.12],
+                    "local": [0, 0, 104.851, 28.12],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "fill": "#ffffff",
+                    "stroke": "#2d3436",
+                    "stroke_width": 1.5
+                  },
+                  {
+                    "path": null,
+                    "loc": "scene/1/0/2/1",
+                    "kind": "container",
+                    "layer": "default",
+                    "box": [148.132333, 348.22, 104.851, 28.12],
+                    "local": [0, 0, 104.851, 28.12],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "children": [
+                      {
+                        "path": "model.figure.operations.operation[area]",
+                        "loc": "scene/1/0/2/1/0",
+                        "kind": "text",
+                        "layer": "default",
+                        "box": [158.132333, 354.22, 84.851, 16.12],
+                        "local": [0, 0, 84.851, 16.12],
+                        "transform": [1, 0, 0, 1, 10, 6],
+                        "opacity": 1,
+                        "fill": "#2d3436",
+                        "font": "body",
+                        "font_size": 13,
+                        "lines": [{"text": "area(): Number", "x": 0, "baseline": 12.35, "width": 84.851}]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "model.disc",
+            "loc": "scene/1/1",
+            "kind": "container",
+            "template": "uml.class",
+            "layer": "default",
+            "box": [20, 463.96, 107.243, 69.96],
+            "local": [0, 0, 107.243, 69.96],
+            "transform": [1, 0, 0, 1, 0, 173.96],
+            "opacity": 1,
+            "children": [
+              {
+                "path": "model.disc.header",
+                "loc": "scene/1/1/0",
+                "kind": "container",
+                "layer": "default",
+                "box": [20, 463.96, 107.243, 35.84],
+                "local": [0, 0, 107.243, 35.84],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "children": [
+                  {
+                    "path": null,
+                    "loc": "scene/1/1/0/0",
+                    "kind": "rect",
+                    "layer": "default",
+                    "box": [20, 463.96, 107.243, 35.84],
+                    "local": [0, 0, 107.243, 35.84],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "fill": "#ffffff",
+                    "stroke": "#2d3436",
+                    "stroke_width": 1.5
+                  },
+                  {
+                    "path": null,
+                    "loc": "scene/1/1/0/1",
+                    "kind": "container",
+                    "layer": "default",
+                    "box": [20, 463.96, 107.243, 35.84],
+                    "local": [0, 0, 107.243, 35.84],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "children": [
+                      {
+                        "path": null,
+                        "loc": "scene/1/1/0/1/0",
+                        "kind": "text",
+                        "layer": "default",
+                        "box": [53.2055, 471.96, 40.832, 19.84],
+                        "local": [0, 0, 40.832, 19.84],
+                        "transform": [1, 0, 0, 1, 33.2055, 8],
+                        "opacity": 1,
+                        "fill": "#2d3436",
+                        "font": "body",
+                        "font_size": 16,
+                        "lines": [{"text": "Circle", "x": 0, "baseline": 15.2, "width": 40.832}]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "path": "model.disc.attributes",
+                "loc": "scene/1/1/1",
+                "kind": "container",
+                "layer": "default",
+                "box": [20, 499.8, 107.243, 28.12],
+                "local": [0, 0, 107.243, 28.12],
+                "transform": [1, 0, 0, 1, 0, 35.84],
+                "opacity": 1,
+                "children": [
+                  {
+                    "path": null,
+                    "loc": "scene/1/1/1/0",
+                    "kind": "rect",
+                    "layer": "default",
+                    "box": [20, 499.8, 107.243, 28.12],
+                    "local": [0, 0, 107.243, 28.12],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "fill": "#ffffff",
+                    "stroke": "#2d3436",
+                    "stroke_width": 1.5
+                  },
+                  {
+                    "path": null,
+                    "loc": "scene/1/1/1/1",
+                    "kind": "container",
+                    "layer": "default",
+                    "box": [20, 499.8, 107.243, 28.12],
+                    "local": [0, 0, 107.243, 28.12],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "children": [
+                      {
+                        "path": "model.disc.attributes.attribute[radius]",
+                        "loc": "scene/1/1/1/1/0",
+                        "kind": "text",
+                        "layer": "default",
+                        "box": [30, 505.8, 87.243, 16.12],
+                        "local": [0, 0, 87.243, 16.12],
+                        "transform": [1, 0, 0, 1, 10, 6],
+                        "opacity": 1,
+                        "fill": "#2d3436",
+                        "font": "body",
+                        "font_size": 13,
+                        "lines": [{"text": "radius: Number", "x": 0, "baseline": 12.35, "width": 87.243}]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "path": "model.disc.operations",
+                "loc": "scene/1/1/2",
+                "kind": "container",
+                "layer": "default",
+                "box": [20, 527.92, 107.243, 6],
+                "local": [0, 0, 107.243, 6],
+                "transform": [1, 0, 0, 1, 0, 63.96],
+                "opacity": 1,
+                "children": [
+                  {
+                    "path": null,
+                    "loc": "scene/1/1/2/0",
+                    "kind": "rect",
+                    "layer": "default",
+                    "box": [20, 527.92, 107.243, 6],
+                    "local": [0, 0, 107.243, 6],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "fill": "#ffffff",
+                    "stroke": "#2d3436",
+                    "stroke_width": 1.5
+                  },
+                  {
+                    "path": null,
+                    "loc": "scene/1/1/2/1",
+                    "kind": "container",
+                    "layer": "default",
+                    "box": [20, 527.92, 107.243, 6],
+                    "local": [0, 0, 107.243, 6],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "model.polygon_class",
+            "loc": "scene/1/2",
+            "kind": "container",
+            "template": "uml.class",
+            "layer": "default",
+            "box": [285.899, 475.02, 83.664, 47.84],
+            "local": [0, 0, 83.664, 47.84],
+            "transform": [1, 0, 0, 1, 265.899, 185.02],
+            "opacity": 1,
+            "children": [
+              {
+                "path": "model.polygon_class.header",
+                "loc": "scene/1/2/0",
+                "kind": "container",
+                "layer": "default",
+                "box": [285.899, 475.02, 83.664, 35.84],
+                "local": [0, 0, 83.664, 35.84],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "children": [
+                  {
+                    "path": null,
+                    "loc": "scene/1/2/0/0",
+                    "kind": "rect",
+                    "layer": "default",
+                    "box": [285.899, 475.02, 83.664, 35.84],
+                    "local": [0, 0, 83.664, 35.84],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "fill": "#ffffff",
+                    "stroke": "#2d3436",
+                    "stroke_width": 1.5
+                  },
+                  {
+                    "path": null,
+                    "loc": "scene/1/2/0/1",
+                    "kind": "container",
+                    "layer": "default",
+                    "box": [285.899, 475.02, 83.664, 35.84],
+                    "local": [0, 0, 83.664, 35.84],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "children": [
+                      {
+                        "path": null,
+                        "loc": "scene/1/2/0/1/0",
+                        "kind": "text",
+                        "layer": "default",
+                        "box": [299.899, 483.02, 55.664, 19.84],
+                        "local": [0, 0, 55.664, 19.84],
+                        "transform": [1, 0, 0, 1, 14, 8],
+                        "opacity": 1,
+                        "fill": "#2d3436",
+                        "font": "body",
+                        "font_size": 16,
+                        "lines": [{"text": "Polygon", "x": 0, "baseline": 15.2, "width": 55.664}]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "path": "model.polygon_class.attributes",
+                "loc": "scene/1/2/1",
+                "kind": "container",
+                "layer": "default",
+                "box": [285.899, 510.86, 83.664, 6],
+                "local": [0, 0, 83.664, 6],
+                "transform": [1, 0, 0, 1, 0, 35.84],
+                "opacity": 1,
+                "children": [
+                  {
+                    "path": null,
+                    "loc": "scene/1/2/1/0",
+                    "kind": "rect",
+                    "layer": "default",
+                    "box": [285.899, 510.86, 83.664, 6],
+                    "local": [0, 0, 83.664, 6],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "fill": "#ffffff",
+                    "stroke": "#2d3436",
+                    "stroke_width": 1.5
+                  },
+                  {
+                    "path": null,
+                    "loc": "scene/1/2/1/1",
+                    "kind": "container",
+                    "layer": "default",
+                    "box": [285.899, 510.86, 83.664, 6],
+                    "local": [0, 0, 83.664, 6],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "path": "model.polygon_class.operations",
+                "loc": "scene/1/2/2",
+                "kind": "container",
+                "layer": "default",
+                "box": [285.899, 516.86, 83.664, 6],
+                "local": [0, 0, 83.664, 6],
+                "transform": [1, 0, 0, 1, 0, 41.84],
+                "opacity": 1,
+                "children": [
+                  {
+                    "path": null,
+                    "loc": "scene/1/2/2/0",
+                    "kind": "rect",
+                    "layer": "default",
+                    "box": [285.899, 516.86, 83.664, 6],
+                    "local": [0, 0, 83.664, 6],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "fill": "#ffffff",
+                    "stroke": "#2d3436",
+                    "stroke_width": 1.5
+                  },
+                  {
+                    "path": null,
+                    "loc": "scene/1/2/2/1",
+                    "kind": "container",
+                    "layer": "default",
+                    "box": [285.899, 516.86, 83.664, 6],
+                    "local": [0, 0, 83.664, 6],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "model.vertex",
+            "loc": "scene/1/3",
+            "kind": "container",
+            "template": "uml.class",
+            "layer": "default",
+            "box": [295.0105, 290, 77.941, 89.08],
+            "local": [0, 0, 77.941, 89.08],
+            "transform": [1, 0, 0, 1, 275.0105, 0],
+            "opacity": 1,
+            "children": [
+              {
+                "path": "model.vertex.header",
+                "loc": "scene/1/3/0",
+                "kind": "container",
+                "layer": "default",
+                "box": [295.0105, 290, 77.941, 35.84],
+                "local": [0, 0, 77.941, 35.84],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "children": [
+                  {
+                    "path": null,
+                    "loc": "scene/1/3/0/0",
+                    "kind": "rect",
+                    "layer": "default",
+                    "box": [295.0105, 290, 77.941, 35.84],
+                    "local": [0, 0, 77.941, 35.84],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "fill": "#ffffff",
+                    "stroke": "#2d3436",
+                    "stroke_width": 1.5
+                  },
+                  {
+                    "path": null,
+                    "loc": "scene/1/3/0/1",
+                    "kind": "container",
+                    "layer": "default",
+                    "box": [295.0105, 290, 77.941, 35.84],
+                    "local": [0, 0, 77.941, 35.84],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "children": [
+                      {
+                        "path": null,
+                        "loc": "scene/1/3/0/1/0",
+                        "kind": "text",
+                        "layer": "default",
+                        "box": [315.573, 298, 36.816, 19.84],
+                        "local": [0, 0, 36.816, 19.84],
+                        "transform": [1, 0, 0, 1, 20.5625, 8],
+                        "opacity": 1,
+                        "fill": "#2d3436",
+                        "font": "body",
+                        "font_size": 16,
+                        "lines": [{"text": "Point", "x": 0, "baseline": 15.2, "width": 36.816}]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "path": "model.vertex.attributes",
+                "loc": "scene/1/3/1",
+                "kind": "container",
+                "layer": "default",
+                "box": [295.0105, 325.84, 77.941, 47.24],
+                "local": [0, 0, 77.941, 47.24],
+                "transform": [1, 0, 0, 1, 0, 35.84],
+                "opacity": 1,
+                "children": [
+                  {
+                    "path": null,
+                    "loc": "scene/1/3/1/0",
+                    "kind": "rect",
+                    "layer": "default",
+                    "box": [295.0105, 325.84, 77.941, 47.24],
+                    "local": [0, 0, 77.941, 47.24],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "fill": "#ffffff",
+                    "stroke": "#2d3436",
+                    "stroke_width": 1.5
+                  },
+                  {
+                    "path": null,
+                    "loc": "scene/1/3/1/1",
+                    "kind": "container",
+                    "layer": "default",
+                    "box": [295.0105, 325.84, 77.941, 47.24],
+                    "local": [0, 0, 77.941, 47.24],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "children": [
+                      {
+                        "path": "model.vertex.attributes.attribute[x]",
+                        "loc": "scene/1/3/1/1/0",
+                        "kind": "text",
+                        "layer": "default",
+                        "box": [305.0105, 331.84, 57.941, 16.12],
+                        "local": [0, 0, 57.941, 16.12],
+                        "transform": [1, 0, 0, 1, 10, 6],
+                        "opacity": 1,
+                        "fill": "#2d3436",
+                        "font": "body",
+                        "font_size": 13,
+                        "lines": [{"text": "x: Number", "x": 0, "baseline": 12.35, "width": 57.941}]
+                      },
+                      {
+                        "path": "model.vertex.attributes.attribute[y]",
+                        "loc": "scene/1/3/1/1/1",
+                        "kind": "text",
+                        "layer": "default",
+                        "box": [305.0105, 350.96, 57.525, 16.12],
+                        "local": [0, 0, 57.525, 16.12],
+                        "transform": [1, 0, 0, 1, 10, 25.12],
+                        "opacity": 1,
+                        "fill": "#2d3436",
+                        "font": "body",
+                        "font_size": 13,
+                        "lines": [{"text": "y: Number", "x": 0, "baseline": 12.35, "width": 57.525}]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "path": "model.vertex.operations",
+                "loc": "scene/1/3/2",
+                "kind": "container",
+                "layer": "default",
+                "box": [295.0105, 373.08, 77.941, 6],
+                "local": [0, 0, 77.941, 6],
+                "transform": [1, 0, 0, 1, 0, 83.08],
+                "opacity": 1,
+                "children": [
+                  {
+                    "path": null,
+                    "loc": "scene/1/3/2/0",
+                    "kind": "rect",
+                    "layer": "default",
+                    "box": [295.0105, 373.08, 77.941, 6],
+                    "local": [0, 0, 77.941, 6],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "fill": "#ffffff",
+                    "stroke": "#2d3436",
+                    "stroke_width": 1.5
+                  },
+                  {
+                    "path": null,
+                    "loc": "scene/1/3/2/1",
+                    "kind": "container",
+                    "layer": "default",
+                    "box": [295.0105, 373.08, 77.941, 6],
+                    "local": [0, 0, 77.941, 6],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "model.canvas",
+            "loc": "scene/1/4",
+            "kind": "container",
+            "template": "uml.class",
+            "layer": "default",
+            "box": [167.243, 475.02, 78.656, 47.84],
+            "local": [0, 0, 78.656, 47.84],
+            "transform": [1, 0, 0, 1, 147.243, 185.02],
+            "opacity": 1,
+            "children": [
+              {
+                "path": "model.canvas.header",
+                "loc": "scene/1/4/0",
+                "kind": "container",
+                "layer": "default",
+                "box": [167.243, 475.02, 78.656, 35.84],
+                "local": [0, 0, 78.656, 35.84],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "children": [
+                  {
+                    "path": null,
+                    "loc": "scene/1/4/0/0",
+                    "kind": "rect",
+                    "layer": "default",
+                    "box": [167.243, 475.02, 78.656, 35.84],
+                    "local": [0, 0, 78.656, 35.84],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "fill": "#ffffff",
+                    "stroke": "#2d3436",
+                    "stroke_width": 1.5
+                  },
+                  {
+                    "path": null,
+                    "loc": "scene/1/4/0/1",
+                    "kind": "container",
+                    "layer": "default",
+                    "box": [167.243, 475.02, 78.656, 35.84],
+                    "local": [0, 0, 78.656, 35.84],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "children": [
+                      {
+                        "path": null,
+                        "loc": "scene/1/4/0/1/0",
+                        "kind": "text",
+                        "layer": "default",
+                        "box": [181.243, 483.02, 50.656, 19.84],
+                        "local": [0, 0, 50.656, 19.84],
+                        "transform": [1, 0, 0, 1, 14, 8],
+                        "opacity": 1,
+                        "fill": "#2d3436",
+                        "font": "body",
+                        "font_size": 16,
+                        "lines": [{"text": "Canvas", "x": 0, "baseline": 15.2, "width": 50.656}]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "path": "model.canvas.attributes",
+                "loc": "scene/1/4/1",
+                "kind": "container",
+                "layer": "default",
+                "box": [167.243, 510.86, 78.656, 6],
+                "local": [0, 0, 78.656, 6],
+                "transform": [1, 0, 0, 1, 0, 35.84],
+                "opacity": 1,
+                "children": [
+                  {
+                    "path": null,
+                    "loc": "scene/1/4/1/0",
+                    "kind": "rect",
+                    "layer": "default",
+                    "box": [167.243, 510.86, 78.656, 6],
+                    "local": [0, 0, 78.656, 6],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "fill": "#ffffff",
+                    "stroke": "#2d3436",
+                    "stroke_width": 1.5
+                  },
+                  {
+                    "path": null,
+                    "loc": "scene/1/4/1/1",
+                    "kind": "container",
+                    "layer": "default",
+                    "box": [167.243, 510.86, 78.656, 6],
+                    "local": [0, 0, 78.656, 6],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "path": "model.canvas.operations",
+                "loc": "scene/1/4/2",
+                "kind": "container",
+                "layer": "default",
+                "box": [167.243, 516.86, 78.656, 6],
+                "local": [0, 0, 78.656, 6],
+                "transform": [1, 0, 0, 1, 0, 41.84],
+                "opacity": 1,
+                "children": [
+                  {
+                    "path": null,
+                    "loc": "scene/1/4/2/0",
+                    "kind": "rect",
+                    "layer": "default",
+                    "box": [167.243, 516.86, 78.656, 6],
+                    "local": [0, 0, 78.656, 6],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "fill": "#ffffff",
+                    "stroke": "#2d3436",
+                    "stroke_width": 1.5
+                  },
+                  {
+                    "path": null,
+                    "loc": "scene/1/4/2/1",
+                    "kind": "container",
+                    "layer": "default",
+                    "box": [167.243, 516.86, 78.656, 6],
+                    "local": [0, 0, 78.656, 6],
+                    "transform": [1, 0, 0, 1, 0, 0],
+                    "opacity": 1,
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": null,
+            "loc": "scene/1/5",
+            "kind": "container",
+            "template": "uml.generalization",
+            "layer": "default",
+            "box": [20, 290, 0, 0],
+            "local": [0, 0, 0, 0],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "children": [
+              {
+                "path": "model.line",
+                "loc": "scene/1/5/0",
+                "kind": "connector",
+                "layer": "default",
+                "box": [103.501677, 376.34, 61.762696, 87.62],
+                "local": [83.501677, 86.34, 61.762696, 87.62],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "stroke": "#2d3436",
+                "stroke_width": 1.5,
+                "points": [
+                  [83.501677, 173.96],
+                  [113.398939, 138.96],
+                  [113.398939, 124.08],
+                  [137.135676, 95.967267]
+                ],
+                "markers": [
+                  {
+                    "kind": "triangle",
+                    "points": [[145.264374, 86.34], [141.548173, 99.69292], [132.723178, 92.241614]]
+                  }
+                ],
+                "route": "layout"
+              }
+            ]
+          },
+          {
+            "path": null,
+            "loc": "scene/1/6",
+            "kind": "container",
+            "template": "uml.generalization",
+            "layer": "default",
+            "box": [20, 290, 0, 0],
+            "local": [0, 0, 0, 0],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "children": [
+              {
+                "path": "model.line",
+                "loc": "scene/1/6/0",
+                "kind": "connector",
+                "layer": "default",
+                "box": [236.539738, 376.34, 71.125448, 98.68],
+                "local": [216.539738, 86.34, 71.125448, 98.68],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "stroke": "#2d3436",
+                "stroke_width": 1.5,
+                "points": [
+                  [287.665186, 185.02],
+                  [249.02675, 138.96],
+                  [249.02675, 124.08],
+                  [224.759885, 95.889303]
+                ],
+                "markers": [
+                  {
+                    "kind": "triangle",
+                    "points": [[216.539738, 86.34], [229.136649, 92.121736], [220.383121, 99.65687]]
+                  }
+                ],
+                "route": "layout"
+              }
+            ]
+          },
+          {
+            "path": null,
+            "loc": "scene/1/7",
+            "kind": "container",
+            "template": "uml.composition",
+            "layer": "default",
+            "box": [20, 290, 0, 0],
+            "local": [0, 0, 0, 0],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "children": [
+              {
+                "path": "model.line",
+                "loc": "scene/1/7/0",
+                "kind": "connector",
+                "layer": "default",
+                "box": [324.89374, 379.08, 8.39258, 95.94],
+                "local": [304.89374, 89.08, 8.39258, 95.94],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "stroke": "#2d3436",
+                "stroke_width": 1.5,
+                "points": [
+                  [309.443012, 168.234839],
+                  [310.674279, 138.96],
+                  [310.674279, 124.08],
+                  [312.129336, 89.08]
+                ],
+                "markers": [
+                  {
+                    "kind": "diamond",
+                    "points": [
+                      [308.737048, 185.02],
+                      [304.89374, 176.450929],
+                      [309.443012, 168.234839],
+                      [313.28632, 176.803911]
+                    ]
+                  }
+                ],
+                "route": "layout",
+                "label": [338.758279, 131.52]
+              },
+              {
+                "path": null,
+                "loc": "scene/1/7/1",
+                "kind": "text",
+                "layer": "default",
+                "box": [340.674279, 414.08, 36.168, 14.88],
+                "local": [0, 0, 36.168, 14.88],
+                "transform": [1, 0, 0, 1, 320.674279, 124.08],
+                "opacity": 1,
+                "fill": "#636e72",
+                "font": "body",
+                "font_size": 12,
+                "lines": [{"text": "outline", "x": 0, "baseline": 11.4, "width": 36.168}]
+              },
+              {
+                "path": null,
+                "loc": "scene/1/7/2",
+                "kind": "text",
+                "layer": "default",
+                "box": [331.381666, 382.184465, 17.004, 14.88],
+                "local": [0, 0, 17.004, 14.88],
+                "transform": [1, 0, 0, 1, 311.381666, 92.184465],
+                "opacity": 1,
+                "fill": "#636e72",
+                "font": "body",
+                "font_size": 12,
+                "lines": [{"text": "3..*", "x": 0, "baseline": 11.4, "width": 17.004}]
+              }
+            ]
+          },
+          {
+            "path": null,
+            "loc": "scene/1/8",
+            "kind": "container",
+            "template": "uml.association",
+            "layer": "default",
+            "box": [20, 290, 0, 0],
+            "local": [0, 0, 0, 0],
+            "transform": [1, 0, 0, 1, 0, 0],
+            "opacity": 1,
+            "children": [
+              {
+                "path": "model.line",
+                "loc": "scene/1/8/0",
+                "kind": "connector",
+                "layer": "default",
+                "box": [193.236103, 376.34, 9.926263, 98.68],
+                "local": [173.236103, 86.34, 9.926263, 98.68],
+                "transform": [1, 0, 0, 1, 0, 0],
+                "opacity": 1,
+                "stroke": "#2d3436",
+                "stroke_width": 1.5,
+                "points": [
+                  [183.162366, 185.02],
+                  [176.59875, 138.96],
+                  [176.59875, 124.08],
+                  [178.477249, 86.34]
+                ],
+                "markers": [
+                  {
+                    "kind": "open_arrow",
+                    "points": [[182.674418, 97.061912], [178.477249, 86.34], [173.236103, 96.592122]]
+                  }
+                ],
+                "route": "layout",
+                "label": [205.31275, 131.52]
+              },
+              {
+                "path": null,
+                "loc": "scene/1/8/1",
+                "kind": "text",
+                "layer": "default",
+                "box": [206.59875, 414.08, 37.428, 14.88],
+                "local": [0, 0, 37.428, 14.88],
+                "transform": [1, 0, 0, 1, 186.59875, 124.08],
+                "opacity": 1,
+                "fill": "#636e72",
+                "font": "body",
+                "font_size": 12,
+                "lines": [{"text": "shapes", "x": 0, "baseline": 11.4, "width": 37.428}]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

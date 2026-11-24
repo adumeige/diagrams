@@ -1,0 +1,61 @@
+# Merise, conceptual data model (MCD) of a jazz festival, placed by a graph layout
+# (docs/graph-layouts.md): no grid, no coordinates, the legs place the boxes.
+#   diagrams render examples/merise_festival.yaml --out merise_festival.png --scale 2
+#
+# Shows a ternary association with a carried property (PROGRAMMER), a reflexive association with
+# roles (OUVRIR POUR), a relative identifier (a CRÉNEAU is identified by its JOUR) and an
+# association with properties (ACHETER).
+format: diagrams/0.1
+title: "MCD : festival de jazz"
+viewport: {width: 1440, height: 900}
+imports:
+  merise: ../libs/merise.yaml
+  paper: ../themes/paper.yaml
+base_theme: paper
+camera:
+  fit: sheet
+  padding: 30
+scene:
+  children:
+    - id: sheet
+      layout: column
+      gap: 30
+      children:
+        - {use: merise.cartouche, model: MCD, title: Festival de jazz, project: Billetterie et programmation, version: "1.0"}
+
+        - id: model
+          layout: force
+          seed: 1
+          link_distance: 90
+          children:
+            # ---- entities
+            - {use: merise.entity, id: artiste, name: ARTISTE, identifier: [N° artiste], properties: [Nom, Nationalité]}
+            - {use: merise.entity, id: groupe, name: GROUPE, identifier: [Code groupe], properties: [Nom, Genre]}
+            - {use: merise.entity, id: stage, name: SCÈNE, identifier: [N° scène], properties: [Nom, Capacité]}
+            - {use: merise.entity, id: creneau, name: CRÉNEAU, identifier: [Heure de début], properties: [Durée]}
+            - {use: merise.entity, id: jour, name: JOUR, identifier: [Date], properties: [Thème]}
+            - {use: merise.entity, id: billet, name: BILLET, identifier: [N° billet], properties: [Tarif]}
+            - {use: merise.entity, id: spectateur, name: SPECTATEUR, identifier: [N° spectateur], properties: [Nom, Courriel]}
+
+            # ---- associations
+            - {use: merise.association, id: membre, name: ÊTRE MEMBRE, properties: [Instrument]}
+            - {use: merise.association, id: ouvrir, name: OUVRIR POUR}
+            - {use: merise.association, id: programmer, name: PROGRAMMER, properties: [Cachet]}
+            - {use: merise.association, id: situer, name: SITUER}
+            - {use: merise.association, id: acheter, name: ACHETER, properties: [Date d'achat, Canal]}
+            - {use: merise.association, id: donner, name: DONNER ACCÈS}
+
+            # ---- legs: the edges of the layout
+            - {use: merise.leg, from: artiste, to: membre, cardinality: "1,n"}
+            - {use: merise.leg, from: groupe, to: membre, cardinality: "1,n"}
+            - {use: merise.leg, from: groupe, to: ouvrir, cardinality: "0,n", role: ouvre}
+            - {use: merise.leg, from: groupe, to: ouvrir, cardinality: "0,n", role: est ouvert, label_gap: -30}
+            - {use: merise.leg, from: groupe, to: programmer, cardinality: "0,n"}
+            - {use: merise.leg, from: stage, to: programmer, cardinality: "0,n"}
+            - {use: merise.leg, from: creneau, to: programmer, cardinality: "0,n"}
+            - {use: merise.leg, from: creneau, to: situer, cardinality: "1,1", identifying: true}
+            - {use: merise.leg, from: jour, to: situer, cardinality: "1,n"}
+            - {use: merise.leg, from: spectateur, to: acheter, cardinality: "0,n"}
+            - {use: merise.leg, from: billet, to: acheter, cardinality: "1,1"}
+            - {use: merise.leg, from: billet, to: donner, cardinality: "1,n"}
+            - {use: merise.leg, from: jour, to: donner, cardinality: "0,n"}

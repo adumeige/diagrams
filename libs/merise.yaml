@@ -1,0 +1,651 @@
+# Merise: the data, processing and communication models of the method.
+#
+#   Conceptual data (MCD)          entity, association, leg, inheritance, constraint, aggregate
+#   Logical and physical data      table, reference
+#   (MLD, MPD)
+#   Processing (MCT, MOT)          event, operation, phase, trigger, emission;
+#                                  post, period and cell for the MOT grid
+#   Communication (MCC, flows)     actor, domain, flow
+#   Any model                      note, cartouche
+#
+# Expects a theme with the tokens surface, stroke, ink and muted (themes/paper.yaml and
+# themes/dark.yaml have them). examples/merise_*.yaml show every template at work.
+#
+# Conventions:
+#   - An identifier is underlined (a rule drawn under the text: 0.1 has no text decoration).
+#   - A leg carries its cardinality at its middle. A relative identifier is a leg with
+#     identifying: true: the cardinality is shown in parentheses.
+#   - In a table, a primary key column is underlined and a foreign key column is prefixed with '#'.
+#   - An external actor has a double outline (0.1 has no dashed strokes).
+#   - Names and properties are free text ("Date de commande"), so they are plain lists and not
+#     keyed ones.
+#
+# Labels of legs and arrows sit at the middle of the line, label_gap away along its left normal
+# (above a left-to-right line, right of a downward one). A negative label_gap puts the label on
+# the other side; label_anchor chooses which anchor of the label meets that point, which is how
+# a long label is kept clear of a slanted line.
+#
+# An operation has up to four emission rules, rule1 to rule4, each an exported part: a result is
+# linked from '<operation>.rule1'. They are fixed parameters because the items of a for_each
+# cannot be exported parts in 0.1.
+#
+# Graph layouts (docs/graph-layouts.md): legs and arrows take route: layout by default, which follows
+# the route a layered or tree container supplies and is a straight line anywhere else, and their
+# labels sit on the connector's 'label' anchor, in the room a layered container reserves for them.
+# An MCD has no direction, so a force container suits it: the legs are its edges. The two legs of a
+# reflexive association bow apart on their own; give one of them a negative label_gap so that the
+# two cardinalities sit on either side. ('scene' is a reserved ID: name a SCÈNE entity 'stage'.)
+#
+# Legs, arrows, attached notes: declare them in a free container, next to the grid or the rows
+# that place the nodes, never inside a row, column or grid (they would take a slot). In the MOT
+# grid, give each cell an id: an instance is a scope, so an arrow reaches what a cell holds
+# through the cell ('from: client_j.commande').
+format: diagrams/0.1
+title: Merise
+styles:
+  box: {fill: "=theme.surface", stroke: "=theme.stroke", stroke_width: 1.5}
+  frame: {fill: "#00000000", stroke: "=theme.muted", stroke_width: 1.5}
+  rule: {fill: "=theme.stroke", stroke_width: 0}
+  wire: {stroke: "=theme.stroke", stroke_width: 1.5}
+  thin_wire: {stroke: "=theme.muted", stroke_width: 1}
+templates:
+
+  # ---- conceptual data model (MCD) ---------------------------------------------------------------
+
+  entity:
+    description: An entity (entité) with its identifier, underlined, and its other properties.
+    params:
+      name: {type: string, description: Entity name}
+      identifier: {type: list, item: {type: string}, default: [], description: "The properties that identify an occurrence, underlined"}
+      properties: {type: list, item: {type: string}, default: [], description: "The other properties, such as 'Nom' or 'Date de commande'"}
+    exports:
+      anchors: [north, south, east, west]
+      parts: [header, body, key, property]
+      tokens: [surface, stroke, ink]
+    body:
+      layout: column
+      align: stretch
+      children:
+        - id: header
+          layout: stack
+          align: stretch
+          children:
+            - {shape: rect, width: 0, height: 0, style: box}
+            - layout: column
+              align: center
+              padding: {x: 18, y: 7}
+              children:
+                - {shape: text, text: "=params.name", font_size: 15, fill: "=theme.ink"}
+        - id: body
+          layout: stack
+          align: stretch
+          children:
+            - {shape: rect, width: 0, height: 0, style: box}
+            - layout: column
+              padding: {x: 12, y: 7}
+              gap: 4
+              children:
+                - for_each: params.identifier
+                  as: prop
+                  id: key
+                  do:
+                    layout: column
+                    align: stretch
+                    children:
+                      - {shape: text, text: "=prop", font_size: 13, fill: "=theme.ink"}
+                      - {shape: rect, width: 0, height: 1, style: rule}
+                - for_each: params.properties
+                  as: prop
+                  id: property
+                  do: {shape: text, text: "=prop", font_size: 13, fill: "=theme.ink"}
+
+  association:
+    description: An association (relation) between entities, with the properties it carries.
+    params:
+      name: {type: string, description: "Association name, usually a verb"}
+      properties: {type: list, item: {type: string}, default: [], description: "Properties carried by the association, such as 'Quantité'"}
+    exports:
+      anchors: [north, south, east, west]
+      tokens: [surface, stroke, ink]
+    body:
+      layout: stack
+      align: stretch
+      children:
+        - {shape: rect, width: 0, height: 0, corner_radius: 18, style: box}
+        - layout: column
+          align: stretch
+          padding: {x: 20, y: 8}
+          gap: 4
+          children:
+            - {shape: text, text: "=params.name", font_size: 14, text_align: center, fill: "=theme.ink"}
+            - for_each: params.properties
+              as: prop
+              do:
+                - {if: "index == 0", shape: rect, width: 0, height: 1, style: rule}
+                - {shape: text, text: "=prop", font_size: 13, text_align: center, fill: "=theme.ink"}
+
+  leg:
+    description: >-
+      A leg (patte) between an entity and an association, with its cardinality. With identifying: true
+      the entity is identified relative to the other entities of the association, and the cardinality
+      is shown in parentheses.
+    params:
+      from: {type: path, description: The entity}
+      to: {type: path, description: The association}
+      cardinality: {type: string, description: "Minimum and maximum, such as '0,n' or '1,1'"}
+      role: {type: string, default: "", description: "Role of the entity, for a reflexive association"}
+      identifying: {type: boolean, default: false, description: Relative identifier}
+      route: {type: enum, values: [layout, straight, orthogonal], default: layout}
+      label_anchor: {type: enum, values: [center, north, south, east, west, north_east, north_west, south_east, south_west], default: center, description: "The label's own anchor that meets the leg"}
+      label_gap: {type: number, default: 20, description: "Distance from the middle of the leg; negative for the other side"}
+    exports:
+      parts: [line]
+      tokens: [stroke, ink, muted]
+    body:
+      children:
+        - {shape: connector, id: line, from: "=params.from", to: "=params.to", route: "=params.route", style: wire}
+        - layout: column
+          align: center
+          attach: {anchor: "=params.label_anchor", to: line.label, gap: "=params.label_gap"}
+          children:
+            - {if: "not params.identifying", shape: text, text: "=params.cardinality", font_size: 13, fill: "=theme.ink"}
+            - {if: params.identifying, shape: text, text: "='(' + params.cardinality + ')'", font_size: 13, fill: "=theme.ink"}
+            - {if: "params.role != ''", shape: text, text: "=params.role", font_size: 12, fill: "=theme.muted"}
+
+  inheritance:
+    description: >-
+      A specialization (héritage, Merise/2): a triangle that points to the generic entity, with the
+      specialized entities under it. constraint is X (exclusion), T (totality) or XT (partition).
+    params:
+      parent: {type: path, description: The generic entity}
+      subtypes: {type: list, item: {type: path}, description: The specialized entities}
+      constraint: {type: enum, values: [none, X, T, XT], default: none}
+    exports:
+      anchors: [north, south, east, west]
+      parts: [symbol]
+      tokens: [surface, stroke, ink]
+    body:
+      children:
+        - {shape: polygon, id: symbol, points: [{x: 26, y: 0}, {x: 52, y: 42}, {x: 0, y: 42}], style: box}
+        - {if: "params.constraint != 'none'", shape: text, at: {x: 0, y: 23}, width: 52, text_align: center, text: "=params.constraint", font_size: 11, fill: "=theme.ink"}
+        - {shape: connector, from: symbol.north, to: "=params.parent", marker_end: arrow, style: wire}
+        - for_each: params.subtypes
+          as: sub
+          do: {shape: connector, from: "=sub", to: symbol.south, style: wire}
+
+  constraint:
+    description: >-
+      A constraint between associations or entities (Merise/2): X exclusion, T totality, XT partition,
+      I inclusion, S simultaneity, CIF functional integrity constraint, DF functional dependency.
+      'between' is linked with plain lines, 'targets' with arrows (the included association, the
+      entity a CIF determines) and 'pivots' with thin lines (the pivot entities).
+    params:
+      kind: {type: enum, values: [X, T, XT, I, S, CIF, DF], default: X}
+      between: {type: list, item: {type: path}, default: [], description: The associations or entities the constraint bears on}
+      targets: {type: list, item: {type: path}, default: [], description: Reached with an arrow}
+      pivots: {type: list, item: {type: path}, default: [], description: Pivot entities}
+    outline: ellipse
+    exports:
+      anchors: [north, south, east, west]
+      parts: [disc]
+      tokens: [surface, stroke, ink, muted]
+    body:
+      children:
+        - {shape: circle, id: disc, radius: 17, style: box}
+        - {shape: text, at: {x: 0, y: 10}, width: 34, text_align: center, text: "=params.kind", font_size: 11, fill: "=theme.ink"}
+        - for_each: params.between
+          as: end
+          do: {shape: connector, from: disc, to: "=end", style: wire}
+        - for_each: params.targets
+          as: end
+          do: {shape: connector, from: disc, to: "=end", marker_end: arrow, style: wire}
+        - for_each: params.pivots
+          as: end
+          do: {shape: connector, from: disc, to: "=end", style: thin_wire}
+
+  aggregate:
+    description: >-
+      An aggregation (agrégat, Merise/2): a frame around an association and its entities, which then
+      takes part in other associations like an entity. Its children go inside the frame.
+    params:
+      name: {type: string, default: ""}
+    exports:
+      anchors: [north, south, east, west]
+      parts: [caption]
+      tokens: [ink, muted]
+    body:
+      layout: stack
+      align: stretch
+      children:
+        - {shape: rect, width: 0, height: 0, corner_radius: 10, style: frame}
+        - layout: column
+          padding: 16
+          gap: 10
+          children:
+            - {if: "params.name != ''", shape: text, id: caption, text: "=params.name", font_size: 12, fill: "=theme.muted"}
+            - {slot: default}
+
+  # ---- logical and physical data models (MLD, MPD) -----------------------------------------------
+
+  table:
+    description: >-
+      A table (relation) of the logical or physical model. Primary key columns are underlined and
+      foreign key columns are prefixed with '#'. Write the type after the name for a physical model:
+      'nom VARCHAR(50)'.
+    params:
+      name: {type: string, description: Table name}
+      pk_fk: {type: list, item: {type: string}, default: [], description: "Primary key columns that are also foreign keys, listed first"}
+      pk: {type: list, item: {type: string}, default: [], description: Primary key columns}
+      columns: {type: list, item: {type: string}, default: [], description: Other columns}
+      fk: {type: list, item: {type: string}, default: [], description: Foreign key columns outside the primary key}
+    exports:
+      anchors: [north, south, east, west]
+      parts: [header, body, key, key_ref, column, ref]
+      tokens: [surface, stroke, ink]
+    body:
+      layout: column
+      align: stretch
+      children:
+        - id: header
+          layout: stack
+          align: stretch
+          children:
+            - {shape: rect, width: 0, height: 0, style: box}
+            - layout: column
+              align: center
+              padding: {x: 18, y: 7}
+              children:
+                - {shape: text, text: "=params.name", font_size: 15, fill: "=theme.ink"}
+        - id: body
+          layout: stack
+          align: stretch
+          children:
+            - {shape: rect, width: 0, height: 0, style: box}
+            - layout: column
+              padding: {x: 12, y: 7}
+              gap: 4
+              children:
+                - for_each: params.pk_fk
+                  as: col
+                  id: key_ref
+                  do:
+                    layout: column
+                    align: stretch
+                    children:
+                      - {shape: text, text: "='#' + col", font_size: 13, fill: "=theme.ink"}
+                      - {shape: rect, width: 0, height: 1, style: rule}
+                - for_each: params.pk
+                  as: col
+                  id: key
+                  do:
+                    layout: column
+                    align: stretch
+                    children:
+                      - {shape: text, text: "=col", font_size: 13, fill: "=theme.ink"}
+                      - {shape: rect, width: 0, height: 1, style: rule}
+                - for_each: params.columns
+                  as: col
+                  id: column
+                  do: {shape: text, text: "=col", font_size: 13, fill: "=theme.ink"}
+                - for_each: params.fk
+                  as: col
+                  id: ref
+                  do: {shape: text, text: "='#' + col", font_size: 13, fill: "=theme.ink"}
+
+  reference:
+    description: A referential link, from the table that holds the foreign key to the table it references.
+    params:
+      from: {type: path, description: The table that holds the foreign key}
+      to: {type: path, description: The referenced table}
+      label: {type: string, default: ""}
+      route: {type: enum, values: [layout, straight, orthogonal], default: orthogonal}
+      label_anchor: {type: enum, values: [center, north, south, east, west, north_east, north_west, south_east, south_west], default: center}
+      label_gap: {type: number, default: 14}
+    exports: {parts: [line], tokens: [stroke, muted]}
+    body: {use: arrow, from: "=params.from", to: "=params.to", label: "=params.label", route: "=params.route", label_anchor: "=params.label_anchor", label_gap: "=params.label_gap"}
+
+  # ---- processing models (MCT, MOT) --------------------------------------------------------------
+
+  event:
+    description: An event or a result (événement, résultat). With a width, the name wraps and centers.
+    params:
+      name: {type: string}
+      width: {type: number, default: 0, description: "0 sizes the oval to its text"}
+    outline: ellipse
+    exports:
+      anchors: [north, south, east, west]
+      tokens: [surface, stroke, ink]
+    body:
+      layout: stack
+      align: stretch
+      children:
+        - {shape: ellipse, width: 0, height: 0, style: box}
+        - layout: column
+          align: center
+          padding: {x: 26, y: 11}
+          children:
+            - {if: "params.width == 0", shape: text, text: "=params.name", font_size: 13, fill: "=theme.ink"}
+            - {if: "params.width > 0", shape: text, text: "=params.name", font_size: 13, fill: "=theme.ink", width: "=params.width - 52", text_align: center, wrap: true}
+
+  operation:
+    description: >-
+      An operation (MCT) or a phase (MOT): the synchronization on top, the name and its actions, then
+      one cell per emission rule (up to four, sharing the width). Link an event to the operation, and
+      a result from a rule cell: 'from: <operation>.rule1'. Without rules, a result comes from the
+      operation itself.
+    params:
+      name: {type: string}
+      sync: {type: string, default: "", description: "Synchronization expression, such as 'a ET (b OU c)'"}
+      nature: {type: string, default: "", description: "For a phase: 'Manuel', 'Automatique', 'Interactif'..."}
+      actions: {type: list, item: {type: string}, default: [], description: Actions carried out}
+      rule1: {type: string, default: "", description: "First emission rule, such as 'Commande valide'"}
+      rule2: {type: string, default: "", description: Second emission rule}
+      rule3: {type: string, default: "", description: Third emission rule}
+      rule4: {type: string, default: "", description: Fourth emission rule}
+      width: {type: number, default: 230}
+    exports:
+      anchors: [north, south, east, west]
+      parts: [sync, core, rule1, rule2, rule3, rule4]
+      tokens: [surface, stroke, ink, muted]
+    body:
+      layout: column
+      align: stretch
+      children:
+        - if: "params.sync != ''"
+          id: sync
+          layout: stack
+          align: stretch
+          children:
+            - {shape: rect, width: 0, height: 0, style: box}
+            - layout: column
+              align: center
+              padding: {x: 10, y: 5}
+              children:
+                - {shape: text, text: "=params.sync", font_size: 12, fill: "=theme.muted"}
+        - id: core
+          layout: stack
+          align: stretch
+          children:
+            - {shape: rect, width: 0, height: 0, style: box}
+            - layout: column
+              padding: {x: 12, y: 8}
+              gap: 4
+              children:
+                - {shape: text, text: "=params.name", font_size: 15, fill: "=theme.ink", width: "=params.width - 24", wrap: true}
+                - {if: "params.nature != ''", shape: text, text: "=params.nature", font_size: 12, fill: "=theme.muted"}
+                - for_each: params.actions
+                  as: action
+                  id: action
+                  do: {shape: text, text: "='– ' + action", font_size: 12, fill: "=theme.ink", width: "=params.width - 24", wrap: true}
+        - if: "params.rule1 != '' and params.rule2 == ''"
+          layout: row
+          align: stretch
+          children:
+            - {use: rule_cell, id: rule1, text: "=params.rule1", width: "=params.width"}
+        - if: "params.rule2 != '' and params.rule3 == ''"
+          layout: row
+          align: stretch
+          children:
+            - {use: rule_cell, id: rule1, text: "=params.rule1", width: "=params.width / 2"}
+            - {use: rule_cell, id: rule2, text: "=params.rule2", width: "=params.width / 2"}
+        - if: "params.rule3 != '' and params.rule4 == ''"
+          layout: row
+          align: stretch
+          children:
+            - {use: rule_cell, id: rule1, text: "=params.rule1", width: "=params.width / 3"}
+            - {use: rule_cell, id: rule2, text: "=params.rule2", width: "=params.width / 3"}
+            - {use: rule_cell, id: rule3, text: "=params.rule3", width: "=params.width / 3"}
+        - if: "params.rule4 != ''"
+          layout: row
+          align: stretch
+          children:
+            - {use: rule_cell, id: rule1, text: "=params.rule1", width: "=params.width / 4"}
+            - {use: rule_cell, id: rule2, text: "=params.rule2", width: "=params.width / 4"}
+            - {use: rule_cell, id: rule3, text: "=params.rule3", width: "=params.width / 4"}
+            - {use: rule_cell, id: rule4, text: "=params.rule4", width: "=params.width / 4"}
+
+  rule_cell:
+    description: One emission rule of an operation. Used by operation; not meant to be used alone.
+    params:
+      text: {type: string}
+      width: {type: number}
+    exports:
+      anchors: [north, south, east, west]
+      tokens: [surface, stroke, ink]
+    body:
+      layout: stack
+      align: stretch
+      children:
+        - {shape: rect, width: 0, height: 0, style: box}
+        - layout: column
+          padding: {x: 8, y: 5}
+          children:
+            - {shape: text, text: "=params.text", font_size: 12, fill: "=theme.ink", width: "=params.width - 16", text_align: center, wrap: true}
+
+  phase:
+    description: A phase (procédure fonctionnelle) of the organizational model. Same as operation.
+    params:
+      name: {type: string}
+      sync: {type: string, default: ""}
+      nature: {type: string, default: "", description: "'Manuel', 'Automatique', 'Interactif'..."}
+      actions: {type: list, item: {type: string}, default: []}
+      rule1: {type: string, default: ""}
+      rule2: {type: string, default: ""}
+      rule3: {type: string, default: ""}
+      rule4: {type: string, default: ""}
+      width: {type: number, default: 230}
+    exports:
+      anchors: [north, south, east, west]
+      parts: [sync, core, rule1, rule2, rule3, rule4]
+      tokens: [surface, stroke, ink, muted]
+    body: {use: operation, name: "=params.name", sync: "=params.sync", nature: "=params.nature", actions: "=params.actions", rule1: "=params.rule1", rule2: "=params.rule2", rule3: "=params.rule3", rule4: "=params.rule4", width: "=params.width"}
+
+  arrow:
+    description: An arrow with an optional label at its middle. The base of trigger, emission, flow and reference.
+    params:
+      from: {type: path}
+      to: {type: path}
+      label: {type: string, default: ""}
+      route: {type: enum, values: [layout, straight, orthogonal], default: layout}
+      label_anchor: {type: enum, values: [center, north, south, east, west, north_east, north_west, south_east, south_west], default: center, description: "The label's own anchor that meets the arrow"}
+      label_gap: {type: number, default: 14, description: "Distance from the middle of the arrow; negative for the other side"}
+    exports:
+      parts: [line]
+      tokens: [stroke, muted]
+    body:
+      children:
+        - {shape: connector, id: line, from: "=params.from", to: "=params.to", route: "=params.route", marker_end: arrow, style: wire}
+        - {if: "params.label != ''", shape: text, text: "=params.label", font_size: 12, fill: "=theme.muted", attach: {anchor: "=params.label_anchor", to: line.label, gap: "=params.label_gap"}}
+
+  trigger:
+    description: From an event to the operation it takes part in triggering.
+    params: {from: path, to: path, label: {type: string, default: ""}, route: {type: enum, values: [layout, straight, orthogonal], default: layout}, label_anchor: {type: enum, values: [center, north, south, east, west, north_east, north_west, south_east, south_west], default: center}, label_gap: {type: number, default: 14}}
+    exports: {parts: [line], tokens: [stroke, muted]}
+    body: {use: arrow, from: "=params.from", to: "=params.to", label: "=params.label", route: "=params.route", label_anchor: "=params.label_anchor", label_gap: "=params.label_gap"}
+
+  emission:
+    description: From an operation, or one of its emission rules, to a result.
+    params: {from: path, to: path, label: {type: string, default: ""}, route: {type: enum, values: [layout, straight, orthogonal], default: layout}, label_anchor: {type: enum, values: [center, north, south, east, west, north_east, north_west, south_east, south_west], default: center}, label_gap: {type: number, default: 14}}
+    exports: {parts: [line], tokens: [stroke, muted]}
+    body: {use: arrow, from: "=params.from", to: "=params.to", label: "=params.label", route: "=params.route", label_anchor: "=params.label_anchor", label_gap: "=params.label_gap"}
+
+  post:
+    description: "A column heading of the MOT grid: a work post (poste de travail) or actor."
+    params:
+      name: {type: string}
+    exports: {tokens: [surface, stroke, ink]}
+    body:
+      layout: stack
+      align: stretch
+      children:
+        - {shape: rect, width: 0, height: 0, style: box}
+        - layout: column
+          align: center
+          padding: {x: 16, y: 8}
+          children:
+            - {shape: text, text: "=params.name", font_size: 14, fill: "=theme.ink"}
+
+  period:
+    description: "A row heading of the MOT grid: when the phases of the row take place."
+    params:
+      label: {type: string}
+    exports: {tokens: [surface, stroke, muted]}
+    body:
+      layout: stack
+      align: stretch
+      children:
+        - {shape: rect, width: 0, height: 0, style: box}
+        - layout: column
+          align: center
+          padding: {x: 12, y: 12}
+          children:
+            - {shape: text, text: "=params.label", font_size: 12, fill: "=theme.muted"}
+
+  cell:
+    description: >-
+      A cell of the MOT grid. Its children (events, phases) go inside; leave it empty for a blank cell.
+      bordered: true draws the cell's outline; arrows that pass through a bordered cell are then
+      reported by the connector_crosses_shape lint rule.
+    params:
+      bordered: {type: boolean, default: false}
+    exports: {tokens: [surface, stroke]}
+    body:
+      layout: stack
+      align: stretch
+      children:
+        - {if: params.bordered, shape: rect, width: 0, height: 0, style: box}
+        - layout: column
+          align: center
+          padding: 18
+          gap: 14
+          children:
+            - {slot: default}
+
+  # ---- communication model (MCC) and flow diagrams ------------------------------------------------
+
+  actor:
+    description: An actor of the flow diagram. An external actor has a double outline.
+    params:
+      name: {type: string}
+      external: {type: boolean, default: false}
+    outline: ellipse
+    exports:
+      anchors: [north, south, east, west]
+      tokens: [surface, stroke, ink]
+    body:
+      layout: stack
+      align: stretch
+      children:
+        - {shape: ellipse, width: 0, height: 0, style: box}
+        - if: "not params.external"
+          layout: column
+          align: center
+          padding: {x: 26, y: 13}
+          children:
+            - {shape: text, text: "=params.name", font_size: 14, fill: "=theme.ink"}
+        - if: params.external
+          layout: column
+          align: stretch
+          padding: 4
+          children:
+            - layout: stack
+              align: stretch
+              children:
+                - {shape: ellipse, width: 0, height: 0, style: box}
+                - layout: column
+                  align: center
+                  padding: {x: 24, y: 10}
+                  children:
+                    - {shape: text, text: "=params.name", font_size: 14, fill: "=theme.ink"}
+
+  domain:
+    description: "The domain under study (domaine d'étude): a frame around the internal actors."
+    params:
+      name: {type: string, default: ""}
+    exports:
+      anchors: [north, south, east, west]
+      parts: [caption]
+      tokens: [ink, muted]
+    body:
+      layout: stack
+      align: stretch
+      children:
+        - {shape: rect, width: 0, height: 0, style: frame}
+        - layout: column
+          padding: 20
+          gap: 14
+          children:
+            - {if: "params.name != ''", shape: text, id: caption, text: "=params.name", font_size: 13, fill: "=theme.muted"}
+            - {slot: default}
+
+  flow:
+    description: "A flow (flux) of information between two actors. Number the flows in their labels: '1. Commande'."
+    params:
+      from: {type: path}
+      to: {type: path}
+      label: {type: string, default: ""}
+      route: {type: enum, values: [layout, straight, orthogonal], default: layout}
+      label_anchor: {type: enum, values: [center, north, south, east, west, north_east, north_west, south_east, south_west], default: center}
+      label_gap: {type: number, default: 14}
+    exports: {parts: [line], tokens: [stroke, muted]}
+    body: {use: arrow, from: "=params.from", to: "=params.to", label: "=params.label", route: "=params.route", label_anchor: "=params.label_anchor", label_gap: "=params.label_gap"}
+
+  # ---- any model -----------------------------------------------------------------------------------
+
+  note:
+    description: A note with free text.
+    params:
+      text: {type: string}
+      width: {type: number, default: 200}
+    exports:
+      anchors: [north, south, east, west]
+      tokens: [surface, ink, muted]
+    body:
+      layout: stack
+      align: stretch
+      children:
+        - {shape: rect, width: 0, height: 0, fill: "=theme.surface", stroke: "=theme.muted", stroke_width: 1}
+        - layout: column
+          padding: 10
+          children:
+            - {shape: text, text: "=params.text", width: "=params.width - 20", font_size: 12, fill: "=theme.ink", wrap: true}
+
+  cartouche:
+    description: >-
+      A title block: the kind of model (MCD, MLD, MCT, MOT...), its title, and optionally the project,
+      the author, the version and the date.
+    params:
+      model: {type: string, description: "MCD, MLD, MPD, MCT, MOT, MCC..."}
+      title: {type: string}
+      project: {type: string, default: ""}
+      author: {type: string, default: ""}
+      version: {type: string, default: ""}
+      date: {type: string, default: ""}
+    exports:
+      tokens: [surface, stroke, ink, muted]
+    body:
+      layout: row
+      align: stretch
+      children:
+        - layout: stack
+          align: stretch
+          children:
+            - {shape: rect, width: 0, height: 0, style: box}
+            - layout: column
+              align: center
+              padding: {x: 14, y: 10}
+              children:
+                - {shape: text, text: "=params.model", font_size: 18, fill: "=theme.ink"}
+        - layout: stack
+          align: stretch
+          children:
+            - {shape: rect, width: 0, height: 0, style: box}
+            - layout: column
+              padding: {x: 14, y: 8}
+              gap: 3
+              children:
+                - {shape: text, text: "=params.title", font_size: 15, fill: "=theme.ink"}
+                - {if: "params.project != ''", shape: text, text: "='Projet : ' + params.project", font_size: 12, fill: "=theme.muted"}
+                - {if: "params.author != ''", shape: text, text: "='Auteur : ' + params.author", font_size: 12, fill: "=theme.muted"}
+                - {if: "params.version != ''", shape: text, text: "='Version : ' + params.version", font_size: 12, fill: "=theme.muted"}
+                - {if: "params.date != ''", shape: text, text: "='Date : ' + params.date", font_size: 12, fill: "=theme.muted"}

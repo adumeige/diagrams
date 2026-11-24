@@ -1,0 +1,45 @@
+# Boxes and links for graphs laid out by a container: flowcharts, trees, networks.
+# Put the steps and the links in a container with `layout: layered`, `tree`, `circular` or `force`.
+# Expects a theme with the tokens surface, stroke, ink, muted and primary (themes/paper.yaml has them).
+format: diagrams/0.1
+title: Flow
+templates:
+  step:
+    description: A box with a line of text. It is as wide as its text unless 'width' is given.
+    params:
+      text: {type: string}
+      width: {type: number, default: 0, description: "Least width of the box; 0 fits the text"}
+      kind: {type: enum, values: [step, terminal, accent], default: step, description: "terminal: rounded ends; accent: filled with the primary token"}
+    exports:
+      anchors: [north, south, east, west]
+      tokens: [surface, stroke, ink, primary]
+    body:
+      layout: stack
+      align: stretch
+      children:
+        - {if: "params.kind == 'step'", shape: rect, width: "=params.width", height: 0, fill: "=theme.surface", stroke: "=theme.stroke", stroke_width: 1.5, corner_radius: 6}
+        - {if: "params.kind == 'terminal'", shape: rect, width: "=params.width", height: 0, fill: "=theme.surface", stroke: "=theme.stroke", stroke_width: 1.5, corner_radius: 18}
+        - {if: "params.kind == 'accent'", shape: rect, width: "=params.width", height: 0, fill: "=theme.primary", stroke: "=theme.stroke", stroke_width: 1.5, corner_radius: 6}
+        - layout: column
+          align: center
+          padding: {x: 16, y: 10}
+          children:
+            - {if: "params.kind != 'accent'", shape: text, text: "=params.text", font_size: 14, fill: "=theme.ink"}
+            - {if: "params.kind == 'accent'", shape: text, text: "=params.text", font_size: 14, fill: "=theme.surface"}
+
+  link:
+    description: "An edge between two nodes, with an optional label. It follows the route its container supplies; the label sits in the room a layered container reserves for it."
+    params:
+      from: {type: path}
+      to: {type: path}
+      label: {type: string, default: ""}
+      head: {type: enum, values: [none, arrow, open_arrow], default: arrow}
+      route: {type: enum, values: [layout, straight, orthogonal], default: layout}
+      constrain: {type: boolean, default: true, description: "false: drawn without influencing the ranks of a layered container"}
+    exports:
+      parts: [line]
+      tokens: [stroke, muted]
+    body:
+      children:
+        - {shape: connector, id: line, from: "=params.from", to: "=params.to", route: "=params.route", constrain: "=params.constrain", stroke: "=theme.stroke", stroke_width: 1.5, marker_end: "=params.head"}
+        - {if: "params.label != ''", shape: text, text: "=params.label", font_size: 12, fill: "=theme.muted", attach: {anchor: south, to: line.label, gap: 4}}

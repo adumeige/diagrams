@@ -1,0 +1,699 @@
+format: diagrams/0.1
+viewport: {width: 1000, height: 560}
+styles:
+  dot: {fill: "#ffeaa7", stroke: "#2d3436", stroke_width: 1.5}
+  hub: {fill: "#fab1a0", stroke: "#2d3436", stroke_width: 1.5}
+  edge: {stroke: "#2d3436", stroke_width: 1.5}
+scene:
+  layout: free
+  rotation: 0
+  scale: 1
+  opacity: 1
+  present: true
+  children:
+    - id: ring
+      layout: circular
+      layer: default
+      at: {x: 20, y: 20}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      children:
+        - id: n1
+          shape: circle
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: hub
+          radius: 20
+        - id: n2
+          shape: circle
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: dot
+          radius: 20
+        - id: n3
+          shape: circle
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: dot
+          radius: 20
+        - id: n4
+          shape: circle
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: dot
+          radius: 20
+        - id: n5
+          shape: circle
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: dot
+          radius: 20
+        - id: n6
+          shape: circle
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: dot
+          radius: 20
+        - id: n7
+          shape: circle
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: dot
+          radius: 20
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: n1
+          to: n2
+          route: layout
+          marker_start: none
+          marker_end: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: n2
+          to: n3
+          route: layout
+          marker_start: none
+          marker_end: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: n3
+          to: n4
+          route: layout
+          marker_start: none
+          marker_end: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: n4
+          to: n5
+          route: layout
+          marker_start: none
+          marker_end: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: n5
+          to: n6
+          route: layout
+          marker_start: none
+          marker_end: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: n6
+          to: n7
+          route: layout
+          marker_start: none
+          marker_end: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: n7
+          to: n1
+          route: layout
+          marker_start: none
+          marker_end: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: n1
+          to: n4
+          route: layout
+          marker_start: none
+          marker_end: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: n2
+          to: n6
+          route: layout
+          marker_start: none
+          marker_end: none
+    - id: wide
+      layout: circular
+      layer: default
+      at: {x: 20, y: 280}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      radius: 100
+      start_angle: 180
+      children:
+        - id: first
+          shape: rect
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: hub
+          width: 50
+          height: 30
+          corner_radius: 0
+        - id: second
+          shape: rect
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: dot
+          width: 50
+          height: 30
+          corner_radius: 0
+        - id: third
+          shape: rect
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: dot
+          width: 50
+          height: 30
+          corner_radius: 0
+        - id: fourth
+          shape: rect
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: dot
+          width: 50
+          height: 30
+          corner_radius: 0
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: first
+          to: third
+          route: layout
+          marker_start: none
+          marker_end: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: second
+          to: fourth
+          route: layout
+          marker_start: none
+          marker_end: none
+    - id: net
+      layout: force
+      layer: default
+      at: {x: 320, y: 20}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      children:
+        - id: core
+          shape: circle
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: hub
+          radius: 24
+        - id: p1
+          shape: circle
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: dot
+          radius: 14
+        - id: p2
+          shape: circle
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: dot
+          radius: 14
+        - id: p3
+          shape: circle
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: dot
+          radius: 14
+        - id: p4
+          shape: circle
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: dot
+          radius: 14
+        - id: q1
+          shape: circle
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: dot
+          radius: 10
+        - id: q2
+          shape: circle
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: dot
+          radius: 10
+        - id: other
+          shape: circle
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: hub
+          radius: 24
+        - id: r1
+          shape: circle
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: dot
+          radius: 14
+        - id: r2
+          shape: circle
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: dot
+          radius: 14
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: core
+          to: p1
+          route: layout
+          marker_start: none
+          marker_end: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: core
+          to: p2
+          route: layout
+          marker_start: none
+          marker_end: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: core
+          to: p3
+          route: layout
+          marker_start: none
+          marker_end: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: core
+          to: p4
+          route: layout
+          marker_start: none
+          marker_end: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: p1
+          to: q1
+          route: layout
+          marker_start: none
+          marker_end: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: p1
+          to: q2
+          route: layout
+          marker_start: none
+          marker_end: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: core
+          to: other
+          route: layout
+          marker_start: none
+          marker_end: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: other
+          to: r1
+          route: layout
+          marker_start: none
+          marker_end: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: other
+          to: r2
+          route: layout
+          marker_start: none
+          marker_end: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: r1
+          to: r2
+          route: layout
+          marker_start: none
+          marker_end: none
+    - id: held
+      layout: force
+      layer: default
+      at: {x: 660, y: 20}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      width: 320
+      height: 500
+      seed: 7
+      link_distance: 40
+      children:
+        - id: upper
+          shape: circle
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: hub
+          pinned: {x: 140, y: 20}
+          radius: 18
+        - id: lower
+          shape: circle
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: hub
+          pinned: {x: 140, y: 440}
+          radius: 18
+        - id: m1
+          shape: circle
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: dot
+          radius: 12
+        - id: m2
+          shape: circle
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: dot
+          radius: 12
+        - id: m3
+          shape: circle
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: dot
+          radius: 12
+        - id: m4
+          shape: circle
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: dot
+          radius: 12
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: upper
+          to: m1
+          route: layout
+          marker_start: none
+          marker_end: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: upper
+          to: m2
+          route: layout
+          marker_start: none
+          marker_end: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: m1
+          to: m3
+          route: layout
+          marker_start: none
+          marker_end: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: m2
+          to: m4
+          route: layout
+          marker_start: none
+          marker_end: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: m3
+          to: lower
+          route: layout
+          marker_start: none
+          marker_end: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: m4
+          to: lower
+          route: layout
+          marker_start: none
+          marker_end: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: m1
+          to: m2
+          route: layout
+          marker_start: none
+          marker_end: none

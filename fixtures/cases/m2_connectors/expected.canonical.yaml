@@ -95,7 +95,7 @@ scene:
       present: true
       from: a
       to: b
-      route: straight
+      route: layout
       marker_start: none
       marker_end: none
       stroke: "#2d3436"
@@ -110,7 +110,7 @@ scene:
       present: true
       from: b
       to: c.west
-      route: straight
+      route: layout
       marker_start: none
       marker_end: none
       stroke: "#2d3436"
@@ -170,7 +170,7 @@ scene:
       present: true
       from: b.south
       to: de.mid
-      route: straight
+      route: layout
       marker_start: none
       marker_end: none
       stroke: "#6c5ce7"

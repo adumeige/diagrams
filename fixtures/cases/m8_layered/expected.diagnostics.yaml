@@ -1,0 +1,5 @@
+- code: connector_crosses_connector
+  severity: warning
+  path: flow.e8
+  message: "connector crosses flow.e6 at (312.49, 189.14)"
+  data: {connector: flow.e6, x: 312.49, y: 189.14}

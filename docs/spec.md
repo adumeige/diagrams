@@ -140,6 +140,7 @@ A node is placed by its container, by an attachment, or by its own coordinates, 
 - A container sizes to its content unless `width` or `height` is set. Text is measured by the core (section 16).
 - In a `free` container, a child is placed by `at: {x, y}` in the parent's frame. This is the mode for drawing a complex shape.
 - Free relational placement ("right of A") is not part of 0.1.
+- `layered`, `tree`, `circular` and `force` place their children from the connectors between them. They are specified in the addendum [graph-layouts.md](graph-layouts.md), with the contract every layout kind declares.
 
 **Anchors**
 - A fixed anchor is a named point in a node's local frame. Every node has `center`, `north`, `south`, `east`, `west`, `north_east`, `north_west`, `south_east`, `south_west`. Shapes and templates can declare more, such as `port_2`.
@@ -158,7 +159,7 @@ A node is placed by its container, by an attachment, or by its own coordinates, 
 - An attachment is directed. The target owns the position and the attacher adapts.
 - Attachments form a DAG and are resolved in one topological pass. A cycle is the error `attach_cycle`.
 - `gap` is the distance between the two anchors, measured outward from the target anchor. `offset: {x, y}` is available for any other displacement.
-- An attached node must sit in a `free` container. Inside any other layout the container wins, with the warning `attach_ignored`.
+- An attached node must sit in a `free` container or a graph container. Inside `row`, `column`, `grid` and `stack` the container wins, with the warning `attach_ignored`.
 - Attachment does not depend on tree position. A node at the root can follow a node deep in another subtree.
 
 **Attachment policy,** set on the attacher:
@@ -184,7 +185,7 @@ A connector is a shape with the `stretch` policy and two attached anchors, so it
 ```
 
 - `from` and `to` each take a node path (floating anchor on its outline) or an anchor path (fixed point).
-- A connector exports the derived anchors `start`, `end` and `mid`. Other nodes and other connectors can attach to them, which covers midpoint labels, association classes and relations on relations.
+- A connector exports the derived anchors `start`, `end`, `mid` and `label`. Other nodes and other connectors can attach to them, which covers midpoint labels, association classes and relations on relations. `label` is `mid`, except in a graph container that reserves room for labels (addendum, section 3).
 - Markers, labels and multiplicities are built by library templates from the `connector` primitive and nodes attached to its derived anchors.
 - A connector paints in the layering context where it is declared (section 8). Declare it at the common ancestor of its two ends.
 
@@ -192,6 +193,7 @@ A connector is a shape with the `stretch` policy and two attached anchors, so it
 - Routing is a second pass: all non-connector geometry is resolved first, then connectors are routed. Connectors attached to other connectors are ordered by their own DAG.
 - A router is a pluggable stretch strategy. It receives the two endpoints and the outlines of both ends, and returns a path.
 - 0.1 ships `straight` and `orthogonal`, with no obstacle avoidance. `curved` and avoidance can be added without changing the model.
+- The default router is `layout`: it follows the route supplied by the graph container the connector is an edge of, and is `straight` everywhere else (addendum, section 3).
 - A floating endpoint is the point on the end's outline toward the center of the other end's box.
 
 ## 8. Layers
@@ -597,7 +599,11 @@ An LLM writes these files without seeing them, so what the toolset returns matte
 | `attach_cycle` | error | Attachments or geometry references form a cycle |
 | `extends_cycle` | error | A state's `extends` chain loops |
 | `token_missing` | error | A library expects a token no theme in scope provides |
-| `attach_ignored` | warning | An attached node sits in a non-free container |
+| `attach_ignored` | warning | An attached node sits in a `row`, `column`, `grid` or `stack` |
+| `hint_ignored` | warning | A layout hint or option is set where the layout in charge does not declare it |
+| `hint_conflict` | warning | A layout hint contradicts the edges |
+| `tree_extra_edge` | warning | An edge of a `tree` gives a node a second parent or closes a loop |
+| `route_backtrack` | warning | A fixed anchor faces away from the route a layout supplies |
 | `encapsulation` | warning | A path reaches past a template's interface |
 | `blend_overlap` | warning | Two sources drive the same property at the same time |
 
@@ -608,6 +614,7 @@ An LLM writes these files without seeing them, so what the toolset returns matte
 | `text_overflow` | Text larger than its box, or clipped |
 | `out_of_view` | Nodes outside the canvas or the camera view |
 | `connector_crosses_shape` | A connector running through a shape |
+| `connector_crosses_connector` | Two connectors whose paths cross away from their ends |
 | `text_too_small` | Text below a readable size at the current zoom |
 | `low_contrast` | Text against its resolved fill | Lint is in the core from the first version. It works with text-only models, costs little because the resolved scene already holds every box and outline, and gives findings a model can act on.
 
@@ -654,6 +661,7 @@ The build order differs from the conceptual layering: static before motion, and 
 | 5 | Time containers, clips, keyframes, camera, video export | Animation |
 | 6 | Browser target, harness API, live viewer | Interactivity |
 | 7 | Media kinds and audio cues | Narrated pieces |
+| 8 | Graph layouts: the layout contract, `layered`, `tree`, `circular`, `force`, the `layout` router ([addendum](graph-layouts.md)) | Graphs without coordinates |
 - Milestone 3 is already a usable product: LLM-generated diagrams from typed libraries. It tests the riskiest thesis early.
 - The track model is specified up front, so nothing in milestones 1 to 3 blocks it.
 - Headless rendering on the JVM carries everything through milestone 5.

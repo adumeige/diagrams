@@ -65,7 +65,7 @@ scene:
       present: true
       from: a
       to: b
-      route: straight
+      route: layout
       marker_start: none
       marker_end: arrow
       stroke: "#636e72"

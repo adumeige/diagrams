@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="560" viewBox="0 0 1000 560">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <g data-path="scene">
+    <g data-path="ring" transform="translate(20 20)">
+      <ellipse data-path="ring.n1" transform="translate(80.66677 0)" cx="20" cy="20" rx="20" ry="20" fill="#fab1a0" stroke="#2d3436" stroke-width="1.5"/>
+      <ellipse data-path="ring.n2" transform="translate(143.734591 30.371862)" cx="20" cy="20" rx="20" ry="20" fill="#ffeaa7" stroke="#2d3436" stroke-width="1.5"/>
+      <ellipse data-path="ring.n3" transform="translate(159.311057 98.616816)" cx="20" cy="20" rx="20" ry="20" fill="#ffeaa7" stroke="#2d3436" stroke-width="1.5"/>
+      <ellipse data-path="ring.n4" transform="translate(115.66677 153.345019)" cx="20" cy="20" rx="20" ry="20" fill="#ffeaa7" stroke="#2d3436" stroke-width="1.5"/>
+      <ellipse data-path="ring.n5" transform="translate(45.66677 153.345019)" cx="20" cy="20" rx="20" ry="20" fill="#ffeaa7" stroke="#2d3436" stroke-width="1.5"/>
+      <ellipse data-path="ring.n6" transform="translate(2.022484 98.616816)" cx="20" cy="20" rx="20" ry="20" fill="#ffeaa7" stroke="#2d3436" stroke-width="1.5"/>
+      <ellipse data-path="ring.n7" transform="translate(17.59895 30.371862)" cx="20" cy="20" rx="20" ry="20" fill="#ffeaa7" stroke="#2d3436" stroke-width="1.5"/>
+      <polyline points="118.686148,28.677675 145.715214,41.694187" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+      <polyline points="168.18501,69.87042 174.860638,99.118257" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+      <polyline points="166.841261,134.253445 148.136567,157.70839" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+      <polyline points="115.66677,173.345019 85.66677,173.345019" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+      <polyline points="53.196974,157.70839 34.49228,134.253445" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+      <polyline points="26.472903,99.118257 33.148531,69.87042" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+      <polyline points="55.618327,41.694187 82.647393,28.677675" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+      <polyline points="105.117189,39.498558 131.216352,153.846461" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+      <polyline points="145.715214,59.049537 40.041862,109.939141" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+    </g>
+    <g data-path="wide" transform="translate(20 280)">
+      <rect data-path="wide.first" transform="translate(0 100)" width="50" height="30" fill="#fab1a0" stroke="#2d3436" stroke-width="1.5"/>
+      <rect data-path="wide.second" transform="translate(100 0)" width="50" height="30" fill="#ffeaa7" stroke="#2d3436" stroke-width="1.5"/>
+      <rect data-path="wide.third" transform="translate(200 100)" width="50" height="30" fill="#ffeaa7" stroke="#2d3436" stroke-width="1.5"/>
+      <rect data-path="wide.fourth" transform="translate(100 200)" width="50" height="30" fill="#ffeaa7" stroke="#2d3436" stroke-width="1.5"/>
+      <polyline points="50,115 200,115" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+      <polyline points="125,30 125,200" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+    </g>
+    <g data-path="net" transform="translate(320 20)">
+      <ellipse data-path="net.core" transform="translate(102.426369 87.070675)" cx="24" cy="24" rx="24" ry="24" fill="#fab1a0" stroke="#2d3436" stroke-width="1.5"/>
+      <ellipse data-path="net.p1" transform="translate(229.404744 141.32949)" cx="14" cy="14" rx="14" ry="14" fill="#ffeaa7" stroke="#2d3436" stroke-width="1.5"/>
+      <ellipse data-path="net.p2" transform="translate(177.33543 6.702792)" cx="14" cy="14" rx="14" ry="14" fill="#ffeaa7" stroke="#2d3436" stroke-width="1.5"/>
+      <ellipse data-path="net.p3" transform="translate(66.01078 0)" cx="14" cy="14" rx="14" ry="14" fill="#ffeaa7" stroke="#2d3436" stroke-width="1.5"/>
+      <ellipse data-path="net.p4" transform="translate(0 98.10736)" cx="14" cy="14" rx="14" ry="14" fill="#ffeaa7" stroke="#2d3436" stroke-width="1.5"/>
+      <ellipse data-path="net.q1" transform="translate(294.139858 219.677595)" cx="10" cy="10" rx="10" ry="10" fill="#ffeaa7" stroke="#2d3436" stroke-width="1.5"/>
+      <ellipse data-path="net.q2" transform="translate(318.504018 103.396306)" cx="10" cy="10" rx="10" ry="10" fill="#ffeaa7" stroke="#2d3436" stroke-width="1.5"/>
+      <ellipse data-path="net.other" transform="translate(68.561276 208.038502)" cx="24" cy="24" rx="24" ry="24" fill="#fab1a0" stroke="#2d3436" stroke-width="1.5"/>
+      <ellipse data-path="net.r1" transform="translate(28.857092 303.046351)" cx="14" cy="14" rx="14" ry="14" fill="#ffeaa7" stroke="#2d3436" stroke-width="1.5"/>
+      <ellipse data-path="net.r2" transform="translate(111.799477 314.397177)" cx="14" cy="14" rx="14" ry="14" fill="#ffeaa7" stroke="#2d3436" stroke-width="1.5"/>
+      <polyline points="148.873447,119.563536 230.310615,150.375321" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+      <polyline points="140.427538,91.577926 183.168082,32.073562" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+      <polyline points="116.073164,89.418627 86.050149,26.630361" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+      <polyline points="102.427389,111.29197 27.999405,111.978271" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+      <polyline points="252.261759,166.17169 297.813419,221.933166" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+      <polyline points="255.962901,149.141382 319.533906,117.816383" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+      <polyline points="119.956295,134.182104 99.031349,208.927073" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+      <polyline points="80.447234,252.756851 49.923617,304.960647" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+      <polyline points="100.387382,254.72665 121.234249,315.162424" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+      <polyline points="56.727806,318.944585 111.928763,326.498943" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+    </g>
+    <g data-path="held" transform="translate(660 20)">
+      <ellipse data-path="held.upper" transform="translate(140 20)" cx="18" cy="18" rx="18" ry="18" fill="#fab1a0" stroke="#2d3436" stroke-width="1.5"/>
+      <ellipse data-path="held.lower" transform="translate(140 440)" cx="18" cy="18" rx="18" ry="18" fill="#fab1a0" stroke="#2d3436" stroke-width="1.5"/>
+      <ellipse data-path="held.m1" transform="translate(171.493315 168.363124)" cx="12" cy="12" rx="12" ry="12" fill="#ffeaa7" stroke="#2d3436" stroke-width="1.5"/>
+      <ellipse data-path="held.m2" transform="translate(120.506685 168.363124)" cx="12" cy="12" rx="12" ry="12" fill="#ffeaa7" stroke="#2d3436" stroke-width="1.5"/>
+      <ellipse data-path="held.m3" transform="translate(173.210923 303.78655)" cx="12" cy="12" rx="12" ry="12" fill="#ffeaa7" stroke="#2d3436" stroke-width="1.5"/>
+      <ellipse data-path="held.m4" transform="translate(118.789077 303.78655)" cx="12" cy="12" rx="12" ry="12" fill="#ffeaa7" stroke="#2d3436" stroke-width="1.5"/>
+      <polyline points="161.172834,55.718158 181.378092,168.551019" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+      <polyline points="154.827166,55.718158 134.621908,168.551019" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+      <polyline points="183.645502,192.362159 185.058736,303.787515" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+      <polyline points="132.354498,192.362159 130.941264,303.787515" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+      <polyline points="182.955769,327.57274 161.38273,440.320714" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+      <polyline points="133.044231,327.57274 154.61727,440.320714" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+      <polyline points="171.493315,180.363124 144.506685,180.363124" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+    </g>
+  </g>
+</svg>

@@ -141,6 +141,11 @@ class Validator(private val sink: DiagnosticSink, private val env: Environment =
                 if (x is Value.Str) anchorPath(x.value, dp, dp.key(k), ppath, allowFloating = true)
             }
             "columns" -> if (x !is Value.Num || x.value < 1 || x.value != kotlin.math.floor(x.value)) error(ppath, "'columns' is a whole number, at least 1", dp.key(k))
+            "rank" -> rank(x, dp, ppath)
+            "seed" -> {
+                check(prop, x, dp.key(k), ppath, label)
+                if (x is Value.Num && (x.value < 0 || x.value != kotlin.math.floor(x.value))) error(ppath, "'seed' is a whole number, 0 or more", dp.key(k))
+            }
             "style" -> style(x, dp.key(k), ppath)
             "states" -> return states(x, dp, ppath)
             "timeline" -> return nodeTimeline(x, dp, ppath)
@@ -599,7 +604,7 @@ class Validator(private val sink: DiagnosticSink, private val env: Environment =
             m.rest.isEmpty() -> if (!allowFloating) sink.error(Codes.PATH_UNRESOLVED, path, "'$ref' names a node; an anchor is expected", dp)
             m.rest.size == 1 && GeometryRefs.isAnchor(m.rest[0], m.node) -> {}
             else -> {
-                val anchors = GeometryRefs.ANCHORS + if (m.node.shape == "connector") GeometryRefs.CONNECTOR_ANCHORS else emptyList()
+                val anchors = GeometryRefs.ANCHORS + if (m.node.shape == "connector") GeometryRefs.CONNECTOR_ANCHORS + GeometryRefs.LABEL_ANCHOR else emptyList()
                 sink.error(Codes.PATH_UNRESOLVED, path, "'${m.rest.joinToString(".")}' is not an anchor of ${m.node.path}; anchors: ${anchors.joinToString()}", dp)
                 return null
             }
@@ -643,8 +648,30 @@ class Validator(private val sink: DiagnosticSink, private val env: Environment =
         }
         val parent = info(nodeDp)?.parent
         val layout = (parent?.node?.get("layout") as? Value.Str)?.value ?: "free"
-        if (layout != "free") sink.warning(Codes.ATTACH_IGNORED, path, "the parent lays out its children ($layout); the container wins and 'attach' is ignored", dp)
+        // in a graph container the nodes are what the edges connect: an attached child keeps following its target
+        if (layout != "free" && !Layouts.isGraph(layout)) sink.warning(Codes.ATTACH_IGNORED, path, "the parent lays out its children ($layout); the container wins and 'attach' is ignored", dp)
         for (k in listOf("gap", "offset")) x[k]?.let { v -> refsIn(v).filter { it.substringBefore('.') !in setOf("theme", "viewport") }.forEach { geometryRef(it, nodeDp, dp.key(k), "$path.$k") } }
+    }
+
+    /** The rank hint of a layered container: `first`, `last` or `{same_as: <node>}`. */
+    private fun rank(x: Value, nodeDp: DataPath, path: String) {
+        val dp = nodeDp.key("rank")
+        val expected = "'rank' is ${Layouts.RANKS.joinToString(", ")} or {same_as: <node>}"
+        when (x) {
+            is Value.Str -> if (x.value !in Layouts.RANKS) error(path, expected, dp)
+            is Value.Map -> {
+                val to = x["same_as"]
+                if (x.keys.any { it != "same_as" } || to !is Value.Str) return error(path, expected, dp)
+                val from = info(nodeDp) ?: return
+                val m = index.resolve(to.value, from)
+                when {
+                    m == null -> sink.error(Codes.PATH_UNRESOLVED, "$path.same_as", "'${to.value}' matches no node in scope", dp.key("same_as"))
+                    m.rest.isNotEmpty() -> sink.error(Codes.PATH_UNRESOLVED, "$path.same_as", "'${to.value}' does not name a node", dp.key("same_as"))
+                    else -> encapsulation(m, to.value, "$path.same_as", dp.key("same_as"))
+                }
+            }
+            else -> error(path, expected, dp)
+        }
     }
 
     private fun padding(x: Value, dp: DataPath, path: String) {

@@ -1,0 +1,385 @@
+format: diagrams/0.1
+viewport: {width: 900, height: 620}
+styles:
+  step: {fill: "#dfe6e9", stroke: "#2d3436", stroke_width: 1.5, corner_radius: 6}
+  edge: {stroke: "#2d3436", stroke_width: 1.5, marker_end: arrow}
+  aside: {stroke: "#0984e3", stroke_width: 1.5, marker_end: arrow}
+  caption: {font_size: 12, fill: "#636e72"}
+scene:
+  layout: free
+  rotation: 0
+  scale: 1
+  opacity: 1
+  present: true
+  children:
+    - id: flow
+      layout: layered
+      layer: default
+      at: {x: 20, y: 20}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      children:
+        - id: read
+          shape: rect
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: step
+          width: 110
+          height: 40
+        - id: parse
+          shape: rect
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: step
+          width: 110
+          height: 40
+        - id: check
+          shape: rect
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: step
+          width: 110
+          height: 40
+        - id: repair
+          shape: rect
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: step
+          width: 110
+          height: 40
+        - id: emit
+          shape: rect
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: step
+          width: 110
+          height: 40
+        - id: report
+          shape: rect
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: step
+          rank: {same_as: emit}
+          width: 110
+          height: 40
+        - id: finish
+          shape: rect
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: step
+          width: 110
+          height: 40
+        - id: audit
+          shape: rect
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: step
+          rank: last
+          width: 110
+          height: 40
+        - id: e1
+          shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: read
+          to: parse
+          route: layout
+          marker_start: none
+        - id: e2
+          shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: parse
+          to: check
+          route: layout
+          marker_start: none
+        - id: e3
+          shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: check
+          to: repair
+          route: layout
+          marker_start: none
+        - id: e4
+          shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: repair
+          to: check
+          route: layout
+          marker_start: none
+        - id: e5
+          shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: check
+          to: emit
+          route: layout
+          marker_start: none
+        - id: e6
+          shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: read
+          to: finish
+          route: layout
+          marker_start: none
+        - id: e7
+          shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: emit
+          to: finish
+          route: layout
+          marker_start: none
+        - id: e8
+          shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: parse
+          to: report
+          route: layout
+          marker_start: none
+        - id: again
+          shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: emit
+          to: emit
+          route: layout
+          marker_start: none
+        - id: e9
+          shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: aside
+          from: report
+          to: audit
+          route: layout
+          constrain: false
+          marker_start: none
+        - shape: text
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: caption
+          attach: {to: e3.label}
+          text: invalid
+          text_align: start
+          wrap: false
+        - shape: text
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: caption
+          attach: {to: e6.label}
+          text: skip
+          text_align: start
+          wrap: false
+    - id: pipeline
+      layout: layered
+      layer: default
+      at: {x: 480, y: 500}
+      rotation: 0
+      scale: 1
+      opacity: 1
+      present: true
+      gap: 24
+      direction: right
+      rank_gap: 50
+      ordering: declared
+      children:
+        - id: source
+          shape: rect
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: step
+          width: 80
+          height: 36
+        - id: build
+          shape: rect
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: step
+          width: 80
+          height: 36
+        - id: test
+          shape: rect
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: step
+          width: 80
+          height: 36
+        - id: ship
+          shape: rect
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: step
+          width: 80
+          height: 36
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: source
+          to: build
+          route: layout
+          marker_start: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: source.south
+          to: test.west
+          route: layout
+          marker_start: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: build
+          to: ship
+          route: layout
+          marker_start: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: aside
+          from: build
+          to: ship
+          route: layout
+          marker_start: none
+        - shape: connector
+          layer: default
+          at: {x: 0, y: 0}
+          rotation: 0
+          scale: 1
+          opacity: 1
+          present: true
+          style: edge
+          from: test
+          to: ship
+          route: orthogonal
+          marker_start: none

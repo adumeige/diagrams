@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="620" viewBox="0 0 900 620">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <g data-path="scene">
+    <g data-path="flow" transform="translate(20 20)">
+      <rect data-path="flow.read" transform="translate(149.260014 0)" width="110" height="40" rx="6" fill="#dfe6e9" stroke="#2d3436" stroke-width="1.5"/>
+      <rect data-path="flow.parse" transform="translate(130.911375 100)" width="110" height="40" rx="6" fill="#dfe6e9" stroke="#2d3436" stroke-width="1.5"/>
+      <rect data-path="flow.check" transform="translate(69.170622 200)" width="110" height="40" rx="6" fill="#dfe6e9" stroke="#2d3436" stroke-width="1.5"/>
+      <rect data-path="flow.repair" transform="translate(0 314.4)" width="110" height="40" rx="6" fill="#dfe6e9" stroke="#2d3436" stroke-width="1.5"/>
+      <rect data-path="flow.emit" transform="translate(150 314.4)" width="110" height="40" rx="6" fill="#dfe6e9" stroke="#2d3436" stroke-width="1.5"/>
+      <rect data-path="flow.report" transform="translate(322 314.4)" width="110" height="40" rx="6" fill="#dfe6e9" stroke="#2d3436" stroke-width="1.5"/>
+      <rect data-path="flow.finish" transform="translate(173.285714 414.4)" width="110" height="40" rx="6" fill="#dfe6e9" stroke="#2d3436" stroke-width="1.5"/>
+      <rect data-path="flow.audit" transform="translate(323.285714 414.4)" width="110" height="40" rx="6" fill="#dfe6e9" stroke="#2d3436" stroke-width="1.5"/>
+      <g data-path="flow.e1">
+        <polyline points="200.590286,40 191.476074,89.672412" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+        <polygon points="189.581102,100 187.345039,88.914423 195.60711,90.4304" fill="#2d3436" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+      </g>
+      <g data-path="flow.e2">
+        <polyline points="173.563224,140 142.034899,191.065664" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+        <polygon points="136.518772,200 138.461164,188.859214 145.608633,193.272115" fill="#2d3436" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+      </g>
+      <g data-path="flow.e3">
+        <polyline points="96.252972,240 54.376497,270 54.376497,284.4 54.619673,303.900816" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+        <polygon points="54.750599,314.4 50.42,303.953187 58.819347,303.848446" fill="#2d3436" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+      </g>
+      <g data-path="flow.e4">
+        <polyline points="82.353799,314.4 123.384497,284.4 123.384497,270 123.691106,250.498702" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+        <polygon points="123.856172,240 127.890587,250.564729 119.491625,250.432676" fill="#2d3436" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+      </g>
+      <g data-path="flow.e5">
+        <polyline points="140.336498,240 164.585311,270 164.585311,284.4 182.233613,306.234019" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+        <polygon points="188.834124,314.4 178.96722,308.874224 185.500005,303.593814" fill="#2d3436" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+      </g>
+      <g data-path="flow.e6">
+        <polyline points="225.66676,40 289.886998,100 289.886998,140 295.238685,200 295.238685,240 297.914528,270 297.914528,284.4 302,314.4 302,354.4 253.829352,406.678223" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+        <polygon points="246.714286,414.4 250.740641,403.832197 256.918062,409.524249" fill="#2d3436" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+      </g>
+      <g data-path="flow.e7">
+        <polyline points="209.657143,354.4 221.247279,404.173591" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+        <polygon points="223.628571,414.4 217.156715,405.126108 225.337843,403.221074" fill="#2d3436" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+      </g>
+      <g data-path="flow.e8">
+        <polyline points="229.286576,140 359.41218,200 359.41218,284.4 366.480698,304.494924" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+        <polygon points="369.964872,314.4 362.518668,305.888594 370.442728,303.101254" fill="#2d3436" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+      </g>
+      <g data-path="flow.again">
+        <polyline points="260,326.4 276,326.4 276,342.4 270.5,342.4" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+        <polygon points="260,342.4 270.5,338.2 270.5,346.6" fill="#2d3436" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+      </g>
+      <g data-path="flow.e9">
+        <polyline points="377.257143,354.4 377.893583,403.900868" fill="none" stroke="#0984e3" stroke-width="1.5"/>
+        <polygon points="378.028571,414.4 373.69393,403.954863 382.093235,403.846872" fill="#0984e3" stroke="#0984e3" stroke-width="1.5" stroke-linejoin="miter"/>
+      </g>
+      <g transform="translate(64.376497 270)" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#636e72">
+        <text x="0" y="10.266" xml:space="preserve">invalid</text>
+      </g>
+      <g transform="translate(305.238685 212.8)" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#636e72">
+        <text x="0" y="10.266" xml:space="preserve">skip</text>
+      </g>
+    </g>
+    <g data-path="pipeline" transform="translate(480 500)">
+      <rect data-path="pipeline.source" transform="translate(0 30)" width="80" height="36" rx="6" fill="#dfe6e9" stroke="#2d3436" stroke-width="1.5"/>
+      <rect data-path="pipeline.build" transform="translate(130 0)" width="80" height="36" rx="6" fill="#dfe6e9" stroke="#2d3436" stroke-width="1.5"/>
+      <rect data-path="pipeline.test" transform="translate(130 60)" width="80" height="36" rx="6" fill="#dfe6e9" stroke="#2d3436" stroke-width="1.5"/>
+      <rect data-path="pipeline.ship" transform="translate(260 20)" width="80" height="36" rx="6" fill="#dfe6e9" stroke="#2d3436" stroke-width="1.5"/>
+      <g>
+        <polyline points="80,38.769231 119.768892,29.591794" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+        <polygon points="130,27.230769 120.713302,33.684237 118.824483,25.499351" fill="#2d3436" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+      </g>
+      <g>
+        <polyline points="40,66 119.592107,76.612281" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+        <polygon points="130,78 119.037019,80.775438 120.147195,72.449124" fill="#2d3436" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+      </g>
+      <g>
+        <polyline points="210,18.615385 235,19 249.921738,23.361739" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+        <polygon points="260,26.307692 248.743357,27.393044 251.10012,19.330434" fill="#2d3436" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+      </g>
+      <g>
+        <polyline points="210,29.692308 235,37 249.501242,37.223096" fill="none" stroke="#0984e3" stroke-width="1.5"/>
+        <polygon points="260,37.384615 249.436635,41.422599 249.56585,33.023593" fill="#0984e3" stroke="#0984e3" stroke-width="1.5" stroke-linejoin="miter"/>
+      </g>
+      <g>
+        <polyline points="210,78 235,78 235,38 249.5,38" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+        <polygon points="260,38 249.5,42.2 249.5,33.8" fill="#2d3436" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="miter"/>
+      </g>
+    </g>
+  </g>
+</svg>

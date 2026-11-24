@@ -62,7 +62,7 @@ scene:
       present: true
       from: squad_note
       to: team.attributes
-      route: straight
+      route: layout
       marker_start: none
       marker_end: arrow
       stroke: "#636e72"

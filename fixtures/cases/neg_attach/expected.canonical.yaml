@@ -100,7 +100,7 @@ scene:
       present: true
       from: a
       to: a.mid
-      route: straight
+      route: layout
       marker_start: none
       marker_end: none
       stroke: "#000000"
@@ -114,7 +114,7 @@ scene:
       opacity: 1
       present: true
       from: a
-      route: straight
+      route: layout
       marker_start: none
       marker_end: none
       stroke: "#000000"
