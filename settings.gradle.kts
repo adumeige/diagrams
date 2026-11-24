@@ -24,4 +24,8 @@ include(
     "render-raster",
     "cli",
     "fixtures",
+    "embed",
+    "vaadin:viewer",
+    "vaadin:karibu",
+    "vaadin:demo",
 )

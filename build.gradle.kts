@@ -5,6 +5,8 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 plugins {
     kotlin("multiplatform") version "2.3.0" apply false
     kotlin("jvm") version "2.3.0" apply false
+    id("com.gradleup.shadow") version "9.2.2" apply false
+    id("com.vaadin") version "25.3.6" apply false
 }
 
 allprojects {

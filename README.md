@@ -53,6 +53,30 @@ diagrams render fixtures/cases/m1_primitives/input.authored.yaml --out primitive
 diagrams validate my.yaml --diagnostics yaml
 ```
 
+For embedding the core in another application, `./gradlew :embed:dist` writes to `embed/build/embed`:
+
+- `jvm/diagrams-embed-<version>.jar`: one jar with the core and the raster renderer, the Kotlin
+  standard library relocated under `diagrams.shaded.kotlin`, so it needs nothing else on the classpath;
+- `js/diagrams-embed.mjs`: one self-contained ES module exporting `Viewer`, with its TypeScript
+  definitions (`diagrams-embed.d.mts`) and a `package.json`.
+
+## Vaadin
+
+The `vaadin` modules put the viewer in Vaadin 25 applications. The core still runs in the browser;
+the server only gathers the document's files and drives the viewer.
+
+| Module | What it is |
+| --- | --- |
+| `vaadin:viewer` | `DiagramViewer`, a Vaadin component around the `<diagrams-viewer>` element: bundles loaded from a `DiagramFiles` source (a directory, the class path, memory) with their assets served by the component, every harness operation (drive, patch, read), and events for loads, clicks, states, findings and the clock |
+| `vaadin:karibu` | karibu-dsl builders (`diagramViewer { }`), `onXxx { }` listeners, the viewer's state as a `StateFlow`, and `bindDocument`/`bindBundle`/`bindText`-style bindings |
+| `vaadin:demo` | A Vaadin Boot webapp: the repository's examples beside a live YAML editor, with states, selection and findings |
+
+```bash
+SERVER_PORT=8091 ./gradlew :vaadin:demo:run
+```
+
+The first start builds Vaadin's development bundle, which takes a minute or two.
+
 ## Themes, styles and fonts
 
 A theme is an imported file with `tokens`, font `assets` and `styles`; `base_theme` picks the one whose
